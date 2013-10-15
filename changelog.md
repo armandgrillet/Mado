@@ -1,3 +1,5 @@
+#Changelog de Mado
+
 ###15 octobre 2013
 L : Overview-style-base.css mis à jour : les styles principaux sont tous en place (à l’exception des titres de niveaux 4, 5 et 6). Document « Example document.md » créé dans Mado\Documents\ pour tester les styles.
 
