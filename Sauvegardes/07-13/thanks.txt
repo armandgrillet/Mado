@@ -1,7 +1,0 @@
-Markdown by John Gruber / http://daringfireball.net/ 
-Showdown by John Fraser and always available thanks to Corey / https://github.com/coreyti/showdown
-Showdown with GitHub Flavored Markdown by Jori Lallo / http://about.me/jorilallo
-jQuery by The jQuery Foundation / http://jquery.com/
-jQuery Autosize by Jack Moore / http://www.jacklmoore.com/
-Normalize.css by Nicolas Gallagher / http://necolas.github.io/normalize.css/
-Responsive-nav by Viljami Salminen / http://viljamis.com/
