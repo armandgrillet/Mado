@@ -1,0 +1,26 @@
+#wrapper {
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+.block {
+	clear: both; /* Resets all the floating paragraphs. */
+	display: block; /* Check later whether this is really useful. */
+	width: 100%;
+}
+
+.pad {
+	width: 50%;
+	float: left;
+}
+
+.notepad {
+	/* Monaco for Mac OS, Consolas for Windows, Courier New for both (old OSs) and "monospace" is a generic fallback font. */
+	font-family: Monaco, Consolas, "Courier New", monospace;
+}
+
+.typepad {
+	/* Georgia is the Windows fallback font and "serif" is a generic fallback font. */
+	font-family: Georgia, serif;
+}

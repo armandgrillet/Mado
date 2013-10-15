@@ -1,0 +1,4 @@
+.sheet:last-of-type img {
+	/* Box-model */
+	max-width: 100%;
+}

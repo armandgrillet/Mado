@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Recent</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="jsForRestore.js"></script>
+	</head>
+	
+	<body>
+		<p> 
+			The bug : if a file is set as an entry and chrome and is deleted, chrome.fileSystem.isRestorable returns true even if the file is deleted.
+			<br>
+			<br>To have the bug click on "create a file", its default content is visible in the app (It's "I have to be deleted").
+			<br>
+			<br>If you relaunch the app, "Is the file still restorable for Chrome?" display "true" and the content of the file is here on launch.
+			<br>If you remove the file and relaunch the app, "Is the file still restorable for Chrome?" display "true" (it should "false") and the content of the file is not here (because the file is no longer available). The console.log displays nothign even if the file isn't here.
+		</p>
+		<br>
+		<br>
+		<button id ="create-button">Create a file</button>
+		<br>
+		<p>Is the file still restorable for Chrome? <span id="the-problem-is-here"></span></p>
+		<br>
+		<br>
+		<p>The content of the file (if it's not deleted)</p>
+		<p id="file-content"></p>
+	</body>
+</html>

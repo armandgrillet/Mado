@@ -1,0 +1,22 @@
+{
+  "name": "Image",
+  "description": "Meuh.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["app/background.js"]
+    }
+  },
+    "permissions": [
+    {"fileSystem": ["write", "retainEntries"]},
+    {"mediaGalleries": ["read", "allAutoDetected"]},
+    "contextMenus",
+    "storage"
+    ],
+  "icons": { 
+    "16": "app/icon16.png",
+    "48": "app/icon48.png",
+    "128": "app/icon128.png" 
+  }
+}

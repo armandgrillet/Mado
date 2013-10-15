@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Mado</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" type="text/css" href="css/reset.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<!-- Generic JS -->
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.autosize-min.js"></script>
+		<script type="text/javascript" src="js/mousetrap.js"></script>
+		<script type="text/javascript" src="js/marked.js"></script>
+		<script type="text/javascript" src="js/countable.js"></script>
+
+		<!-- JS for Mado (alphabetical order) -->
+		<script type="text/javascript" src="./app/app.js"></script>
+		<script type="text/javascript" src="js/editor.js"></script>
+		<script type="text/javascript" src="js/help.js"></script>
+		<script type="text/javascript" src="js/link.js"></script>
+		<script type="text/javascript" src="js/responsive.js"></script>
+		<script type="text/javascript" src="js/viewswitch.js"></script>
+
+		<!-- Onload script -->
+		<script type="text/javascript" src="js/onload.js"></script>
+	</head>
+	
+	<body>
+
+		<!-- FIXED TOPBAR -->
+		<header>
+
+			<nav id="navbar">
+				
+				<ul>
+					
+					<li id="new">New</li>
+					<li id="open">Open</li>
+					<li id="recent">Recent</li>
+					<li id="save">Save</li>
+					<li id="save-as">Save as</li>
+					<li id="export">Export</li>
+				</ul>
+
+				<div class="responsive-change"> <!-- /!\ ... IS THAT EVEN USEFUL? -->
+					
+					<!-- The view switch handles the main container. On big screens, it has three different states:
+						 - "Markdown" to diplay only the markdown area;
+						 - "Both" to display both the markdown and the HTML conversion areas;
+						 - "HTML" to display only the HTML conversion area.
+					See 'viewswitch.js' for further information. -->
+					<div id="view-switch">
+
+						<div class="switch-button" id="switch-md">Markdown</div>
+						<div class="switch-button" id="switch-both">Both</div> <!-- /!\ REPLACE WITH BEAUTIFUL ICON -->
+						<div class="switch-button" id="switch-html">HTML</div> <!-- /!\ "Overview" maybe? -->
+					</div>
+				</div>
+				<p id="more">More</p> <!-- Deploys "Settings" and "About Mado" -->
+			</nav>
+		</header>
+
+		<!-- MAIN CONTENT -->
+		<!-- The main container is called "workspace" and it has three state classes:
+			 - "normal": the default behavior for the app.
+			 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
+			 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
+			 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
+		<section id="workspace" class="normal">
+			
+			<div id="switch-cursor"></div>
+
+			<!-- Markdown control sidebar
+				 Contains three square buttons:
+				 - The help-input accessor;
+				 - The link shortcut;
+				 - The image shortcut. -->
+			<aside class="sidebar" id="md-control">
+				
+				<ul>
+
+					<!-- Help tool -->
+					<li id="help-input-container">
+					
+						<div class="button" id="help-button">Help</div> <!-- When clicked, displays the help input via javascript. -->
+						<!-- Help input diplayer
+							 Displays the input on click on the "Help" button. It has two class states:
+							 - "hidden": hides its children.
+							 - No class: displays everything. -->
+						<div class="hidden" id="help-input-displayer">
+						
+							<!-- The arrow that comes with the box (see below) -->
+							<div id="help-input-arrow"></div>
+							<!-- The gray box that contains the input -->
+							<div id="help-input-box">
+
+								<!-- The help input itself -->
+								<input type="text" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
+								
+								<!-- Results container -->
+								<div class="hidden" id="help-results-container">
+									
+									<ul>
+									
+										<li class="result" id="result-1">
+											<div class="result-switch" id="result-switch-1"></div>
+											<div class="answer" id="answer-1"></div>
+											<div class="example" id="example-1"></div>
+										</li>
+										<li class="result" id="result-2">
+											<div class="result-switch" id="result-switch-2"></div>
+											<div class="answer" id="answer-2"></div>
+											<div class="example" id="example-2"></div>
+										</li>
+										<li class="result" id="result-3">
+											<div class="result-switch" id="result-switch-3"></div>
+											<div class="answer" id="answer-3"></div>
+											<div class="example" id="example-3"></div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</li>
+					<!-- Link tool
+						 Displays one or two inputs, depending on whether text is selected in the markdown area or not. See 'link.js' for further information. -->
+					<li id="link-insertion-container">
+
+						<div class="button" id="link-button">Link</div> <!-- When clicked, displays the link input(s) via javascript. -->
+						<!-- Link insertion diplayer
+							 Displays the input(s) on click on the "Link" button. It has two class states:
+							 - "hidden": hides its children.
+							 - No class: displays everything. -->
+						<div class="hidden" id="link-insertion-displayer">
+
+							<div id="link-insertion-arrow"></div>
+						
+							<div id="link-insertion-box">
+								<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
+								<input type="text" id="url-input" placeholder="Type a URL">
+								<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
+									 Three cases here:
+									 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
+									 - No text is selected and the user types something into this input: the typed text will be used as hypertext.
+									 - No text is selected and the user does not type anything into this input: the URL typed into the first input will also be used as hypertext. -->
+								<input type="text" id="hypertext-input" placeholder="Type a text (optional)">
+							</div>
+						</div>
+					</li>
+					<li class="button">Image</li>
+				</ul>
+			</aside>
+
+			<!-- Markdown area
+				 Contains the textarea itself.
+				 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+			<article class="sheet" id="markdown-container"> <!-- MAYBE THE id IS NOT USEFUL -->
+
+				<!-- Textarea for typing markdown
+					 Controlled via JavaScript. See 'marked.js' for further information. -->
+				<textarea id="markdown" placeholder="Your text here" autofocus></textarea> <!-- /!\ A STYLE ATTRIBUTE IS ADDED AND BLOCKS THE CSS -->
+			</article>
+
+			<aside id="center-line-container"><div id="center-line"></div></aside>
+
+			<!-- HTML overview area
+				 Contains the displayed version of the markdown after conversion. See 'markup.js' for urther information.
+				 On big screen, it takes the right half of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+			<article class="sheet" id="conversion-container"> <!-- MAYBE THE id IS NOT USEFUL -->
+
+				<div id="html-conversion"></div>
+			</article>
+
+			<!-- HTML overview control navbar
+				 Contains the CSS picker square button. -->
+			<aside class="sidebar" id="conversion-control">
+				
+				<div class="button">Style</div>
+			</aside>
+		</section>
+
+		<!-- FIXED BOTTOM BAR
+			 Contains useful information for the user:
+			 - The document's name;
+			 - Its number of words;
+			 - Whether it is saved or not.
+			 These data are set via JavaScript. See 'footerdata.js' for urther information. -->
+		<footer>
+
+			<p>
+				<span id="doc-name"></span>&nbsp;|<span id="character-nb"></span><span id="word-nb"></span>| <span id="save-state"></span>
+			</p>
+		</footer>
+	</body>
+</html>

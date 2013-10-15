@@ -1,0 +1,126 @@
+/* ==============
+	MISCELLANOUS
+   ============== */
+
+.sheet:last-of-type {
+	/* Typography */
+	font-size: 11pt;
+	line-height: 16pt;
+}
+
+.sheet:last-of-type img { max-width: 100%; }
+
+/* ------------
+	Paragraphs
+   ------------ */
+.sheet:last-of-type p,
+.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+.sheet:last-of-type ul {
+	padding-bottom: 8pt;
+}
+
+/* --------
+	Titles
+   -------- */
+.sheet:last-of-type h1,
+.sheet:last-of-type h2,
+.sheet:last-of-type h3 {
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto Light", "Open Sans", sans-serif;
+}
+
+.sheet:last-of-type h1 {
+	/* Box-model */
+	padding-top: 12pt;
+
+	/* Typography */
+	font-size: 22pt;
+	line-height: 30pt;
+}
+
+.sheet:last-of-type h2 {
+	/* Box-model */
+	padding-top: 8pt;
+
+	/* Typography */
+	font-size: 16pt;
+	line-height: 20pt;
+}
+
+.sheet:last-of-type h3 {
+	/* Box-model */
+	padding-top: 14pt;
+
+	/* Typography */
+	font-size: 13pt;
+	line-height: 14pt;
+}
+
+/* /!\ STILL 3 HEADER STYLES TO MAKE */
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+.sheet:last-of-type ul { padding-left: 22pt; }
+
+.sheet:last-of-type ul li { list-style-type: disc; }
+
+/* ORDERED LISTS */
+.sheet:last-of-type ol { counter-reset: list; }
+
+.sheet:last-of-type ol li {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	padding-left: 32pt;
+
+	/* Misc */
+	counter-increment: list;
+}
+
+.sheet:last-of-type ol li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 32pt;
+	padding-left: 8pt;
+
+	/* Misc */
+	content: counter(list);
+}
+
+/* -------------
+	Blockquotes
+   ------------- */
+.sheet:last-of-type blockquote {
+	/* Positioning */
+	margin-bottom: 8pt;
+
+	/* Box-model */
+	padding: 8pt 0 0 8pt;
+
+	/* Visual */
+	border-left: 8pt solid rgba(0,0,0,.1);
+}
+
+/* ------------------
+	Horizontal rules
+   ------------------ */
+.sheet:last-of-type hr {
+	/* Positioning */
+	clear: both;
+	margin: 8pt auto 16pt; /* No matter the size of the rule, it will be centered */
+
+	/* Box-model */
+	height: 1px;
+
+	/* Visual */
+	background-color: rgba(0,0,0,.1);
+	border: none;
+}

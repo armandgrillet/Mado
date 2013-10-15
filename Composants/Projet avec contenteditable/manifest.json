@@ -1,0 +1,32 @@
+{
+  	"app": {
+    	"background": {
+      		"scripts": ["app/background.js"]
+    	}
+  	},
+  	"manifest_version": 2,
+  	"name": "Mado Editable",
+  	"version": "0.1",
+
+  	"description": "Write and view your Markdown files",
+  	"icons": { 
+    	"16": "app/icon16.png",
+    	"48": "app/icon48.png",
+    	"128": "app/icon128.png" 
+  	},  	
+  	"file_handlers": {
+  		"text": {
+    		"types": ["text/md"],
+	    	"title": "Mado"
+	  	}
+	},
+    "permissions": [
+    	{"fileSystem": ["write", "retainEntries"]},
+    	{"mediaGalleries": ["read", "allAutoDetected"]},
+    	"contextMenus",
+    	"storage",
+    	"webview"
+    ],
+  	"minimum_chrome_version": "30",
+  	"offline_enabled": true
+}

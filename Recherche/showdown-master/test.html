@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<script src = "src/showdown.js"></script>
+		<script>
+			function displayDate() {
+				var converter = new Showdown.converter();
+				alert(converter.makeHtml('#hello markdown!'));
+			}
+		</script>
+	</head>
+	<body>
+		<button type="button" onclick="displayDate();">Click Me!</button>
+	</body>
+</html>

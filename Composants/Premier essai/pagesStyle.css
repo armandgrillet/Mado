@@ -1,0 +1,62 @@
+html, body { 
+	height: 100%; 
+	width: 100%; 
+	margin: 0 auto; 	
+	overflow-x: hidden;
+}
+
+.content {	
+	height: 80%;
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 90%;	
+}
+
+#switch {
+	display: none;
+}
+
+#markdown {
+	float: left;
+	min-height: 100%;
+	margin-left: 7%;
+	padding: 0;
+	resize: none;
+	width: 40%;	
+	transition: all 0.7s ease;
+}
+
+#html {
+	background-color: #aaa;
+	float: right;
+	margin-right: 7%;
+	min-height: 100%;
+	width: 40%;
+	transition: all 0.7s ease;
+}
+
+@media handheld, (max-width: 1599px){	
+	#switch {
+		display: block;
+		margin: 0 auto;
+		margin-top: 10px;
+	} 
+
+	#html {
+    	margin-right: -70%;
+    }
+
+    #markdown {
+    	margin-left: 20%;
+    	width: 60%;
+    }
+
+    #html.inversed {
+		margin-right: 20%;
+		width: 60%;
+	}
+
+	#markdown.inversed{
+		margin-left: -70%;
+	}
+}

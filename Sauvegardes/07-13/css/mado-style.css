@@ -1,0 +1,198 @@
+@font-face { /* Local font for Markdown */
+	font-family: SourceCodePro; 
+	src: url('../fonts/SourceCodePro-Regular.otf'); 
+} 
+
+body { 
+	height: 100%; 
+	width: 100%; 
+	margin: 0 auto; 	
+	overflow-x: hidden;
+}
+
+li { display: block; }
+
+/* Topbar part */
+#topbar {
+	background-color: rgba(235, 236, 237, 0.8);
+	border-bottom: 1px solid rgba(171, 171, 171, 0.8);
+	height: 30px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+#topbar ul { -webkit-padding-start : 0; }
+
+#topbar i {
+	color: #626262;
+	padding: 5px;
+}
+
+#topbar i:hover {
+	color: #000;
+	cursor: pointer;
+}
+
+#top-inner {	
+	cursor: default;
+	line-height: 30px;		
+	margin: 0 auto;
+	width: 90%;
+}
+
+#left {
+	border-left: 0;
+	float: left;
+}
+
+#right {
+	border-right: 0;
+	float: right;
+	right: 0;
+}
+
+/* Switch button */
+#switch {
+	position: relative; /* All the elements inside are positioned in absolute relatively to this box. */
+	width: 100%; /* See #reponsive-change's height property. */
+	height: 30px; /* Matches the height of the topbar. */
+}
+
+#switch .switch-slider {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -6px; /* Half its own height to center itself. */
+	margin-left: -12px; /* Half its own width to center itself. */
+	width: 24px;
+	height: 12px;
+	background: #626262;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+#switch .switch-slider:hover {
+	background: black;
+}
+
+#switch .switch-cursor {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -4px; /* Half its own height to center itself. */
+	margin-left: -10px; /* Default position when the switch is set to "Markdown": on the left. */
+	width: 8px;
+	height: 8px;
+	background: #E6E6E6;
+	border-radius: 4px;
+	transition: margin-left 0.05s ease-out;
+}
+
+#switch.switched .switch-cursor {
+	margin-left: 2px;
+}
+
+#switch .switch-title {
+	position: absolute;
+	top: 50%;
+	margin-top: -3.5pt; /* Half its own height to center itself. */
+	font-size: 7pt;
+	line-height: 7pt;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+#switch .switch-title:first-of-type {
+	right: 50%;
+	margin-right: 22px;
+	color: #626262;
+	text-shadow: none;
+}
+
+#switch.switched .switch-title:first-of-type {
+	color: #aaa;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+#switch .switch-title:last-of-type {
+	left: 50%;
+	margin-left: 22px;
+	color: #9f9f9f;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+#switch.switched .switch-title:last-of-type {
+	color: #626262;
+	text-shadow: none;
+}
+
+/* Content */ 
+#markdown {
+	box-sizing: border-box;
+	float: left;
+	font-family: SourceCodePro;
+	font-size: 15px;
+	height: 600px;
+	outline: none;
+	margin-top: 70px;		
+	padding: 7px;
+	padding-top: 27px;
+	resize: none;	
+	transition: all .7s ease, height 0 ease; /*Height 0 for a perfect autosize */
+}
+
+#html-conversion {
+	float: right;
+	margin-top: 70px;
+	transition: all .7s ease;
+}
+
+/* Footer */
+footer {
+	background-color: #E6E6E6;
+	bottom: 0px;
+	border-top: 1px solid #ababab;
+	height: 19px;
+	left: 0px;
+	line-height: 19px;
+	position: fixed;
+	width: 100%;
+	z-index: 2;
+}
+/* Responsive part */
+@media handheld, (min-width: 1366px) {	
+	#responsive-change { display: none; }
+
+	#markdown {
+		margin-left: 10%;		
+		width: 37%;	
+	}
+
+	#html-conversion {
+		margin-right: 10%;
+		width: 37%;
+	}
+}
+
+@media handheld, (max-width: 1365px) {
+	#responsive-change {
+		display: block;
+		margin:0 auto;
+		width: 200px;
+	} 
+
+    #markdown {
+    	margin-left: 15%;
+    	width: 70%;
+    }
+
+    #html-conversion {
+    	margin-right: -100%;
+    	width: 70%;
+    }
+
+	#markdown.inversed { margin-left: -100%; }
+
+    #html-conversion.inversed { margin-right: 15%;	}	
+}

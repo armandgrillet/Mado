@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="reset.css" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Test : appli v0.1.0</title>
+		<script type="text/javascript" src="type.js"></script>
+		<meta name="description" content="Deux paragraphes côte à côte" />
+	</head>
+
+	<body>
+		<section id="wrapper">
+			<section class="block">
+				<!-- BROUILLONS & NOTES -->
+				<aside class="notepad pad">
+					<p contenteditable="true"> <!-- Name in progress. -->
+						<!-- Ideally, this text should be removed automatically when the user clicks in, like with a placeholder. -->
+						Écrivez vos notes et vos brouillons ici.
+					</p>
+				</aside>
+
+				<!-- MANUSCRIT -->
+				<article class="typepad pad">
+					<p contenteditable="true"> <!-- Name in progress. -->
+						<!-- Ideally, this text should be removed automatically when the user clicks in, like with a placeholder. -->
+						Écrivez votre manuscrit ici.
+					</p>
+				</article>
+			</section>
+			<button onclick="switchBody()">Switch</button>
+		</section>
+	</body>
+</html>
