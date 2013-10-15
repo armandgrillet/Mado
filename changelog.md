@@ -3,6 +3,8 @@
 ###15 octobre 2013
 L : Overview-style-base.css mis à jour : les styles principaux sont tous en place (à l’exception des titres de niveaux 4, 5 et 6). Document « Example document.md » créé dans Mado\Documents\ pour tester les styles.
 
+R : Projet migré sur GitHub, changelog au format Markdown.
+
 ###14 octobre 2013
 L : Style-base.css mis à jour : problème d’alignement vertical du footer et de l’icône d’état de sauvegarde réglé ; problème d’overflow de #image-status réglé (il reste un bug impossible à résoudre). Overview-style-base.css mis à jour : premiers stylages effectués.
 
