@@ -1,13 +1,16 @@
-15 octobre 2013
------
-L : Overview-style-base.css mis à jour : les styles principaux sont tous en place (à l’exception des titres de niveaux 4, 5 et 6, c’est-à-dire <h4>, <h5> et <h6>). Document « Example document.md » créé dans Mado\Documents\ pour tester les styles.
+###15 octobre 2013
+L : Overview-style-base.css mis à jour : les styles principaux sont tous en place (à l’exception des titres de niveaux 4, 5 et 6). Document « Example document.md » créé dans Mado\Documents\ pour tester les styles.
 
-14 octobre 2013
+###14 octobre 2013
 L : Style-base.css mis à jour : problème d’alignement vertical du footer et de l’icône d’état de sauvegarde réglé ; problème d’overflow de #image-status réglé (il reste un bug impossible à résoudre). Overview-style-base.css mis à jour : premiers stylages effectués.
+
 R : Changement de la gestion des settings via une analyse de changements de valeur pour les variables (plus optimisé). Taille des fenêtres More comme convenu.
-13 octobre 2013
+
+###13 octobre 2013
+
 L : Q&A complet.
-12 octobre 2013
+
+###12 octobre 2013
 Meeting A+A.
 R : Le clic sur Both au resizing peut être décidé dans Settings. Changements avec L de l’aide et corrections de plusieurs bugs durant le RDV.
 11 octobre 2013
