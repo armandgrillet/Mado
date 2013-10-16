@@ -1162,7 +1162,7 @@ footer {
 	/* -----------
 		Workspace
 	   ----------- */
-	/* Setting the workspace's behavior in normal mode when on small screens */
+	/* Setting the workspace's behavior in normal mode when on small screen */
 	#workspace.normal { width: 200%; }
 
 	.normal #center-line-container {
