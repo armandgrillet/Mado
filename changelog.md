@@ -1,7 +1,7 @@
 #Changelog de Mado
 
 ###17 octobre 2013
-R : Ajout du code concernant le display size, je continue ce soir pour qu'il s'applique au body.
+R : Ajout du code concernant le display size, je continue ce soir pour qu'il s'applique au body. La façon de voir si le window resizing est changé a été modifiée dans les settings (de manière plus optimisée).
 
 ###15 octobre 2013
 L : Overview-style-base.css mis à jour : les styles principaux sont tous en place (à l’exception des titres de niveaux 4, 5 et 6). Document « Example document.md » créé dans Mado\Documents\ pour tester les styles.
