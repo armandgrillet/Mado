@@ -166,6 +166,7 @@ window.onload = function() {
     
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
+    setWindowResizing();
 
     // Getting and setting the click event on each of the switch buttons.
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });

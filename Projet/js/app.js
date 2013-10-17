@@ -195,6 +195,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { // Update wh
   	for (key in changes) {
   		if (key == "gfm")
   			setEditorSyntax();
+  		else if (key == "resize")
+  			setWindowResizing();
   		else if (key == "displaySize")
   			newDisplaySize();
 	}

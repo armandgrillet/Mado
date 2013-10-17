@@ -10,6 +10,8 @@ var switchToHTML;
 
 var switchButtons = new Array(); // The array for the switch 
 
+var windowResizing;
+
 var centerLine;
 var previousSize; // The previous size of the window.
 
@@ -57,20 +59,23 @@ function switchShortcuts (direction) {
 	}	
 }
 
+function setWindowResizing () {
+	chrome.storage.local.get("resize",  function(mado) {
+		if (mado["resize"] != undefined)			
+			windowResizing = mado["resize"];
+		else {
+			chrome.storage.local.set({ "resize" : true });
+			windowResizing = true;
+		}
+	});
+}
+
 $(window).resize(function() { // On window resizing
 	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1366 && previousSize < 1366) {
-		chrome.storage.local.get("resize",  function(mado) {
-			if (mado["resize"] != undefined)
-				if (mado["resize"])
-					switchToBoth.click(); // The normal view with both divs is back.
-			else {
-				chrome.storage.local.set({ "resize" : true });
-				switchToBoth.click(); // The normal view with both divs is back.
-			}
-		});
-	}
+	else if (window.innerWidth >= 1366 && previousSize < 1366) 
+		if (windowResizing)
+			switchToBoth.click();
 
 	previousSize = window.innerWidth; // Setting the size of the window for seeing the difference when a new resizing come.
 });
