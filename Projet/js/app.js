@@ -187,11 +187,26 @@ function moreWindow(choice) { // Open a window for a suject on More.
   	moreButton.click(); // Close the more dropdown.
 }
 
-function newDisplaySize () {
-	console.log("Regarde ce que demande Théophile au niveau de la class du body");
+function newDisplaySize () { // Set the body's class.
+	chrome.storage.local.get("displaySize",  function(mado) {
+		if (mado["displaySize"] != undefined) {
+			if (mado["displaySize"] == "small")
+				$("body").attr("class", "small");
+			else {
+				if (mado["displaySize"] == "medium")
+					$("body").attr("class", " ");
+				else
+					$("body").attr("class", "big");	
+			}
+		}
+		else {
+			chrome.storage.local.set({ "displaySize" : "medium" });
+			$("body").attr("class", " ");
+		}
+	});
 }
 
-chrome.storage.onChanged.addListener(function(changes, namespace) { // Update when a storage value is changed
+chrome.storage.onChanged.addListener(function(changes, namespace) { // What to do when a storage value is changed.
   	for (key in changes) {
   		if (key == "gfm")
   			setEditorSyntax();
