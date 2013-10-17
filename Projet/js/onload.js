@@ -82,6 +82,8 @@ window.onload = function() {
             markdownSaved = undefined;
     }); 
 
+    newDisplaySize(); // Set the size of the font.
+
     $(newButton).on("click", function() { newWindow(); });
     Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
     $(openButton).on("click", function() { openFileButton(); });

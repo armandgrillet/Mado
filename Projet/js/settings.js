@@ -31,6 +31,30 @@ function setSyntax (newValue) {
 	chrome.storage.local.set({ "gfm" : newValue });
 }
 
+
+function getDisplaySize () {
+	chrome.storage.local.get("displaySize",  function(mado) {
+		if (mado["displaySize"] != undefined) {
+			if (mado["displaySize"] == "small")
+				smaDisplaySize.checked = true;			
+			else {
+				if (mado["displaySize"] == "medium")
+					medDisplaySize.checked = true;	
+				else
+					bigDisplaySize.checked = true;
+			}		
+		}
+		else {
+			chrome.storage.local.set({ "displaySize" : "medium" });
+			medDisplaySize.checked = true;
+		}
+	});
+} 
+
+function setDisplaySize (newValue) {
+	chrome.storage.local.set({ "displaySize" : newValue });
+}
+
 function getResizing () {
 	chrome.storage.local.get("resize",  function(mado) {
 		if (mado["resize"] != false) {
@@ -45,5 +69,6 @@ function setResizing () {
 	else 
 		chrome.storage.local.set({ "resize" : false });
 }
+
 
 
