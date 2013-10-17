@@ -62,9 +62,28 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type ul { padding-left: 22pt; }
+.sheet:last-of-type ul li {
+	/* Positioning */
+	position: relative;
 
-.sheet:last-of-type ul li { list-style-type: disc; }
+	/* Box-model */
+	padding-left: 32pt;
+}
+
+.sheet:last-of-type ul li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 32pt;
+	padding-left: 8pt;
+
+	/* Misc */
+	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
+}
 
 /* ORDERED LISTS */
 .sheet:last-of-type ol { counter-reset: list; }
