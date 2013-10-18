@@ -1,5 +1,7 @@
 #Changelog de Mado
 
+###18 octobre 2013
+R : Modification du compteur de mots/lettres pour qu'il soit plus précis.
 ###17 octobre 2013
 L : Clinic.css mis à jour : intégration de la fonte Bariol. Le thème *Clinic* est commencé. Achat de Bariol Italic Font Family prévu pour compléter.
 
