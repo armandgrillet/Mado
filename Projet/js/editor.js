@@ -8,8 +8,6 @@ var tempConversion; // A string used to don't display errors when an image is lo
 var editorSyntax;
 
 function conversion () { // What to do when something change in the Markdown editor.
-	Countable.once(textarea, function (counter) { displayCounter(counter) }); // Count the words in the textarea.
-
 	if (textarea.value.length > 0) { // Markdown in HTML.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
@@ -21,14 +19,12 @@ function conversion () { // What to do when something change in the Markdown edi
 				}
 				setEditorSyntax();
 				marked(textarea.value, function (err, content) { // Marked.js makes the conversion.	    	
-			    	imagePosition = 0; // Reset.
-
-			        // Replace the links.
-			       	tempConversion = content; //.replace(/<a href=/g,"<a target=\"_blank\" href=");
-
-			       	for (var i = 0; i < imagesArray.length; i++) // Reset.
+					/* Reset. */
+			    	imagePosition = 0;
+			    	for (var i = 0; i < imagesArray.length; i++) // Reset.
 			       		imagesArray[i][2] = false;
 
+			       	tempConversion = content; 
 			       	displayImages();      
 			    });
 			});	    
@@ -36,20 +32,19 @@ function conversion () { // What to do when something change in the Markdown edi
 		else {
 			marked.setOptions({ gfm : editorSyntax });
 			marked(textarea.value, function (err, content) { // Marked.js makes the conversion.	    	
-		    	imagePosition = 0; // Reset.
-
-		        // Replace the links.
-		       	tempConversion = content; //.replace(/<a href=/g,"<a target=\"_blank\" href=");
-
-		       	for (var i = 0; i < imagesArray.length; i++) // Reset.
+		    	/* Reset. */
+		    	imagePosition = 0;
+		    	for (var i = 0; i < imagesArray.length; i++) // Reset.
 		       		imagesArray[i][2] = false;
 
+		       	tempConversion = content;
 		       	displayImages();      
 		    });
 		}
 	}
 	else {// No Markdown here.
 		conversionDiv.innerHTML = "The HTML view.";
+		Countable.once(textarea, function (counter) { displayCounter(counter); }); // Count the words in the textarea.
 		checkSaveState();
 	}
 }
@@ -75,10 +70,10 @@ function endOfConversion () {
 	});
 	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
+	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();
 }
 
 function setEditorSyntax () {
-	console.log("changement de syntaxe !");
 	chrome.storage.local.get("gfm",  function(mado) { editorSyntax = mado["gfm"]; });
 }

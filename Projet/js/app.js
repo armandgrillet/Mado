@@ -209,11 +209,11 @@ function newDisplaySize () { // Set the body's class.
 chrome.storage.onChanged.addListener(function(changes, namespace) { // What to do when a storage value is changed.
   	for (key in changes) {
   		if (key == "gfm")
-  			setEditorSyntax();
+  			setEditorSyntax(); // editor.js
   		else if (key == "resize")
-  			setWindowResizing();
+  			setWindowResizing(); // viewswitch.js 
   		else if (key == "displaySize")
-  			newDisplaySize();
+  			newDisplaySize(); // app.js 
 	}
 });
 
