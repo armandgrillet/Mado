@@ -15,10 +15,12 @@
     	"128": "app/icon128.png" 
   	},  	
   	"file_handlers": {
-  		"text": {
-    		"types": ["text/md"],
-	    	"title": "Mado"
-	  	}
+		"text": {
+        	"extensions": [
+          		"md"
+        	],
+        	"title": "Mado"
+      	}
 	},
     "permissions": [
     	{"fileSystem": ["write", "retainEntries"]},
