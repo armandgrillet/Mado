@@ -16,6 +16,7 @@
 .sheet:last-of-type p,
 .sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
 .sheet:last-of-type ul {
+	/* Box-model */
 	padding-bottom: 8pt;
 }
 
@@ -111,7 +112,7 @@
 	padding-left: 8pt;
 
 	/* Misc */
-	content: counter(list);
+	content: counter(list)".";
 }
 
 /* -------------

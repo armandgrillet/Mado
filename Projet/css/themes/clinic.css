@@ -50,19 +50,96 @@
 	src: url('../../fonts/bariol_light_italic.ttf'); /* /!\ BUY BARIOL ITALIC FAMILY */
 }
 
-.clinic .sheet:last-of-type {
+.sheet:last-of-type .clinic {
 	/* Typography */
 	font-family: Bariol, sans-serif;
-	font-size: 13pt;
-	letter-spacing: 0.05em;
+	font-size: 14pt;
+	line-height: 21pt;
+	letter-spacing: 1px;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* ------------
+	Paragraphs
+   ------------ */
+.sheet:last-of-type p,
+.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+.sheet:last-of-type ul {
+	/* Box-model */
+	padding-bottom: 10.5pt;
 }
 
 /* --------
 	Titles
    -------- */
-.clinic .sheet:last-of-type h1,
-.clinic .sheet:last-of-type h2,
-.clinic .sheet:last-of-type h3 {
+.sheet:last-of-type .clinic h1,
+.sheet:last-of-type .clinic h2,
+.sheet:last-of-type .clinic h3 {
 	/* Typography */
 	font-family: BariolLight;
+}
+
+.sheet:last-of-type .clinic h1 {
+	/* Box-model */
+	padding: 28pt 0 14pt;
+
+	/* Typography */
+	font-size: 42pt;
+	line-height: 63pt;
+	text-align: center;
+}
+
+.sheet:last-of-type .clinic h2 {
+	/* Box-model */
+	padding: 21pt 0 14pt;
+
+	/* Typography */
+	font-size: 28pt;
+	line-height: 42pt;
+}
+
+.sheet:last-of-type .clinic h3 {
+	/* Box-model */
+	padding: 14pt 0;
+
+	/* Typography */
+	font-size: 18pt;
+	font-weight: bold;
+	line-height: 21pt;
+}
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+.sheet:last-of-type .clinic ul li { padding-left: 28pt; }
+
+.sheet:last-of-type .clinic ul li:before { padding-left: 0; }
+
+/* ORDERED LISTS */
+.sheet:last-of-type .clinic ol li { padding-left: 28pt; }
+
+.sheet:last-of-type .clinic ol li:before {
+	/* Box-model */
+	padding-left: 0;
+
+	/* Typography */
+	font-weight: bold;
+
+	/* Misc */
+	content: counter(list);
+}
+
+/* -------------
+	Blockquotes
+   ------------- */
+.sheet:last-of-type .clinic blockquote {
+	/* Positioning */
+	margin-bottom: 10.5pt;
+
+	/* Box-model */
+	padding: 10.5pt 0 0 10.5pt;
+
+	/* Visual */
+	background-color: rgba(0,0,0,.05);
 }

@@ -972,6 +972,9 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	width: 50%;
 	height: 100%;
 	padding: 0 40px;
+
+	/* Typography */
+	color: #4a4942;
 }
 
 /* ---------------
@@ -999,7 +1002,14 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 /* -----------
 	HTML area
    ----------- */
-#html-conversion { padding-top: 40px; }
+#html-conversion {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	padding: 40px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
 
 /* ----------------------
 	Center vertical line
