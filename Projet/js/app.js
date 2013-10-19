@@ -4,6 +4,8 @@
 var nameContainer = {};
 var chromeLocalFile = "";
 
+var fileEntry;
+
 
 function errorHandler() {
 	if (fileInLoading != undefined) {
@@ -81,33 +83,11 @@ function launchWithText (loadedText) { // What to do if the user has open a file
 
 
 function saveFile () { // Waiting fixes by Google
-	chrome.fileSystem.chooseEntry(
-		{
-			type: "saveFile", 
-			suggestedName: "document.md"
-		}, 
-		function(savedFile) {
-			if (savedFile) {
-				savedFile.createWriter(
-					function(writer) {
-				 		writer.write(
-				 			new Blob(
-					 			[textarea.value],
-								{
-									type: "text/plain"
-								}
-							)
-						); 
-						markdownSaved = textarea.value;
-						checkSaveState();
-    					document.getElementById("doc-name").innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+	if (fileEntry == undefined)
+		saveAsFile
+	else { // If we have already loaded the file.
 
-						newRecentFile(savedFile); // Add the file to the "Recent" div.
-				 	}, 
-				errorHandler);
-			}
-		}
-	);
+	}
 }
 
 function saveAsFile () { // Save the document in a new file 
