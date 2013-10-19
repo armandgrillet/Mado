@@ -138,8 +138,9 @@
 	margin-bottom: 10.5pt;
 
 	/* Box-model */
-	padding: 10.5pt 0 0 10.5pt;
+	padding: 10.5pt 0 0 14pt;
 
 	/* Visual */
 	background-color: rgba(0,0,0,.05);
+	border-left: none;
 }
