@@ -103,7 +103,7 @@ L : Set d’icônes de la navbar terminé mais disproportionné (trop grand) ; j
 R : J’ai ajouté un composant (image) pour créer le code JS afin de gérer l’insertion d’image. J’ai réussir à obtenir tous les fichiers accessibles par l’appli, il me reste maintenant à faire une correspondance entre cette liste et l’image voulue par l’utilisateur pour afficher l’image grâce à son ID (ça sera totalement transparent pour l’utilisateur et c’est le seul moyen pour afficher des images locales).
 
 ###21 septembre 2013
-L : Mado.html et style-base.css mis à jour : balise <webview> ajoutée et stylée.
+L : Mado.html et style-base.css mis à jour : balise "webview" ajoutée et stylée.
 
 R : Ajout des fonctions pour ajouter une image (non fonctionnelles à cause de la protection de Chrome).
 
