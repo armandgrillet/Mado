@@ -1,6 +1,8 @@
 #Changelog de Mado
 
 ###19 octobre 2013
+L : Le thème *Clinic* est terminé, le thème *Home* est avancé et le thème *Tramway* est superficiellement commencé.
+
 R : Analytics est inclut à Mado, il n'y a plus qu'à mettre la bonne ID (qu'on aura une fois le site web lié à Google). Pour l'instant Analytics nous donne juste les statistiques d'ouvertures de Mado.
 
 ###18 octobre 2013
