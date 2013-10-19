@@ -1,2 +1,14 @@
 /* Newspaper style for the conversion view. Its name, "Tramway", reminds of the time spent reading a journal in the public transport. */
 
+/* ------------------
+	Horizontal rules
+   ------------------ */
+.sheet:last-of-type .tramway hr {
+	margin: 8pt auto 16pt; /* No matter the size of the rule, it will be centered */
+
+	/* Box-model */
+	width: calc(100% - 24pt); /* /!\ ADJUST CALCULATION ACCORDING TO LINE-HEIGHTS ETC. */
+
+	/* Visual */
+	background-color: rgba(0,0,0,.4);
+}
