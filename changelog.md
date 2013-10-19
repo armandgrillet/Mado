@@ -1,7 +1,11 @@
 #Changelog de Mado
 
+###19 octobre 2013
+R : Analytics est inclut à Mado, il n'y a plus qu'à mettre la bonne ID (qu'on aura une fois le site web lié à Google). Pour l'instant Analytics nous donne juste les statistiques d'ouvertures de Mado.
+
 ###18 octobre 2013
 R : Modification du compteur de mots/lettres pour qu'il soit plus précis. Mado peut ouvrir des fichiers Markdown directement, sur Windows il faut passer par l'invité de commandes pour tester (voir code dans background.js).
+
 ###17 octobre 2013
 L : Clinic.css mis à jour : intégration de la fonte Bariol. Le thème *Clinic* est commencé. Achat de Bariol Italic Font Family prévu pour compléter.
 
