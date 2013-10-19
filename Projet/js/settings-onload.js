@@ -16,6 +16,7 @@ window.onload = function() {
 	getDisplaySize();
 	getSyntax();
 	getResizing();
+	getAnalytics();
 
 	$(markdownSyntax).on("click", function() { setSyntax(false); });
 	$(gfmSyntax).on("click", function() { setSyntax(true); });
@@ -25,4 +26,6 @@ window.onload = function() {
 	$(bigDisplaySize).on("click", function() { setDisplaySize("big"); });
 
 	$(viewOnResize).on("click", setResizing);
+
+	$(analytics).on("click", setAnalytics);
 }

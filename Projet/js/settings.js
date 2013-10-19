@@ -70,5 +70,19 @@ function setResizing () {
 		chrome.storage.local.set({ "resize" : false });
 }
 
+function getAnalytics () {
+	chrome.storage.local.get("analytics",  function(mado) {
+		if (mado["analytics"] != false) {
+			analytics.checked = true;
+		}
+	});
+}
+
+function setAnalytics () {
+	if (analytics.checked)
+		chrome.storage.local.set({ "analytics" : true });
+	else 
+		chrome.storage.local.set({ "analytics" : false });
+}
 
 

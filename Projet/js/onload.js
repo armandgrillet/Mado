@@ -164,6 +164,9 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
     
+    /* stats.js */
+    initStats();
+
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
     setWindowResizing();
