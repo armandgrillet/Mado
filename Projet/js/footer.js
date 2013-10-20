@@ -1,3 +1,4 @@
+var nameDiv;
 var charsDiv;
 var wordsDiv;
 var markdownSaved;

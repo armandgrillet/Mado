@@ -8,20 +8,26 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 			function(file) {
 		 		var reader = new FileReader();
 		 		reader.onload = function(e) {
-		 			chrome.storage.local.set({'loadedText': e.target.result}, function() { newWindow(); }); // Save the text in the storageArea
-		 			  	chrome.app.window.create('mado.html', {
-					    bounds: {
-					      	width: Math.round(screen.width * 0.85),
-					      	height: Math.round(screen.height * 0.85)
-					    }, 
-					    minWidth: 683, 
-					    minHeight: 240
-				  	});
+		 			chrome.storage.local.set(
+		 				{
+		 					"tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry), 
+		 					"loadedText" : e.target.result
+		 				}, 
+		 				function() {
+		 				chrome.app.window.create("mado.html", {
+						    bounds: {
+						      	width: Math.round(screen.width * 0.85),
+						      	height: Math.round(screen.height * 0.85)
+						    }, 
+						    minWidth: 683, 
+						    minHeight: 240
+					  	});
+		 			}); // Save the text in the storageArea 			  	
 			 	};
 				reader.readAsText(file);
 			});		
 	else // New file.
-	  	chrome.app.window.create('mado.html', {
+	  	chrome.app.window.create("mado.html", {
 		    bounds: {
 		      	width: Math.round(screen.width * 0.85),
 		      	height: Math.round(screen.height * 0.85)

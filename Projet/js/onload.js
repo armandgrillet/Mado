@@ -16,11 +16,12 @@ window.onload = function() {
     /* editor.js */
     textarea = document.getElementById("markdown");   
     conversionDiv = document.getElementById("html-conversion");
-    saveState = document.getElementById("save-state");
-
+    
     /* footer.js */
+    nameDiv = document.getElementById("doc-name");
     charsDiv = document.getElementById("character-nb");
     wordsDiv = document.getElementById("word-nb");
+    saveState = document.getElementById("save-state");
 
     /* help.js */ 
     help = document.getElementById("help-input");
@@ -75,12 +76,22 @@ window.onload = function() {
     */
 
     /* app.js (with Mousetrap functions) */
-    chrome.storage.local.get('loadedText', function(mado) { 
-        if(mado.loadedText != undefined && mado.loadedText != " ")
-            launchWithText(mado.loadedText);
+    chrome.storage.local.get(["tempFileEntry", "loadedText"], function(mado) { 
+        if (mado["tempFileEntry"] != undefined) {
+            chrome.fileSystem.restoreEntry(
+                mado["tempFileEntry"],
+                function (theFileEntry) {
+                    fileEntry = theFileEntry;
+                    nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;|";
+                    chrome.storage.local.remove("tempFileEntry");
+                }
+            );          
+        }
+        if(mado["loadedText"] != undefined && mado["loadedText"] != " ")
+            launchWithText(mado["loadedText"]);
         else
             markdownSaved = undefined;
-    }); 
+    });
 
     newDisplaySize(); // Set the class of the body.
 

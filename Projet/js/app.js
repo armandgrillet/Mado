@@ -25,8 +25,8 @@ function newWindow () {
 			      	width: Math.round(screen.width * 0.85),
 			      	height: Math.round(screen.height * 0.85)
 			    }, 
-			    minWidth:320, 
-			    minHeight: 240
+			    minWidth: 683, 
+				minHeight: 240
 		  	}
 	  	);
   	}
@@ -54,13 +54,25 @@ function openFile(fileToOpen) {
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (textarea.value != "") // Something is already in the textarea, Mado opens a new window 
-	 				chrome.storage.local.set({'loadedText': e.target.result}, function() { newWindow(); }); // Save the text in the storageArea
+	 			if (textarea.value != "") {// Something is already in the textarea, Mado opens a new window 
+	 				chrome.storage.local.set(
+		 				{
+		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen), 
+		 					"loadedText" : e.target.result
+		 				}, 
+		 				newWindow
+	 				);
+ 				}
 	 			else { // Nothing in the textarea. 
 		 			textarea.value = e.target.result; // The file is loaded.
+
+		 			// Save.
+		 			fileEntry = fileToOpen;
+
+		 			// Footer.
 		 			markdownSaved = e.target.result;
 		 			conversion();
-		 			document.getElementById("doc-name").innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
+		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the storage, the file opened is now on top.						 	
 	 		};
@@ -70,7 +82,7 @@ function openFile(fileToOpen) {
 	);
 }
 
-function fileName (path) { // if path is ".../folder/documents/document.md", returns "document".
+function fileName (path) { // if path is ".../folder/documents/document.md", returns "document.md".
 	return path.substring(path.lastIndexOf('/') + 1); 
 }
 
@@ -82,15 +94,30 @@ function launchWithText (loadedText) { // What to do if the user has open a file
 }
 
 
-function saveFile () { // Waiting fixes by Google
+function saveFile () {
 	if (fileEntry == undefined)
-		saveAsFile
+		saveAsFile();
 	else { // If we have already loaded the file.
-
+		fileEntry.createWriter(
+			function(writer) {
+		 		writer.write(
+		 			new Blob(
+			 			[textarea.value],
+						{
+							type: "text/plain"
+						}
+					)
+				); 
+				// Footer
+				markdownSaved = textarea.value;
+				checkSaveState();
+				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+		 	}, 
+		errorHandler);
 	}
 }
 
-function saveAsFile () { // Save the document in a new file 
+function saveAsFile () { // Save the document in a new file. 
 	chrome.fileSystem.chooseEntry(
 		{
 			type: "saveFile", 
@@ -108,9 +135,13 @@ function saveAsFile () { // Save the document in a new file
 								}
 							)
 						); 
+						// Save without asking the file.
+						fileEntry = savedFile;
+
+						// Footer
 						markdownSaved = textarea.value;
 						checkSaveState();
-						document.getElementById("doc-name").innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
 
 						newRecentFile(savedFile);
 				 	}, 
