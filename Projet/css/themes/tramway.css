@@ -1,5 +1,15 @@
 /* Newspaper style for the conversion view. Its name, "Tramway", reminds of the time spent reading a journal in the public transport. */
 
+/* --------
+	Titles
+   -------- */
+.sheet:last-of-type .tramway h1,
+.sheet:last-of-type .tramway h2,
+.sheet:last-of-type .tramway h3 {
+	/* Typography */
+	font-family: Arvo;
+}
+
 /* ------------------
 	Horizontal rules
    ------------------ */
