@@ -1,5 +1,7 @@
 #Changelog de Mado
 
+###20 octobre 2013
+R : La sauvegarde immédiate marche. La façon de prendre en charge quand un utilisateur ouvre un fichier Markdown a été améliorée niveau performances.
 ###19 octobre 2013
 L : Le thème *Clinic* est terminé, le thème *Home* est avancé et le thème *Tramway* est superficiellement commencé.
 
