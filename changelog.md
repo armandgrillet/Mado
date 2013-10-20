@@ -1,6 +1,8 @@
 #Changelog de Mado
 
 ###20 octobre 2013
+L : About.html mis à jour pour R. Thème *Tramway* commencé.
+
 R : La sauvegarde immédiate marche. La façon de prendre en charge quand un utilisateur ouvre un fichier Markdown a été améliorée niveau performances.
 ###19 octobre 2013
 L : Le thème *Clinic* est terminé, le thème *Home* est avancé et le thème *Tramway* est superficiellement commencé.
@@ -227,6 +229,10 @@ R : Débogage background.js, l’application fonctionne maintenant avec width ou
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
 nne maintenant avec width ou height non paire ; ajout de la font Source Code Pro et liaison avec mado.html
+
+###12 août 2013
+R : Ecriture de Developpement.docx, à valider par L.
+avec width ou height non paire ; ajout de la font Source Code Pro et liaison avec mado.html
 
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
