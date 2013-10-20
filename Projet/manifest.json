@@ -1,19 +1,16 @@
 {
   	"app": {
     	"background": {
-      		"scripts": ["app/background.js"]
+      		"scripts": [
+      			"app/background.js"
+      		]
     	}
   	},
   	"manifest_version": 2,
   	"name": "Mado",
   	"version": "0.1",
 
-  	"description": "Write and view your Markdown files",
-  	"icons": { 
-    	"16": "app/icon16.png",
-    	"48": "app/icon48.png",
-    	"128": "app/icon128.png" 
-  	},  	
+  	"description": "Mado is a Markdown editor application. You can use it to take notes, write blog posts or edit documents.",
   	"file_handlers": {
 		"text": {
         	"extensions": [
@@ -22,12 +19,27 @@
         	"title": "Mado"
       	}
 	},
+  	"icons": { 
+    	"16": "app/icon16.png",
+    	"48": "app/icon48.png",
+    	"128": "app/icon128.png" 
+  	},  	
+  	"minimum_chrome_version": "31",
+  	"offline_enabled": true,
     "permissions": [
-    	{"fileSystem": ["write", "retainEntries"]},
-    	{"mediaGalleries": ["read", "allAutoDetected"]},
+    	{
+    		"fileSystem": [
+    			"write", 
+    			"retainEntries"
+    		]
+    	},
+    	{
+    		"mediaGalleries": [
+    			"read", 
+    			"allAutoDetected"
+    		]
+    	},
     	"storage",
     	"webview"
-    ],
-  	"minimum_chrome_version": "30",
-  	"offline_enabled": true
+    ] 	
 }

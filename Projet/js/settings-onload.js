@@ -9,9 +9,17 @@ window.onload = function() {
 	medDisplaySize = document.getElementById("medium-display-radio");
 	bigDisplaySize = document.getElementById("big-display-radio");
 
+	bigInputContainer = document.getElementById("big-display-input-container");
+	bigLabelContainer = document.getElementById("big-display-label-container");
 	viewOnResize = document.getElementById("global-view-checkbox");
 
 	analytics = document.getElementById("analytics-checkbox");
+
+	/* Functions. */
+	if (screen.width < 1366) { // Don't show "Big" if the screen is too small
+		bigInputContainer.style.display = "none";
+		bigLabelContainer.style.display = "none";
+	}
 
 	getDisplaySize();
 	getSyntax();

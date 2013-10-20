@@ -14,7 +14,7 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 				      	width: Math.round(screen.width * 0.85),
 				      	height: Math.round(screen.height * 0.85)
 				    }, 
-				    minWidth: 683, 
+				    minWidth: theMinWidth(), 
 				    minHeight: 240
 	  			});			
 			}
@@ -25,7 +25,14 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 		      	width: Math.round(screen.width * 0.85),
 		      	height: Math.round(screen.height * 0.85)
 		    }, 
-		    minWidth: 683, 
+		    minWidth: theMinWidth(), 
 		    minHeight: 240
 	  	});
 });
+
+function theMinWidth () {
+	if (screen.width < 1600)
+		return 683;
+	else
+		return 800;
+}
