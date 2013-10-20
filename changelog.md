@@ -3,7 +3,11 @@
 ###20 octobre 2013
 L : About.html mis à jour pour R. Thème *Tramway* commencé.
 
-R : La sauvegarde immédiate marche. La façon de prendre en charge quand un utilisateur ouvre un fichier Markdown a été améliorée niveau performances.
+R : La sauvegarde immédiate marche. 
+La façon de prendre en charge quand un utilisateur ouvre un fichier Markdown a été améliorée niveau performances.
+About.html terminé.
+Meilleure gestion de la taille minimale des fenêtres, il faudra attendre que Google mette à jour son API pour avoir quelque chose de parfait.
+
 ###19 octobre 2013
 L : Le thème *Clinic* est terminé, le thème *Home* est avancé et le thème *Tramway* est superficiellement commencé.
 
