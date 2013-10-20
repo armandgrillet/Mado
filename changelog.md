@@ -39,7 +39,7 @@ L : Q&A complet.
 ###12 octobre 2013
 Meeting A+A.
 
-R : Le clic sur Both au resizing peut être décidé dans Settings. Changements avec L de l’aide et corrections de plusieurs bugs durant le RDV.
+R : Le clic sur Both au resizing peut être décidé dans Settings. Changements avec L de l’aide et corrections de plusieurs bugs durant le meeting.
 
 ###11 octobre 2013
 L : « Shortcuts » finalisé, gère la séparation Mac/autre (à tester sous Mac). CSS de tout « More » presque terminé.
