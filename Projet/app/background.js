@@ -4,28 +4,21 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 	"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --app-id=YourAppId "C:\Path\To\document.md"
 	*/
 	if (parameters.items != undefined) // If you're opening a Markdown file.
-		parameters.items[0].entry.file(
-			function(file) {
-		 		var reader = new FileReader();
-		 		reader.onload = function(e) {
-		 			chrome.storage.local.set(
-		 				{
-		 					"tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry), 
-		 					"loadedText" : e.target.result
-		 				}, 
-		 				function() {
-		 				chrome.app.window.create("mado.html", {
-						    bounds: {
-						      	width: Math.round(screen.width * 0.85),
-						      	height: Math.round(screen.height * 0.85)
-						    }, 
-						    minWidth: 683, 
-						    minHeight: 240
-					  	});
-		 			}); // Save the text in the storageArea 			  	
-			 	};
-				reader.readAsText(file);
-			});		
+		chrome.storage.local.set(
+			{ 
+				"tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry)
+			}, 
+			function() {
+				chrome.app.window.create("mado.html", {
+				    bounds: {
+				      	width: Math.round(screen.width * 0.85),
+				      	height: Math.round(screen.height * 0.85)
+				    }, 
+				    minWidth: 683, 
+				    minHeight: 240
+	  			});			
+			}
+		);		
 	else // New file.
 	  	chrome.app.window.create("mado.html", {
 		    bounds: {

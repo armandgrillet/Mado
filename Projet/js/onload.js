@@ -76,19 +76,28 @@ window.onload = function() {
     */
 
     /* app.js (with Mousetrap functions) */
-    chrome.storage.local.get(["tempFileEntry", "loadedText"], function(mado) { 
+    chrome.storage.local.get(["tempFileEntry", "loadedText"], function(mado) {  // If you're loading a file.
         if (mado["tempFileEntry"] != undefined) {
             chrome.fileSystem.restoreEntry(
                 mado["tempFileEntry"],
                 function (theFileEntry) {
                     fileEntry = theFileEntry;
-                    nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;|";
                     chrome.storage.local.remove("tempFileEntry");
+
+                    nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;|";
+                    fileEntry.file(
+                        function(file) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                launchWithText(e.target.result);                           
+                            };
+                            reader.readAsText(file);
+                        },
+                        errorHandler
+                    );
                 }
             );          
         }
-        if(mado["loadedText"] != undefined && mado["loadedText"] != " ")
-            launchWithText(mado["loadedText"]);
         else
             markdownSaved = undefined;
     });

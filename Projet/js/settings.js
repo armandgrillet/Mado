@@ -31,7 +31,6 @@ function setSyntax (newValue) {
 	chrome.storage.local.set({ "gfm" : newValue });
 }
 
-
 function getDisplaySize () {
 	chrome.storage.local.get("displaySize",  function(mado) {
 		if (mado["displaySize"] != undefined) {
