@@ -1,13 +1,13 @@
 #Changelog de Mado
 
 ###21 octobre 2013
-R : La gestion des fenêtres est aboutie, il y a un bug venant de chez Google qui m'empêche d'avoir quelque chose de parfaitement optimisé mais ça marche (très bien) quand même.
-
+R : Gestion des fenêtres aboutie, un bug de chez Google m'empêchant d'avoir quelque chose de parfaitement optimisé mais ça marche bien quand même.
+app.js commenté d'une nouvelle façon, à venir sur tout les autres fichiers JS nous appartenant.
 ###20 octobre 2013
 L : About.html mis à jour pour R. Thème *Tramway* commencé.
 
 R : La sauvegarde immédiate marche. 
-La façon de prendre en charge quand un utilisateur ouvre un fichier Markdown a été améliorée niveau performances.
+Prise en charge de l'ouverture d'un fichier Markdown améliorée niveau performances.
 About.html terminé.
 Meilleure gestion de la taille minimale des fenêtres, il faudra attendre que Google mette à jour son API pour avoir quelque chose de parfait.
 
