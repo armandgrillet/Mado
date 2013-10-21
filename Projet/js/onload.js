@@ -2,7 +2,7 @@
 
 window.onload = function() {
     /*
-    * SHORTCUTS (JS files in alphabetical order)
+    * SHORTCUTS (JS files in alphabetical order).
     */
 
     /* app.js */
@@ -88,8 +88,10 @@ window.onload = function() {
                     fileEntry.file(
                         function(file) {
                             var reader = new FileReader();
-                            reader.onload = function(e) {
-                                launchWithText(e.target.result);                           
+                            reader.onload = function(e) { 
+                                textarea.value = e.target.result;
+                                markdownSaved = e.target.result;
+                                conversion();                       
                             };
                             reader.readAsText(file);
                         },

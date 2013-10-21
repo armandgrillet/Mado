@@ -6,6 +6,10 @@ var recentFiles = [ // Name of the variables on the local storage.
 "recentFileId1", "recentFileId2", "recentFileId3", "recentFileId4", "recentFileId5", "recentFileId6", "recentFileId7"];
 var footerHelp;
 
+/* Used when I have to use storage.local.set. */
+var nameContainer = {};
+var chromeLocalFile = "";
+
 var fileInLoading;
 
 function newRecentFile (file) { // Add a recent file.
