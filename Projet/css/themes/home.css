@@ -14,7 +14,7 @@
 }
 
 /* Sub-lists */
-.sheet:last-of-type .home ul ul { padding-bottom: none; }
+.sheet:last-of-type .home ul ul { padding-bottom: 0; }
 
 /* ORDERED LISTS */
 .sheet:last-of-type .home ol li:before {
@@ -30,12 +30,12 @@
 }
 
 /* Sub-lists */
-.sheet:last-of-type .home ol ol { padding-bottom: none; }
+.sheet:last-of-type .home ol ol { padding-bottom: 0; }
 
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type blockquote {
+.sheet:last-of-type .home blockquote {
 	/* Positioning */
 	margin-bottom: 8pt;
 	margin-left: auto;

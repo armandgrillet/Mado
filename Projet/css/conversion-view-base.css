@@ -32,11 +32,11 @@
 
 .sheet:last-of-type h1 {
 	/* Box-model */
-	padding-top: 12pt;
+	padding-top: 16pt;
 
 	/* Typography */
-	font-size: 22pt;
-	line-height: 30pt;
+	font-size: 36pt;
+	line-height: 48pt;
 }
 
 .sheet:last-of-type h2 {
@@ -44,20 +44,42 @@
 	padding-top: 8pt;
 
 	/* Typography */
-	font-size: 16pt;
-	line-height: 20pt;
+	font-size: 24pt;
+	line-height: 32pt;
 }
 
 .sheet:last-of-type h3 {
 	/* Box-model */
-	padding-top: 14pt;
+	padding-top: 8pt;
 
 	/* Typography */
-	font-size: 13pt;
-	line-height: 14pt;
+	font-size: 15pt;
+	line-height: 16pt;
 }
 
-/* /!\ STILL 3 HEADER STYLES TO MAKE */
+.sheet:last-of-type h4 {
+	/* Box-model */
+	padding-top: 8pt;
+
+	/* Typography */
+	font-size: 12pt;
+	font-weight: bold;
+	line-height: 16pt;
+}
+
+.sheet:last-of-type h5 {
+	/* Typography */
+	font-size: 10pt;
+	font-weight: bold;
+	line-height: 16pt;
+}
+
+.sheet:last-of-type h6 {
+	/* Typography */
+	font-size: 9pt;
+	font-weight: bold;
+	line-height: 16pt;
+}
 
 /* -------
 	Lists
@@ -80,14 +102,13 @@
 	/* Box-model */
 	display: block;
 	width: 32pt;
-	padding-left: 8pt;
 
 	/* Misc */
 	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
 }
 
 /* Sub-lists */
-.sheet:last-of-type ul ul { padding-bottom: none; }
+.sheet:last-of-type ul ul { padding-bottom: 0; }
 
 /* ORDERED LISTS */
 .sheet:last-of-type ol { counter-reset: list; }
@@ -112,14 +133,13 @@
 	/* Box-model */
 	display: block;
 	width: 32pt;
-	padding-left: 8pt;
 
 	/* Misc */
 	content: counter(list);
 }
 
 /* Sub-lists */
-.sheet:last-of-type ol ol { padding-bottom: none; }
+.sheet:last-of-type ol ol { padding-bottom: 0; }
 
 /* -------------
 	Blockquotes
