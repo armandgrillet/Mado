@@ -10,12 +10,12 @@ var fileEntry; // This is the variable who stores the file opened.
 * Functions (alphabetical order).
 *
 * Resume:
-	* errorHandler (): what to do if something wents wrong when I tried to open a removed file.
+	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
 	* string fileName (entirePath): return a string who is just the name of the file manipulated (with the extension).
 	* moreWindow (moreChoice): open the correct window when the user clicks on an element of the "More" dropdown.
-	* newDisplaySize: what to do when the user changes the display size on the options.
-	* newWindow: open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's textarea).
+	* newDisplaySize (): what to do when the user changes the display size on the options.
+	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's textarea).
 	* openFile (theFile): all the scripts to open correctly a file, used when the user clicks on "Open" or when he clicks on a recent file.
 	* openFileButton (): open a window to choose a file when the user clicks on "Open".
 	* saveAsFile (): what to do when the user clicks on "Save As".
