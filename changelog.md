@@ -1,7 +1,7 @@
 #Changelog de Mado
 
 ###21 octobre 2013
-R: La gestion des fenêtres est aboutie, il y a un bug venant de chez Google qui m'empêche d'avoir quelque chose de parfaitement optimisé mais ça marche (très bien) quand même.
+R : La gestion des fenêtres est aboutie, il y a un bug venant de chez Google qui m'empêche d'avoir quelque chose de parfaitement optimisé mais ça marche (très bien) quand même.
 
 ###20 octobre 2013
 L : About.html mis à jour pour R. Thème *Tramway* commencé.
