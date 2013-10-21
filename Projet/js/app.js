@@ -22,14 +22,21 @@ function newWindow () {
 			    bounds: {
 			    	left: (window.screenX + 20), // To watch this is a new window.
 			    	top: (window.screenY + 20), // To watch this is a new window.
-			      	width: Math.round(screen.width * 0.85),
-			      	height: Math.round(screen.height * 0.85)
+			      	width: window.innerWidth,
+			      	height: window.innerHeight
 			    }, 
-			    minWidth: 683, 
+			    minWidth: theMinWidth(), 
 				minHeight: 240
 		  	}
 	  	);
   	}
+}
+
+function theMinWidth () {
+	if (screen.width < 1600)
+		return 683;
+	else
+		return 800;
 }
 
 function openFileButton () {		
@@ -57,8 +64,7 @@ function openFile(fileToOpen) {
 	 			if (textarea.value != "") {// Something is already in the textarea, Mado opens a new window 
 	 				chrome.storage.local.set(
 		 				{
-		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen), 
-		 					"loadedText" : e.target.result
+		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
 		 				}, 
 		 				newWindow
 	 				);
@@ -88,7 +94,6 @@ function fileName (path) { // if path is ".../folder/documents/document.md", ret
 
 function launchWithText (loadedText) { // What to do if the user has open a file with already text on his previous window.
 	textarea.value = loadedText; // Set what is in the textarea.
-	chrome.storage.local.set({"loadedText": " "}, function() {}); // Reset the text in the storageArea.
 	markdownSaved = loadedText;
 	conversion();
 }

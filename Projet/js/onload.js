@@ -76,7 +76,7 @@ window.onload = function() {
     */
 
     /* app.js (with Mousetrap functions) */
-    chrome.storage.local.get(["tempFileEntry", "loadedText"], function(mado) {  // If you're loading a file.
+    chrome.storage.local.get("tempFileEntry", function(mado) {  // If you're loading a file.
         if (mado["tempFileEntry"] != undefined) {
             chrome.fileSystem.restoreEntry(
                 mado["tempFileEntry"],
