@@ -75,5 +75,8 @@ function endOfConversion () {
 }
 
 function setEditorSyntax () {
-	chrome.storage.local.get("gfm",  function(mado) { editorSyntax = mado["gfm"]; });
+	chrome.storage.local.get("gfm",  function(mado) { 
+		editorSyntax = mado["gfm"]; 
+		conversion();
+	});
 }
