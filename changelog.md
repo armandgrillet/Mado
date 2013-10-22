@@ -3,6 +3,8 @@
 ###22 octobre 2013
 L : L'infobulle *Styles* s'ouvre sans problème, CSS des infobulles repensé pour moins de lignes.
 
+R : Le fonctionnement des styles a été fait.
+
 ###21 octobre 2013
 L : Tous les thèmes terminés, code optimisé pour rester le plus *light* possible.
 
