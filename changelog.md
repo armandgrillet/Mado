@@ -1,8 +1,14 @@
 #Changelog de Mado
 
+###22 octobre 2013
+L : L'infobulle *Styles* s'ouvre sans problème, CSS des infobulles repensé pour moins de lignes.
+
 ###21 octobre 2013
+L : Tous les thèmes terminés, code optimisé pour rester le plus *light* possible.
+
 R : Gestion des fenêtres aboutie, un bug de chez Google m'empêchant d'avoir quelque chose de parfaitement optimisé mais ça marche bien quand même.
 app.js commenté d'une nouvelle façon, à venir sur tout les autres fichiers JS nous appartenant.
+
 ###20 octobre 2013
 L : About.html mis à jour pour R. Thème *Tramway* commencé.
 
@@ -243,3 +249,4 @@ avec width ou height non paire ; ajout de la font Source Code Pro et liaison ave
 
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
+Developpement.docx, à valider par L.
