@@ -67,6 +67,9 @@ window.onload = function() {
     /* styles.js */
     stylesButton = document.getElementById("style-tool");
     stylesDisplayer = document.getElementById("style-tool-displayer");
+    homeRadio = document.getElementById("home-style");
+    clinicRadio = document.getElementById("clinic-style");
+    tramwayRadio = document.getElementById("tramway-style");
 
     /* viewswitch.js */
     workspace = document.getElementById("workspace");
@@ -193,6 +196,13 @@ window.onload = function() {
     /* stats.js */
     initStats();
 
+    /* styles.js */
+    getStyle();
+
+    $(homeRadio).on("click", function() { setStyle ("home"); });
+    $(clinicRadio).on("click", function() { setStyle ("clinic"); });
+    $(tramwayRadio).on("click", function() { setStyle ("tramway"); });
+    
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
     setWindowResizing();
