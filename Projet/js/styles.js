@@ -25,7 +25,6 @@ function getStyle () {
 }
 
 function setStyle (newStyle) {
-	console.log("On set le style");
 	chrome.storage.local.set({ "style" : newStyle }, function () {
 		$(conversionDiv).attr("class", newStyle);
 	});

@@ -199,10 +199,10 @@ window.onload = function() {
     /* styles.js */
     getStyle();
 
-    $(homeRadio).on("click", function() { setStyle ("home"); });
-    $(clinicRadio).on("click", function() { setStyle ("clinic"); });
-    $(tramwayRadio).on("click", function() { setStyle ("tramway"); });
-    
+    $(homeRadio).on("click", function() { setStyle("home"); });
+    $(clinicRadio).on("click", function() { setStyle("clinic"); });
+    $(tramwayRadio).on("click", function() { setStyle("tramway"); });
+
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
     setWindowResizing();
