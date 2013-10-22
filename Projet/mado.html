@@ -34,6 +34,7 @@
 		<script type="text/javascript" src="js/more.js"></script>
 		<script type="text/javascript" src="js/recentfiles.js"></script>
 		<script type="text/javascript" src="js/stats.js"></script>
+		<script type="text/javascript" src="js/styles.js"></script>
 		<script type="text/javascript" src="js/viewswitch.js"></script>
 
 		<!-- Onload script -->
@@ -262,14 +263,21 @@
 					<div class="cta tool icon-style" id="style-tool"></div>
 					
 					<div class="tool-displayer hidden" id="style-tool-displayer">
+
+						<div class="tool-arrow"></div>
 						
 						<div class="tool-box">
 
-							<input type="radio" name="style-choice" id="home-style"><label for="home-style">Home</label>
-							<input type="radio" name="style-choice" id="clinic-style"><label for="clinic-style">Clinic</label>
-							<input type="radio" name="style-choice" id="tramway-style"><label for="tramway-style">Tramway</label>
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="home-style"><label class="cta" for="home-style">Home</label>
+							</div>
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="clinic-style"><label class="cta" for="clinic-style">Clinic</label>
+							</div>
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="tramway-style"><label class="cta" for="tramway-style">Tramway</label>
+							</div>
 						</div>
-						<div class="tool-arrow">
 					</div>
 				</div>
 			</aside>

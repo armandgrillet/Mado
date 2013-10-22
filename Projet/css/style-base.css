@@ -678,11 +678,8 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 
 .tool:hover { color: #000; }
 
-/* Markdown sidebar */
-#md-control { left: 0; }
-
-/* LEFT SIDEBAR TOOLS */
-/* Left sidebar tool container */
+/* SIDEBAR TOOLS */
+/* Sidebar tool container */
 .tool-container {
 	/* Positioning */
 	position: relative;
@@ -697,13 +694,11 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	/* Positioning */
 	position: absolute;
 	top: 5px;
-	left: 40px;
 
 	/* Box-model */
 	width: 315px;
 
 	/* Misc */
-	-webkit-transform-origin: 1px 15px;
 	transition: all .1s ease-out;
 }
 
@@ -715,32 +710,59 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	/* Positioning */
 	position: relative; /* For the Z-index */
 	margin-top: 11px; /* The tip matches the middle of the button */
-	margin-left: 1px;
 	z-index: 1000;
 
 	/* Box-model */
 	width: 0;
 	height: 0;
-	float: left;
 
 	/* Visual */
-	border-color: transparent #fff transparent transparent;
 	border-style: solid;
-	border-width: 4px 4px 4px 0;
 }
 
 /* The "box" is a gray container for the sidebar tool; it comes with an arrow (see .tool-arrow above) */
 .tool-box {
 	/* Box-model */
-	width: 310px;
 	height: auto;
 	padding: 5px;
-	float: left;
 
 	/* Visual */
 	background-color: #fff;
 	border-radius: 5px;
 	box-shadow: 0 0 15px rgba(0,0,0,.2);
+}
+
+/* Markdown sidebar */
+#md-control { left: 0; }
+
+/* LEFT SIDEBAR TOOLS */
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+#md-control .tool-displayer {
+	/* Positioning */
+	left: 40px;
+
+	/* Misc */
+	-webkit-transform-origin: 1px 15px;
+}
+
+/* The arrow is a gray corner for the "box" (see #md-control .tool-box below) */
+#md-control .tool-arrow {
+	/* Positioning */
+	margin-left: 1px;
+
+	/* Box-model */
+	float: left;
+
+	/* Visual */
+	border-color: transparent #fff transparent transparent;
+	border-width: 4px 4px 4px 0;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #md-control .tool-arrow above) */
+#md-control .tool-box {
+	/* Box-model */
+	width: 310px;
+	float: left;
 }
 
 /* HELP INPUT SPECIFICS: HELP RESULTS */
@@ -912,6 +934,54 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 
 /* HTML CONVERSION SIDEBAR */
 #conversion-control { right: 0; }
+
+/* RIGHT SIDEBAR TOOLS */
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+#conversion-control .tool-displayer {
+	/* Positioning */
+	right: 40px;
+
+	/* Misc */
+	-webkit-transform-origin: 314px 15px;
+}
+
+/* The arrow is a gray corner for the "box" (see #conversion-control .tool-box below) */
+#conversion-control .tool-arrow {
+	/* Positioning */
+	margin-right: 1px;
+
+	/* Box-model */
+	float: right;
+
+	/* Visual */
+	border-color: transparent transparent transparent #fff;
+	border-width: 4px 0 4px 4px;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #conversion-control .tool-arrow above) */
+#conversion-control .tool-box {
+	/* Box-model */
+	width: 120px;
+	float: right;
+}
+
+/* STYLES TOOL SPECIFICS */
+.style-choice-container {
+	/* Box-model */
+	display: block;
+	width: 100%;
+	height: 27px;
+
+	/* Typography */
+	font-size: 10pt;
+	font-weight: bold;
+	line-height: 27px;
+	color: #4a4942;
+}
+
+.style-choice-container label:hover { color: #000; }
+
+.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
 
 /* -----------
 	Workspace

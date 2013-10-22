@@ -1,6 +1,6 @@
 /* Set how the link div has to work */
 
-var link; // The content who is added.
+var link; // The content that is added.
 var linkButton; // The "Link" button
 var linkDisplayer; // The div that contains all the link divs
 var urlInput; // The div that contains the url

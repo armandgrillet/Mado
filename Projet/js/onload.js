@@ -60,9 +60,13 @@ window.onload = function() {
     aboutLine = document.getElementById("about");
 
     /* recentfiles.js */
-    recentButton = document.getElementById("recent-button");   
+    recentButton = document.getElementById("recent-button");
     recentFilesDisplayer = document.getElementById("recent-files-displayer");
     recentFilesContainer = document.getElementById("recent-files-container");
+
+    /* styles.js */
+    stylesButton = document.getElementById("style-tool");
+    stylesDisplayer = document.getElementById("style-tool-displayer");
 
     /* viewswitch.js */
     workspace = document.getElementById("workspace");
