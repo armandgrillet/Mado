@@ -1,5 +1,8 @@
 #Changelog de Mado
 
+###23 octobre 2013
+L : Icône de Mado terminée, elle peut être vue dans le dossier *"Design"* dans Google Drive.
+
 ###22 octobre 2013
 L : L'infobulle *Styles* s'ouvre sans problème, CSS des infobulles repensé pour moins de lignes.
 
@@ -248,6 +251,11 @@ nne maintenant avec width ou height non paire ; ajout de la font Source Code Pro
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
 avec width ou height non paire ; ajout de la font Source Code Pro et liaison avec mado.html
+
+###12 août 2013
+R : Ecriture de Developpement.docx, à valider par L.
+Developpement.docx, à valider par L.
+liaison avec mado.html
 
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
