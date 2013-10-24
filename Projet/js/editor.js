@@ -1,11 +1,15 @@
 /* Events linked to the Markdown textarea */
 
+/* 
+* Variables. 
+*/
+
 var textarea; // The textarea where the user writes.
 var conversionDiv; // The div who contains the HTML conversion.
 var saveState; // It's in the footer but I manage it here.
 var link;
 var tempConversion; // A string used to don't display errors when an image is loaded.
-var editorSyntax;
+var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 
 function conversion () { // What to do when something change in the Markdown editor.
 	if (textarea.value.length > 0) { // Markdown in HTML.
