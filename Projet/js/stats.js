@@ -7,11 +7,11 @@ function initStats () {
     service.getConfig().addCallback(setTrackingPermission);
 
     // Get a Tracker using your Google Analytics app Tracking ID.
-    tracker = service.getTracker('UA-XXXXX-X'); // Need to change for the real ID.
+    tracker = service.getTracker("UA-45134408-1"); // Need to change for the real ID.
 
     // Record an "appView" each time the user launches your app or goes to a new
     // screen within the app.
-    tracker.sendAppView('MainView');
+    tracker.sendAppView("MainView");
 }
 
 function setTrackingPermission (config) {
