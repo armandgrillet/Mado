@@ -1,4 +1,4 @@
-/* Events linked to the Markdown textarea */
+/* Functions linked to the Markdown textarea. */
 
 /* 
 * Variables. 
@@ -7,12 +7,20 @@
 var textarea; // The textarea where the user writes.
 var conversionDiv; // The div who contains the HTML conversion.
 var saveState; // It's in the footer but I manage it here.
-var link;
 var tempConversion; // A string used to don't display errors when an image is loaded.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 
-function conversion () { // What to do when something change in the Markdown editor.
-	if (textarea.value.length > 0) { // Markdown in HTML.
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* conversion (): what to do when the user change something on the textarea.
+	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
+	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
+*/
+
+function conversion () {
+	if (textarea.value.length > 0) { // There is Markdown in the textarea.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -25,7 +33,7 @@ function conversion () { // What to do when something change in the Markdown edi
 				marked(textarea.value, function (err, content) { // Marked.js makes the conversion.	    	
 					/* Reset. */
 			    	imagePosition = 0;
-			    	for (var i = 0; i < imagesArray.length; i++) // Reset.
+			    	for (var i = 0; i < imagesArray.length; i++) // Reset the images array.
 			       		imagesArray[i][2] = false;
 
 			       	tempConversion = content; 
@@ -35,10 +43,10 @@ function conversion () { // What to do when something change in the Markdown edi
 		}
 		else {
 			marked.setOptions({ gfm : editorSyntax });
-			marked(textarea.value, function (err, content) { // Marked.js makes the conversion.	    	
+			marked(textarea.value, function (err, content) {  	
 		    	/* Reset. */
 		    	imagePosition = 0;
-		    	for (var i = 0; i < imagesArray.length; i++) // Reset.
+		    	for (var i = 0; i < imagesArray.length; i++)
 		       		imagesArray[i][2] = false;
 
 		       	tempConversion = content;

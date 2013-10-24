@@ -7,7 +7,7 @@
 var fileEntry; // This is the variable who stores the file opened.
 
 /*
-* Functions (alphabetical order).
+* Functions (in alphabetical order).
 *
 * Resume:
 	* errorHandler (): what to do if the users tries to open a removed file.
@@ -60,7 +60,6 @@ function exportFileHTML () {
 function fileName (path) {
 	return path.substring(path.lastIndexOf('/') + 1); 
 }
-
 
 function moreWindow(choice) {
 	chrome.app.window.create(
