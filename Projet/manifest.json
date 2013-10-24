@@ -20,7 +20,9 @@
       	}
 	},
   	"icons": { 
-    	"128": "app/icon128.png" 
+      "16": "app/icon16.png",
+      "48": "app/icon48.png",
+    	"128": "app/icon128.png"
   	},  	
   	"minimum_chrome_version": "31",
   	"offline_enabled": true,
