@@ -10,6 +10,8 @@
 
 .sheet:last-of-type img { max-width: 100%; }
 
+.sheet:last-of-type .nofile { cursor: pointer; }
+
 /* ------------
 	Paragraphs
    ------------ */
