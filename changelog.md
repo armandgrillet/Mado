@@ -1,6 +1,11 @@
 #Changelog de Mado
 
 ###23 octobre 2013
+Meeting pour le logo, le site et des détails.
+
+R : Ajout des ToS, site aplusa.io disponible, analytics fonctionnel.
+
+###23 octobre 2013
 L : Icône de Mado terminée, elle peut être vue dans le dossier *"Design"* dans Google Drive.
 
 ###22 octobre 2013
