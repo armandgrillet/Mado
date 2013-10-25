@@ -24,6 +24,7 @@ function applyLink () {
 		$(textarea).click();
 		textarea.focus();
 		textarea.setSelectionRange(newStartSelect, newEndSelect);
+		console.log("Conversion depuis applylink");
 		conversion();
 	}
 }

@@ -69,7 +69,6 @@ function endOfConversion () {
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
 
-	tempConversion = tempConversion.replace(/blue/g,"red");
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
@@ -77,9 +76,8 @@ function endOfConversion () {
 	});
 
 	$("#html-conversion img").each(function() { // Add a link to help the user to choose his folders.
-		if($(this).attr("src") == "img/nofile.png") {
+		if($(this).attr("src") == "img/nofile.png")
 			$(this).attr("class", "nofile");
-		}
 	});
 	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
@@ -89,7 +87,12 @@ function endOfConversion () {
 
 function setEditorSyntax () {
 	chrome.storage.local.get("gfm",  function(mado) { 
-		editorSyntax = mado["gfm"]; 
+		if (mado["gfm"] != undefined)
+			editorSyntax = mado["gfm"]; 
+		else {
+			chrome.storage.local.set({ "gfm" : false });
+			editorSyntax = false; 
+		}
 		conversion();
 	});
 }

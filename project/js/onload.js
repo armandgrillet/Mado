@@ -124,10 +124,10 @@ window.onload = function() {
     $(exportButton).on("click", function() { exportFileHTML(); });
 
     /* editor.js */    
-    conversion(); // A conversion is made when the window is opened.
+    setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
-    $(textarea).on("input propertychange", function () { conversion(); });
+    $(textarea).on("input propertychange", conversion);
 
     /* footer.js */
     $(charsDiv).on("click", function() { counterSelection(); });
@@ -139,14 +139,14 @@ window.onload = function() {
         if(e.keyCode == 27) // The user press echap
             $(helpButton).click();
     });
-    $(help).on("input propertychange", function () { displayAnswers(); }); // Launch the help when something is typed on the input.
+    $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
     $(resultSwitch1).on("click", function() { switchResult("1"); });
     $(resultSwitch2).on("click", function() { switchResult("2"); });
     $(resultSwitch3).on("click", function() { switchResult("3"); });
 
     /* image.js */
-    $(imageBrowser).on("click", function() { loadImage(); });
+    $(imageBrowser).on("click", loadImage);
     $(altInput).keyup(function(e){
         if(e.keyCode == 13) // The user press enter
            applyImage();

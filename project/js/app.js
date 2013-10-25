@@ -138,6 +138,7 @@ function openFile(fileToOpen) {
 
 		 			// For the footer.
 		 			markdownSaved = e.target.result;
+		 			console.log("Conversion depuis openFile");
 		 			conversion();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
 	 			}

@@ -70,7 +70,6 @@ function applyImage () {
 
 function chooseGalleries () {
 	chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, update); // Let the user chooses his folders.
-	
 }
 
 function update () {	
@@ -86,11 +85,11 @@ function galleryAnalysis(index) {
 	if (rightFile == false) {
 		if (index < galleriesList.length) {
 			currentGallery = index;
-
 			galleriesList.forEach(
 				function(item, indx, arr) { // For each gallery.
-		     		if (indx == index && imagePath != undefined && rightFile == false) // If we're looking for a file.  
+		     		if (indx == index && imagePath != undefined && rightFile == false) {// If we're looking for a file.  
 		     			item.root.createReader().readEntries(getImages); // Get the images of the folder.
+		     		}
 		  		}
 			)
 		}
@@ -104,7 +103,7 @@ function galleryAnalysis(index) {
 }
 
 function fileNotFound() {
-	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.jpg"); 
+	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.png"); 
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -113,12 +112,12 @@ function fileNotFound() {
 
 function getImages(entries) { // Get all the images, even in sub-directories.
 	for (var i = 0; i < entries.length && rightFile == false; i++) { // All the files in the repository, the correct file is not found yet.
+		console.log("On recherche l'image");
 		if (entries[i].isDirectory && imagePath.indexOf(entries[i].fullPath) != -1) {// If the file is a directory and the right directory.
 			entries[i].createReader().readEntries(getImages); // Recursivity.
 			break;
 		}
 		else if (imagePath.indexOf(entries[i].fullPath) != -1) {// It's the correct image!
-			console.log("Image trouvée");
 			getImage(entries[i].fullPath);
 			break; 			
 		}
@@ -169,7 +168,7 @@ function displayImages () {
 				}       			
 			}
 			else // The array doesn't exist yet.
-				update(); // Get the ID of the file.      	
+				update(); // Get the ID of the file.   	
 		}
 		else
 			displayImages();
