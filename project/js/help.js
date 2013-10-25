@@ -1,24 +1,24 @@
 ﻿/* The JS to help the user when he types something on the help input. */
 
+/*
+* Variables (in alphabetical order):
+	* Everything except arrays.
+	* Arrays.
+*/
+
+var answer1, answer2, answer3; // The divs who contain the answers.
+var answersContainer; // The div who contains the answers displayed.
+var example1, example2, example3; // The divs who contain the examples.
 var help; // The input where the user writes what he wants.
 var helpButton; // The help button.
 var helpDisplayer; // The div who contains all the help divs.
-var answersContainer; // The div who contains the answers displayed.
-var wordPos;
-var answer1; // 1st answer div.
-var answer2; // 2nd answer div.
-var answer3; // 3rd answer div.
-var example1;
-var example2;
-var example3;
-var result1;
-var result2;
-var result3;
-var resultSwitch1;
-var resultSwitch2;
-var resultSwitch3;
+var maxAnswers; // Check the number of answers displayed, max = 3.
+var result1, result2, result3; // The divs who contain the results.
+var resultsContainer; // Will contain the HTML results container.
+var resultSwitch1, resultSwitch2, resultSwitch3; // The divs who contain the result switchs.
+var wordPos; // Shortcut for "words[i][j].toLowerCase().indexOf(help.value.toLowerCase());".
 
-var words = [ // All the words that can be used on the help input, each line corresponding to the same line in 'answers'. Source: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+var words = [ // All the words that can be used on the help input, each line corresponding to the same line in 'answers'.
 	// Headers
 	["Headers", "Titles"],
 
@@ -54,7 +54,10 @@ var words = [ // All the words that can be used on the help input, each line cor
 	["Horizontal rules"],
 
 	// Line Breaks
-	["Line breaks"]
+	["Line breaks"],
+
+	// Joke
+	["Question"]
 ];
 
 var answers = [ // The answers displayed.
@@ -78,7 +81,6 @@ var answers = [ // The answers displayed.
 	['<span class=\"help-code\">![alt text](path/to/image.jpg "Title")</span>'], 
 	['<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg "Title"</span>'],
 
-
 	// Code and Syntax Highlighting
 	["<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>"],
 
@@ -94,7 +96,10 @@ var answers = [ // The answers displayed.
 	["<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>"],
 
 	// Line Breaks
-	["To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."]
+	["To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."],
+
+	// Joke
+	["Seriously?"]
 ];
 
 var examples = [
@@ -133,36 +138,27 @@ var examples = [
 	["<hr> You can use Hyphens, asterisks or underscores.<hr>"],
 
 	// Line Breaks
-	["<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"]
+	["<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"],
+
+	// Joke
+	["Life's most persistent and urgent question is, 'What are you doing for others?'."]
 ];
 
-var maxAnswers; // Check the number of answers displayed, max = 3.
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* activateHelp (): show the help input and focus when the help button is clicked.
+	* answer (): find the answers and the examples for the question.
+	* displayAnswers (): display the answers
+	* switchResult (result number): show the answer or the example when the user click on a switch.
+*/
 
-var resultsContainer; // Will contain the HTML results container.
-
-function activateHelp () { // Show the help input and focus when the help button is clicked.
+function activateHelp () { 
 	if (helpDisplayer.className == "hidden") {
-		console.log("a");
 		helpDisplayer.className = " ";
     	help.focus();
 	}	
-}
-
-function displayAnswers () {
-	if (help.value.length == 0)
-		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
-	else {
-		if (help.value.length < 3) {
-			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2);
-			if (help.value.length == 1)
-				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
-			else if (help.value.length == 2)
-				answer1.innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
-		}
-		else
-			answer(); // Find the answers.
-	}
 }
 
 function answer () {
@@ -196,7 +192,23 @@ function answer () {
 	}
 }
 
-/* Switch between the help answer and the corresponding example. */
+function displayAnswers () {
+	if (help.value.length == 0)
+		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
+	else {
+		if (help.value.length < 3) {
+			resultsContainer.className = "one-result no-result";
+			resetAnswerDiv(2);
+			if (help.value.length == 1)
+				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
+			else if (help.value.length == 2)
+				answer1.innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
+		}
+		else
+			answer(); // Find the answers.
+	}
+}
+
 function switchResult (numResult) {
 	if (window["result" + numResult].className == "result") // If Markdown style displayed
 		window["result" + numResult].className = "result switched";
@@ -204,27 +216,27 @@ function switchResult (numResult) {
 		window["result" + numResult].className = "result";
 }
 
-function resetAnswerDiv(begin) {
-	for (var i = begin; i < 4; i++) { 
-		if (window["answer" + i].innerHTML == "")
-			i = 3;
-		else {
-			window["answer" + i].innerHTML = "";
-			window["result" + i].className = "result";
-			window["example" + i].innerHTML = "";
-		}
-	}
-}
+/*
+* Listener
+*/
 
 $(document).click(function(e) {
 	if ($(e.target).closest(helpButton).length && helpDisplayer.className == "tool-displayer hidden") { // Click on the help button with the help input hide.
 		helpDisplayer.className = "tool-displayer";
     	help.focus();
 	}
-	else if (! $(e.target).closest(help).length && ! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed)
-		help.value = ""; // Reset the input of the help
-		resetAnswerDiv(1);
-		resultsContainer.className = "hidden"; // Hide the results container
+	else if (! $(e.target).closest(help).length && ! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed).
+		help.value = ""; 
+		for (var i = 1; i < 4; i++) { 
+			if (window["answer" + i].innerHTML == "")
+				i = 3;
+			else {
+				window["answer" + i].innerHTML = "";
+				window["result" + i].className = "result";
+				window["example" + i].innerHTML = "";
+			}
+		}
+		resultsContainer.className = "hidden";
 		helpDisplayer.className = "tool-displayer hidden";
 	}
 });

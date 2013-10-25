@@ -2,27 +2,27 @@
 
 window.onload = function() {
     /*
-    * SHORTCUTS (JS files in alphabetical order).
+    * Shortcuts (JS files in alphabetical order).
     */
 
     /* app.js */
+    exportButton = document.getElementById("export");
     newButton = document.getElementById("new");
     openButton = document.getElementById("open");
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
-    exportButton = document.getElementById("export");
-
+    
     /* editor.js */
-    textarea = document.getElementById("markdown");   
     conversionDiv = document.getElementById("html-conversion");
+    textarea = document.getElementById("markdown");   
     
     /* footer.js */
-    nameDiv = document.getElementById("doc-name");
     charsDiv = document.getElementById("character-nb");
-    wordsDiv = document.getElementById("word-nb");
+    nameDiv = document.getElementById("doc-name");
     saveState = document.getElementById("save-state");
-
+    wordsDiv = document.getElementById("word-nb");
+    
     /* help.js */ 
     help = document.getElementById("help-input");
     helpButton = document.getElementById("help-button");
@@ -79,7 +79,7 @@ window.onload = function() {
     switchButtons.push(switchToMD, switchToBoth, switchToHTML); // Wrapping the switch buttons in an array.
 
     /*
-    * FUNCTIONS (JS files in alphabetical order).
+    * Functions (JS files in alphabetical order).
     */
 
     /* app.js (with Mousetrap functions) */

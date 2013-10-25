@@ -84,7 +84,6 @@ function chromeUpdate(results) { // Update everything.
 
 function galleryAnalysis(index) {
 	if (rightFile == false) {
-		console.log("Analyse d'un gallerie");
 		if (index < galleriesList.length) {
 			currentGallery = index;
 
@@ -95,10 +94,8 @@ function galleryAnalysis(index) {
 		  		}
 			)
 		}
-		else {
-			console.log("Image non trouvée");
+		else
 			fileNotFound();
-		}
 	}
 	else {
 		imagesArray.length = 0;
@@ -107,7 +104,6 @@ function galleryAnalysis(index) {
 }
 
 function fileNotFound() {
-	console.log("Image non trouvée");
 	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.jpg"); 
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
@@ -126,10 +122,8 @@ function getImages(entries) { // Get all the images, even in sub-directories.
 			getImage(entries[i].fullPath);
 			break; 			
 		}
-		else if (i == (entries.length - 1))  {// End of the gallery.
-			console.log("On change de gallerie");
+		else if (i == (entries.length - 1)) // End of the gallery.
 			galleryAnalysis(currentGallery + 1);
-		}
 	}
 }
 
@@ -142,7 +136,7 @@ function getImage(entryPath) { // Get the image.
              	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), this.result);  
              	rightFile = true;
              	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
-             		displayImages;
+             		displayImages();
              	else // The end.
              		endOfConversion();       	
           	};
@@ -153,7 +147,6 @@ function getImage(entryPath) { // Get the image.
 
 function displayImages () {
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		console.log("Une image !");
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
 		rightFile = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
@@ -162,7 +155,6 @@ function displayImages () {
 			if (imagesArray.length > 0){ // Files are already stored.
 				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
 					if(imagesArray[i][0] == imagePath) { // The file is already here.
-						console.log("L'image existe déjà dans le tableau !");	
 						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[i][1]); // Replace the path.		
 		    			imagesArray[i][2] = true; // The file has been used.
 		    			if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
@@ -172,16 +164,12 @@ function displayImages () {
 		    			else
 	                     	endOfConversion();
 		        	}
-		        	else if (i == imagesArray.length - 1) {// The file isn't here.   	
-		        		console.log("L'image n'existe pas encore dans le tableau !");	
+		        	else if (i == imagesArray.length - 1) // The file isn't here.   	
 		    			update(); // Get the ID of the file.
-		    		}
 				}       			
 			}
-			else {// The array doesn't exist yet.
-				console.log("Le tableau n'existe pas encore !");
-				update(); // Get the ID of the file.  
-			}     	
+			else // The array doesn't exist yet.
+				update(); // Get the ID of the file.      	
 		}
 		else
 			displayImages();

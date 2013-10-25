@@ -1,14 +1,13 @@
 /* Functions linked to the Markdown textarea. */
 
 /* 
-* Variables. 
+* Variables (in alphabetical order). 
 */
 
-var textarea; // The textarea where the user writes.
 var conversionDiv; // The div who contains the HTML conversion.
-var saveState; // It's in the footer but I manage it here.
-var tempConversion; // A string used to don't display errors when an image is loaded.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
+var tempConversion; // A string used to don't display errors when an image is loaded.
+var textarea; // The textarea where the user writes.
 
 /*
 * Functions (in alphabetical order).
@@ -70,6 +69,7 @@ function endOfConversion () {
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
 
+	tempConversion = tempConversion.replace(/blue/g,"red");
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
@@ -77,8 +77,9 @@ function endOfConversion () {
 	});
 
 	$("#html-conversion img").each(function() { // Add a link to help the user to choose his folders.
-		if($(this).attr("src") == "img/nofile.jpg")
+		if($(this).attr("src") == "img/nofile.png") {
 			$(this).attr("class", "nofile");
+		}
 	});
 	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
