@@ -3,6 +3,8 @@
 ###23 octobre 2013
 Meeting pour le logo, le site et des détails.
 
+L : Icône finale de Mado terminée et intégrée.
+
 R : Ajout des ToS, site aplusa.io disponible, analytics fonctionnel.
 
 ###23 octobre 2013
@@ -259,6 +261,13 @@ avec width ou height non paire ; ajout de la font Source Code Pro et liaison ave
 
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
+Developpement.docx, à valider par L.
+liaison avec mado.html
+
+###12 août 2013
+R : Ecriture de Developpement.docx, à valider par L.
+Developpement.docx, à valider par L.
+eveloppement.docx, à valider par L.
 Developpement.docx, à valider par L.
 liaison avec mado.html
 
