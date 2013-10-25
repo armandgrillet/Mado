@@ -773,7 +773,7 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	
 	/* Typography */
 	font-size: 10pt;
-	line-height: 12pt;
+	line-height: 10pt;
 	color: #1a1a1a;
 
 	/* Misc */
@@ -790,11 +790,11 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	opacity: 0;
 }
 
-#help-results-container.one-result { height: 40px; }
+#help-results-container.one-result { height: 50px; }
 
-#help-results-container.two-results { height: 80px; }
+#help-results-container.two-results { height: 100px; }
 
-#help-results-container.three-results { height: 120px; }
+#help-results-container.three-results { height: 150px; }
 
 /* Container for both the answer and the example, also features a switch button to navigate between each */
 .result {
@@ -803,7 +803,7 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 
 	/* Box-model */
 	width: 200%; /* Twice the #help-results-container's width */
-	height: 40px;
+	height: 50px;
 }
 
 .result:not(:first-of-type) { border-top: 1px solid #fafafa; }
