@@ -40,7 +40,6 @@
     			"allAutoDetected"
     		]
     	},
-    	"storage",
-    	"webview"
+    	"storage"
     ] 	
 }

@@ -194,7 +194,8 @@ window.onload = function() {
     displayRecentFiles();
     
     /* stats.js */
-    initStats();
+    if (navigator.onLine)
+        initStats();
 
     /* styles.js */
     getStyle();
