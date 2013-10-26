@@ -150,12 +150,14 @@ var examples = [
 * Resume:
 	* activateHelp (): show the help input and focus when the help button is clicked.
 	* answer (): find the answers and the examples for the question.
-	* displayAnswers (): display the answers
+	* displayAnswers (): display the answers.
+	* resetAnswerDiv (): clear the Help divs.
 	* switchResult (result number): show the answer or the example when the user click on a switch.
 */
 
-function activateHelp () { 
+function activateHelp () { // Show the help input and focus when the help button is clicked.
 	if (helpDisplayer.className == "hidden") {
+		console.log("a");
 		helpDisplayer.className = " ";
     	help.focus();
 	}	
@@ -209,6 +211,18 @@ function displayAnswers () {
 	}
 }
 
+function resetAnswerDiv(begin) {
+	for (var i = begin; i < 4; i++) { 
+		if (window["answer" + i].innerHTML == "")
+			i = 3;
+		else {
+			window["answer" + i].innerHTML = "";
+			window["result" + i].className = "result";
+			window["example" + i].innerHTML = "";
+		}
+	}
+}
+
 function switchResult (numResult) {
 	if (window["result" + numResult].className == "result") // If Markdown style displayed
 		window["result" + numResult].className = "result switched";
@@ -217,7 +231,7 @@ function switchResult (numResult) {
 }
 
 /*
-* Listener
+* Listener.
 */
 
 $(document).click(function(e) {
@@ -225,18 +239,10 @@ $(document).click(function(e) {
 		helpDisplayer.className = "tool-displayer";
     	help.focus();
 	}
-	else if (! $(e.target).closest(help).length && ! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed).
-		help.value = ""; 
-		for (var i = 1; i < 4; i++) { 
-			if (window["answer" + i].innerHTML == "")
-				i = 3;
-			else {
-				window["answer" + i].innerHTML = "";
-				window["result" + i].className = "result";
-				window["example" + i].innerHTML = "";
-			}
-		}
-		resultsContainer.className = "hidden";
+	else if (! $(e.target).closest(help).length && ! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed)
+		help.value = ""; // Reset the input of the help
+		resetAnswerDiv(1);
+		resultsContainer.className = "hidden"; // Hide the results container
 		helpDisplayer.className = "tool-displayer hidden";
 	}
 });
