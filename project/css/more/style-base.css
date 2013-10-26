@@ -85,6 +85,13 @@ em { font-style: italic; }
 
 strong { font-weight: bold; }
 
+sup {
+	/* Typography */
+	font-size: 9pt;
+	line-height: 0;
+	vertical-align: super;
+}
+
 input[type="text"] {
 	/* Box-model */
 	width: 300px;

@@ -1,0 +1,59 @@
+ul li {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	padding-left: 16pt;
+}
+
+ul li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 16pt;
+
+	/* Misc */
+	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
+}
+
+/* Terms of policy (ToS) */
+.tos {
+	/* Typography */
+	font-size: 9pt;
+	line-height: 12pt;
+}
+
+.tos p { padding-bottom: 6pt; }
+
+.tos ol { counter-reset: list; }
+
+.tos ol li {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	padding-left: 12pt;
+
+	/* Misc */
+	counter-increment: list;
+}
+
+.tos ol li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 12pt;
+
+	/* Misc */
+	content: counter(list);
+}
+
+.tos sup { font-size: 6pt; }
