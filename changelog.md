@@ -1,6 +1,9 @@
 #Changelog de Mado
 
-###23 octobre 2013
+###25 octobre 2013
+R : JS avec meilleurs commentaires, Mado marche à 100% avec Chrome Beta, image.js amélioré pour éviter les bugs.
+
+###24 octobre 2013
 Meeting pour le logo, le site et des détails.
 
 L : Icône finale de Mado terminée et intégrée.
