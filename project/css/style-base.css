@@ -816,13 +816,27 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 .result:not(:first-of-type) { border-top: 1px solid #fafafa; }
 
 /* The button to switch between the answer and the example */
+.result-switch-container {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 50%;
+	z-index: 1000;
+
+	/* Box-model */
+	width: 30px;
+	height: 100%;
+
+	/* Visual */
+	background-color: #fff; /* Hides the text underneath it during the transition */
+}
+
 .result-switch {
 	/* Positioning */
 	position: absolute;
 	top: 50%;
-	right: 50%;
+	left: 0;
 	margin: -15px 0 0; /* Auto vertical centering, more flexible in case of modification */
-	z-index: 1000;
 
 	/* Box-model */
 	width: 30px;
@@ -832,9 +846,6 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	color: #4a4942;
 	text-align: center;
 	line-height: 30px;
-
-	/* Visual */
-	background-color: #fff; /* Hides the text underneath it during the transition */
 
 	/* Misc */
 	cursor: pointer;
