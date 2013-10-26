@@ -1,14 +1,30 @@
 /* Set how the link div has to work */
 
+/* 
+* Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
+*/
+
+/* HTML shortcuts. */
+var hypertextInput; // The div that contains the hypertext.
 var link; // The content that is added.
-var linkButton; // The "Link" button
-var linkDisplayer; // The div that contains all the link divs
-var urlInput; // The div that contains the url
-var hypertextInput; // The div that contains the hypertext
-var startSelect;
-var endSelect;
-var newStartSelect;
-var newEndSelect;
+var linkButton; // The "Link" button.
+var linkDisplayer; // The div that contains all the link divs.
+var urlInput; // The div that contains the url.
+
+/* Functions variables. */
+var endSelect; // End of the selection
+var newStartSelect; // New start of the selection.
+var newEndSelect; // New end of the selection.
+var startSelect; // Start of the selection.
+
+/*
+* Function.
+*
+* Resume:
+	* applyLink (): what to do when the user press enter after setting the link.
+*/
 
 function applyLink () {
 	if (urlInput.value == "")
@@ -24,10 +40,13 @@ function applyLink () {
 		$(textarea).click();
 		textarea.focus();
 		textarea.setSelectionRange(newStartSelect, newEndSelect);
-		console.log("Conversion depuis applylink");
 		conversion();
 	}
 }
+
+/*
+* Listener.
+*/
 
 $(document).click(function(e) {
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	

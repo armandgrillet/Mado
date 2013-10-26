@@ -130,8 +130,8 @@ window.onload = function() {
     $(textarea).on("input propertychange", conversion);
 
     /* footer.js */
-    $(charsDiv).on("click", function() { counterSelection(); });
-    $(wordsDiv).on("click", function() { counterSelection(); });
+    $(charsDiv).on("click", counterSelection);
+    $(wordsDiv).on("click", counterSelection);
 
     /* help.js */ 
     Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.

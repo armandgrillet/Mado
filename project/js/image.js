@@ -196,7 +196,7 @@ function update () {
 }
 
 /*
-* Listener
+* Listener.
 */
 
 $(document).click(function(e) {
