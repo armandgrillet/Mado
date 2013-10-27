@@ -1,6 +1,9 @@
 #Changelog de Mado
 
-###25 octobre 2013
+###27 octobre 2013
+R : JS avec meilleurs commentaires partout, ajout d'un span lors de l'ajout d'une image non lue par Mado.
+
+###26 octobre 2013
 R : JS avec meilleurs commentaires, changement de la taille minimale des fenêtres (sachant qu'il n'y a pas Small et Big en 0.1). 
 
 ###25 octobre 2013
