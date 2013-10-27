@@ -1,6 +1,8 @@
 #Changelog de Mado
 
 ###27 octobre 2013
+L : Logo de A+A terminé. Squelette du site A+A réalisé.
+
 R : JS avec meilleurs commentaires partout, ajout d'un span lors de l'ajout d'une image non lue par Mado.
 
 ###26 octobre 2013
@@ -276,6 +278,14 @@ liaison avec mado.html
 ###12 août 2013
 R : Ecriture de Developpement.docx, à valider par L.
 Developpement.docx, à valider par L.
+eveloppement.docx, à valider par L.
+Developpement.docx, à valider par L.
+liaison avec mado.html
+
+###12 août 2013
+R : Ecriture de Developpement.docx, à valider par L.
+Developpement.docx, à valider par L.
+r par L.
 eveloppement.docx, à valider par L.
 Developpement.docx, à valider par L.
 liaison avec mado.html
