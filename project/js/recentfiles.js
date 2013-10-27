@@ -33,7 +33,7 @@ var recentFiles = [ // Name of the recent files and the corresponding ids on the
 	* removeAllFilesInStorage (): remove all the files in the local storage.
 */
 
-function checkRecentFile (fileNumber) { // 
+function checkRecentFile (fileNumber) { 
 	if (fileNumber <= 7) {
 		chrome.storage.local.get(
 			recentFiles,  
@@ -189,7 +189,7 @@ function removeFileInStorage (fileNumber, after) {
 	);
 }
 
-function removeAllFiles () { /
+function removeAllFiles () { 
 	chrome.storage.local.get(
 		recentFiles,  
 		function(mado) {
