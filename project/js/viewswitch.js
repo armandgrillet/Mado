@@ -1,21 +1,44 @@
-/* This document handles the view switch. */
+/* This document handles the view switch on the topbar. */
 
-// Getting the main container (workspace).
-var workspace;
+/* 
+* Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
+*/
 
-// Declaring the vars for all the switch buttons.
-var switchToMD;
-var switchToBoth;
-var switchToHTML;
+/* HTML shortcuts. */
+var switchToBoth; // Both switch.
+var switchToHTML; // HTML switch.
+var switchToMD; // Markdown switch.
+var workspace; // Getting the main container (workspace).
 
-var switchButtons = new Array(); // The array for the switch 
-
-var windowResizing;
-
-var centerLine;
+/* Functions variables. */
 var previousSize; // The previous size of the window.
+var switchButtons = new Array(); // The array for the switch. 
+var windowResizing; // Get the storage variable "resize".
 
-function initActivation () { // Initalize the switch's look on Mado's launch.
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* activate (buttonClicked, stateOfTheClass): handles the behavior of a switch button when it is clicked. The function sets the main container's class name according to the button.
+	* initActivation (): initalize the switch's look on Mado's launch.
+	* setWindowResizing (): set the storage variable "resize".
+	* switchShortcuts (theDirection): change the switch when the user uses a keyboard shortcut.
+*/
+
+function activate (clickedBtn, classState) {
+	for (var i = 0; i < switchButtons.length; i++) {
+		if (switchButtons[i].id != clickedBtn) // Deactivating the switch buttons that are not clicked.
+			switchButtons[i].className = "switch-button";
+		else // Activating the clicked button.
+			switchButtons[i].className = "switch-button activated";
+	}	
+
+	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+}
+
+function initActivation () { 
 	if (window.innerWidth > 1365) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {
@@ -26,17 +49,15 @@ function initActivation () { // Initalize the switch's look on Mado's launch.
 	previousSize = window.innerWidth; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
 }
 
-/* This function handles the behavior of a switch button when it is clicked.
-At the end, the function sets the main container"s class name according to the button. */
-function activate (clickedBtn, classState) {
-	for (var i = 0; i < switchButtons.length; i++) {
-		if (switchButtons[i].id != clickedBtn) // Deactivating the switch buttons that are not clicked.
-			switchButtons[i].className = "switch-button";
-		else // Activating the clicked button.
-			switchButtons[i].className = "switch-button activated";
-	}	
-
-	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+function setWindowResizing () {
+	chrome.storage.local.get("resize",  function(mado) {
+		if (mado["resize"] != undefined)			
+			windowResizing = mado["resize"];
+		else {
+			chrome.storage.local.set({ "resize" : true });
+			windowResizing = true;
+		}
+	});
 }
 
 function switchShortcuts (direction) {
@@ -57,15 +78,4 @@ function switchShortcuts (direction) {
 		else
 			switchToHTML.click();
 	}	
-}
-
-function setWindowResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != undefined)			
-			windowResizing = mado["resize"];
-		else {
-			chrome.storage.local.set({ "resize" : true });
-			windowResizing = true;
-		}
-	});
 }

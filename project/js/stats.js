@@ -1,5 +1,19 @@
+/* The JS to send data to Analytics. */
+
+/* 
+* Variables (in alphabetical order). 
+*/
+
 var service;
 var tracker;
+
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* initStats (): create a new service for Analytics.
+	* setTrackingPermission (analyticsService): set the tracking permission.
+*/
 
 function initStats () {
     // Initialize the Analytics service object with the name of your app.

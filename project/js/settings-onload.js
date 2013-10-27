@@ -1,7 +1,9 @@
 /* All the things to do when settings.html is loaded, event listeners are here because Chrome doesn't want JS in the HTML. */
 
 window.onload = function() {
-	/* Shortcuts. */
+	/*
+    * Shortcuts.
+    */
 	markdownSyntax = document.getElementById("markdown-radio");
 	gfmSyntax = document.getElementById("gfm-radio");
 
@@ -21,13 +23,16 @@ window.onload = function() {
 		bigLabelContainer.style.display = "none";
 	}
 
+	/*
+    * Functions.
+    */
 	getDisplaySize();
 	getSyntax();
 	getResizing();
 	getAnalytics();
 
-	$(markdownSyntax).on("click", function() { setSyntax(false); });
-	$(gfmSyntax).on("click", function() { setSyntax(true); });
+	$(markdownSyntax).on("click", setSyntax);
+	$(gfmSyntax).on("click", setSyntax);
 
 	$(smaDisplaySize).on("click", function() { setDisplaySize("small"); });
 	$(medDisplaySize).on("click", function() { setDisplaySize("medium"); });

@@ -1,34 +1,34 @@
 /* The javascript to set and get Mado's settings. */
 
-var markdownSyntax;
-var gfmSyntax;
+/* 
+* Variables. 
+*/
 
+var markdownSyntax, gfmSyntax;
+var smaDisplaySize, medDisplaySize, bigDisplaySize;
 var viewOnResize;
-
-var smaDisplaySize;
-var medDisplaySize;
-var bigDisplaySize;
-
 var analytics;
 
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* getAnalytics (): get the storage variable "analytics".
+	* getDisplaySize (): get the storage variable "displaySize".
+	* getResizing (): get the storage variable "resize".
+	* getSyntax (): get the storage variable "gfm".
+	* setAnalytics (): set the storage variable "analytics".
+	* setDisplaySize (newDisplaySize): set the storage variable "displaySize".
+	* setResizing (): set the storage variable "resize".
+	* setSyntax (): set the storage variable "analytics".
+*/
 
-function getSyntax () {
-	chrome.storage.local.get("gfm",  function(mado) {
-		if (mado["gfm"] != undefined) {
-			if (mado["gfm"])
-				gfmSyntax.checked = true;			
-			else
-				markdownSyntax.checked = true;	
-		}
-		else {
-			chrome.storage.local.set({ "gfm" : false });
-			markdownSyntax.checked = true;
+function getAnalytics () {
+	chrome.storage.local.get("analytics",  function(mado) {
+		if (mado["analytics"] != false) {
+			analytics.checked = true;
 		}
 	});
-}
-
-function setSyntax (newValue) {
-	chrome.storage.local.set({ "gfm" : newValue });
 }
 
 function getDisplaySize () {
@@ -50,10 +50,6 @@ function getDisplaySize () {
 	});
 } 
 
-function setDisplaySize (newValue) {
-	chrome.storage.local.set({ "displaySize" : newValue });
-}
-
 function getResizing () {
 	chrome.storage.local.get("resize",  function(mado) {
 		if (mado["resize"] != false) {
@@ -62,17 +58,17 @@ function getResizing () {
 	});
 }
 
-function setResizing () {
-	if (viewOnResize.checked)
-		chrome.storage.local.set({ "resize" : true });
-	else 
-		chrome.storage.local.set({ "resize" : false });
-}
-
-function getAnalytics () {
-	chrome.storage.local.get("analytics",  function(mado) {
-		if (mado["analytics"] != false) {
-			analytics.checked = true;
+function getSyntax () {
+	chrome.storage.local.get("gfm",  function(mado) {
+		if (mado["gfm"] != undefined) {
+			if (mado["gfm"])
+				gfmSyntax.checked = true;			
+			else
+				markdownSyntax.checked = true;	
+		}
+		else {
+			chrome.storage.local.set({ "gfm" : false });
+			markdownSyntax.checked = true;
 		}
 	});
 }
@@ -84,4 +80,20 @@ function setAnalytics () {
 		chrome.storage.local.set({ "analytics" : false });
 }
 
+function setDisplaySize (newValue) {
+	chrome.storage.local.set({ "displaySize" : newValue });
+}
 
+function setResizing () {
+	if (viewOnResize.checked)
+		chrome.storage.local.set({ "resize" : true });
+	else 
+		chrome.storage.local.set({ "resize" : false });
+}
+
+function setSyntax () {
+	if (markdownSyntax.checked)
+		chrome.storage.local.set({ "gfm" : false });
+	else 
+		chrome.storage.local.set({ "gfm" : true });
+}

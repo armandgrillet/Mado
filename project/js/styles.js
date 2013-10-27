@@ -1,9 +1,27 @@
-var stylesButton; // The "Styles" button
-var stylesDisplayer; // The div that contains and displays the style selection tool
+/* The JS to control Mado's styles. */
 
-var homeRadio;
-var clinicRadio;
-var tramwayRadio;
+/* 
+* Variables (in alphabetical order). 
+	* HTML div shortcuts.
+	* HTML radio shortcuts.
+*/
+
+/* HTML div shortcuts. */
+var stylesButton; // The "Styles" button.
+var stylesDisplayer; // The div that contains and displays the style selection tool.
+
+/* HTML radio shortcuts. */
+var clinicRadio; // Clinic style.
+var homeRadio; // Home style.
+var tramwayRadio; // Tramway style.
+
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* getStyle (): get the storage variable style.
+	* setStyle (newStyleToApply): set the storage variable "style".
+*/
 
 function getStyle () {
 	chrome.storage.local.get("style",  function(mado) {
@@ -29,6 +47,10 @@ function setStyle (newStyle) {
 		$(conversionDiv).attr("class", newStyle);
 	});
 }
+
+/*
+* Listener.
+*/
 
 $(document).click(function(e) {
 	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {

@@ -21,6 +21,8 @@ bool resize : true si l'utilisateur veut retourner à Both en agrandissant la fe
 
 bool analytics : true si l'utilisateur veut bien partager ses données.
 
+string style : le style HTML que souhaite l'utilisateur.
+
 ###Fonctionnement de l'application : 
 string tempFileEntry : stockage du fichier Markdown ouvert si ouverture dans une nouvelle fenêtre.
 
