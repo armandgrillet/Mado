@@ -1,6 +1,9 @@
 #Changelog de Mado
 
 ###25 octobre 2013
+R : JS avec meilleurs commentaires, changement de la taille minimale des fenêtres (sachant qu'il n'y a pas Small et Big en 0.1). 
+
+###25 octobre 2013
 R : JS avec meilleurs commentaires, Mado marche à 100% avec Chrome Beta, image.js amélioré pour éviter les bugs.
 
 ###24 octobre 2013
