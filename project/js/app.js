@@ -234,8 +234,24 @@ function theMinWidth () {
 }
 
 /*
-Chrome method.
+* Chrome methods.
+*
+* Resume:
+	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
+	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
 */
+
+chrome.app.window.current().onBoundsChanged.addListener(function () {
+	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
+		switchToMD.click(); // Markdown is set as default view.
+	else 
+		chrome.storage.local.get("lastWidth", function (mado) {
+			if (window.innerWidth >= 1366 && mado["lastWidth"] < 1366) 
+				if (windowResizing)
+					switchToBoth.click(); // viewswitch.js
+		});
+	chrome.storage.local.set({"lastX" : window.screenX, "lastY" : window.screenY, "lastWidth" : window.innerWidth, "lastHeight" : window.innerHeight });
+});
 
 chrome.storage.onChanged.addListener(function(changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
@@ -247,6 +263,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { // What to d
             newDisplaySize(); // app.js 
     }
 });
+
 
 
 

@@ -69,15 +69,3 @@ function setWindowResizing () {
 		}
 	});
 }
-
-chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
-		switchToMD.click(); // Markdown is set as default view.
-	else 
-		chrome.storage.local.get("lastWidth", function (mado) {
-			if (window.innerWidth >= 1366 && mado["lastWidth"] < 1366) 
-				if (windowResizing)
-					switchToBoth.click();
-		});
-	chrome.storage.local.set({"lastX" : window.screenX, "lastY" : window.screenY, "lastWidth" : window.innerWidth, "lastHeight" : window.innerHeight });
-});
