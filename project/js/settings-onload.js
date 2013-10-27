@@ -26,7 +26,7 @@ window.onload = function() {
 	/*
     * Functions.
     */
-	getDisplaySize();
+	// getDisplaySize();
 	getSyntax();
 	getResizing();
 	getAnalytics();
@@ -34,10 +34,12 @@ window.onload = function() {
 	$(markdownSyntax).on("click", setSyntax);
 	$(gfmSyntax).on("click", setSyntax);
 
+	/*
 	$(smaDisplaySize).on("click", function() { setDisplaySize("small"); });
 	$(medDisplaySize).on("click", function() { setDisplaySize("medium"); });
 	$(bigDisplaySize).on("click", function() { setDisplaySize("big"); });
-
+	*/
+	
 	$(viewOnResize).on("click", setResizing);
 
 	$(analytics).on("click", setAnalytics);

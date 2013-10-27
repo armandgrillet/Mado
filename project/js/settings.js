@@ -31,6 +31,7 @@ function getAnalytics () {
 	});
 }
 
+/*
 function getDisplaySize () {
 	chrome.storage.local.get("displaySize",  function(mado) {
 		if (mado["displaySize"] != undefined) {
@@ -49,6 +50,7 @@ function getDisplaySize () {
 		}
 	});
 } 
+*/
 
 function getResizing () {
 	chrome.storage.local.get("resize",  function(mado) {
@@ -80,9 +82,11 @@ function setAnalytics () {
 		chrome.storage.local.set({ "analytics" : false });
 }
 
+/*
 function setDisplaySize (newValue) {
 	chrome.storage.local.set({ "displaySize" : newValue });
 }
+*/
 
 function setResizing () {
 	if (viewOnResize.checked)

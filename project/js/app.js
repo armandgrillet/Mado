@@ -261,6 +261,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { // What to d
             setWindowResizing(); // viewswitch.js 
         else if (key == "displaySize")
             newDisplaySize(); // app.js 
+        else if (key == "analytics")
+            setTrackingPermission(); // stats.js 
     }
 });
 
