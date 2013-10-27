@@ -69,16 +69,13 @@ function endOfConversion () {
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
 
+	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> File not found.</span><img class=\"nofile\" src=\"img/nofile.png");
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
 		$(this).attr("target", "_blank");
 	});
 
-	$("#html-conversion img").each(function() { // Add a link to help the user to choose his folders.
-		if($(this).attr("src") == "img/nofile.png")
-			$(this).attr("class", "nofile");
-	});
 	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
