@@ -43,8 +43,11 @@ function firstWindow () {
 }
 
 function theMinWidth () {
+	/* For the 0.2
 	if (screen.width < 1600)
 		return 683;
 	else
 		return 800;
+	*/
+	return 683;
 }
