@@ -17,7 +17,7 @@
  * Mousetrap is a simple keyboard shortcut library for Javascript with
  * no external dependencies
  *
- * @version 1.4.4
+ * @version 1.4.5
  * @url craig.is/killing/mice
  */
 (function(window, document, undefined) {
@@ -412,10 +412,10 @@
      * @param {Event} e
      * @returns void
      */
-    function _fireCallback(callback, e, combo) {
+    function _fireCallback(callback, e, combo, sequence) {
 
         // if this event should not happen stop here
-        if (Mousetrap.stopCallback(e, e.target || e.srcElement, combo)) {
+        if (Mousetrap.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
             return;
         }
 
@@ -481,7 +481,7 @@
 
                 // keep a list of which sequences were matches for later
                 doNotReset[callbacks[i].seq] = 1;
-                _fireCallback(callbacks[i].callback, e, callbacks[i].combo);
+                _fireCallback(callbacks[i].callback, e, callbacks[i].combo, callbacks[i].seq);
                 continue;
             }
 
@@ -911,7 +911,7 @@
                 return false;
             }
 
-            // stop for input, select.
+            // stop for input, select
             return element.tagName == 'INPUT' || element.tagName == 'SELECT';
         },
 
