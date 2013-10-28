@@ -8,6 +8,7 @@
 
 /* HTML shortcuts. */
 var altInput; // The input for the alternative text.
+var galleriesButton; // The "Galleries" button.
 var imageButton; // The "Image" button.
 var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.

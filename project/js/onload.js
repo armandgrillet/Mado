@@ -36,6 +36,7 @@ window.onload = function() {
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
+    galleriesButton = document.getElementById("galleries-button");
     imageButton = document.getElementById("image-button");
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
@@ -147,6 +148,7 @@ window.onload = function() {
 
     /* image.js */
     $(imageBrowser).on("click", loadImage);
+    $(galleriesButton).on("click", chooseGalleries);
     $(altInput).keyup(function(e){
         if(e.keyCode == 13) // The user press enter
            applyImage();
