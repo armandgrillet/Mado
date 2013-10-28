@@ -20,6 +20,14 @@ ul li:before {
 	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
 }
 
+.about-logo {
+	/* Positioning */
+	margin: 10px auto;
+
+	/* Box-model */
+	display: block;
+}
+
 /* Terms of Service (ToS) */
 .tos {
 	/* Typography */
