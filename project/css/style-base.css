@@ -936,8 +936,24 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 	color: #4a4942;
 
 	/* Misc */
-	cursor: text; /* Visually report the user that the example code is selectable */
+	cursor: text; /* Visually inform the user that the example code is selectable */
 	-webkit-user-select: text; /* Enable the user to select the example code */
+}
+
+/* Example images for the image insertion syntax */
+.example-image {
+	/* Positioning */
+	margin: 0 auto;
+
+	/* Box-model */
+	width: 33%;
+	height: calc(100% - 10px); /* Delete the visual padding */
+
+	/* Visual */
+	background-color: #e0e0e0;
+	background-image: url("../img/example-image.png");
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 /* IMAGE INSERTION SPECIFICS */

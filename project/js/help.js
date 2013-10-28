@@ -120,8 +120,8 @@ var examples = [
 	["<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"],
 
 	// Images
-	["![alt text](http://armand.gr/mado.png \"Mado\")"],
-	["![alt text](http://armand.gr/mado.png \"Mado\")"],
+	["<div class=\"example-image\"></div>"],
+	["<div class=\"example-image\"></div>"],
 
 	// Code and Syntax Highlighting
 	["<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"],
