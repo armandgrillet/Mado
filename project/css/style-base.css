@@ -389,7 +389,7 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 
 	/* Misc */
 	cursor: pointer;
-	transition: all .1s ease;
+	transition: background-color .1s ease;
 }
 
 #recent-files-info.clear-all:hover {
