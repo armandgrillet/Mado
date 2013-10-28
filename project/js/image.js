@@ -202,7 +202,7 @@ function update () {
 $(document).click(function(e) {
 	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { // Click on the "Image" button with the image insertion tool hidden
 		/* Reset. */
-		imageBrowser.innerHTML = "Chose an image";
+		imageBrowser.innerHTML = "Choose an image";
 		imageStatus.style.display = "none";
 		altInput.value = "";
 		titleInput.value = "";
