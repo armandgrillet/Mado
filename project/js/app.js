@@ -138,7 +138,6 @@ function openFile(fileToOpen) {
 
 		 			// For the footer.
 		 			markdownSaved = e.target.result;
-		 			console.log("Conversion depuis openFile");
 		 			conversion();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
 	 			}
@@ -201,7 +200,7 @@ function saveAsFile () {
 }
 
 function saveFile () {
-	if (fileEntry == undefined) // Nothing saved yet, we have to ask where the user wants to save the document.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;|") // Not saved or not a Markdown file.
 		saveAsFile();
 	else { // If we have already loaded the file.
 		fileEntry.createWriter(

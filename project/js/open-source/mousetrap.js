@@ -911,8 +911,8 @@
                 return false;
             }
 
-            // stop for input, select
-            return element.tagName == 'INPUT' || element.tagName == 'SELECT';
+            // stop for select
+            return element.tagName == 'SELECT';
         },
 
         /**
