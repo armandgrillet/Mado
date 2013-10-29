@@ -1,5 +1,10 @@
 #Changelog de Mado
 
+###29 octobre 2013 : Création de la 0.1 released full.
+
+###28 octobre 2013
+R : Derniers bugs résolus.
+
 ###27 octobre 2013
 L : Logo de A+A terminé. Squelette du site A+A réalisé.
 
