@@ -10,17 +10,19 @@
 
 .sheet:last-of-type img { max-width: 100%; }
 
-.sheet:last-of-type .nofile { cursor: pointer; }
+.sheet:last-of-type .nofile,
+.sheet:last-of-type .nofile-link
+ { cursor: pointer; }
 
-.sheet:last-of-type .nofile-link {
+.sheet:last-of-type .nofile-visual {
 	/* Typography */
 	color: #1c75ea;
 	text-decoration: none;
 }
 
-.sheet:last-of-type .nofile-link { text-decoration: underline; }
+.sheet:last-of-type .nofile-visual { text-decoration: underline; }
 
-.sheet:last-of-type .nofile-link { color: #187af9; }
+.sheet:last-of-type .nofile-visual { color: #187af9; }
 
 /* ------------
 	Paragraphs
