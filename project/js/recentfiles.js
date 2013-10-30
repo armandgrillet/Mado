@@ -137,8 +137,8 @@ function newRecentFile (file) {
 				}
 			}
 			// Now the first recent file is empty, we set the ID and the name.
-			chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}, function() {}); 	
-			chrome.storage.local.set({"recentFile1" : file.fullPath}, function() {});
+			chrome.storage.local.set("recentFileId1" : chrome.fileSystem.retainEntry(file)); 	
+			chrome.storage.local.set("recentFile1" : file.fullPath);
 
 			displayRecentFiles(); // Update the div.
 		}
