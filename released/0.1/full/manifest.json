@@ -10,6 +10,7 @@
   	"name": "Mado",
   	"version": "0.1",
 
+    "author": "A+A",
   	"description": "Mado is a Markdown editor application. You can use it to take notes, write blog posts or edit documents.",
   	"file_handlers": {
 		"text": {

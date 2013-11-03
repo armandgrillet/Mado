@@ -193,7 +193,7 @@ function loadImage () {
 }
 
 function update () {	
-	chrome.mediaGalleries.getMediaFileSystems({ interactive : 'if_needed' }, chromeUpdate);
+	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
 }
 
 /*
