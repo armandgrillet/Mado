@@ -161,6 +161,7 @@ function getImages (entries) {
 			break;
 		}
 		else if (imagePath.indexOf(entries[i].fullPath) != -1) {// It's the correct image!
+			console.log(entries[i].fullPath);
 			getImage(entries[i].fullPath);
 			break; 			
 		}
