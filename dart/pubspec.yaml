@@ -1,0 +1,5 @@
+name: Mado
+description: A sample chrome packaged application
+dependencies:
+  browser: any
+  chrome: 0.3.1
