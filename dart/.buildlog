@@ -343,3 +343,1273 @@ build.dart --machine --full
 
 build.dart finished [54 ms]
 
+---
+build.dart --machine --full
+
+build.dart finished [61 ms]
+
+---
+build.dart --machine --removed=README.md
+
+build.dart finished [65 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [58 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [80 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [78 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [67 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [45 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [67 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [71 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [69 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [149 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [161 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [168 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [159 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [164 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [133 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=pubspec.lock
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [133 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [160 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [156 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\a\mado.dart --removed=app\dart\mado.dart
+
+build.dart finished [133 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart --removed=app\a\mado.dart
+
+build.dart finished [136 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [168 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [170 ms]
+
+---
+build.dart --machine --changed=app\mado.html
+
+build.dart finished [42 ms]
+
+---
+build.dart --machine --changed=app\dart\help.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [131 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [162 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [156 ms]
+
+---
+build.dart --machine --changed=app\dart\help.dart
+
+build.dart finished [130 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [134 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [149 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [160 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --removed=app\dart\help.dart
+
+build.dart finished [174 ms]
+
+---
+build.dart --machine --changed=app\dart\helpManager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart --removed=app\dart\helpManager.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [121 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [134 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [168 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [183 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [140 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [136 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [117 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [139 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [139 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [161 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [140 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [158 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [136 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [153 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [120 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [140 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [142 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\Help.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\Help.dart
+
+build.dart finished [149 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [128 ms]
+
+---
+build.dart --machine --changed=app\dart\Help.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [136 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [149 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [133 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [117 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [120 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [122 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpArray.dart
+
+build.dart finished [142 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpArray.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [133 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\Help.dart
+
+build.dart finished [153 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart --changed=app\dart\help\Help.dart --removed=app\dart\H...
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\HelpManager.dart --changed=app\dart\help\HelpArray.dart --removed=app\d...
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\HelpManager.dart --changed=app\dart\mado.dart --removed=app\dart\H...
+
+build.dart finished [127 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_manager.dart --changed=app\dart\mado.dart --removed=app\dart\...
+
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help.dart --removed=app\dart\help\Help.dart
+
+build.dart finished [157 ms]
+
+---
+build.dart --machine --removed=app\dart\help\HelpArray.dart
+
+build.dart finished [127 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_array.dart
+
+build.dart finished [125 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_array.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_manager.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_manager.dart
+
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=app\dart\help\help_manager.dart
+
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart --removed=app\dart\help\help_manager.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart --removed=app\dart\help\help_array.dart
+
+build.dart finished [121 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart --removed=app\dart\help\help.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [172 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [117 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [139 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [158 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [142 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [138 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [139 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [131 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [152 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [136 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [131 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [159 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [129 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [161 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [135 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [128 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [165 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [132 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [149 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [121 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [128 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [150 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [119 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [146 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [148 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [151 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [128 ms]
+
+---
+build.dart --machine --changed=app\dart\mado.dart
+
+build.dart finished [143 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [128 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [145 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [153 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [153 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [144 ms]
+
+---
+build.dart --machine --changed=app\dart\help\block.dart
+
+build.dart finished [142 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [161 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [121 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [131 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=app\dart\help\array.dart
+
+build.dart finished [147 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [154 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [156 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [129 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [134 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [156 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [130 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [157 ms]
+
+---
+build.dart --machine --changed=app\dart\help\manager.dart
+
+build.dart finished [129 ms]
+

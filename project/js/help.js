@@ -155,7 +155,7 @@ var examples = [
 	* switchResult (result number): show the answer or the example when the user click on a switch.
 */
 
-function activateHelp () { // Show the help input and focus when the help button is clicked.
+function activateHelp () { // Show the help input and focus when the help button is clicked. MAYBE USELESS
 	if (helpDisplayer.className == "hidden") {
 		helpDisplayer.className = " ";
     	help.focus();
