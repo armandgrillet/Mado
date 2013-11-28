@@ -2,8 +2,8 @@ library help_manager;
 
 import "dart:html";
 
-import 'array.dart';
-import 'block.dart';
+import "array.dart";
+import "block.dart";
 
 class HelpManager {
 	// The HTML shortcuts. 	
