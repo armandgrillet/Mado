@@ -1,8 +1,0 @@
-name: Mado
-description: A sample chrome packaged application
-dependencies:
-  bot_web: '>=0.20.6'
-  browser: any
-  chrome: '>=0.3.1'
-  markdown: any
-  meta: any
