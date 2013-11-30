@@ -46,10 +46,10 @@ function counterSelection () {
 }
 
 function displayCounter (counter) {
-	charsDiv.innerHTML = ' ' + counter.characters + " characters&nbsp;";
-  	wordsDiv.innerHTML = ' ' + counter.words + " words&nbsp;";
+	charsDiv.innerHTML = "&nbsp;" + counter.characters + " characters&nbsp;";
+  	wordsDiv.innerHTML = "&nbsp;" + counter.words + " words&nbsp;";
   	if (counter.characters == 1)
-  		charsDiv.innerHTML = ' ' + counter.characters + " character&nbsp;";
+  		charsDiv.innerHTML = "&nbsp;" + counter.characters + " character&nbsp;";
   	if (counter.words == 1)
-		wordsDiv.innerHTML = ' ' + counter.words + " word&nbsp;";
+		wordsDiv.innerHTML = "&nbsp;" + counter.words + " word&nbsp;";
 }

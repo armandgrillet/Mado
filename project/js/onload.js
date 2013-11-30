@@ -195,9 +195,12 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
     
-    /* stats.js */
+    /* stats.js 
+    * Waiting for the prod.
+    
     if (navigator.onLine)
         initStats();
+    */
 
     /* styles.js */
     getStyle();
