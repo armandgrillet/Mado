@@ -165,7 +165,13 @@ window.onload = function() {
         if(e.keyCode == 27) // The user press echap
             $(imageButton).click();
     });
-    
+    $(titleInput).keydown(function(e){
+        if (e.keyCode == 9) { // The user press tab
+            e.preventDefault();
+            $(altInput).select();
+        }
+    })
+
     /* link.js */
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
 
@@ -185,6 +191,12 @@ window.onload = function() {
         if(e.keyCode == 27) // The user press echap
             $(linkButton).click();
     });
+    $(hypertextInput).keydown(function(e){
+        if (e.keyCode == 9) { // The user press tab
+            e.preventDefault();
+            $(urlInput).select();
+        }
+    })
 
     /* More.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
