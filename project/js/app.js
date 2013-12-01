@@ -237,6 +237,7 @@ function theMinWidth () {
 *
 * Resume:
 	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
+	* chrome.runtime.getBackgroundPage(function (backgroundPage): what to do when the window is closed.
 	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
 */
 
@@ -249,10 +250,16 @@ chrome.app.window.current().onBoundsChanged.addListener(function () {
 				if (windowResizing)
 					switchToBoth.click(); // viewswitch.js
 		});
-	chrome.storage.local.set({"lastX" : window.screenX, "lastY" : window.screenY, "lastWidth" : window.innerWidth, "lastHeight" : window.innerHeight });
+	
 });
 
-chrome.storage.onChanged.addListener(function(changes, namespace) { // What to do when a storage value is changed.
+chrome.runtime.getBackgroundPage(function (backgroundPage) {
+	chrome.app.window.current().onClosed.addListener(function () {
+	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	});
+});
+
+chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
         if (key == "gfm")
             setEditorSyntax(); // editor.js
@@ -264,7 +271,3 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { // What to d
             setTrackingPermission(); // stats.js 
     }
 });
-
-
-
-

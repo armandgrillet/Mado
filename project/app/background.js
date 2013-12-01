@@ -46,12 +46,16 @@ function theMinWidth () {
 function windowCreation () {
 	chrome.storage.local.get(["lastX", "lastY", "lastWidth", "lastHeight"], function(mado) {
 		if (mado["lastX"] != undefined && mado["lastY"] != undefined && mado["lastWidth"] != undefined && mado["lastHeight"] != undefined
-		&& !isNaN(mado["lastX"]) && !isNaN(mado["lastY"]) && !isNaN(mado["lastWidth"]) && !isNaN(mado["lastHeight"])
-		&&	mado["lastX"] > 0 && mado["lastY"] > 0 && mado["lastWidth"] >= 240 && mado["lastHeight"] >= 683)
+		&& ! isNaN(mado["lastX"]) && ! isNaN(mado["lastY"]) && ! isNaN(mado["lastWidth"]) && ! isNaN(mado["lastHeight"])
+		&&	mado["lastX"] >= 0 && mado["lastY"] >= 0 && mado["lastWidth"] >= 240 && mado["lastHeight"] >= 683)
 			anotherWindow(mado["lastX"], mado["lastY"], mado["lastWidth"], mado["lastHeight"]);
 		else
 			firstWindow();
 	});	
+}
+
+function newBounds (lastX, lastY, lastWidth, lastHeight) {
+	chrome.storage.local.set({"lastX" : lastX, "lastY" : lastY, "lastWidth" : lastWidth, "lastHeight" : lastHeight });
 }
 
 /*
@@ -67,10 +71,3 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 	else // New file.
 	  	windowCreation();
 });
-
-
-
-
-
-
-
