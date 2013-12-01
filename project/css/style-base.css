@@ -957,6 +957,14 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 }
 
 /* IMAGE INSERTION SPECIFICS */
+#browse-image-module {
+	/* Positioning */
+	clear: both;
+
+	/* Box-model */
+	padding-top: 5px;
+}
+
 #image-status-container {
 	/* Positioning */
 	float: left;
@@ -1002,8 +1010,6 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 #conversion-control .tool-arrow {
 	/* Positioning */
 	margin-right: 1px;
-
-	/* Box-model */
 	float: right;
 
 	/* Visual */

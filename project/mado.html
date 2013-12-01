@@ -219,17 +219,19 @@
 							<div class="tool-arrow"></div>
 
 							<div class="tool-box" id="image-insertion-box">
+								<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
+								<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
 								<!-- The browse button is required, it asks the user to choose an image on his hard drive.
 									 Two cases here:
 									 - No image chosen already: the label ("p" element) is hidden, and the browse button is entitled "Choose an image".
 									 - Already an image chosen: the label shows the image title and extension, and the browse button is entitled "Change the image". -->
-								<div class="cta button" id="browse-image"></div><div id="image-status-container"><p class="no-image" id="image-status"></p></div>
+								<div id="browse-image-module">
+									<div class="cta button" id="browse-image"></div><div id="image-status-container"><p class="no-image" id="image-status"></p></div>
+								</div>
 								<!-- The first input is required, it asks the user to type the alt text for the image. -->
 								<input type="text" id="alt-input" placeholder="Type an alt text">
 								<!-- The second input is optional, it enables the user to type a title for the image. -->
 								<input type="text" id="title-input" placeholder="Type a title (optional)">
-								<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
-								<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
 							</div>
 						</div>
 					</li>
