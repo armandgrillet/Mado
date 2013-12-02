@@ -10,6 +10,7 @@ var fileEntry; // This is the variable who stores the file opened.
 * Functions (in alphabetical order).
 *
 * Resume:
+	* closeWindow(): what to do when the window is closed.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
 	* string fileName (entirePath): return a string who is just the name of the file manipulated (with the extension).
@@ -22,6 +23,13 @@ var fileEntry; // This is the variable who stores the file opened.
 	* saveFile (): what to do when the user clicks on "Save", if the user haven't save its document yet, the function who's working is saveAsFile ().
 	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
 */
+
+function closeWindow() {
+	chrome.runtime.getBackgroundPage(function (backgroundPage) {
+	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	});
+	chrome.app.window.current().close();
+}
 
 function errorHandler() {
 	if (fileInLoading != undefined) {
@@ -111,6 +119,7 @@ function newWindow () {
 			      	width: window.innerWidth,
 			      	height: window.innerHeight
 			    }, 
+			    frame: "none",
 			    minWidth: theMinWidth(), 
 				minHeight: 240
 		  	}
@@ -237,7 +246,6 @@ function theMinWidth () {
 *
 * Resume:
 	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
-	* chrome.runtime.getBackgroundPage(function (backgroundPage): what to do when the window is closed.
 	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
 */
 
@@ -251,12 +259,6 @@ chrome.app.window.current().onBoundsChanged.addListener(function () {
 					switchToBoth.click(); // viewswitch.js
 		});
 	
-});
-
-chrome.runtime.getBackgroundPage(function (backgroundPage) {
-	chrome.app.window.current().onClosed.addListener(function () {
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
-	});
 });
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.

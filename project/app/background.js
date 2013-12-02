@@ -17,6 +17,7 @@ function anotherWindow (theX, theY, theWidth, theHeight) {
 	      	width: theWidth,
 	      	height: theHeight
 	    }, 
+    	frame: "none",
 	    minWidth: theMinWidth(), 
 	    minHeight: 240
 	});
@@ -28,6 +29,7 @@ function firstWindow () {
 	      	width: Math.round(screen.width * 0.85),
 	      	height: Math.round(screen.height * 0.85)
 	    }, 
+	    frame: "none",
 	    minWidth: theMinWidth(), 
 	    minHeight: 240
 	});

@@ -12,7 +12,8 @@ window.onload = function() {
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
-    
+    windowClose = document.getElementById("window-close");
+
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
     textarea = document.getElementById("markdown");   
@@ -123,6 +124,7 @@ window.onload = function() {
     $(saveAsButton).on("click", saveAsFile);
     Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
     $(exportButton).on("click", exportFileHTML);
+    $(windowClose).on("click", closeWindow);
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
