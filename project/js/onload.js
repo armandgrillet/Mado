@@ -13,6 +13,8 @@ window.onload = function() {
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
     windowClose = document.getElementById("window-close");
+    windowMax = document.getElementById("window-maximize");
+    windowMin = document.getElementById("window-minimize");
 
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
@@ -131,6 +133,10 @@ window.onload = function() {
 
     $(windowClose).on("click", closeWindow);
     Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+
+    $(windowMax).on("click", maximizeWindow);
+
+    $(windowMin).on("click", minimizeWindow);
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.

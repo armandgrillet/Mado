@@ -1,10 +1,12 @@
 /* The JS to control the scripts between Mado and the computer. */
 
 /* 
-* Variable. 
+* Variables (in alphabetical order). 
 */
 
+var bounds; // This is the variable who stores the bounds when the window is maximised.
 var fileEntry; // This is the variable who stores the file opened.
+var lastWidth; // This is the last zier of the window.
 
 /*
 * Functions (in alphabetical order).
@@ -69,7 +71,20 @@ function fileName (path) {
 	return path.substring(path.lastIndexOf('/') + 1); 
 }
 
-function moreWindow(choice) {
+function maximizeWindow () {
+	if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
+		bounds = chrome.app.window.current().getBounds();
+		chrome.app.window.current().maximize();
+	}
+	else // Restore the last bounds.
+		chrome.app.window.current().setBounds(bounds);
+}
+
+function minimizeWindow () {
+	chrome.app.window.current().minimize();
+}
+
+function moreWindow (choice) {
 	chrome.app.window.create(
 		choice, 
 		{
@@ -250,14 +265,15 @@ function theMinWidth () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
+	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated") {
+		lastWidth = window.innerWidth;
 		switchToMD.click(); // Markdown is set as default view.
-	else 
-		chrome.storage.local.get("lastWidth", function (mado) {
-			if (window.innerWidth >= 1366 && mado["lastWidth"] < 1366) 
-				if (windowResizing)
-					switchToBoth.click(); // viewswitch.js
-		});
+	}
+	else if (window.innerWidth >= 1366 && lastWidth < 1366) {
+		lastWidth = window.innerWidth;
+		if (windowResizing)
+			switchToBoth.click(); // viewswitch.js
+	}
 	
 });
 

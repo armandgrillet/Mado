@@ -14,6 +14,9 @@
 
 	/* Visual */
 	background-color: white;
+
+	/* Drag */
+	-webkit-app-region: drag;
 }
 
 #window-bar li {
@@ -26,6 +29,9 @@
 
 	/* Misc */
 	cursor: pointer;
+
+	/* No drag */
+	-webkit-app-region: no-drag;
 }
 
 #window-bar li:first-of-type { background-color: red; }
