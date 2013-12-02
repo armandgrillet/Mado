@@ -18,7 +18,7 @@ body {
 
 body {
 	/* Box-model */
-	padding: 40px 0 20px; /* Simplifies positioning according to the topbar and the footer */
+	padding: 66px 0 20px; /* Simplifies positioning according to the topbar and the footer */
 	overflow: hidden;
 
 	/* Typography */
@@ -147,7 +147,7 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 #navbar {
 	/* Positioning */
 	position: fixed;
-	top: 0;
+	top: 26px;
 	left: 0;
 	z-index: 1000;
 
@@ -535,7 +535,7 @@ input[type="text"]:focus { border: 1px solid #e0e0e0; }
 #switch-cursor {
 	/* Positioning */
 	position: fixed;
-	top: 36px;
+	top: 62px;
 	left: 50%;
 	z-index: 1500;
 
