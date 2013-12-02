@@ -117,14 +117,20 @@ window.onload = function() {
 
     $(newButton).on("click", newWindow);
     Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
+    
     $(openButton).on("click", openFileButton);
     Mousetrap.bind(['command+o', 'ctrl+o'], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
+    
     $(saveButton).on("click", saveFile);
     Mousetrap.bind(['command+s', 'ctrl+s'], function(e) { saveFile(); return false; }); // Ctrl+s = save.
+    
     $(saveAsButton).on("click", saveAsFile);
     Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
+    
     $(exportButton).on("click", exportFileHTML);
+
     $(windowClose).on("click", closeWindow);
+    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
