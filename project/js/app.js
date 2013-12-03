@@ -30,7 +30,27 @@ function closeWindow() {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) {
 	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
 	});
-	chrome.app.window.current().close();
+	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") {
+		chrome.app.window.create(
+			"alerts/unsaved-changes.html", 
+			{
+			    bounds: {
+			    	left: Math.round((window.screenX + (($(window).width() - 650) / 2))), // Perfect alignement.
+			    	top: Math.round((window.screenY + (($(window).height() - 200) / 2))), // Always perfect.
+			      	width: 650,
+			      	height: 200
+			    }, 
+			    frame: "none",
+			    // The window can't be resized.
+			    minWidth: 650, 
+			    minHeight: 200,
+			    maxWidth: 650,
+			    maxHeight: 200
+		  	}
+	  	);
+	}
+	else
+		chrome.app.window.current().close();
 }
 
 function errorHandler() {

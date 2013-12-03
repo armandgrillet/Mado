@@ -9,6 +9,13 @@
 		<!-- Generic CSS -->
 		<link rel="stylesheet" type="text/css" href="../css/reset.css">
 		<link rel="stylesheet" type="text/css" href="../css/alerts/style-base.css">
+
+		<!-- Generic JS -->
+		<script type="text/javascript" src="../js/open-source/jquery-2.0.3.min.js"></script>
+
+		<!-- JS for Mado (alphabetical order) -->
+		<script type="text/javascript" src="../js/alerts/unsaved-changes.js"></script>
+		<script type="text/javascript" src="../js/alerts/unsaved-changes-onload.js"></script>
 	</head>
 	
 	<body>
@@ -30,13 +37,13 @@
 		<footer id="alert-actions">
 			
 			<div class="alert-button-container">
-				<div class="cta button button-grey">Cancel</div>
+				<div class="cta button button-grey" id="cancel">Cancel</div>
 			</div>
 			<div class="alert-button-container">
-				<div class="cta button button-grey">No, don't save</div>
+				<div class="cta button button-grey" id="quit">No, don't save</div>
 			</div>
 			<div class="alert-button-container">
-				<div class="cta button">Save and exit</div>
+				<div class="cta button" id="sage-quit">Save and exit</div>
 			</div>
 		</footer>
 	</body>
