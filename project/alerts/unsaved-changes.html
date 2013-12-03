@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<title>Mado</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Generic CSS -->
+		<link rel="stylesheet" type="text/css" href="../css/reset.css">
+		<link rel="stylesheet" type="text/css" href="../css/alerts/style-base.css">
+	</head>
+	
+	<body>
+
+		<h1 id="alert-title">Unsaved changes</h1>
+
+		<div class="alert-part">
+
+			<p>
+				The document <span id="doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
+			</p>
+		</div>
+
+		<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
+			 Three buttons here:
+			 - "Cancel": don't close the document and close the alert;
+			 - "No, don't save": close the document without saving the chages;
+			 - "Save and exit": save the changes, then close the document. -->
+		<footer id="alert-actions">
+			
+			<div class="alert-button-container">
+				<div class="cta button button-grey">Cancel</div>
+			</div>
+			<div class="alert-button-container">
+				<div class="cta button button-grey">No, don't save</div>
+			</div>
+			<div class="alert-button-container">
+				<div class="cta button">Save and exit</div>
+			</div>
+		</footer>
+	</body>
+</html>

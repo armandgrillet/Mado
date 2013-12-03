@@ -1,6 +1,11 @@
 /* ============
 	WINDOW BAR
-   ============ */
+   ============
+	Specific styles for Mado's window bar.
+	It displays three buttons:
+		- "Minimize": on click, Mado is minimized;
+		- "Maximize"/"Restore": on click, Mado is set to fullscreen mode or restored to its last dimensions;
+		- "Close": on click, closes the document. */
 
 #window-bar {
 	/* Positioning */
@@ -14,9 +19,7 @@
 
 	/* Visual */
 	background-color: white;
-
-	/* Drag */
-	-webkit-app-region: drag;
+	-webkit-app-region: drag; /* Disable drag action */
 }
 
 #window-bar li {
@@ -29,9 +32,7 @@
 
 	/* Misc */
 	cursor: pointer;
-
-	/* No drag */
-	-webkit-app-region: no-drag;
+	-webkit-app-region: no-drag; /* Disable drag action */
 }
 
 #window-bar li:first-of-type { background-color: red; }
