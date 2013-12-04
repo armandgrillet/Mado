@@ -1,0 +1,57 @@
+/* ==============
+	MISCELLANOUS
+   ============== */
+
+body { padding: 20px 20px 80px; } /* The padding-bottom matches the footer's height */
+
+#alert-message {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	overflow-y: auto; /* Enables long messages */
+}
+
+
+/* ==============
+	ALERT STYLES
+   ============== */
+/* Main title for the option window */
+#alert-title {
+	/* Box-model */
+	padding-bottom: 14px;
+
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "RobotoLight", "Roboto Light", "Open Sans", sans-serif;
+	font-size: 22pt;
+	line-height: 40px;
+}
+
+/* Content block inside the option window */
+.alert-part { line-height: 27px; }
+
+.alert-part:not(:first-of-type) { padding-top: 10px; }
+
+.alert-part:not(:last-of-type) { padding-bottom: 10px; }
+
+/* ---------------
+	Alert actions
+   ---------------
+   Contains the style for the alert's footer. The footer itself contains the buttons that respond to the alert. */
+#alert-actions {
+	/* Positioning */
+	position: fixed;
+	bottom: 0;
+	left: 0;
+
+	/* Box-model */
+	width: 100%;
+	height: 80px;
+	padding: 20px;
+
+	/* Visual */
+	background-color: #f8f8f8;
+}
+
+.alert-button-container { float: left; }
+
+.alert-button-container:not(:last-of-type) { padding-right: 5px; }

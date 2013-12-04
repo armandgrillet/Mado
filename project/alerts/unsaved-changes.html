@@ -8,7 +8,10 @@
 
 		<!-- Generic CSS -->
 		<link rel="stylesheet" type="text/css" href="../css/reset.css">
-		<link rel="stylesheet" type="text/css" href="../css/alerts/style-base.css">
+		<link rel="stylesheet" type="text/css" href="../css/style-base.css">
+
+		<!-- CSS for alerts -->
+		<link rel="stylesheet" type="text/css" href="../css/alerts/alerts-base.css">
 
 		<!-- Generic JS -->
 		<script type="text/javascript" src="../js/open-source/jquery-2.0.3.min.js"></script>
@@ -20,14 +23,17 @@
 	
 	<body>
 
-		<h1 id="alert-title">Unsaved changes</h1>
+		<section id="alert-message">
 
-		<div class="alert-part">
+			<h1 id="alert-title">Unsaved changes</h1>
 
-			<p>
-				The document <span id="doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
-			</p>
-		</div>
+			<div class="alert-part">
+
+				<p>
+					The document <span id="doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
+				</p>
+			</div>
+		</section>
 
 		<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
 			 Three buttons here:

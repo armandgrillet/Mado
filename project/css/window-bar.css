@@ -19,7 +19,7 @@
 
 	/* Visual */
 	background-color: white;
-	-webkit-app-region: drag; /* Disable drag action */
+	-webkit-app-region: drag; /* Enable drag action */
 }
 
 #window-bar li {
