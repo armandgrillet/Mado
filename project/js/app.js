@@ -27,29 +27,13 @@ var lastWidth; // This is the last zier of the window.
 */
 
 function closeWindow() {
-	chrome.runtime.getBackgroundPage(function (backgroundPage) {
+	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
 	});
-	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") {
-		chrome.app.window.create(
-			"alerts/unsaved-changes.html", 
-			{
-			    bounds: {
-			    	left: Math.round((window.screenX + (($(window).width() - 650) / 2))), // Perfect alignement.
-			    	top: Math.round((window.screenY + (($(window).height() - 200) / 2))), // Always perfect.
-			      	width: 650,
-			      	height: 200
-			    }, 
-			    frame: "none",
-			    // The window can't be resized.
-			    minWidth: 650, 
-			    minHeight: 200,
-			    maxWidth: 650,
-			    maxHeight: 200
-		  	}
-	  	);
+	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") { // Save not made.
+		console.log("Sauvegarde non faite")
 	}
-	else
+	else 
 		chrome.app.window.current().close();
 }
 
@@ -299,13 +283,13 @@ chrome.app.window.current().onBoundsChanged.addListener(function () {
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
-        if (key == "gfm")
-            setEditorSyntax(); // editor.js
-        else if (key == "resize")
-            setWindowResizing(); // viewswitch.js 
+   		if (key == "analytics")
+            setTrackingPermission(); // stats.js 
         else if (key == "displaySize")
             newDisplaySize(); // app.js 
-        else if (key == "analytics")
-            setTrackingPermission(); // stats.js 
+        else if (key == "gfm")
+            setEditorSyntax(); // editor.js
+        else if (key == "resize")
+            setWindowResizing(); // viewswitch.js         
     }
 });
