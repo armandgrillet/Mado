@@ -12,13 +12,14 @@
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 3000;
 
 	/* Box-model */
 	width: 100%;
 	height: 26px; /* /!\ CHANGE FOR AESTHETIC */
 
 	/* Visual */
-	background-color: white;
+	background-color: white; /* /!\ CHANGE FOR AESTHETIC */
 	-webkit-app-region: drag; /* Enable drag action */
 }
 
@@ -31,12 +32,130 @@
 	height: 26px;
 
 	/* Misc */
-	cursor: pointer;
 	-webkit-app-region: no-drag; /* Disable drag action */
 }
 
-#window-bar li:first-of-type { background-color: red; }
+#window-close { background-color: red; }
 
-#window-bar li:nth-of-type(2) { background-color: gray; }
+#window-maximize { background-color: gray; }
 
-#window-bar li:last-of-type { background-color: #eee; }
+#window-minimize { background-color: #eee; }
+
+/* -------
+	Alert
+   ------- */
+/* Setting the "Close" button's positioning to relative */
+#window-close {
+	/* Positioning */
+	position: relative;
+	z-index: 3000;
+}
+
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	position: absolute;
+	top: 26px;
+	right: 5px;
+	z-index: 3500;
+
+	/* Box-model */
+	width: 450px;
+
+	/* Misc */
+	-webkit-transform-origin: 430px 1px;
+	transition: all .15s ease-out;
+}
+
+#close-alert-displayer.hidden { -webkit-transform: scale(0); }
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow {
+	/* Positioning */
+	position: relative; /* For the Z-index */
+	margin: 1px 0 0 426px;
+	z-index: 1500;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-color: transparent transparent #fff transparent;
+	border-style: solid;
+	border-width: 0 4px 4px 4px;
+}
+
+#close-alert-container {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	width: 450px;
+	height: 225px;
+	overflow: hidden;
+	padding: 20px 20px 80px; /* The padding-bottom matches the footer's height */
+
+	/* Typography */
+	color: #4a4942;
+	font-size: 10pt;
+	line-height: 12pt;
+	text-align: left;
+
+	/* Visual */
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0,0,0,.2);
+
+	/* Misc */
+	transition: height .1s ease;
+}
+
+#alert-message {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	overflow-y: auto; /* Enables long messages */
+}
+
+/* ALERT STYLES */
+/* Main title for the alert */
+#alert-title {
+	/* Box-model */
+	padding-bottom: 14px;
+
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "RobotoLight", "Roboto Light", "Open Sans", sans-serif;
+	font-size: 22pt;
+	line-height: 40px;
+}
+
+/* Content block inside the option window */
+.alert-part { line-height: 27px; }
+
+.alert-part:not(:first-of-type) { padding-top: 10px; }
+
+.alert-part:not(:last-of-type) { padding-bottom: 10px; }
+
+/* ---------------
+	Alert actions
+   ---------------
+   Contains the style for the alert's footer. The footer itself contains the buttons that respond to the alert. */
+#alert-actions {
+	/* Positioning */
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	/* Box-model */
+	width: 100%;
+	height: 80px;
+	padding: 20px;
+
+	/* Visual */
+	background-color: #f8f8f8;
+}
+
+.alert-button-container { float: left; }
+
+.alert-button-container:not(:last-of-type) { padding-right: 5px; }

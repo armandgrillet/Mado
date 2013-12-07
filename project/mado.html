@@ -60,9 +60,49 @@
 				<nav id="window-bar">
 					
 					<ul>
-						<li id="window-close"></li>
-						<li id="window-maximize"></li>
-						<li id="window-minimize"></li>
+						<li id="window-close">
+							
+							<div class="cta" id="window-close-button"></div>
+							<!-- Close alert displayer -->
+							<div class="hidden" id="close-alert-displayer">
+
+								<div id="close-alert-arrow"></div>
+								<div id="close-alert-container">
+
+									<section id="alert-message">
+
+										<h1 id="alert-title">Unsaved changes</h1>
+
+										<div class="alert-part">
+
+											<p>
+												The document <span id="doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
+											</p>
+										</div>
+									</section>
+
+									<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
+										 Three buttons here:
+										 - "Cancel": don't close the document and close the alert;
+										 - "No, don't save": close the document without saving the changes;
+										 - "Save and exit": save the changes, then close the document. -->
+									<footer id="alert-actions">
+										
+										<div class="alert-button-container">
+											<div class="cta button button-grey" id="cancel">Cancel</div>
+										</div>
+										<div class="alert-button-container">
+											<div class="cta button button-grey" id="quit">No, don't save</div>
+										</div>
+										<div class="alert-button-container">
+											<div class="cta button" id="save-quit">Save and exit</div>
+										</div>
+									</footer>
+								</div>
+							</div>
+						</li>
+						<li class="cta" id="window-maximize"></li>
+						<li class="cta" id="window-minimize"></li>
 					</ul>
 				</nav>
 
@@ -83,7 +123,7 @@
 							<!-- Recent files displayer -->
 							<div class="hidden" id="recent-files-displayer">
 
-							<div id="recent-files-arrow"></div>
+								<div id="recent-files-arrow"></div>
 								<!-- Recent files container -->
 								<ul id="recent-files-container">
 								</ul>

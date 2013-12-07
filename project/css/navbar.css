@@ -420,7 +420,9 @@
 /* Switch cursor's position when in HTML view */
 .conversion-view #switch-cursor { margin-left: 61px; }
 
-/* "MORE" OPTIONS */
+/* ----------------
+	"More" options
+   ---------------- */
 /* Setting the "More" button's positioning to relative */
 #more { position: relative; }
 
