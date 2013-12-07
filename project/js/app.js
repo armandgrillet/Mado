@@ -4,7 +4,6 @@
 * Variables (in alphabetical order). 
 */
 
-var bounds; // This is the variable who stores the bounds when the window is maximised.
 var fileEntry; // This is the variable who stores the file opened.
 var lastWidth; // This is the last zier of the window.
 
@@ -25,17 +24,6 @@ var lastWidth; // This is the last zier of the window.
 	* saveFile (): what to do when the user clicks on "Save", if the user haven't save its document yet, the function who's working is saveAsFile ().
 	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
 */
-
-function closeWindow() {
-	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
-	});
-	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") { // Save not made.
-		console.log("Sauvegarde non faite")
-	}
-	else 
-		chrome.app.window.current().close();
-}
 
 function errorHandler() {
 	if (fileInLoading != undefined) {
@@ -73,19 +61,6 @@ function exportFileHTML () {
 
 function fileName (path) {
 	return path.substring(path.lastIndexOf('/') + 1); 
-}
-
-function maximizeWindow () {
-	if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
-		bounds = chrome.app.window.current().getBounds();
-		chrome.app.window.current().maximize();
-	}
-	else // Restore the last bounds.
-		chrome.app.window.current().setBounds(bounds);
-}
-
-function minimizeWindow () {
-	chrome.app.window.current().minimize();
 }
 
 function moreWindow (choice) {
@@ -269,16 +244,12 @@ function theMinWidth () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated") {
-		lastWidth = window.innerWidth;
+	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	}
-	else if (window.innerWidth >= 1366 && lastWidth < 1366) {
-		lastWidth = window.innerWidth;
-		if (windowResizing)
-			switchToBoth.click(); // viewswitch.js
-	}
-	
+	else if (window.innerWidth >= 1366 && lastWidth < 1366 && windowResizing) 
+		switchToBoth.click(); // viewswitch.js
+
+	lastWidth = window.innerWidth;
 });
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.

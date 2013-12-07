@@ -47,22 +47,3 @@ function applyLink () {
 /*
 * Listener.
 */
-
-$(document).click(function(e) {
-	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
-		/* Reset. */
-		urlInput.value = "";
-		hypertextInput.value = "";
-
-		linkDisplayer.className = "tool-displayer";
-		startSelect = textarea.selectionStart;
-		endSelect = textarea.selectionEnd;
-		if (startSelect != endSelect) {
-			textarea.setSelectionRange(startSelect, endSelect);
-			hypertextInput.value = textarea.value.substring(startSelect, endSelect);
-		}
-		urlInput.focus();
-	}
-	else if (! $(e.target).closest(linkDisplayer).length)		
-		linkDisplayer.className = "tool-displayer hidden";
-});

@@ -113,7 +113,7 @@ function displayRecentFiles () {
     ); 
 }
 
-function newRecentFile (file) {
+function newRecentFile (file, after) {
 	chrome.storage.local.get( // We have to affect the local storage
 		recentFiles, // Get all the recent files.
 		function(mado) { 
@@ -131,16 +131,23 @@ function newRecentFile (file) {
 						chromeLocalFile = ("recentFile" + j).toString();
 						nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
 						chrome.storage.local.set(nameContainer);
-						nameContainer = {};									
+						nameContainer = {};		
+
+						if (j == 2) { // The end.
+							// Now the first recent file is empty, we set the ID and the name.
+							chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}); 	 	
+							chrome.storage.local.set({"recentFile1" : file.fullPath});
+
+							displayRecentFiles(); // Update the div.
+
+							if (after != undefined && after == "quit")
+								quitCloseWindow();
+						}							
 					}
 					break; // End of the loop
 				}
 			}
-			// Now the first recent file is empty, we set the ID and the name.
-			chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}); 	 	
-			chrome.storage.local.set({"recentFile1" : file.fullPath});
-
-			displayRecentFiles(); // Update the div.
+			
 		}
 	);
 }
@@ -222,16 +229,3 @@ function removeAllFilesInStorage (fileNumber) {
 		}	
 	);
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) { 
-	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
-		displayRecentFiles(); // If the user remove something from another window.
-		recentFilesDisplayer.className = "";
-	}
-	else if (! $(e.target).closest(recentFilesContainer).length && recentFilesDisplayer.className == "")
-		recentFilesDisplayer.className = "hidden";
-});

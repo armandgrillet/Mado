@@ -12,10 +12,7 @@ window.onload = function() {
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
-    windowClose = document.getElementById("window-close");
-    windowMax = document.getElementById("window-maximize");
-    windowMin = document.getElementById("window-minimize");
-
+    
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
     textarea = document.getElementById("markdown");   
@@ -82,6 +79,15 @@ window.onload = function() {
     switchToHTML = document.getElementById("switch-html");
     switchButtons.push(switchToMD, switchToBoth, switchToHTML); // Wrapping the switch buttons in an array.
 
+    /* window.js */
+    cancelCloseButton = document.getElementById("cancel"); 
+    closeDisplayer = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
+    quitCloseButton = document.getElementById("quit");
+    saveQuitCloseButton = document.getElementById("save-quit");
+    windowClose = document.getElementById("window-close");
+    windowMax = document.getElementById("window-maximize");
+    windowMin = document.getElementById("window-minimize");
+
     /*
     * Functions (JS files in alphabetical order).
     */
@@ -130,13 +136,6 @@ window.onload = function() {
     Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
     
     $(exportButton).on("click", exportFileHTML);
-
-    $(windowClose).on("click", closeWindow);
-    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
-
-    $(windowMax).on("click", maximizeWindow);
-
-    $(windowMin).on("click", minimizeWindow);
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
@@ -245,4 +244,15 @@ window.onload = function() {
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
     Mousetrap.bind(['command+alt+left', 'ctrl+alt+left'], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
     Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
+
+    /* window.js */
+    $(quitCloseButton).on("click", quitCloseWindow);
+    $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
+
+    $(windowClose).on("click", closeWindow);
+    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+
+    $(windowMax).on("click", maximizeWindow);
+
+    $(windowMin).on("click", minimizeWindow);
 }

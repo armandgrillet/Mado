@@ -196,28 +196,3 @@ function loadImage () {
 function update () {	
 	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) {
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { // Click on the "Image" button with the image insertion tool hidden
-		/* Reset. */
-		imageBrowser.innerHTML = "Choose an image";
-		imageStatus.style.display = "none";
-		altInput.value = "";
-		titleInput.value = "";
-		imageLoaded = undefined;
-
-		imageDisplayer.className = "tool-displayer";
-		startSelect = textarea.selectionStart;
-		endSelect = textarea.selectionEnd;
-		if (startSelect != endSelect) {
-			textarea.setSelectionRange(startSelect, endSelect);
-			titleInput.value = textarea.value.substring(startSelect, endSelect);
-		}
-	}
-	else if (! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-});
