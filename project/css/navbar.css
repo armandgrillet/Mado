@@ -28,9 +28,6 @@
 /* Items on the left */
 #navbar .nav-item { float: left; }
 
-/* Slight space on the left of the first item ("New") */
-#navbar .nav-item:first-of-type { margin-left: 5px; }
-
 #navbar .nav-item:not(#recent):hover,
 #recent-button:hover,
 #more-button:hover {
@@ -51,13 +48,7 @@
 }
 
 /* Navbar "More" button is on the right and has a slight space on its right, like the "New" button */
-#more {
-	/* Positioning */
-	margin-right: 5px;
-
-	/* Box-model */
-	float: right;
-}
+#more { float: right; }
 
 /* Navbar icons */
 .nav-icon {
@@ -393,8 +384,8 @@
 /* The switch cursor is a triangle showing which display mode is on */
 #switch-cursor {
 	/* Positioning */
-	position: fixed;
-	top: 62px;
+	position: absolute;
+	top: -4px;
 	left: 50%;
 	z-index: 1500;
 
@@ -431,7 +422,7 @@
 	/* Positioning */
 	position: absolute;
 	top: 40px;
-	right: 0px;
+	right: 5px;
 
 	/* Box-model */
 	width: 120px;
@@ -450,7 +441,7 @@
 #more-arrow {
 	/* Positioning */
 	position: relative; /* For the Z-index */
-	margin: 1px 0 0 96px;
+	margin: 1px 0 0 101px;
 	z-index: 1500;
 
 	/* Box-model */

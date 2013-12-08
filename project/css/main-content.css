@@ -458,14 +458,14 @@
    ---------------------- */
 #center-line-container {
 	/* Positioning */
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 50%;
 
 	/* Box-model */
 	width: 1px;
 	height: 100%;
-	padding: 80px 0 60px; /* /!\ ADJUST PADDING ACCORDING TO THE FINAL APP */
+	padding: 40px 0;
 
 	/* Misc */
 	transition: left .25s ease-out; /* /!\ SAME TRANSITION AS #workspace */
