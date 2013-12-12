@@ -15,6 +15,7 @@ var lastWidth; // This is the last zier of the window.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
 	* string fileName (entirePath): return a string who is just the name of the file manipulated (with the extension).
+	* string minFileName (entirePath): return a string who is just the name of the file manipulated (without the extension).
 	* moreWindow (moreChoice): open the correct window when the user clicks on an element of the "More" dropdown.
 	* newDisplaySize (): what to do when the user changes the display size on the options.
 	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's textarea).
@@ -37,7 +38,7 @@ function exportFileHTML () {
 		chrome.fileSystem.chooseEntry(
 			{
 				type: "saveFile", 
-				suggestedName: "document.html"
+				suggestedName: minFileName(nameDiv.innerHTML) + ".html"
 			}, 
 			function(exportedFile) {
 				if (exportedFile) {
@@ -61,6 +62,10 @@ function exportFileHTML () {
 
 function fileName (path) {
 	return path.substring(path.lastIndexOf('/') + 1); 
+}
+
+function minFileName (path) {
+	return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
 }
 
 function moreWindow (choice) {
