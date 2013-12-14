@@ -16,12 +16,14 @@
 
 	/* Box-model */
 	width: 100%;
-	height: 26px; /* /!\ CHANGE FOR AESTHETIC */
+	height: 20px;
 
 	/* Visual */
-	background-color: white; /* /!\ CHANGE FOR AESTHETIC */
+	background-color: #325c9c;
 	-webkit-app-region: drag; /* Enable drag action */
 }
+
+#window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
 
 #window-bar li {
 	/* Positioning */
@@ -29,7 +31,7 @@
 
 	/* Box-model */
 	width: 40px;
-	height: 26px;
+	height: 100%;
 
 	/* Misc */
 	-webkit-app-region: no-drag; /* Disable drag action */
@@ -55,7 +57,7 @@
 #close-alert-displayer {
 	/* Positioning */
 	position: absolute;
-	top: 26px;
+	top: 20px;
 	right: 5px;
 	z-index: 3500;
 

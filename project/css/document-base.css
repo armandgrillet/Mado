@@ -2,7 +2,7 @@
 	MISCELLANOUS
    ============== */
 
-body { padding: 66px 0 20px; } /* Simplifies positioning according to the topbar and the footer; the padding-top is the sum of the window bar and the navbar */
+body { padding: 60px 0 20px; } /* Simplifies positioning according to the topbar and the footer; the padding-top is the sum of the window bar and the navbar */
 
 #document {
 	/* Positioning */
