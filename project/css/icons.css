@@ -38,7 +38,9 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-/* NAVBAR ICONS */
+/* --------------
+	Navbar icons
+   -------------- */
 .icon-new:before { content: "\e00a"; }
 
 .icon-open:before { content: "\e001"; }
@@ -55,15 +57,17 @@
 
 .icon-more:before { content: "\e007"; }
 
-/* SIDEBAR ICONS */
-/* Left sidebar icons */
+/* ---------------
+	Sidebar icons
+   --------------- */
+/* LEFT SIDEBAR ICONS */
 .icon-help:before { content: "\e010"; }
 
 .icon-link:before { content: "\e011"; }
 
 .icon-image:before { content: "\e012"; }
 
-/* Right sidebar icon */
+/* RIGHT SIDEBAR ICON */
 .icon-style:before { content: "\e020"; }
 
 
@@ -81,6 +85,12 @@
 }
 
 /* Use the following CSS code (one class per icon) */
+.little-icon-win-close,
+.little-icon-win-maximize,
+.little-icon-win-minimize,
+.little-icon-mac-close,
+.little-icon-mac-minimize,
+.little-icon-mac-maximize,
 .little-icon-both,
 .little-icon-switch,
 .little-icon-delete,
@@ -97,15 +107,38 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-/* NAVBAR SWITCH "BOTH" ICON */
+/* -------------
+	Frame icons
+   ------------- */
+/* WINDOWS FRAME ICONS */
+.little-icon-win-close:before { content: "\e200"; }
+
+.little-icon-win-maximize:before { content: "\e201"; }
+
+.little-icon-win-minimize:before { content: "\e202"; }
+
+/* MAC OS X FRAME ICONS */
+.little-icon-mac-close:before { content: "\e300"; }
+
+.little-icon-mac-minimize:before { content: "\e301"; }
+
+.little-icon-mac-maximize:before { content: "\e302"; }
+
+/* ---------------------------
+	Navbar switch "Both" icon
+   --------------------------- */
 .little-icon-both:before { content: "\e010"; }
 
-/* GENERIC ICONS */
+/* ---------------
+	Generic icons
+   --------------- */
 .little-icon-switch:before { content: "\e000"; }
 
 .little-icon-delete:before { content: "\e001"; }
 
-/* FOOTER ICONS */
+/* --------------
+	Footer icons
+   -------------- */
 .little-icon-unsaved:before { content: "\e002"; }
 
 .little-icon-saved:before { content: "\e003"; }
