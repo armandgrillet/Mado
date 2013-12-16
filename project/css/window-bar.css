@@ -2,7 +2,7 @@
 	WINDOW BAR
    ============
 	Specific styles for Mado's window bar.
-	It displays three buttons:
+	It displays the document's name, the app title and three buttons:
 		- "Minimize": on click, Mado is minimized;
 		- "Maximize"/"Restore": on click, Mado is set to fullscreen mode or restored to its last dimensions;
 		- "Close": on click, closes the document. */
@@ -38,15 +38,22 @@
 	line-height: 20px;
 	text-align: center;
 
+	/* Visual */
+	background: transparent;
+
 	/* Misc */
 	-webkit-app-region: no-drag; /* Disable drag action */
 }
 
-#window-close { background-color: red; }
+#window-close-button:hover { background-color: #d11; }
 
-#window-maximize { background-color: gray; }
+#window-close-button:active { background-color: #c01a1a; }
 
-#window-minimize { background-color: #eee; }
+#window-maximize:hover,
+#window-minimize:hover { background-color: #143d7a; }
+
+#window-maximize:active,
+#window-minimize:active { background-color: #103365; }
 
 /* -------
 	Alert

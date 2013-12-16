@@ -9,6 +9,7 @@
 /* HTML shortcuts. */
 var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
+var head; // The "head" section of the main app.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
 var windowCloseContainer; // The close container.
@@ -24,6 +25,7 @@ var bounds; // This is the variable who stores the bounds when the window is max
 *
 * Resume:
 	* closeWindow (): what to do when the user clicks on close.
+	* determineFrame (): which window bar style to display on launch, according to the OS.
 	* maximizeWindow (): what to do when the user clicks on maximize.
 	* minimizeWindow (): what to do when the user clicks on minimize. 
 	* quitCloseWindow (): what to do when the user clicks on "No, don't save".
@@ -40,6 +42,19 @@ function closeWindow () {
 		closeDisplayer.className = "visible";
 	else 
 		chrome.app.window.current().close();
+}
+
+function determineFrame () {
+	var stylesheetLink = document.createElement("link"); // Create a "link" node.
+	stylesheetLink.setAttribute("rel", "stylesheet");
+	stylesheetLink.setAttribute("type", "text/css");
+
+	if (navigator.appVersion.indexOf("Mac") != -1) // If the user is on a Mac, redirect to the Mac window bar styles.
+		stylesheetLink.setAttribute("href", "css/window-bar-mac.css");
+	else // If the user is on another type of computer, redirect to the generic window bar styles.
+		stylesheetLink.setAttribute("href", "css/window-bar-windows.css");
+
+	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
 }
 
 function maximizeWindow () {
@@ -110,4 +125,3 @@ function saveQuitCloseWindow () {
 	else
 		saveAndQuit();
 }
-

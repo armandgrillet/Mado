@@ -82,6 +82,7 @@ window.onload = function() {
     /* window.js */
     cancelCloseButton = document.getElementById("cancel"); 
     closeDisplayer = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
+    head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
     quitCloseButton = document.getElementById("quit");
     saveQuitCloseButton = document.getElementById("save-quit");
     windowCloseContainer = document.getElementById("window-close");
@@ -256,4 +257,6 @@ window.onload = function() {
     $(windowMax).on("click", maximizeWindow);
 
     $(windowMin).on("click", minimizeWindow);
+
+    determineFrame();
 }
