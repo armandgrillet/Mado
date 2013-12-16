@@ -11,6 +11,7 @@ var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
+var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
 var windowMin; // The minimize button.

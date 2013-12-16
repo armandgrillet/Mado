@@ -84,7 +84,8 @@ window.onload = function() {
     closeDisplayer = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
     quitCloseButton = document.getElementById("quit");
     saveQuitCloseButton = document.getElementById("save-quit");
-    windowClose = document.getElementById("window-close");
+    windowCloseContainer = document.getElementById("window-close");
+    windowClose = document.getElementById("window-close-button");
     windowMax = document.getElementById("window-maximize");
     windowMin = document.getElementById("window-minimize");
 

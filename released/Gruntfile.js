@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             // 2. Configuration for concatinating files goes here.
             dist: {
                 src: [
-                    "test/meuh.js", // All my JS.
+                    "test/*.js", // All my JS.
                 ],
                 dest: "test/mado.js",
             }

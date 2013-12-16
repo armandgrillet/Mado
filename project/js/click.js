@@ -78,7 +78,7 @@ $(document).click( function(e) {
 
 	/* window.js */
 	if (closeDisplayer.className == "visible" && ( // The close displayer is visible.
-			! $(e.target).closest(windowClose).length ||  // The click is not on something in the closeDisplayer (closeButton included).
+			! $(e.target).closest(windowCloseContainer).length ||  // The click is not on something in the closeDisplayer (closeButton included).
 			$(e.target).closest(cancelCloseButton).length // The click is on the "Cancel" button.
 			)
 		)		

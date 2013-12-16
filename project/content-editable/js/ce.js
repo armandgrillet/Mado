@@ -3,7 +3,7 @@ var markdownTA;
 var htmlTA;
 var markdownCE;
 var htmlCE;
-var tempMarkdown = document.createElement("div");
+var tempMarkdown;
 var stringRelou = "<div>Meuh<div> la vache </div></div> <div> et toi </div>"
 
 function oldConversion () {
@@ -19,7 +19,10 @@ function conversion () {
 }
 
 function changeTheCe (ce) {
-	tempMarkdown.innerHTML = ce;
+	tempMarkdown = ce;
+	console.log(ce);
+	// console.log("meuh <div>".search(/<div *>/));
+
 	/*
 	// Remove the useless <div>
 	console.log($(tempMarkdown + "> div").length);
