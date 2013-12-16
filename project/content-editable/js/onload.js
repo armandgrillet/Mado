@@ -1,6 +1,10 @@
 window.onload = function() {
-	markdown = document.getElementById("markdown");
-	html = document.getElementById("html-conversion");
+	markdownTA = document.getElementById("markdown-ta");
+	htmlTA = document.getElementById("html-conversion-ta");
 
-	$(markdown).on("input propertychange", conversion);
+	markdownCE = document.getElementById("markdown-ce");
+	htmlCE = document.getElementById("html-conversion-ce");
+
+	$(markdownTA).on("input propertychange", oldConversion);
+	$(markdownCE).on("input propertychange", conversion);
 }
