@@ -3,8 +3,11 @@ var markdownTA;
 var htmlTA;
 var markdownCE;
 var htmlCE;
+
 var tempMarkdown;
-var stringRelou = "<div>Meuh<div> la vache </div></div> <div> et toi </div>"
+var optiMarkdown;
+var openDiv;
+var closeDiv;
 
 function oldConversion () {
 	marked(markdownTA.value, function (err, content) {
@@ -13,36 +16,46 @@ function oldConversion () {
 }
 
 function conversion () {
-	marked(changeTheCe(markdownCE.innerHTML), function (err, content) {
+	marked(changeTheCE(markdownCE.innerHTML), function (err, content) {
 		htmlCE.innerHTML = content;
 	});
 }
 
-function changeTheCe (ce) {
+function changeTheCE (ce) {
 	tempMarkdown = ce;
 	tempMarkdown = tempMarkdown.replace(/&lt;/g, '<'); // <
 	tempMarkdown = tempMarkdown.replace(/&gt;/g, '>'); // >
 	tempMarkdown = tempMarkdown.replace(/&nbsp;/g, ' '); // Space.
-	tempMarkdown = tempMarkdown.replace(/< *div *>/g, "<div>"); // <div>
+	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
+	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
 	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
 
-	console.log(tempMarkdown);
-	console.log(tempMarkdown.search(/<div>/));
-	// console.log("meuh <div>".search(/<div *>/));
-
-	/*
-	// Remove the useless <div>
-	console.log($(tempMarkdown + "> div").length);
-	// divRegExp = new RegExp(imagePath, "g");
-	// while (tempMarkdown.search(divRegExp) != -1) { // Still useless <div>
-	// 	tempMarkdown.substring(tempMarkdown.search(divRegExp)).$("div").length;
-	// }
-	// Remove the <br>
-	tempMarkdown = tempMarkdown.replace(/<br\s*[\/]?>/gi, "\n");
-	*/
+	
+	while (tempMarkdown.indexOf("<div>") != -1) { // Remove the useless divs.
+		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div>"));
+		if (optiMarkdown[0] != -1) {
+			tempMarkdown = optiMarkdown[1];
+		}
+		else
+			break;
+	}
 	return tempMarkdown;
 }
 
-function remove () {
-	
+function checkDiv (divCount, content, pos) {
+	openDiv = content.indexOf("<div", pos);
+	closeDiv = content.indexOf("</div>", pos);
+
+	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
+		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
+			return (checkDiv(divCount + 1, content, openDiv + 5)); // Recursivity.
+		else { // If </div> is here first.
+			if (divCount == 1) // If we have the same ammount of "<div>" and "</div>".
+				return [0, content.substring(0, content.indexOf("<div>")) + content.substring(content.indexOf("<div>") + 5, closeDiv) + content.substring(closeDiv + 6)]; // Return the text without the useless "<div>" and "</div".
+			else
+				return(checkDiv(divCount - 1, content, closeDiv + 6)); // Recursivity.
+		}
+	}
+	else
+		return [-1]; // Don't remove the brackets.
 }
