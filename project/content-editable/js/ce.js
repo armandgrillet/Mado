@@ -20,7 +20,14 @@ function conversion () {
 
 function changeTheCe (ce) {
 	tempMarkdown = ce;
-	console.log(ce);
+	tempMarkdown = tempMarkdown.replace(/&lt;/g, '<'); // <
+	tempMarkdown = tempMarkdown.replace(/&gt;/g, '>'); // >
+	tempMarkdown = tempMarkdown.replace(/&nbsp;/g, ' '); // Space.
+	tempMarkdown = tempMarkdown.replace(/< *div *>/g, "<div>"); // <div>
+	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
+
+	console.log(tempMarkdown);
+	console.log(tempMarkdown.search(/<div>/));
 	// console.log("meuh <div>".search(/<div *>/));
 
 	/*
