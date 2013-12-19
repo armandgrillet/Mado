@@ -384,8 +384,8 @@
 /* The switch cursor is a triangle showing which display mode is on */
 #switch-cursor {
 	/* Positioning */
-	position: absolute;
-	top: -4px;
+	position: fixed;
+	top: 57px;
 	left: 50%;
 	z-index: 1500;
 
