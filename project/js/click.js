@@ -26,12 +26,8 @@ $(document).click( function(e) {
 		imageLoaded = undefined;
 
 		imageDisplayer.className = "tool-displayer";
-		startSelect = markdown.selectionStart;
-		endSelect = markdown.selectionEnd;
-		if (startSelect != endSelect) {
-			markdown.setSelectionRange(startSelect, endSelect);
+		if (startSelect != endSelect)
 			titleInput.value = markdown.innerText.substring(startSelect, endSelect);
-		}
 	}
 	else if (! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
 		imageDisplayer.className = "tool-displayer hidden";
@@ -41,14 +37,10 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
-
+		
 		linkDisplayer.className = "tool-displayer";
-		startSelect = markdown.selectionStart;
-		endSelect = markdown.selectionEnd;
-		if (startSelect != endSelect) {
-			markdown.setSelectionRange(startSelect, endSelect);
+		if (startSelect != endSelect)
 			hypertextInput.value = markdown.innerText.substring(startSelect, endSelect);
-		}
 		urlInput.focus();
 	}
 	else if (! $(e.target).closest(linkDisplayer).length)		

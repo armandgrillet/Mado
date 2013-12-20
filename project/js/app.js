@@ -193,13 +193,14 @@ function saveAsFile () {
 							)
 						); 						
 						fileEntry = savedFile; // Save without asking the file.
+						newRecentFile(fileEntry); // Update the local storage, the file opened is now on top.
 
 						// Footer
 						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
 
-						newRecentFile(savedFile); // Update the local storage, the file opened is now on top.
+						
 				 	}, 
 				errorHandler);
 			}
@@ -221,6 +222,8 @@ function saveFile () {
 						}
 					)
 				); 
+				newRecentFile(fileEntry); // Update the position of the file saved.
+
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();

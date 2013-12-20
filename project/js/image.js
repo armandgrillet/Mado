@@ -58,9 +58,9 @@ function applyImage () {
 		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
 		newEndSelect = (markdown.innerText.slice(0, startSelect) + image).length;
 		markdown.innerText = markdown.innerText.slice(0, startSelect) + image + markdown.innerText.slice(endSelect, markdown.length);
+		
 		$(markdown).click();
-		markdown.focus();
-		markdown.setSelectionRange(newStartSelect, newEndSelect);
+		newSelection();
 		conversion();
 	}
 }

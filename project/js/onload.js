@@ -144,6 +144,12 @@ window.onload = function() {
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
     $(markdown).on("input propertychange", conversion);
+    $(markdown).on('selectstart', function () {
+        $(document).one('mouseup', function() {
+            startSelect = window.getSelection().extentOffset;
+            endSelect = window.getSelection().baseOffset;
+        });
+    });
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
@@ -211,7 +217,7 @@ window.onload = function() {
             e.preventDefault();
             $(urlInput).select();
         }
-    })
+    });
 
     /* More.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });

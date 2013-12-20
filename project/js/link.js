@@ -3,7 +3,6 @@
 /* 
 * Variables (in alphabetical order). 
 	* HTML shortcuts.
-	* Functions variables.
 */
 
 /* HTML shortcuts. */
@@ -12,12 +11,6 @@ var link; // The content that is added.
 var linkButton; // The "Link" button.
 var linkDisplayer; // The div that contains all the link divs.
 var urlInput; // The div that contains the url.
-
-/* Functions variables. */
-var endSelect; // End of the selection
-var newStartSelect; // New start of the selection.
-var newEndSelect; // New end of the selection.
-var startSelect; // Start of the selection.
 
 /*
 * Function.
@@ -37,9 +30,9 @@ function applyLink () {
 		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
 		newEndSelect = (markdown.innerText.slice(0, startSelect) + link).length;
 		markdown.innerText = markdown.innerText.slice(0, startSelect) + link + markdown.innerText.slice(endSelect, markdown.length);
-		$(markdown).click();
-		markdown.focus();
-		markdown.setSelectionRange(newStartSelect, newEndSelect);
+		
+		$(markdown).click();		
+		newSelection();
 		conversion();
 	}
 }

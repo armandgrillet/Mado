@@ -119,22 +119,25 @@ function newRecentFile (file, after) {
 		function(mado) { 
 			for (var i = 1; i <= 7; i++) { // Max : 7
 				if (mado["recentFile" + i] == undefined || mado["recentFile" + i] == file.fullPath || i == 7) { // If there's no file here or the file at this position is the file who is set, or it's just the end.
-					for (var j = i; j > 1; j--) { // The second loop begins, j -> j - 1.
-						/* Two things in local storage to change, the name of the file and its id.
-						First : The id */
-						chromeLocalFile = ("recentFileId" + j).toString(); // This is j.
-						nameContainer[chromeLocalFile] = mado["recentFileId" + (j - 1)]; // This is j - 1.
-						chrome.storage.local.set(nameContainer); // j is now j - 1.
-						nameContainer = {}; // Reset.
+					console.log("Pas de fichier en position " + 1);	
+					for (var j = i; j > 0; j--) { // The second loop begins, j -> j - 1.
+						if (j > 1) {
+							/* Two things in local storage to change, the name of the file and its id.
+							First : The id */
+							chromeLocalFile = ("recentFileId" + j).toString(); // This is j.
+							nameContainer[chromeLocalFile] = mado["recentFileId" + (j - 1)]; // This is j - 1.
+							chrome.storage.local.set(nameContainer); // j is now j - 1.
+							nameContainer = {}; // Reset.
 
-						// Secondly : the file name. (Same functions than for the id).
-						chromeLocalFile = ("recentFile" + j).toString();
-						nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
-						chrome.storage.local.set(nameContainer);
-						nameContainer = {};		
-
-						if (j == 2) { // The end.
+							// Secondly : the file name. (Same functions than for the id).
+							chromeLocalFile = ("recentFile" + j).toString();
+							nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
+							chrome.storage.local.set(nameContainer);
+							nameContainer = {};	
+						}
+						else { // The end.
 							// Now the first recent file is empty, we set the ID and the name.
+							console.log("On ajoute le fichier avec path " + file.fullPath);
 							chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}); 	 	
 							chrome.storage.local.set({"recentFile1" : file.fullPath});
 

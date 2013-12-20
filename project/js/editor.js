@@ -2,12 +2,20 @@
 
 /* 
 * Variables (in alphabetical order). 
+	* Global.
+	* For other JS.
 */
 
 var conversionDiv; // The div who contains the HTML conversion.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
-var tempConversion; // A string used to don't display errors when an image is loaded.
 var markdown; // The contenteditable where the user writes.
+var tempConversion; // A string used to don't display errors when an image is loaded.
+
+/* For other JS files. */
+var endSelect; // End of the selection
+var newStartSelect; // New start of the selection.
+var newEndSelect; // New end of the selection.
+var startSelect; // Start of the selection.
 
 /*
 * Functions (in alphabetical order).
@@ -83,6 +91,19 @@ function endOfConversion () {
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();
+}
+
+function newSelection () {
+	var fc = markdown.firstChild,
+		    ec = markdown.lastChild,
+		    range = document.createRange(),
+		    sel;
+		markdown.focus();
+		range.setStart(fc, newStartSelect);
+		range.setEnd(ec, newEndSelect);
+		sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
 }
 
 function setEditorSyntax () {

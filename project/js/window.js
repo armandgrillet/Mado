@@ -96,7 +96,7 @@ function saveAndQuit () {
 					}
 				)
 			); 
-			quitCloseWindow();
+			newRecentFile(fileEntry, "quit"); // Update the position of the file saved.
 	 	}, 
 	errorHandler);
 }
