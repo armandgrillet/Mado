@@ -23,37 +23,26 @@
 	-webkit-app-region: drag; /* Enable drag action */
 }
 
-#window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
-
-#window-bar li {
+/* --------
+	Header
+   -------- */
+#app-header {
 	/* Positioning */
-	float: right;
+	position: absolute;
+	bottom: 0;
+	left: 0;
 
 	/* Box-model */
-	width: 40px;
-	height: 100%;
+	width: 100%;
 
 	/* Typography */
 	color: #fff;
-	line-height: 20px;
+	line-height: 1em;
 	text-align: center;
 
-	/* Visual */
-	background: transparent;
-
 	/* Misc */
-	-webkit-app-region: no-drag; /* Disable drag action */
+	pointer-events: none;
 }
-
-#window-close-button:hover { background-color: #d11; }
-
-#window-close-button:active { background-color: #c01a1a; }
-
-#window-maximize:hover,
-#window-minimize:hover { background-color: #143d7a; }
-
-#window-maximize:active,
-#window-minimize:active { background-color: #103365; }
 
 /* -------
 	Alert
@@ -71,7 +60,6 @@
 	position: absolute;
 	top: 20px;
 	right: 5px;
-	z-index: 3500;
 
 	/* Box-model */
 	width: 450px;

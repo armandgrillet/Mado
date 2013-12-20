@@ -49,10 +49,18 @@ function determineFrame () {
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
-	if (navigator.appVersion.indexOf("Mac") != -1) // If the user is on a Mac, redirect to the Mac window bar styles.
+	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window bar styles.
 		stylesheetLink.setAttribute("href", "css/window-bar-mac.css");
-	else // If the user is on another type of computer, redirect to the generic window bar styles.
+		windowClose.setAttribute("class", "cta little-icon-mac-close");
+		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
+		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window bar styles.
 		stylesheetLink.setAttribute("href", "css/window-bar-windows.css");
+		windowClose.setAttribute("class", "cta little-icon-win-close");
+		windowMax.setAttribute("class", "cta little-icon-win-maximize");
+		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	}
 
 	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
 }
