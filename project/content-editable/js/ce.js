@@ -16,20 +16,22 @@ function oldConversion () {
 }
 
 function conversion () {
-	marked(changeTheCE(markdownCE.innerHTML), function (err, content) {
+	marked(markdownCE.innerText, function (err, content) {
 		htmlCE.innerHTML = content;
 	});
 }
 
 function changeTheCE (ce) {
+	console.log(ce);
 	tempMarkdown = ce;
+	/*
 	tempMarkdown = tempMarkdown.replace(/&lt;/g, '<'); // <
 	tempMarkdown = tempMarkdown.replace(/&gt;/g, '>'); // >
 	tempMarkdown = tempMarkdown.replace(/&nbsp;/g, ' '); // Space.
 	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
 	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
 	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
-
+	tempMarkdown = tempMarkdown.replace(/<br>/g, "\r\n"); // New line
 	
 	while (tempMarkdown.indexOf("<div>") != -1) { // Remove the useless divs.
 		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div>"));
@@ -39,6 +41,8 @@ function changeTheCE (ce) {
 		else
 			break;
 	}
+	console.log(tempMarkdown);
+	*/
 	return tempMarkdown;
 }
 

@@ -1,0 +1,4 @@
+[contenteditable="true"]:empty:not(:focus):before{
+  content:attr(placeholder);
+  color:grey;
+}
