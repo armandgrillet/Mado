@@ -26,11 +26,11 @@ $(document).click( function(e) {
 		imageLoaded = undefined;
 
 		imageDisplayer.className = "tool-displayer";
-		startSelect = textarea.selectionStart;
-		endSelect = textarea.selectionEnd;
+		startSelect = markdown.selectionStart;
+		endSelect = markdown.selectionEnd;
 		if (startSelect != endSelect) {
-			textarea.setSelectionRange(startSelect, endSelect);
-			titleInput.value = textarea.value.substring(startSelect, endSelect);
+			markdown.setSelectionRange(startSelect, endSelect);
+			titleInput.value = markdown.innerText.substring(startSelect, endSelect);
 		}
 	}
 	else if (! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
@@ -43,11 +43,11 @@ $(document).click( function(e) {
 		hypertextInput.value = "";
 
 		linkDisplayer.className = "tool-displayer";
-		startSelect = textarea.selectionStart;
-		endSelect = textarea.selectionEnd;
+		startSelect = markdown.selectionStart;
+		endSelect = markdown.selectionEnd;
 		if (startSelect != endSelect) {
-			textarea.setSelectionRange(startSelect, endSelect);
-			hypertextInput.value = textarea.value.substring(startSelect, endSelect);
+			markdown.setSelectionRange(startSelect, endSelect);
+			hypertextInput.value = markdown.innerText.substring(startSelect, endSelect);
 		}
 		urlInput.focus();
 	}

@@ -441,6 +441,11 @@
 	resize: none;
 }
 
+#markdown:empty:before{ /* Placeholder*/
+  	content: attr(placeholder);
+  	color: grey;
+}
+
 /* -----------
 	HTML area
    ----------- */

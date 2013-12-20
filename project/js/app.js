@@ -18,7 +18,7 @@ var lastWidth; // This is the last zier of the window.
 	* string minFileName (entirePath): return a string who is just the name of the file manipulated (without the extension).
 	* moreWindow (moreChoice): open the correct window when the user clicks on an element of the "More" dropdown.
 	* newDisplaySize (): what to do when the user changes the display size on the options.
-	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's textarea).
+	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's markdown).
 	* openFile (theFile): all the scripts to open correctly a file, used when the user clicks on "Open" or when he clicks on a recent file.
 	* openFileButton (): open a window to choose a file when the user clicks on "Open".
 	* saveAsFile (): what to do when the user clicks on "Save As".
@@ -34,7 +34,7 @@ function errorHandler() {
 }
 
 function exportFileHTML () {
-	marked(textarea.value, function (err, content) {
+	marked(markdown.innerText, function (err, content) {
 		chrome.fileSystem.chooseEntry(
 			{
 				type: "saveFile", 
@@ -108,7 +108,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (textarea.value.length > 0) {
+	if (markdown.innerText.length > 0) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -131,7 +131,7 @@ function openFile(fileToOpen) {
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (textarea.value != "") {// Something is already in the textarea, Mado opens a new window. 
+	 			if (markdown.innerText != "") {// Something is already in the markdown, Mado opens a new window. 
 	 				chrome.storage.local.set(
 		 				{
 		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
@@ -140,7 +140,7 @@ function openFile(fileToOpen) {
 	 				);
  				}
 	 			else {
-		 			textarea.value = e.target.result; // Display the file content.	
+		 			markdown.innerText = e.target.result; // Display the file content.	
 	 			 			
 		 			fileEntry = fileToOpen; // For save.
 
@@ -186,7 +186,7 @@ function saveAsFile () {
 					function(writer) {
 				 		writer.write(
 				 			new Blob(
-					 			[textarea.value],
+					 			[markdown.innerText],
 								{
 									type: "text/plain"
 								}
@@ -195,7 +195,7 @@ function saveAsFile () {
 						fileEntry = savedFile; // Save without asking the file.
 
 						// Footer
-						markdownSaved = textarea.value;
+						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
 
@@ -215,14 +215,14 @@ function saveFile () {
 			function(writer) {
 		 		writer.write(
 		 			new Blob(
-			 			[textarea.value],
+			 			[markdown.innerText],
 						{
 							type: "text/plain"
 						}
 					)
 				); 
 				// Footer
-				markdownSaved = textarea.value;
+				markdownSaved = markdown.innerText;
 				checkSaveState();
 				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
 		 	}, 

@@ -55,12 +55,12 @@ function applyImage () {
 		else 
 			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
 
-		newStartSelect = (textarea.value.slice(0, startSelect)).length;
-		newEndSelect = (textarea.value.slice(0, startSelect) + image).length;
-		textarea.value = textarea.value.slice(0, startSelect) + image + textarea.value.slice(endSelect, textarea.length);
-		$(textarea).click();
-		textarea.focus();
-		textarea.setSelectionRange(newStartSelect, newEndSelect);
+		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
+		newEndSelect = (markdown.innerText.slice(0, startSelect) + image).length;
+		markdown.innerText = markdown.innerText.slice(0, startSelect) + image + markdown.innerText.slice(endSelect, markdown.length);
+		$(markdown).click();
+		markdown.focus();
+		markdown.setSelectionRange(newStartSelect, newEndSelect);
 		conversion();
 	}
 }

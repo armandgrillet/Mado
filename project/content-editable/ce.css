@@ -1,4 +1,4 @@
-[contenteditable="true"]:empty:not(:focus):before{
+#markdown-ce:empty:before{
   content:attr(placeholder);
   color:grey;
 }

@@ -7,4 +7,6 @@ window.onload = function() {
 
 	$(markdownTA).on("input propertychange", oldConversion);
 	$(markdownCE).on("input propertychange", conversion);
+
+	$(markdownCE).focus();
 }

@@ -1,4 +1,4 @@
-/* Functions linked to the Markdown textarea. */
+/* Functions linked to the Markdown markdown. */
 
 /* 
 * Variables (in alphabetical order). 
@@ -7,19 +7,19 @@
 var conversionDiv; // The div who contains the HTML conversion.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 var tempConversion; // A string used to don't display errors when an image is loaded.
-var textarea; // The textarea where the user writes.
+var markdown; // The contenteditable where the user writes.
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
-	* conversion (): what to do when the user change something on the textarea.
+	* conversion (): what to do when the user change something on the contenteditable.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
 	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
 */
 
 function conversion () {
-	if (textarea.value.length > 0) { // There is Markdown in the textarea.
+	if (markdown.innerText.length > 0) { // There is Markdown in the contenteditable.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -29,7 +29,7 @@ function conversion () {
 					marked.setOptions({ gfm : false });
 				}
 				setEditorSyntax();
-				marked(textarea.value, function (err, content) { // Marked.js makes the conversion.	    	
+				marked(markdown.innerText, function (err, content) { // Marked.js makes the conversion.	    	
 					/* Reset. */
 			    	imagePosition = 0;
 			    	for (var i = 0; i < imagesArray.length; i++) // Reset the images array.
@@ -42,7 +42,7 @@ function conversion () {
 		}
 		else {
 			marked.setOptions({ gfm : editorSyntax });
-			marked(textarea.value, function (err, content) {  	
+			marked(markdown.innerText, function (err, content) {  	
 		    	/* Reset. */
 		    	imagePosition = 0;
 		    	for (var i = 0; i < imagesArray.length; i++)
@@ -55,7 +55,8 @@ function conversion () {
 	}
 	else {// No Markdown here.
 		conversionDiv.innerHTML = "The HTML view.";
-		Countable.once(textarea, function (counter) { displayCounter(counter); }); // Count the words in the textarea.
+		// FIXME
+		resetCounter();
 		checkSaveState();
 	}
 }

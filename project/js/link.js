@@ -34,16 +34,12 @@ function applyLink () {
 			link = '[' + urlInput.value + "](" + urlInput.value + ')';
 		else 
 			link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-		newStartSelect = (textarea.value.slice(0, startSelect)).length;
-		newEndSelect = (textarea.value.slice(0, startSelect) + link).length;
-		textarea.value = textarea.value.slice(0, startSelect) + link + textarea.value.slice(endSelect, textarea.length);
-		$(textarea).click();
-		textarea.focus();
-		textarea.setSelectionRange(newStartSelect, newEndSelect);
+		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
+		newEndSelect = (markdown.innerText.slice(0, startSelect) + link).length;
+		markdown.innerText = markdown.innerText.slice(0, startSelect) + link + markdown.innerText.slice(endSelect, markdown.length);
+		$(markdown).click();
+		markdown.focus();
+		markdown.setSelectionRange(newStartSelect, newEndSelect);
 		conversion();
 	}
 }
-
-/*
-* Listener.
-*/

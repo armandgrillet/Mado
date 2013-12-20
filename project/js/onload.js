@@ -15,7 +15,7 @@ window.onload = function() {
     
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
-    textarea = document.getElementById("markdown");   
+    markdown = document.getElementById("markdown");   
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
@@ -108,7 +108,7 @@ window.onload = function() {
                         function(file) {
                             var reader = new FileReader();
                             reader.onload = function(e) { 
-                                textarea.value = e.target.result;
+                                markdown.innerText = e.target.result;
                                 markdownSaved = e.target.result;
                                 conversion();                       
                             };
@@ -143,7 +143,7 @@ window.onload = function() {
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
-    $(textarea).on("input propertychange", conversion);
+    $(markdown).on("input propertychange", conversion);
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);

@@ -90,7 +90,7 @@ function saveAndQuit () {
 		function(writer) {
 	 		writer.write(
 	 			new Blob(
-		 			[textarea.value],
+		 			[markdown.innerText],
 					{
 						type: "text/plain"
 					}
@@ -113,7 +113,7 @@ function saveAsAndQuit () {
 					function(writer) {
 				 		writer.write(
 				 			new Blob(
-					 			[textarea.value],
+					 			[markdown.innerText],
 								{
 									type: "text/plain"
 								}
