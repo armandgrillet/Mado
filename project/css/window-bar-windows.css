@@ -34,3 +34,19 @@
 
 #window-maximize:active,
 #window-minimize:active { background-color: #103365; }
+
+/* -------
+	Alert
+   ------- */
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	top: 20px;
+	right: 5px;
+
+	/* Misc */
+	-webkit-transform-origin: 430px 1px;
+}
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow { margin: 1px 0 0 431px; }

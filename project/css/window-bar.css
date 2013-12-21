@@ -58,7 +58,6 @@
 #close-alert-displayer {
 	/* Positioning */
 	position: absolute;
-	top: 20px;
 	right: 5px;
 
 	/* Box-model */

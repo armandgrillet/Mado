@@ -12,7 +12,6 @@
 	/* Box-model */
 	width: 12px;
 	height: 12px;
-	overflow: hidden;
 
 	/* Typography */
 	line-height: 12px;
@@ -34,7 +33,7 @@
 	left: -2px; /* 16px (original font square size) - 12px (actual buttons' width) = 4px, then 4px / 2 (because it's centered) = 2px */
 }
 
-#window-close { left: 8px; }
+#window-close { left: 10px; }
 
 #window-close-button {
 	/* Box-model */
@@ -43,11 +42,12 @@
 
 	/* Visual */
 	background-color: #f24848;
+	border-radius: 10px;
 }
 
 #window-minimize {
 	/* Positioning */
-	left: 28px;
+	left: 30px;
 
 	/* Visual */
 	background-color: #f2d048;
@@ -55,7 +55,7 @@
 
 #window-maximize {
 	/* Positioning */
-	left: 48px;
+	left: 50px;
 
 	/* Visual */
 	background-color: #82cc28;
@@ -72,3 +72,19 @@
 #window-maximize:hover { color: #273a18; }
 
 #window-maximize:active { background-color: #64b00b; }
+
+/* -------
+	Alert
+   ------- */
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	top: 16px;
+	left: -3px;
+
+	/* Misc */
+	-webkit-transform-origin: 20px 1px;
+}
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow { margin: 1px 0 0 5px; }
