@@ -1,0 +1,40 @@
+List of all the CSS files that still have to be converted
+=========================================================
+
+
+Generic
+-------
+[x] reset
+[x] style-base
+
+
+Mado's main page
+----------------
+[x] document-base
+[x] window-bar
+[x] window-bar-mac
+[x] window-bar-windows
+[ ] navbar
+[ ] main-content
+[ ] bottom-bar
+[ ] icons
+[ ] responsive
+[ ] conversion-view-base
+[ ] home
+[ ] clinic
+[ ] tramway
+
+Options
+-------
+[ ] options-base
+[ ] about
+[ ] shortcuts
+
+
+Conversion values
+=================
+
+Font size:
+11pt | 1em
+10pt | 0.8em
+ 9pt | 

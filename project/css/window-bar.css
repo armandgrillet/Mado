@@ -99,8 +99,8 @@
 
 	/* Typography */
 	color: #4a4942;
-	font-size: 10pt;
-	line-height: 12pt;
+	font-size: 0.8em;
+	line-height: 1.3em;
 	text-align: left;
 
 	/* Visual */
@@ -127,8 +127,8 @@
 
 	/* Typography */
 	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "RobotoLight", "Roboto Light", "Open Sans", sans-serif;
-	font-size: 22pt;
-	line-height: 40px;
+	font-size: 2.3em;
+	line-height: 1.3em;
 }
 
 /* Content block inside the option window */
