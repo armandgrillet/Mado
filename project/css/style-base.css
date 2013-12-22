@@ -22,7 +22,7 @@ body {
 
 	/* Typography */
 	font-family: "Segoe UI", "Helvetica Neue", Roboto, "Open Sans", sans-serif; /* System fonts for Windows, OS X and Android/Chrome OS */
-	font-size: 11pt;
+	font-size: 1em;
 }
 
 /* The call to action (CTA) class forces the cursor to be a pointer */
@@ -36,8 +36,8 @@ body {
 
 	/* Typography */
 	color: #fff;
-	font-size: 10pt;
-	line-height: 12pt;
+	font-size: 0.8em;
+	line-height: 1.3em;
 	font-weight: bold;
 	text-align: center;
 
@@ -104,7 +104,7 @@ strong { font-weight: bold; }
 
 sup {
 	/* Typography */
-	font-size: 9pt;
+	font-size: 0.8;
 	line-height: 0;
 	vertical-align: super;
 }
