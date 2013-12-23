@@ -14,11 +14,11 @@ Mado's main page
 [x] window-bar
 [x] window-bar-mac
 [x] window-bar-windows
-[ ] navbar
-[ ] main-content
-[ ] bottom-bar
-[ ] icons
-[ ] responsive
+[x] navbar
+[x] main-content
+[x] bottom-bar
+[x] icons
+[x] responsive
 [ ] conversion-view-base
 [ ] home
 [ ] clinic
