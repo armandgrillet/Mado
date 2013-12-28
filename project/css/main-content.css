@@ -376,10 +376,9 @@
 
 	/* Box-model */
 	height: 100%;
-
-	/* Misc */
-	transition: all .25s ease-out;
 }
+
+#workspace, #center-line-container { transition: all .25s ease-out; } /* The workspace and the center-line must have the same transition */
 
 /* Setting the possible states for the "workspace" div and their behavior. */
 #workspace.markdown-view {
@@ -474,16 +473,13 @@
 	width: 1px;
 	height: 100%;
 	padding: 40px 0;
-
-	/* Misc */
-	transition: left .25s ease-out; /* /!\ SAME TRANSITION AS #workspace */
 }
 
 /* Center line behavior according to the workspace mode */
 .markdown-view #center-line-container { left: 100%; }
 
 /* Center line behavior according to the conversion view mode */
-.conversion-view #center-line-container { left: -1%; } /* /!\ IT DRAWS A LINE ON THE LEFT BORDER */
+.conversion-view #center-line-container { left: -1%; }
 
 /* The visual center line. Nothing to change here. */
 #center-line {
@@ -492,5 +488,5 @@
 	height: 100%;
 
 	/* Visual */
-	background-color: #e0e0e0; /* /!\ CHANGE FOR AESTHETIC? */
+	background-color: #e0e0e0;
 }
