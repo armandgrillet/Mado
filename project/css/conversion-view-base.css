@@ -5,7 +5,7 @@
 .sheet:last-of-type {
 	/* Typography */
 	font-size: 1em;
-	line-height: 16pt;
+	line-height: 1.35em;
 }
 
 .sheet:last-of-type img { max-width: 100%; }

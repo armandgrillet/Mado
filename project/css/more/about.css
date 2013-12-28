@@ -3,7 +3,7 @@ ul li {
 	position: relative;
 
 	/* Box-model */
-	padding-left: 16pt;
+	padding-left: 1.3em;
 }
 
 ul li:before {
@@ -14,7 +14,7 @@ ul li:before {
 
 	/* Box-model */
 	display: block;
-	width: 16pt;
+	width: 1.3em;
 
 	/* Misc */
 	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
@@ -31,11 +31,11 @@ ul li:before {
 /* Terms of Service (ToS) */
 .tos {
 	/* Typography */
-	font-size: 9pt;
-	line-height: 12pt;
+	font-size: 0.75em;
+	line-height: 1.35em;
 }
 
-.tos p { padding-bottom: 6pt; }
+.tos p { padding-bottom: 0.65em; }
 
 .tos ol { counter-reset: list; }
 
@@ -44,7 +44,7 @@ ul li:before {
 	position: relative;
 
 	/* Box-model */
-	padding-left: 12pt;
+	padding-left: 1.35em;
 
 	/* Misc */
 	counter-increment: list;
@@ -58,10 +58,10 @@ ul li:before {
 
 	/* Box-model */
 	display: block;
-	width: 12pt;
+	width: 1.35em;
 
 	/* Misc */
 	content: counter(list);
 }
 
-.tos sup { font-size: 6pt; }
+.tos sup { font-size: 0.65em; }

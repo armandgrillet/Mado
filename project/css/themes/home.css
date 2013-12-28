@@ -6,8 +6,7 @@
 /* UNORDERED LISTS */
 .sheet:last-of-type .home ul li:before {
 	/* Box-model */
-	width: 20pt;
-	padding: 0 12pt 0 0;
+	width: 2em;
 
 	/* Typography */
 	text-align: right;
@@ -19,8 +18,7 @@
 /* ORDERED LISTS */
 .sheet:last-of-type .home ol li:before {
 	/* Box-model */
-	width: 20pt;
-	padding: 0 12pt 0 0;
+	width: 2em;
 
 	/* Typography */
 	text-align: right;
@@ -37,13 +35,13 @@
    ------------- */
 .sheet:last-of-type .home blockquote {
 	/* Positioning */
-	margin-bottom: 8pt;
+	margin-bottom: 0.7em;
 	margin-left: auto;
 
 	/* Box-model */
-	width: calc(100% - 24pt);
-	padding: 8pt 0 0 12pt;
+	width: calc(100% - 2.4em);
+	padding: 0.7em 0 0 1.2em;
 
 	/* Visual */
-	border-left: 8pt solid rgba(0,0,0,.1);
+	border-left: 0.7em solid rgba(0,0,0,.1);
 }

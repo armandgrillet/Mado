@@ -423,6 +423,8 @@
 /* ---------------
 	Markdown area
    --------------- */
+#markdown-container { overflow: auto; }
+
 #markdown {
 	/* Box-model */
 	width: 100%;

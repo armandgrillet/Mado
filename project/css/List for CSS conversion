@@ -20,21 +20,12 @@ Mado's main page
 [x] icons
 [x] responsive
 [x] conversion-view-base
-[ ] home
+[x] home
 [ ] clinic
 [ ] tramway
 
 Options
 -------
-[ ] options-base
-[ ] about
-[ ] shortcuts
-
-
-Conversion values
-=================
-
-Font size:
-11pt | 1em
-10pt | 0.8em
- 9pt | 
+[x] options-base
+[x] about
+[x] shortcuts

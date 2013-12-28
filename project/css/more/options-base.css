@@ -19,7 +19,7 @@ body {
 
 	/* Typography */
 	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "RobotoLight", "Roboto Light", "Open Sans", sans-serif;
-	font-size: 22pt;
+	font-size: 1.8em;
 	line-height: 40px;
 }
 
@@ -42,7 +42,7 @@ body {
 
 	/* Typography */
 	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto Light", "Open Sans", sans-serif;
-	font-size: 14pt;
+	font-size: 1.2em;
 	line-height: 27px;
 }
 
