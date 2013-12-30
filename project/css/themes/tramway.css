@@ -38,8 +38,8 @@
 .sheet:last-of-type .tramway {
 	/* Typography */
 	font-family: Arvo, serif;
-	font-size: 12pt;
-	line-height: 16pt;
+	font-size: 1em;
+	line-height: 1.35em;
 }
 
 /* ------------
@@ -49,7 +49,7 @@
 .sheet:last-of-type .tramway ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
 .sheet:last-of-type .tramway ul {
 	/* Box-model */
-	padding-bottom: 8pt;
+	padding-bottom: 0.65em;
 }
 
 /* --------
@@ -64,75 +64,68 @@
 
 .sheet:last-of-type .tramway h1 {
 	/* Box-model */
-	padding: 16pt 0;
+	padding: 0.35em 0;
 
 	/* Typography */
-	font-size: 36pt;
-	line-height: 48pt;
+	font-size: 3em;
 }
 
 .sheet:last-of-type .tramway h2 {
 	/* Box-model */
-	padding: 8pt 0 16pt;
+	padding: 0.3em 0 0.65em;
 
 	/* Typography */
-	font-size: 24pt;
-	line-height: 32pt;
+	font-size: 2em;
 }
 
 .sheet:last-of-type .tramway h3 {
 	/* Box-model */
-	padding: 8pt 0;
+	padding: 0.5em 0;
 
 	/* Typography */
-	font-size: 15pt;
-	line-height: 20pt;
+	font-size: 1.25em;
 }
 
 .sheet:last-of-type .tramway h4 {
 	/* Box-model */
-	padding: 8pt 0;
+	padding: 0.65em 0;
 
 	/* Typography */
-	font-size: 12pt;
 	font-weight: bold;
-	line-height: 16pt;
 }
 
 .sheet:last-of-type .tramway h5 {
 	/* Box-model */
-	padding-bottom: 8pt;
+	padding-bottom: 0.8em;
 
 	/* Typography */
-	font-size: 10pt;
+	font-size: 0.8em;
 	font-weight: bold;
-	line-height: 16pt;
 }
 
 .sheet:last-of-type .tramway h6 {
 	/* Typography */
-	font-size: 9pt;
+	font-size: 0.75em;
 	font-weight: bold;
-	line-height: 16pt;
 }
 
 /* -------
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .tramway ul li { padding-left: 24pt; }
+.sheet:last-of-type .tramway ul li { padding-left: 2em; }
 
-.sheet:last-of-type .tramway ul li:before { width: 24pt; }
+.sheet:last-of-type .tramway ul li:before { width: 2em; }
 
 /* Sub-lists */
 .sheet:last-of-type .tramway ul ul { padding-bottom: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .tramway ol li { padding-left: 24pt; }
+.sheet:last-of-type .tramway ol li { padding-left: 2em; }
 
 .sheet:last-of-type .tramway ol li:before {
 	/* Box-model */
-	width: 24pt;
+	width: 2em;
 
 	/* Misc */
 	content: counter(list)".";
@@ -146,10 +139,10 @@
    ------------- */
 .sheet:last-of-type .tramway blockquote {
 	/* Box-model */
-	padding: 0 16pt;
+	padding: 0 1.35em;
 
 	/* Typography */
-	font-size: 13pt;
+	font-size: 1.05em;
 	text-align: center;
 }
 
@@ -157,10 +150,10 @@
 	Horizontal rules
    ------------------ */
 .sheet:last-of-type .tramway hr {
-	margin: 8pt auto 16pt; /* No matter the size of the rule, it will be centered */
+	margin: 0.65em auto 1.35em; /* No matter the size of the rule, it will be centered */
 
 	/* Box-model */
-	width: calc(100% - 48pt); /* /!\ ADJUST CALCULATION ACCORDING TO LINE-HEIGHTS ETC. */
+	width: calc(100% - 4em);
 
 	/* Visual */
 	background-color: #4a4942;
