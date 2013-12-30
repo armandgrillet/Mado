@@ -53,8 +53,8 @@
 .sheet:last-of-type .clinic {
 	/* Typography */
 	font-family: Bariol, sans-serif;
-	font-size: 14pt;
-	line-height: 21pt;
+	font-size: 1.1em;
+	line-height: 1.5em;
 	/*-webkit-font-smoothing: antialiased;*/
 }
 
@@ -65,7 +65,7 @@
 .sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
 .sheet:last-of-type ul {
 	/* Box-model */
-	padding-bottom: 10.5pt;
+	padding-bottom: 0.7em;
 }
 
 /* --------
@@ -79,65 +79,57 @@
 
 .sheet:last-of-type .clinic h1 {
 	/* Box-model */
-	padding: 28pt 0 14pt;
+	padding: 0.6em 0 0.3em;
 
 	/* Typography */
-	font-size: 42pt;
-	line-height: 63pt;
+	font-size: 3em;
 }
 
 .sheet:last-of-type .clinic h2 {
 	/* Box-model */
-	padding: 21pt 0 14pt;
+	padding: 0.7em 0 0.5em;
 
 	/* Typography */
-	font-size: 28pt;
-	line-height: 42pt;
+	font-size: 2em;
 }
 
 .sheet:last-of-type .clinic h3 {
 	/* Box-model */
-	padding: 14pt 0;
+	padding: 0.75em 0;
 
 	/* Typography */
 	font-family: Bariol;
-	font-size: 18pt;
-	line-height: 21pt;
+	font-size: 1.25em;
 }
 
-/* /!\ STILL 3 HEADER STYLES TO MAKE */
 .sheet:last-of-type .clinic h4 {
 	/* Box-model */
-	padding: 10.5pt 0;
+	padding: 0.7em 0;
 
 	/* Typography */
-	font-size: 14pt;
 	font-weight: bold;
-	line-height: 21pt;
 }
 
 .sheet:last-of-type .clinic h5 {
 	/* Box-model */
-	padding-bottom: 10.5pt;
+	padding-bottom: 0.85em;
 
 	/* Typography */
-	font-size: 12pt;
+	font-size: 0.85em;
 	font-weight: bold;
-	line-height: 21pt;
 }
 
 .sheet:last-of-type .clinic h6 {
 	/* Typography */
-	font-size: 11pt;
+	font-size: 0.8em;
 	font-weight: bold;
-	line-height: 21pt;
 }
 
 /* -------
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .clinic ul li { padding-left: 28pt; }
+.sheet:last-of-type .clinic ul li { padding-left: 2em; }
 
 .sheet:last-of-type .clinic ul li:before { padding-left: 0; }
 
@@ -145,7 +137,7 @@
 .sheet:last-of-type .clinic ul ul { padding-bottom: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .clinic ol li { padding-left: 28pt; }
+.sheet:last-of-type .clinic ol li { padding-left: 2em; }
 
 .sheet:last-of-type .clinic ol li:before {
 	/* Box-model */
@@ -167,10 +159,10 @@
    ------------- */
 .sheet:last-of-type .clinic blockquote {
 	/* Positioning */
-	margin-bottom: 10.5pt;
+	margin-bottom: 0.7em;
 
 	/* Box-model */
-	padding: 10.5pt 0 0 14pt;
+	padding: 0.7em 0 0 1em;
 
 	/* Visual */
 	background-color: rgba(0,0,0,.05);
@@ -180,4 +172,4 @@
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type hr { margin: 10.5pt auto 21pt; }
+.sheet:last-of-type hr { margin: 0.7em auto 1.5em; }
