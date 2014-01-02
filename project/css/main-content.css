@@ -405,9 +405,7 @@
 	width: 200%;
 }
 
-/* --------
-	Sheets
-   -------- */
+/* SHEETS */
 .sheet {
 	/* Box-model */
 	float: left;
@@ -419,9 +417,7 @@
 	color: #4a4942;
 }
 
-/* ---------------
-	Markdown area
-   --------------- */
+/* MARKDOWN AREA */
 #markdown-container { overflow: auto; }
 
 #markdown {
@@ -439,18 +435,17 @@
 	background-color: transparent;
 
 	/* Misc */
+	cursor: text;
 	resize: none;
 }
 
-/* Placeholder*/
+/* Placeholder for the Markdown area */
 #markdown:empty:before{
   	content: attr(placeholder); /* Gets and displays the "placeholder" attribute's value */
   	color: #808080; /* This hexa color is the equivalent of "grey" */
 }
 
-/* -----------
-	HTML area
-   ----------- */
+/* HTML AREA */
 #html-conversion {
 	/* Box-model */
 	width: 100%;
@@ -460,9 +455,7 @@
 	overflow-y: auto;
 }
 
-/* ----------------------
-	Center vertical line
-   ---------------------- */
+/* CENTER VERTICAL LINE */
 #center-line-container {
 	/* Positioning */
 	position: absolute;
