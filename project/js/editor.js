@@ -17,6 +17,11 @@ var newStartSelect; // New start of the selection.
 var newEndSelect; // New end of the selection.
 var startSelect; // Start of the selection.
 
+var fc;
+var ec;
+var range = document.createRange();
+var sel;
+
 /*
 * Functions (in alphabetical order).
 *
@@ -94,16 +99,39 @@ function endOfConversion () {
 }
 
 function newSelection () {
-	var fc = markdown.firstChild,
-		    ec = markdown.lastChild,
-		    range = document.createRange(),
-		    sel;
-		markdown.focus();
-		range.setStart(fc, newStartSelect);
-		range.setEnd(ec, newEndSelect);
-		sel = window.getSelection();
-		sel.removeAllRanges();
-		sel.addRange(range);
+	fc = markdown.firstChild;
+	ec = markdown.lastChild;
+	markdown.focus();
+	range.setStart(fc, newStartSelect);
+	range.setEnd(ec, newEndSelect);
+	sel = window.getSelection();
+	sel.removeAllRanges();
+	sel.addRange(range);
+}
+
+function saveSelection() {
+	console.log("Enregistre");
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            return sel.getRangeAt(0);
+        }
+    } else if (document.selection && document.selection.createRange) {
+        return document.selection.createRange();
+    }
+    return null;
+}
+
+function restoreSelection(range) {
+    if (range) {
+        if (window.getSelection) {
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (document.selection && range.select) {
+            range.select();
+        }
+    }
 }
 
 function setEditorSyntax () {

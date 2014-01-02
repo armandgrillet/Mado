@@ -145,10 +145,7 @@ window.onload = function() {
 
     $(markdown).on("input propertychange", conversion);
     $(markdown).on('selectstart', function () {
-        $(document).one('mouseup', function() {
-            startSelect = window.getSelection().extentOffset;
-            endSelect = window.getSelection().baseOffset;
-        });
+        $(document).one('mouseup', saveSelection);
     });
 
     /* footer.js */

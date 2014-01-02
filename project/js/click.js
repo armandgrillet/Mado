@@ -39,8 +39,14 @@ $(document).click( function(e) {
 		hypertextInput.value = "";
 		
 		linkDisplayer.className = "tool-displayer";
-		if (startSelect != endSelect)
+		if (startSelect != endSelect) {
+			var rangeTwo = window.getSelection(); 
+			var newElement = document.createElement('span');
+			newElement.id = 'myId';
+			newElement.innerHTML = 'Hello World!';
+			rangeTwo.insertNode(newElement);
 			hypertextInput.value = markdown.innerText.substring(startSelect, endSelect);
+		}
 		urlInput.focus();
 	}
 	else if (! $(e.target).closest(linkDisplayer).length)		
