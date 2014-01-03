@@ -145,7 +145,7 @@ function openFile(fileToOpen) {
 		 			fileEntry = fileToOpen; // For save.
 
 		 			// For the footer.
-		 			markdownSaved = e.target.result;
+		 			markdownSaved = markdown.innerText;
 		 			conversion();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 	 			}

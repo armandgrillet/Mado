@@ -128,7 +128,7 @@ function saveAsAndQuit () {
 }
 
 function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;|") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
 		saveAsAndQuit();
 	else
 		saveAndQuit();

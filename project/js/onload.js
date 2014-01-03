@@ -145,12 +145,8 @@ window.onload = function() {
 
     $(markdown).on("input propertychange", conversion);
     $(markdown).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab
-            document.execCommand('styleWithCSS', true, null);
-            document.execCommand('indent', true, null);
-            if(e.preventDefault){
-                e.preventDefault()
-            }         
+        if (e.keyCode == 9) { // The user press tab        
+            e.preventDefault();
         }
     })
 
