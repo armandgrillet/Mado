@@ -37,20 +37,16 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
-		
+
 		linkDisplayer.className = "tool-displayer";
-		if (startSelect != endSelect) {
-			var rangeTwo = window.getSelection(); 
-			var newElement = document.createElement('span');
-			newElement.id = 'myId';
-			newElement.innerHTML = 'Hello World!';
-			rangeTwo.insertNode(newElement);
-			hypertextInput.value = markdown.innerText.substring(startSelect, endSelect);
-		}
+		if ($(markdown).children('#mado-link')[0] != undefined)
+			hypertextInput.value = $(markdown).children('#mado-link')[0].innerText;
 		urlInput.focus();
 	}
-	else if (! $(e.target).closest(linkDisplayer).length)		
+	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {	
+		removeDivWithId("mado-link");	
 		linkDisplayer.className = "tool-displayer hidden";
+	}
 
 	/* more.js */
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.

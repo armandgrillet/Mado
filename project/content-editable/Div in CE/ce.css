@@ -1,4 +1,9 @@
 #selection {
 	display: inline;
-	color: yellow;
+	color: blue;
+}
+
+#mado-link {
+	display: inline;
+	color: blue;
 }

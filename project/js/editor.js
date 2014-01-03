@@ -17,10 +17,12 @@ var newStartSelect; // New start of the selection.
 var newEndSelect; // New end of the selection.
 var startSelect; // Start of the selection.
 
-var fc;
-var ec;
-var range = document.createRange();
-var sel;
+var contentHighlighted;
+var tempMarkdown;
+var optiMarkdown;
+var openDiv;
+var closeDiv;
+var newCE;
 
 /*
 * Functions (in alphabetical order).
@@ -98,50 +100,87 @@ function endOfConversion () {
 	checkSaveState();
 }
 
-function newSelection () {
-	fc = markdown.firstChild;
-	ec = markdown.lastChild;
-	markdown.focus();
-	range.setStart(fc, newStartSelect);
-	range.setEnd(ec, newEndSelect);
-	sel = window.getSelection();
-	sel.removeAllRanges();
-	sel.addRange(range);
+function saveContentHighlighted () {
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0; i < sel.rangeCount; ++i)
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            contentHighlighted = container.innerHTML;
+        }
+    } 
+    else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            contentHighlighted = document.selection.createRange().htmlText;
+        }
+    }
 }
 
-function saveSelection() {
-	console.log("Enregistre");
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            return sel.getRangeAt(0);
+function changeContentHighlighted () {
+    contentHighlighted = "<div id=\"mado-link\">" + contentHighlighted + "</div>";
+    if (window.getSelection && window.getSelection().getRangeAt) {
+        range = window.getSelection().getRangeAt(0);
+        range.deleteContents();
+        var div = document.createElement("div");
+        div.innerHTML = contentHighlighted;
+        var frag = document.createDocumentFragment(), child;
+        while ( (child = div.firstChild) ) {
+            frag.appendChild(child);
         }
+        range.insertNode(frag);
     } else if (document.selection && document.selection.createRange) {
-        return document.selection.createRange();
+        range = document.selection.createRange();
+        contentHighlighted = (node.nodeType == 3) ? node.data : node.outerHTML;
+        range.pasteHTML(contentHighlighted);
     }
-    return null;
 }
 
-function restoreSelection(range) {
-    if (range) {
-        if (window.getSelection) {
-            sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-        } else if (document.selection && range.select) {
-            range.select();
-        }
-    }
+function removeDivWithId (id) {
+	tempMarkdown = markdown.innerHTML;
+	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
+	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
+	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
+
+	if (tempMarkdown.indexOf("<div id=\"" + id + "\">") != -1) { // Remove the useless div.
+		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div id=\"" + id + "\">"), id);
+		if (optiMarkdown[0] != -1) {
+			tempMarkdown = optiMarkdown[1];
+		}
+	}
+	markdown.innerHTML = tempMarkdown;
+}
+
+function checkDiv (divCount, content, pos, id) {
+	openDiv = content.indexOf("<div", pos);
+	closeDiv = content.indexOf("</div>", pos);
+
+	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
+		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
+			return (checkDiv(divCount + 1, content, openDiv + 5, id)); // Recursivity.
+		else { // If </div> is here first.
+			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
+				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
+				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + 20, closeDiv); 
+				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
+				return [0, newCE];
+			}
+			else
+				return(checkDiv(divCount - 1, content, closeDiv + 6, id)); // Recursivity.
+		}
+	}
+	else
+		return [-1]; // Don't remove the brackets.
 }
 
 function setEditorSyntax () {
-	chrome.storage.local.get("gfm",  function(mado) { 
-		if (mado["gfm"] != undefined)
-			editorSyntax = mado["gfm"]; 
-		else {
-			chrome.storage.local.set({ "gfm" : false });
-			editorSyntax = false; 
-		}
-		conversion();
-	});
+    chrome.storage.local.get("gfm",  function(mado) { 
+        if (mado["gfm"] != undefined)
+                editorSyntax = mado["gfm"]; 
+        else {
+                chrome.storage.local.set({ "gfm" : false });
+                editorSyntax = false; 
+        }
+        conversion();
+    });
 }

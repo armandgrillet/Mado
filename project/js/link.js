@@ -27,12 +27,12 @@ function applyLink () {
 			link = '[' + urlInput.value + "](" + urlInput.value + ')';
 		else 
 			link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
-		newEndSelect = (markdown.innerText.slice(0, startSelect) + link).length;
-		markdown.innerText = markdown.innerText.slice(0, startSelect) + link + markdown.innerText.slice(endSelect, markdown.length);
-		
-		$(markdown).click();		
-		newSelection();
+		if ($(markdown).children('#mado-link')[0] != undefined)
+			$(markdown).children('#mado-link')[0].innerText = link;		
+		else
+			$(markdown).innerText = $(markdown).innerText + link;
+		removeDivWithId("mado-link");
+		$(markdown).click();	
 		conversion();
 	}
 }

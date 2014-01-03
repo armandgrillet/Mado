@@ -144,9 +144,6 @@ window.onload = function() {
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
     $(markdown).on("input propertychange", conversion);
-    $(markdown).on('selectstart', function () {
-        $(document).one('mouseup', saveSelection);
-    });
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
@@ -191,6 +188,10 @@ window.onload = function() {
     })
 
     /* link.js */
+    $(linkButton).on("mousedown", function() {
+        saveContentHighlighted();
+        changeContentHighlighted();
+    });
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
 
     $(urlInput).keyup(function(e){
