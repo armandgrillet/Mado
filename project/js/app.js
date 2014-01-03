@@ -147,7 +147,7 @@ function openFile(fileToOpen) {
 		 			// For the footer.
 		 			markdownSaved = e.target.result;
 		 			conversion();
-		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
+		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
 	 		};
@@ -198,7 +198,7 @@ function saveAsFile () {
 						// Footer
 						markdownSaved = markdown.innerText;
 						checkSaveState();
-						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 
 						
 				 	}, 
@@ -209,7 +209,7 @@ function saveAsFile () {
 }
 
 function saveFile () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;|") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
 		saveAsFile();
 	else { // If we have already loaded the file.
 		fileEntry.createWriter(
@@ -227,7 +227,7 @@ function saveFile () {
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();
-				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		 	}, 
 		errorHandler);
 	}

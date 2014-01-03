@@ -7,7 +7,8 @@ $(document).click( function(e) {
 		helpDisplayer.className = "tool-displayer";
     	help.focus();
 	}
-	else if (! $(e.target).closest(help).length && 
+	else if (helpDisplayer.className != "tool-displayer hidden" &&
+		! $(e.target).closest(help).length && 
 		! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed)
 		help.value = ""; // Reset the input of the help
 		resetAnswerDiv(1);
@@ -16,8 +17,7 @@ $(document).click( function(e) {
 	}
 
 	/* image.js */
-	if ($(e.target).closest(imageButton).length && // Click on the "Image" button with the image insertion tool hidden
-		imageDisplayer.className == "tool-displayer hidden") { 
+	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		imageStatus.style.display = "none";
@@ -29,7 +29,7 @@ $(document).click( function(e) {
 		if (startSelect != endSelect)
 			titleInput.value = markdown.innerText.substring(startSelect, endSelect);
 	}
-	else if (! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className = "tool-displayer" && ! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
 		imageDisplayer.className = "tool-displayer hidden";
 
 	/* link.js */
@@ -54,7 +54,7 @@ $(document).click( function(e) {
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.
 		moreDisplayer.className = " ";
 	}
-	else if (! $(e.target).closest(moreBox).length)
+	else if (moreDisplayer.className != "hidden" && ! $(e.target).closest(moreBox).length)
 		moreDisplayer.className = "hidden";
 
 	/* recentfiles.js */
@@ -62,14 +62,14 @@ $(document).click( function(e) {
 		displayRecentFiles(); // If the user remove something from another window.
 		recentFilesDisplayer.className = "";
 	}
-	else if (! $(e.target).closest(recentFilesContainer).length && recentFilesDisplayer.className == "")
+	else if (recentFilesDisplayer.className != "hidden" && ! $(e.target).closest(recentFilesContainer).length)
 		recentFilesDisplayer.className = "hidden";
 
 	/* styles.js */
 	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
 		stylesDisplayer.className = "tool-displayer";
 	}
-	else if (! $(e.target).closest(stylesDisplayer).length)		
+	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)		
 		stylesDisplayer.className = "tool-displayer hidden";
 
 	/* window.js */

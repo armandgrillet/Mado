@@ -55,4 +55,5 @@ function cancelLink () {
 	if ($(markdown).children('#mado-link')[0] != undefined)
 		$(markdown).children('#mado-link')[0].innerText = initialLinkText;		
 	removeDivWithId("mado-link");
+	conversion();
 }
