@@ -144,6 +144,15 @@ window.onload = function() {
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
     $(markdown).on("input propertychange", conversion);
+    $(markdown).keydown(function(e){
+        if (e.keyCode == 9) { // The user press tab
+            document.execCommand('styleWithCSS', true, null);
+            document.execCommand('indent', true, null);
+            if(e.preventDefault){
+                e.preventDefault()
+            }         
+        }
+    })
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
