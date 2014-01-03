@@ -162,8 +162,13 @@ window.onload = function() {
     $(resultSwitch3).on("click", function() { switchResult("3"); });
 
     /* image.js */
+    $(imageButton).on("mousedown", function() {
+        saveContentHighlighted();
+        changeContentHighlighted("mado-image");
+    });
+
     $(imageBrowser).on("click", loadImage);
-    $(galleriesButton).on("click", chooseGalleries);
+    $(galleriesButton).on("click", chooseGalleries);   
 
     $(altInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
@@ -188,7 +193,7 @@ window.onload = function() {
     /* link.js */
     $(linkButton).on("mousedown", function() {
         saveContentHighlighted();
-        changeContentHighlighted();
+        changeContentHighlighted("mado-link");
     });
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
 

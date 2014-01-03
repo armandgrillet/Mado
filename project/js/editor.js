@@ -11,18 +11,13 @@ var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 var markdown; // The contenteditable where the user writes.
 var tempConversion; // A string used to don't display errors when an image is loaded.
 
-/* For other JS files. */
-var endSelect; // End of the selection
-var newStartSelect; // New start of the selection.
-var newEndSelect; // New end of the selection.
-var startSelect; // Start of the selection.
-
 var contentHighlighted;
 var tempMarkdown;
 var optiMarkdown;
 var openDiv;
 var closeDiv;
 var newCE;
+var initialText;
 
 /*
 * Functions (in alphabetical order).
@@ -116,8 +111,8 @@ function saveContentHighlighted () {
     }
 }
 
-function changeContentHighlighted () {
-    contentHighlighted = "<div id=\"mado-link\">" + contentHighlighted + "</div>";
+function changeContentHighlighted (id) {
+    contentHighlighted = "<div id=\"" + id + "\">" + contentHighlighted + "</div>";
     if (window.getSelection && window.getSelection().getRangeAt) {
         range = window.getSelection().getRangeAt(0);
         range.deleteContents();
@@ -160,7 +155,7 @@ function checkDiv (divCount, content, pos, id) {
 		else { // If </div> is here first.
 			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
 				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
-				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + 20, closeDiv); 
+				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv); 
 				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
 				return [0, newCE];
 			}

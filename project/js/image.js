@@ -54,15 +54,21 @@ function applyImage () {
 			image = "![" + altInput.value + "](" + imageLoaded + ')';
 		else 
 			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-
-		newStartSelect = (markdown.innerText.slice(0, startSelect)).length;
-		newEndSelect = (markdown.innerText.slice(0, startSelect) + image).length;
-		markdown.innerText = markdown.innerText.slice(0, startSelect) + image + markdown.innerText.slice(endSelect, markdown.length);
+		if ($(markdown).children('#mado-image')[0] != undefined)
+			$(markdown).children('#mado-image')[0].innerText = image;		
+		else
+			$(markdown).innerText = $(markdown).innerText + image;
 		
-		$(markdown).click();
-		newSelection();
-		conversion();
+		removeDivWithId("mado-image");
+		$(markdown).click();	
 	}
+}
+
+function cancelImage () {
+	if ($(markdown).children('#mado-image')[0] != undefined)
+		$(markdown).children('#mado-image')[0].innerText = initialText;		
+	removeDivWithId("mado-image");
+	conversion();
 }
 
 function chooseGalleries () {
