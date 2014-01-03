@@ -68,9 +68,8 @@ function conversion () {
 		    });
 		}
 	}
-	else {// No Markdown here.
-		conversionDiv.innerHTML = "The HTML view.";
-		// FIXME
+	else { // No Markdown here.
+		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
 	}
