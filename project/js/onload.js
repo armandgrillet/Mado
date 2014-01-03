@@ -164,28 +164,26 @@ window.onload = function() {
     /* image.js */
     $(imageBrowser).on("click", loadImage);
     $(galleriesButton).on("click", chooseGalleries);
+
     $(altInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
            applyImage();
-    });
-    $(titleInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
-            applyImage();
-    });
-    $(altInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
+        else if (e.keyCode == 27) // The user press echap
             $(imageButton).click();
     });
-    $(titleInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(imageButton).click();
-    });
+
     $(titleInput).keydown(function(e){
         if (e.keyCode == 9) { // The user press tab
             e.preventDefault();
             $(altInput).select();
         }
     })
+    $(titleInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+            applyImage();
+        else if (e.keyCode == 27) // The user press echap
+            $(imageButton).click();
+    });
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
@@ -195,26 +193,27 @@ window.onload = function() {
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
 
     $(urlInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
            applyLink();
+        else if (e.keyCode == 27) // The user press echap
+            $(linkButton).click();       
+        else
+            modifyLink();
     });
-    $(hypertextInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
-            applyLink();
-    });
-    $(urlInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(linkButton).click();
-    });
-    $(hypertextInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(linkButton).click();
-    });
+
     $(hypertextInput).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab
+        if (e.keyCode == 9)  {
             e.preventDefault();
             $(urlInput).select();
         }
+    })
+    $(hypertextInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+            applyLink();
+        else if (e.keyCode == 27) // The user press echap
+            $(linkButton).click();        
+        else
+            modifyLink();        
     });
 
     /* More.js */

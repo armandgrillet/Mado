@@ -12,6 +12,8 @@ var linkButton; // The "Link" button.
 var linkDisplayer; // The div that contains all the link divs.
 var urlInput; // The div that contains the url.
 
+var initialLinkText;
+
 /*
 * Function.
 *
@@ -35,4 +37,22 @@ function applyLink () {
 		$(markdown).click();	
 		conversion();
 	}
+}
+
+function modifyLink () {
+	if (hypertextInput.value == "")
+		link = '[' + urlInput.value + "](" + urlInput.value + ')';
+	else 
+		link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
+	if ($(markdown).children('#mado-link')[0] != undefined)
+		$(markdown).children('#mado-link')[0].innerText = link;		
+	else
+		$(markdown).innerText = $(markdown).innerText + link;
+	conversion();
+}
+
+function cancelLink () {
+	if ($(markdown).children('#mado-link')[0] != undefined)
+		$(markdown).children('#mado-link')[0].innerText = initialLinkText;		
+	removeDivWithId("mado-link");
 }

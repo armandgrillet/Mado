@@ -39,12 +39,14 @@ $(document).click( function(e) {
 		hypertextInput.value = "";
 
 		linkDisplayer.className = "tool-displayer";
-		if ($(markdown).children('#mado-link')[0] != undefined)
+		if ($(markdown).children('#mado-link')[0] != undefined) {
 			hypertextInput.value = $(markdown).children('#mado-link')[0].innerText;
+			initialLinkText = hypertextInput.value;
+		}
 		urlInput.focus();
 	}
 	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {	
-		removeDivWithId("mado-link");	
+		cancelLink();
 		linkDisplayer.className = "tool-displayer hidden";
 	}
 
