@@ -172,4 +172,13 @@
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type hr { margin: 0.7em auto 1.5em; }
+.sheet:last-of-type .clinic hr { margin: 0.7em auto 1.5em; }
+
+/* ------
+	Code
+   ------ */
+.sheet:last-of-type .clinic code {
+	/* Typography */
+	font-size: 0.85em;
+	line-height: 1.45em;
+}

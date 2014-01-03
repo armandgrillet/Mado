@@ -186,3 +186,32 @@
 	background-color: rgba(0,0,0,.1);
 	border: none;
 }
+
+/* ------
+	Code
+   ------ */
+code {
+	/* Box-model */
+	padding: 0 0.35em;
+
+	/* Typography */
+	font-family: SourceCodePro;
+	font-size: 0.95em;
+	color: #000;
+
+	/* Visual */
+	background-color: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 3px;
+}
+
+pre code {
+	/* Positioning */
+	margin-bottom: 0.7em;
+
+	/* Box-model */
+	display: block;
+	width: 100%;
+	padding: 0.65em;
+	overflow-x: auto;
+}
