@@ -41,8 +41,6 @@
 	/* Switch cursor's position when in HTML view */
 	.conversion-view #switch-cursor { margin-left: 41px; }
 
-	/* /!\ NORMAL CLASS <=> MARKDOWN-VIEW (FOR SECURITY & FOR LAUNCH VISUAL STABILITY) */
-
 	/* -----------
 		Workspace
 	   ----------- */

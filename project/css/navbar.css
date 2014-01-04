@@ -519,7 +519,7 @@
 .more-option:first-of-type { margin-top: 5px; }
 
 /* Separation between the options */
-.more-option:not(:first-of-type) .more-option-wrapped { border-top: 1px solid #fafafa; } /* /!\ COMMON STYLE WITH .result:not(:first-of-type) */
+.more-option:not(:first-of-type) .more-option-wrapped { border-top: 1px solid #fafafa; }
 
 /* Slight margin under the last option */
 .more-option:last-of-type { margin-bottom: 5px; }
