@@ -60,16 +60,19 @@ function applyImage () {
 			imageDiv.innerText = image;		
 		else
 			$(markdown).innerText = $(markdown).innerText + image;		
-		removeDivWithId("mado-image");
-		$(markdown).click();	
+		imageDisplayer.className = "tool-displayer hidden";
+		selectElementContents(imageDiv);
+		restoreSelection("mado-image");
+		conversion();
 	}
 }
 
 function cancelImage () {
 	if (imageDiv != undefined)
 		imageDiv.innerText = initialText;		
-	removeDivWithId("mado-image");
-	conversion();
+	imageDisplayer.className = "tool-displayer hidden";
+	selectElementContents(imageDiv);
+	restoreSelection("mado-image");
 }
 
 function chooseGalleries () {

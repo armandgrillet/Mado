@@ -33,10 +33,8 @@ $(document).click( function(e) {
 		}
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) { // The user doesn't click on the image insertion box.
+		! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
 		cancelImage();
-		imageDisplayer.className = "tool-displayer hidden";
-	}
 
 	/* link.js */
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
@@ -52,10 +50,8 @@ $(document).click( function(e) {
 		}
 		urlInput.focus();
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {	
+	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length)
 		cancelLink();
-		linkDisplayer.className = "tool-displayer hidden";
-	}
 
 	/* more.js */
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.

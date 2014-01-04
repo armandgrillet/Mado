@@ -34,16 +34,20 @@ function applyLink () {
 			linkDiv.innerText = link;		
 		else
 			$(markdown).innerText = $(markdown).innerText + link;
-		removeDivWithId("mado-link");
-		$(markdown).click();	
+
+		linkDisplayer.className = "tool-displayer hidden";
+		selectElementContents(linkDiv);
+		restoreSelection("mado-link");
 	}
 }
 
 function cancelLink () {
 	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;		
-	removeDivWithId("mado-link");
-	conversion();
+		linkDiv.innerText = initialText;	
+
+	linkDisplayer.className = "tool-displayer hidden";	
+	selectElementContents(linkDiv);
+	restoreSelection("mado-link");
 }
 
 function modifyLink () {

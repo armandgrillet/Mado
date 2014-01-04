@@ -16,6 +16,9 @@ var newCE; // The new contenteditable content (temporary).
 var openDiv; // The beginning of the div.
 var optiMarkdown; // The new Markdown, without useless div.
 var range; // Get the user's selection.
+var rangeSelection; // Set the user's new range selection.
+var savedSel; // The selection is saved here.
+var selection; // Set the user's new selection.
 var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
 var tempConversion; // A string used to don't display errors when an image is loaded.
 var tempMarkdown; // String used to modify the markdown innerHTML.
@@ -146,6 +149,32 @@ function removeDivWithId (id) {
 		}
 	}
 	markdown.innerHTML = tempMarkdown;
+}
+
+function restoreSelection (id) {
+	savedSel = rangy.saveSelection();
+	removeDivWithId(id);		
+	rangy.restoreSelection(savedSel);
+	rangy.removeMarkers(savedSel);
+}
+
+function selectElementContents(el) {
+    if (document.createRange && window.getSelection) {
+        rangeSelection = document.createRange();
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        try {
+            rangeSelection.seleectNodeContents(el);
+            selection.addRange(rangeSelection);
+        } catch (e) {
+            rangeSelection.selectNode(el);
+            selection.addRange(rangeSelection);
+        }
+    } else if (document.body.createTextRange) {
+        rangeSelection = document.body.createTextRange();
+        rangeSelection.moveToElementText(el);
+        rangeSelection.select();
+    }
 }
 
 function setEditorSyntax () {
