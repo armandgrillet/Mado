@@ -2,24 +2,23 @@
 
 /* 
 * Variables (in alphabetical order). 
+	* Shortcuts.
 	* Global.
-	* For other JS.
 */
 
+var markdown; // The contenteditable where the user writes.
+
+var closeDiv; // The end of the div.
 var conversionDiv; // The div who contains the HTML conversion.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
-var markdown; // The contenteditable where the user writes.
+var initialText; // A save used when the user cancel a link/image.
+var newCE; // The new contenteditable content (temporary).
+var openDiv; // The beginning of the div.
+var optiMarkdown; // The new Markdown, without useless div.
+var range; // Get the user's selection.
+var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
 var tempConversion; // A string used to don't display errors when an image is loaded.
-
-var contentHighlighted;
-var tempMarkdown;
-var optiMarkdown;
-var openDiv;
-var closeDiv;
-var newCE;
-var initialText;
-
-var surroundDiv = document.createElement("div");
+var tempMarkdown; // String used to modify the markdown innerHTML.
 
 /*
 * Functions (in alphabetical order).
@@ -76,13 +75,8 @@ function conversion () {
 	}
 }
 
-function getFirstRange() {
-    var sel = rangy.getSelection();
-    return sel.rangeCount ? sel.getRangeAt(0) : null;
-}
-
 function changeContentHighlighted (id) {
-    var range = getFirstRange();
+    range = rangy.getSelection().rangeCount ? rangy.getSelection().getRangeAt(0) : null;
     if (range) {    
         surroundDiv.id = id;
         try {

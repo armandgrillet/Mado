@@ -13,6 +13,7 @@ var imageButton; // The "Image" button.
 var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
+var imageDiv; // The div with id="mado-image".
 var imageStatus; // The div to display the image path.
 var titleInput; // The input for the title of the image
 
@@ -29,13 +30,13 @@ var imagePosition = 0; // Used to don't keep on the same part of the document.
 var imagesArray = new Array(); // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
-var imageDiv;
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
 	* applyImage (): what to do when the user press enter after choosing an image.
+	* cancelImage (): what to do if the user press elsewhere the image container when he was adding an image.
 	* chooseGalleries (): open a pop-up to let the user chooses his galleries.
 	* chromeUpdate (newGalleries): set the galleries to be used in getImages().
 	* displayImages (): find the images on the document and display the correct corresponding data.

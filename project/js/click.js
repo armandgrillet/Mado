@@ -32,7 +32,8 @@ $(document).click( function(e) {
 			initialText = titleInput.value;
 		}
 	}
-	else if (imageDisplayer.className == "tool-displayer" && ! $(e.target).closest(imageBox).length) { // The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className == "tool-displayer" && 
+		! $(e.target).closest(imageBox).length) { // The user doesn't click on the image insertion box.
 		cancelImage();
 		imageDisplayer.className = "tool-displayer hidden";
 	}

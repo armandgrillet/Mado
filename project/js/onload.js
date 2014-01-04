@@ -198,6 +198,7 @@ window.onload = function() {
     $(linkButton).on("mousedown", function() {
         changeContentHighlighted("mado-link");
     });
+    
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
         changeContentHighlighted("mado-link");
         $(linkButton).click(); 

@@ -11,13 +11,15 @@ var link; // The content that is added.
 var linkButton; // The "Link" button.
 var linkDisplayer; // The div that contains all the link divs.
 var urlInput; // The div that contains the url.
-var linkDiv;
+var linkDiv; // The div with id="mado-link".
 
 /*
 * Function.
 *
 * Resume:
 	* applyLink (): what to do when the user press enter after setting the link.
+	* cancelLink (): what to do if the user press elsewhere the link container when he was adding a link.
+	* modifyLink (): enables the realtime modification of a link.
 */
 
 function applyLink () {
@@ -37,6 +39,13 @@ function applyLink () {
 	}
 }
 
+function cancelLink () {
+	if (linkDiv != undefined)
+		linkDiv.innerText = initialText;		
+	removeDivWithId("mado-link");
+	conversion();
+}
+
 function modifyLink () {
 	if (hypertextInput.value == "")
 		link = '[' + urlInput.value + "](" + urlInput.value + ')';
@@ -46,12 +55,5 @@ function modifyLink () {
 		linkDiv.innerText = link;		
 	else
 		$(markdown).innerText = $(markdown).innerText + link;
-	conversion();
-}
-
-function cancelLink () {
-	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;		
-	removeDivWithId("mado-link");
 	conversion();
 }
