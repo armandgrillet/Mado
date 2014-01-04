@@ -6,8 +6,10 @@
 	* Global.
 */
 
+/* HTML shortcuts. */
 var markdown; // The contenteditable where the user writes.
 
+/* Global. */
 var closeDiv; // The end of the div.
 var conversionDiv; // The div who contains the HTML conversion.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
@@ -32,7 +34,8 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
 	* removeDivWithId (id): Remove a div from content via chechDiv (divCount, content, pos, id), use RegExp for strength.
-	* saveContentHighlighted (): Get the selection position.
+	* restoreSelection (id): Restore the previous elements selected by the user.	
+	* selectElementContents(el) : Do weird things with HTML to re-set the selection.
 	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
 */
 
