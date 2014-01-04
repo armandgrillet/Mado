@@ -26,12 +26,13 @@ $(document).click( function(e) {
 		imageLoaded = undefined;
 
 		imageDisplayer.className = "tool-displayer";
-		if ($(markdown).children('#mado-image')[0] != undefined) {
-			titleInput.value = $(markdown).children('#mado-image')[0].innerText;
+		if ($(markdown).find("#mado-image").length > 0) {
+			imageDiv = document.getElementById("mado-image");
+			titleInput.value = imageDiv.innerText;
 			initialText = titleInput.value;
 		}
 	}
-	else if (imageDisplayer.className == "tool-displayer" && ! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className == "tool-displayer" && ! $(e.target).closest(imageBox).length) { // The user doesn't click on the image insertion box.
 		cancelImage();
 		imageDisplayer.className = "tool-displayer hidden";
 	}
@@ -43,8 +44,9 @@ $(document).click( function(e) {
 		hypertextInput.value = "";
 
 		linkDisplayer.className = "tool-displayer";
-		if ($(markdown).children('#mado-link')[0] != undefined) {
-			hypertextInput.value = $(markdown).children('#mado-link')[0].innerText;
+		if ($(markdown).find("#mado-link").length > 0) {
+			linkDiv = document.getElementById("mado-link");
+			hypertextInput.value = linkDiv.innerText;
 			initialText = hypertextInput.value;
 		}
 		urlInput.focus();

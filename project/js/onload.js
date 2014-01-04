@@ -102,15 +102,15 @@ window.onload = function() {
                 function (theFileEntry) {
                     fileEntry = theFileEntry;
                     chrome.storage.local.remove("tempFileEntry");
-
-                    nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;|";
+    
                     fileEntry.file(
                         function(file) {
                             var reader = new FileReader();
                             reader.onload = function(e) { 
                                 markdown.innerText = e.target.result;
-                                markdownSaved = e.target.result;
-                                conversion();                       
+                                markdownSaved = markdown.innerText;
+                                conversion();  
+                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";                     
                             };
                             reader.readAsText(file);
                         },
@@ -168,7 +168,6 @@ window.onload = function() {
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
-        saveContentHighlighted();
         changeContentHighlighted("mado-image");
     });
 
@@ -197,11 +196,9 @@ window.onload = function() {
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
-        saveContentHighlighted();
         changeContentHighlighted("mado-link");
     });
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
-        saveContentHighlighted();
         changeContentHighlighted("mado-link");
         $(linkButton).click(); 
         return false; 
@@ -266,6 +263,8 @@ window.onload = function() {
     Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
 
     /* window.js */
+    determineFrame();
+
     $(quitCloseButton).on("click", quitCloseWindow);
     $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
 
@@ -274,7 +273,5 @@ window.onload = function() {
 
     $(windowMax).on("click", maximizeWindow);
 
-    $(windowMin).on("click", minimizeWindow);
-
-    determineFrame();
+    $(windowMin).on("click", minimizeWindow);    
 }

@@ -17,6 +17,7 @@ var wordsDiv; // The div who contains the document's words number.
 	* checkSaveState (): change saveState's innerHTML.
 	* counterSelection (): what counter to display.
 	* displayCounter (): change charsDiv and wordsDiv.
+	* resetCounter (): what to display if there is nothing in the contenteditable.
 */
 
 function checkSaveState () {

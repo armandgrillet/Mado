@@ -11,6 +11,7 @@ var link; // The content that is added.
 var linkButton; // The "Link" button.
 var linkDisplayer; // The div that contains all the link divs.
 var urlInput; // The div that contains the url.
+var linkDiv;
 
 /*
 * Function.
@@ -27,8 +28,8 @@ function applyLink () {
 			link = '[' + urlInput.value + "](" + urlInput.value + ')';
 		else 
 			link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-		if ($(markdown).children('#mado-link')[0] != undefined)
-			$(markdown).children('#mado-link')[0].innerText = link;		
+		if (linkDiv != undefined)
+			linkDiv.innerText = link;		
 		else
 			$(markdown).innerText = $(markdown).innerText + link;
 		removeDivWithId("mado-link");
@@ -41,16 +42,16 @@ function modifyLink () {
 		link = '[' + urlInput.value + "](" + urlInput.value + ')';
 	else 
 		link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-	if ($(markdown).children('#mado-link')[0] != undefined)
-		$(markdown).children('#mado-link')[0].innerText = link;		
+	if (linkDiv != undefined)
+		linkDiv.innerText = link;		
 	else
 		$(markdown).innerText = $(markdown).innerText + link;
 	conversion();
 }
 
 function cancelLink () {
-	if ($(markdown).children('#mado-link')[0] != undefined)
-		$(markdown).children('#mado-link')[0].innerText = initialText;		
+	if (linkDiv != undefined)
+		linkDiv.innerText = initialText;		
 	removeDivWithId("mado-link");
 	conversion();
 }

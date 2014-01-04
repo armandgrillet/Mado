@@ -28,7 +28,7 @@ var recentFiles = [ // Name of the recent files and the corresponding ids on the
 	* displayRecentFiles (): it just displays the recent files, no animation.
 	* newRecentFile (theFile): add a recent file.
 	* removeFile (numberOfTheFile): remove a file with an animation, removeFile(numberOfTheFile) -> removefileInStorage() -> displayRecentFiles().
-	* removefileInStorage (numberOfTheFile, whatToDoAfter): remove a file in the local storage.
+	* removefileInStorage (numberOfTheFile, OPTION whatToDoAfter): remove a file in the local storage.
 	* removeAllFiles (): remove all the recent files in the div and calls removeAllFilesInStorage().
 	* removeAllFilesInStorage (): remove all the files in the local storage.
 */

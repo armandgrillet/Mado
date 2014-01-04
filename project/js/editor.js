@@ -19,12 +19,18 @@ var closeDiv;
 var newCE;
 var initialText;
 
+var surroundDiv = document.createElement("div");
+
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
 	* conversion (): what to do when the user change something on the contenteditable.
+	* changeContentHighlighted (id): Add a div with id @param id around the selection. 
+	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
+	* removeDivWithId (id): Remove a div from content via chechDiv (divCount, content, pos, id), use RegExp for strength.
+	* saveContentHighlighted (): Get the selection position.
 	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
 */
 
@@ -70,6 +76,45 @@ function conversion () {
 	}
 }
 
+function getFirstRange() {
+    var sel = rangy.getSelection();
+    return sel.rangeCount ? sel.getRangeAt(0) : null;
+}
+
+function changeContentHighlighted (id) {
+    var range = getFirstRange();
+    if (range) {    
+        surroundDiv.id = id;
+        try {
+            range.surroundContents(surroundDiv);
+        }
+        catch(ex) {
+        }
+    }
+}
+
+function checkDiv (divCount, content, pos, id) {
+	openDiv = content.indexOf("<div", pos);
+	closeDiv = content.indexOf("</div>", pos);
+
+	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
+		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
+			return (checkDiv(divCount + 1, content, openDiv + 5, id)); // Recursivity.
+		else { // If </div> is here first.
+			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
+				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
+				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv); 
+				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
+				return [0, newCE];
+			}
+			else
+				return(checkDiv(divCount - 1, content, closeDiv + 6, id)); // Recursivity.
+		}
+	}
+	else
+		return [-1]; // Don't remove the brackets.
+}
+
 function endOfConversion () {
 	/* Reset. */
 	imagePath = undefined;
@@ -94,42 +139,6 @@ function endOfConversion () {
 	checkSaveState();
 }
 
-function saveContentHighlighted () {
-    if (typeof window.getSelection != "undefined") {
-        var sel = window.getSelection();
-        if (sel.rangeCount) {
-            var container = document.createElement("div");
-            for (var i = 0; i < sel.rangeCount; ++i)
-                container.appendChild(sel.getRangeAt(i).cloneContents());
-            contentHighlighted = container.innerHTML;
-        }
-    } 
-    else if (typeof document.selection != "undefined") {
-        if (document.selection.type == "Text") {
-            contentHighlighted = document.selection.createRange().htmlText;
-        }
-    }
-}
-
-function changeContentHighlighted (id) {
-    contentHighlighted = "<div id=\"" + id + "\">" + contentHighlighted + "</div>";
-    if (window.getSelection && window.getSelection().getRangeAt) {
-        range = window.getSelection().getRangeAt(0);
-        range.deleteContents();
-        var div = document.createElement("div");
-        div.innerHTML = contentHighlighted;
-        var frag = document.createDocumentFragment(), child;
-        while ( (child = div.firstChild) ) {
-            frag.appendChild(child);
-        }
-        range.insertNode(frag);
-    } else if (document.selection && document.selection.createRange) {
-        range = document.selection.createRange();
-        contentHighlighted = (node.nodeType == 3) ? node.data : node.outerHTML;
-        range.pasteHTML(contentHighlighted);
-    }
-}
-
 function removeDivWithId (id) {
 	tempMarkdown = markdown.innerHTML;
 	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
@@ -143,28 +152,6 @@ function removeDivWithId (id) {
 		}
 	}
 	markdown.innerHTML = tempMarkdown;
-}
-
-function checkDiv (divCount, content, pos, id) {
-	openDiv = content.indexOf("<div", pos);
-	closeDiv = content.indexOf("</div>", pos);
-
-	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
-		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
-			return (checkDiv(divCount + 1, content, openDiv + 5, id)); // Recursivity.
-		else { // If </div> is here first.
-			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
-				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
-				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv); 
-				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
-				return [0, newCE];
-			}
-			else
-				return(checkDiv(divCount - 1, content, closeDiv + 6, id)); // Recursivity.
-		}
-	}
-	else
-		return [-1]; // Don't remove the brackets.
 }
 
 function setEditorSyntax () {

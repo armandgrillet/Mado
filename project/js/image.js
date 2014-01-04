@@ -29,6 +29,7 @@ var imagePosition = 0; // Used to don't keep on the same part of the document.
 var imagesArray = new Array(); // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
+var imageDiv;
 
 /*
 * Functions (in alphabetical order).
@@ -54,19 +55,18 @@ function applyImage () {
 			image = "![" + altInput.value + "](" + imageLoaded + ')';
 		else 
 			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-		if ($(markdown).children('#mado-image')[0] != undefined)
-			$(markdown).children('#mado-image')[0].innerText = image;		
+		if (imageDiv != undefined)
+			imageDiv.innerText = image;		
 		else
-			$(markdown).innerText = $(markdown).innerText + image;
-		
+			$(markdown).innerText = $(markdown).innerText + image;		
 		removeDivWithId("mado-image");
 		$(markdown).click();	
 	}
 }
 
 function cancelImage () {
-	if ($(markdown).children('#mado-image')[0] != undefined)
-		$(markdown).children('#mado-image')[0].innerText = initialText;		
+	if (imageDiv != undefined)
+		imageDiv.innerText = initialText;		
 	removeDivWithId("mado-image");
 	conversion();
 }
