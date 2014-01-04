@@ -21,7 +21,7 @@ var wordsDiv; // The div who contains the document's words number.
 
 function checkSaveState () {
 	if (markdown.innerText != "") {
-		if (markdownSaved == undefined || (markdown.innerText != markdownSaved))
+		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
 			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "| Saved <span class=\"little-icon-saved\"></span>";

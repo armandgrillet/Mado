@@ -143,12 +143,12 @@ window.onload = function() {
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
+    $(markdown).focus();
     $(markdown).on("input propertychange", conversion);
     $(markdown).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab        
+        if (e.keyCode == 9) // The user press tab        
             e.preventDefault();
-        }
-    })
+    });
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
@@ -200,7 +200,12 @@ window.onload = function() {
         saveContentHighlighted();
         changeContentHighlighted("mado-link");
     });
-    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
+        saveContentHighlighted();
+        changeContentHighlighted("mado-link");
+        $(linkButton).click(); 
+        return false; 
+    }); 
 
     $(urlInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
