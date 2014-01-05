@@ -179,8 +179,7 @@
 				 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
 			<section id="workspace" class="normal">
 
-				<div id="switch-cursor"></div>
-
+				<div id="switch-cursor"></div>				
 				<!-- Markdown control sidebar
 					 Contains three square buttons:
 					 - The help-input accessor;
@@ -291,9 +290,8 @@
 				<!-- Markdown area
 					 Contains the textarea itself.
 					 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
-				<article class="sheet" id="markdown-container">
-
-					<!-- Textarea for typing markdown
+				<article class="sheet" id="markdown-container">					
+					<!-- Contenteditable for typing markdown
 						 Controlled via JavaScript. See 'marked.js' for further information. -->
 					<div contenteditable="true" placeholder="Write here" id="markdown"></div>
 				</article>
@@ -339,15 +337,18 @@
 
 			<!-- FIXED BOTTOM BAR
 				 Contains useful information for the user:
-				 - The document's name;
 				 - Its number of words;
 				 - Whether it is saved or not.
+				 - The paste zone used when the user pastes content.
 				 These data are set via JavaScript. See 'footer.js' for urther information. -->
 			<footer>
 
 				<p>
 					<span id="character-nb"></span><span id="word-nb"></span><span id="save-state"></span>
 				</p>
+				<!-- Contenteditable when pasting someting
+						Controlled via JavaScript. -->
+				<textarea id="paste-zone"></textarea>
 			</footer>
 		</section>
 	</body>

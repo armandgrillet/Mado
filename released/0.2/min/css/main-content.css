@@ -446,10 +446,15 @@
 }
 
 /* Selected Markdown when inserting a link or an image */
-#mado-link, #mado-image {
+#mado-link, #mado-image, #mado-paste {
 	display: inline;
 	color: #fafafa;
 	background-color: #1c75ea;
+}
+
+#paste-zone {
+	width: 0;
+	height: 0;
 }
 
 /* HTML AREA */
