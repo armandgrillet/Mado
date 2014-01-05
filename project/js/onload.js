@@ -16,6 +16,7 @@ window.onload = function() {
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
+    pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
@@ -145,10 +146,13 @@ window.onload = function() {
 
     $(markdown).focus();
     $(markdown).on("input propertychange", conversion);
+    $(markdown).bind('paste', function(){ // What to do if the user pastes something.
+        pasteContent();   
+    });
     $(markdown).keydown(function(e){
         if (e.keyCode == 9) // The user press tab        
             e.preventDefault();
-    });
+    });  
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);

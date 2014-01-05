@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<title>Settings | Mado</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Generic CSS -->
+		<link rel="stylesheet" type="text/css" href="../css/reset.css">
+		<link rel="stylesheet" type="text/css" href="../css/style-base.css">
+
+		<!-- CSS for options -->
+		<link rel="stylesheet" type="text/css" href="../css/more/options-base.css">
+		
+		<!-- Generic JS -->
+		<script type="text/javascript" src="../js/open-source/jquery-2.0.3.min.js"></script>
+
+		<!-- JS for Settings (alphabetical order) -->
+		<script type="text/javascript" src="../js/more/settings.js"></script>
+	</head>
+	
+	<body>
+
+		<h1 id="option-title">Settings</h1>
+
+		<section class="option-part">
+
+			<h2 class="option-part-title">Syntax:</h2>
+
+			<div class="input-container"><input class="cta" type="radio" name="syntax" id="markdown-radio"></div><div class="label-container"><label class="cta" for="markdown-radio">Markdown</label></div>
+			<div class="input-container"><input class="cta" type="radio" name="syntax" id="gfm-radio"></div><div class="label-container"><label class="cta" for="gfm-radio">GFM (<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank">GitHub Flavored Markdown</a>)</label></div>
+		</section>
+		<!--
+		<section class="option-part">
+
+			<h2 class="option-part-title">Display size:</h2>
+			
+			<div class="input-container"><input class="cta" type="radio" name="display-size" id="small-display-radio"></div><div class="label-container"><label class="cta" for="small-display-radio">Small</label></div>
+			<div class="input-container"><input class="cta" type="radio" name="display-size" id="medium-display-radio"></div><div class="label-container"><label class="cta" for="medium-display-radio">Medium</label></div>
+			<div class="input-container" id="big-display-input-container"><input class="cta" type="radio" name="display-size" id="big-display-radio"></div><div class="label-container" id="big-display-label-container"><label class="cta" for="big-display-radio">Big</label></div>
+		</section>
+		-->
+		<section class="option-part">
+
+			<div class="input-container"><input class="cta" type="checkbox" id="global-view-checkbox"></div><div class="label-container"><label class="cta" for="global-view-checkbox">Switch back to global view on window resizing.</label></div>
+		</section>
+
+		<section class="option-part">
+			
+			<div class="input-container"><input class="cta" type="checkbox" id="analytics-checkbox"></div><div class="label-container"><label class="cta" for="analytics-checkbox">Improve Mado by sending anonymous data <em>via</em> Google Analytics.</label></div>
+		</section>
+	</body>
+</html>

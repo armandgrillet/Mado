@@ -7,21 +7,24 @@
 */
 
 /* HTML shortcuts. */
+var conversionDiv; // The div who contains the HTML conversion.
 var markdown; // The contenteditable where the user writes.
+var pasteZone; // The textarea used when the user pastes content.
 
 /* Global. */
 var closeDiv; // The end of the div.
-var conversionDiv; // The div who contains the HTML conversion.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 var initialText; // A save used when the user cancel a link/image.
 var newCE; // The new contenteditable content (temporary).
 var openDiv; // The beginning of the div.
 var optiMarkdown; // The new Markdown, without useless div.
+var pasteDiv; // The div used when the user pastes content.
 var range; // Get the user's selection.
 var rangeSelection; // Set the user's new range selection.
 var savedSel; // The selection is saved here.
 var selection; // Set the user's new selection.
 var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
+var tempTextarea = document.createElement("textarea"); // Used to add the div to the contenteditable.
 var tempConversion; // A string used to don't display errors when an image is loaded.
 var tempMarkdown; // String used to modify the markdown innerHTML.
 
@@ -137,6 +140,22 @@ function endOfConversion () {
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();
+}
+
+function pasteContent () {
+	changeContentHighlighted("mado-paste");  
+	pasteDiv = document.getElementById("mado-paste");      
+    pasteZone.focus();
+
+    setTimeout(function(){
+        if (pasteDiv != undefined)
+            pasteDiv.innerText = pasteZone.value;       
+        else
+            $(markdown).innerText = $(markdown).innerText + pasteZone.value;
+        selectElementContents(pasteDiv);
+        restoreSelection("mado-paste");
+        conversion();
+    }, 20);
 }
 
 function removeDivWithId (id) {
