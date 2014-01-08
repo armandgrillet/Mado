@@ -177,7 +177,7 @@ function answer () {
 		case 1: // Nothing found.
 			answer1.innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2);
+			resetAnswerDiv(1);
 			break;
 		case 2: // One answer found.
 			resultsContainer.className = "one-result";
@@ -194,12 +194,15 @@ function answer () {
 }
 
 function displayAnswers () {
+	for (var i = 1; i <= 3; i++) 
+		if (window["result" + i].className == "result switched")
+			window["result" + i].className = "result";
+
 	if (help.value.length == 0)
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2);
 			if (help.value.length == 1)
 				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
 			else if (help.value.length == 2)
@@ -211,7 +214,7 @@ function displayAnswers () {
 }
 
 function resetAnswerDiv(begin) {
-	for (var i = begin; i < 4; i++) { 
+	for (var i = begin; i <= 3; i++) { 
 		if (window["answer" + i].innerHTML == "")
 			i = 3;
 		else {
@@ -227,4 +230,5 @@ function switchResult (numResult) {
 		window["result" + numResult].className = "result switched";
 	else // If corresponding example displayed
 		window["result" + numResult].className = "result";
+	help.focus();
 }
