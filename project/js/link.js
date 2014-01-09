@@ -26,15 +26,7 @@ function applyLink () {
 	if (urlInput.value == "")
 		urlInput.focus();	
 	else {
-		if (hypertextInput.value == "")
-			link = '[' + urlInput.value + "](" + urlInput.value + ')';
-		else 
-			link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-		if (linkDiv != undefined)
-			linkDiv.innerText = link;		
-		else
-			$(markdown).innerText = $(markdown).innerText + link;
-
+		modifyLink();
 		linkDisplayer.className = "tool-displayer hidden";
 		selectElementContents(linkDiv);
 		restoreSelection("mado-link");
@@ -48,6 +40,7 @@ function cancelLink () {
 	linkDisplayer.className = "tool-displayer hidden";	
 	selectElementContents(linkDiv);
 	restoreSelection("mado-link");
+	conversion();
 }
 
 function modifyLink () {

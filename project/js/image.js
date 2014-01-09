@@ -45,6 +45,7 @@ var rightFile; // If false the JS is looking for an image.
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* modifyImage (): enables the realtime modification of an image.
 	* update (): update the list of folders and analyse the files in folders.
 */
 
@@ -52,18 +53,10 @@ function applyImage () {
 	if (altInput.value == "") // An alternative input is obligatory
 		altInput.focus();
 	else if (imageLoaded != undefined){ // An image is obligatory
-		if (titleInput.value == "")
-			image = "![" + altInput.value + "](" + imageLoaded + ')';
-		else 
-			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-		if (imageDiv != undefined)
-			imageDiv.innerText = image;		
-		else
-			$(markdown).innerText = $(markdown).innerText + image;		
+		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
-		conversion();
 	}
 }
 
@@ -73,6 +66,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
+	conversion();
 }
 
 function chooseGalleries () {
@@ -142,7 +136,7 @@ function galleryAnalysis (index) {
 	}
 	else {
 		imagesArray.length = 0;
-		conversion();
+		modifyImage();
 	}
 }
 
@@ -195,11 +189,24 @@ function loadImage () {
 					imageStatus.innerHTML = imageStatus.innerHTML.substring(0, imageStatus.innerHTML.lastIndexOf('.')) + "<span id=\"extension\">" + imageStatus.innerHTML.substring(imageStatus.innerHTML.lastIndexOf('.'), imageStatus.innerHTML.length) + "</span";
 					imageStatus.style.display = "inline-block";
 					imageLoaded = path.replace(/\\/g, "/");
+					modifyImage();
 					altInput.focus();
 				});
 			}
 		}
 	);
+}
+
+function modifyImage () {
+	if (titleInput.value == "")
+		image = "![" + altInput.value + "](" + imageLoaded + ')';
+	else 
+		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	if (imageDiv != undefined)
+		imageDiv.innerText = image;		
+	else
+		$(markdown).innerText = $(markdown).innerText + image;		
+	conversion();
 }
 
 function update () {	

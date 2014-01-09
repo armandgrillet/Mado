@@ -182,7 +182,9 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
            applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
 
     $(titleInput).keydown(function(e){
@@ -195,7 +197,9 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
             applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
 
     /* link.js */
@@ -211,9 +215,9 @@ window.onload = function() {
 
     $(urlInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
-           applyLink();
+           applyLink(false);
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();       
+            cancelLink();       
         else
             modifyLink();
     });
@@ -226,9 +230,9 @@ window.onload = function() {
     })
     $(hypertextInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
-            applyLink();
+            applyLink(false);
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();        
+            cancelLink();        
         else
             modifyLink();        
     });

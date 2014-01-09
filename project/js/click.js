@@ -35,8 +35,11 @@ $(document).click( function(e) {
 		initialText = titleInput.value;
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
-		cancelImage();
+		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+		imageDisplayer.className = "tool-displayer hidden";
+		selectElementContents(imageDiv);
+		restoreSelection("mado-image");
+	}
 
 	/* link.js */
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
@@ -54,8 +57,11 @@ $(document).click( function(e) {
 		initialText = hypertextInput.value;
 		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length)
-		cancelLink();
+	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+		linkDisplayer.className = "tool-displayer hidden";
+		selectElementContents(linkDiv);
+		restoreSelection("mado-link");
+	}
 
 	/* more.js */
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.
