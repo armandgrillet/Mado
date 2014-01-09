@@ -65,7 +65,10 @@ function fileName (path) {
 }
 
 function minFileName (path) {
-	return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+	if (path == "")
+		return "document";
+	else
+		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
 }
 
 function moreWindow (choice) {

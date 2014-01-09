@@ -20,8 +20,7 @@ window.onload = function() {
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");
-    saveState = document.getElementById("save-state");
+    nameDiv = document.getElementById("doc-name");   
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -86,6 +85,7 @@ window.onload = function() {
     head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
     quitCloseButton = document.getElementById("quit");
     saveQuitCloseButton = document.getElementById("save-quit");
+    saveState = document.getElementById("save-state");
     windowCloseContainer = document.getElementById("window-close");
     windowClose = document.getElementById("window-close-button");
     windowMax = document.getElementById("window-maximize");
