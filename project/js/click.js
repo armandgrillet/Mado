@@ -25,12 +25,14 @@ $(document).click( function(e) {
 		titleInput.value = "";
 		imageLoaded = undefined;
 
-		imageDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-image").length > 0) {
-			imageDiv = document.getElementById("mado-image");
-			titleInput.value = imageDiv.innerText;
-			initialText = titleInput.value;
+		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-image");
 		}
+		imageDisplayer.className = "tool-displayer";
+		imageDiv = document.getElementById("mado-image");
+		titleInput.value = imageDiv.innerText;
+		initialText = titleInput.value;
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
 		! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
@@ -41,14 +43,16 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
-
-		linkDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-link").length > 0) {
-			linkDiv = document.getElementById("mado-link");
-			hypertextInput.value = linkDiv.innerText;
-			initialText = hypertextInput.value;
+		
+		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-link");
 		}
-		urlInput.focus();
+		linkDisplayer.className = "tool-displayer";
+		linkDiv = document.getElementById("mado-link");
+		hypertextInput.value = linkDiv.innerText;
+		initialText = hypertextInput.value;
+		urlInput.focus();			
 	}
 	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length)
 		cancelLink();
