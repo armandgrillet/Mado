@@ -177,7 +177,7 @@ function answer () {
 		case 1: // Nothing found.
 			answer1.innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(1);
+			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
 			break;
 		case 2: // One answer found.
 			resultsContainer.className = "one-result";
