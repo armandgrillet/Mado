@@ -348,24 +348,6 @@
 	float: right;
 }
 
-/* STYLES TOOL SPECIFICS */
-.style-choice-container {
-	/* Box-model */
-	display: block;
-	width: 100%;
-	height: 27px;
-
-	/* Typography */
-	font-size: 0.8em;
-	line-height: 27px;
-	font-weight: bold;
-	color: #4a4942;
-}
-
-.style-choice-container label:hover { color: #000; }
-
-.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
-
 /* -----------
 	Workspace
    ----------- */
@@ -458,11 +440,13 @@
 }
 
 /* HTML AREA */
+.sheet:last-of-type { padding: 0 0 0 40px; }
+
 #html-conversion {
 	/* Box-model */
 	width: 100%;
 	height: 100%;
-	padding: 40px 0;
+	padding: 40px 40px 40px 0;
 	overflow-x: hidden;
 	overflow-y: auto;
 }

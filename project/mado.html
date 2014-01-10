@@ -320,34 +320,6 @@
 
 					<div id="html-conversion"></div>
 				</article>
-
-				<!-- HTML overview control navbar
-					 Contains the CSS picker square button. -->
-				<aside class="sidebar" id="conversion-control">
-					
-					<div class="tool-container" id="style-tool-container">
-					
-						<div class="cta tool icon-style" id="style-tool"></div>
-						
-						<div class="tool-displayer hidden" id="style-tool-displayer">
-
-							<div class="tool-arrow"></div>
-							
-							<div class="tool-box">
-
-								<div class="style-choice-container">
-									<input type="radio" name="style-choice" class="cta" id="home-style"><label class="cta" for="home-style">Home</label>
-								</div>
-								<div class="style-choice-container">
-									<input type="radio" name="style-choice" class="cta" id="clinic-style"><label class="cta" for="clinic-style">Clinic</label>
-								</div>
-								<div class="style-choice-container">
-									<input type="radio" name="style-choice" class="cta" id="tramway-style"><label class="cta" for="tramway-style">Tramway</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</aside>
 			</section>
 
 			<!-- FIXED BOTTOM BAR
@@ -361,6 +333,32 @@
 				<p>
 					<span id="character-nb"></span><span id="word-nb">
 				</p>
+
+				<!-- HTML overview control navbar
+					 Contains the CSS picker square button. -->
+				<div class="tool-container" id="style-tool-container">
+				
+					<div class="cta tool icon-style" id="style-tool"></div>
+					
+					<div class="tool-displayer hidden" id="style-tool-displayer">
+
+						<div class="tool-arrow"></div>
+						
+						<div class="tool-box">
+
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="home-style"><label class="cta" for="home-style">Home</label>
+							</div>
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="clinic-style"><label class="cta" for="clinic-style">Clinic</label>
+							</div>
+							<div class="style-choice-container">
+								<input type="radio" name="style-choice" class="cta" id="tramway-style"><label class="cta" for="tramway-style">Tramway</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<!-- Contenteditable when pasting someting
 						Controlled via JavaScript. -->
 				<textarea id="paste-zone"></textarea>
