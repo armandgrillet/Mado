@@ -41,13 +41,13 @@ var bounds; // This is the variable who stores the bounds when the window is max
 function checkSaveState () {
 	if (markdown.innerText != "") {
 		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
-			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
 		else
-			saveState.innerHTML = "| Saved <span class=\"little-icon-saved\"></span>";
+			saveState.innerHTML = "";
 	}
 	else {
 		if (markdownSaved != undefined)
-			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "";
 	}
