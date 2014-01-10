@@ -24,6 +24,8 @@ footer {
 	cursor: default;
 }
 
+footer p { text-align: right; }
+
 #character-nb,
 #word-nb {
 	/* Positioning */
@@ -50,28 +52,4 @@ footer {
 #word-nb:active {
 	/* Visual */
 	background-color: #424139;
-}
-
-#save-state {
-	/* Positioning */
-	position: relative; /* Help positioning the corresponding icon */
-
-	/* Box-model */
-	padding-right: 20px; /* Give the icon the place to display */
-}
-
-#save-state span {
-	/* Positioning */
-	position: absolute;
-	top: 0;
-	right: 0;
-
-	/* Box-model */
-	display: block;
-	width: 20px;
-	height: 20px;
-
-	/* Typography */
-	line-height: 20px !important;
-	text-align: center;
 }

@@ -45,6 +45,27 @@
 	pointer-events: none;
 }
 
+#save-state {
+	/* Positioning */
+	position: relative; /* /!\ HELP POSITIONING THE CORRESPONDING ICON? */
+}
+
+#save-state span {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	/* Box-model */
+	display: block;
+	width: 20px;
+	height: 20px;
+
+	/* Typography */
+	line-height: 20px !important;
+	text-align: center;
+}
+
 /* -------
 	Alert
    ------- */
