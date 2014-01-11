@@ -43,7 +43,6 @@
 .tool-displayer {
 	/* Positioning */
 	position: absolute;
-	top: 5px;
 
 	/* Box-model */
 	width: 315px;
@@ -89,6 +88,7 @@
 /* The displayer is actually a container that fades out when combined with the "hidden" class */
 #md-control .tool-displayer {
 	/* Positioning */
+	top: 5px;
 	left: 40px;
 
 	/* Misc */
@@ -316,37 +316,6 @@
 
 /* The textual extension of the chosen image */
 #extension { color: #b5b4b3; }
-
-/* HTML CONVERSION SIDEBAR */
-#conversion-control { right: 0; }
-
-/* RIGHT SIDEBAR TOOLS */
-/* The displayer is actually a container that fades out when combined with the "hidden" class */
-#conversion-control .tool-displayer {
-	/* Positioning */
-	right: 40px;
-
-	/* Misc */
-	-webkit-transform-origin: 314px 15px;
-}
-
-/* The arrow is a gray corner for the "box" (see #conversion-control .tool-box below) */
-#conversion-control .tool-arrow {
-	/* Positioning */
-	margin-right: 1px;
-	float: right;
-
-	/* Visual */
-	border-color: transparent transparent transparent #fff;
-	border-width: 4px 0 4px 4px;
-}
-
-/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #conversion-control .tool-arrow above) */
-#conversion-control .tool-box {
-	/* Box-model */
-	width: 120px;
-	float: right;
-}
 
 /* -----------
 	Workspace
