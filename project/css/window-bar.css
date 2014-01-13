@@ -45,12 +45,12 @@
 	pointer-events: none;
 }
 
-#app-header-centered { position: relative; }
+#app-header-centered { position: relative; } /* Help positioning the "Unsaved" icon */
 
 #save-state span {
 	/* Positioning */
-	position: absolute;
-	left: -20px;
+	position: absolute; /* See #app-header-centered above */
+	left: -20px; /* Override the child span's own width */
 	top: 0;
 
 	/* Box-model */
@@ -59,7 +59,7 @@
 	height: 20px;
 
 	/* Typography */
-	line-height: 20px !important;
+	line-height: 20px;
 	text-align: center;
 }
 
