@@ -4,6 +4,8 @@ window.onload = function() {
 	/*
     * Shortcuts.
     */
+    windowClose = document.getElementById("window-close"); // Get the close button
+
 	markdownSyntax = document.getElementById("markdown-radio");
 	gfmSyntax = document.getElementById("gfm-radio");
 
@@ -26,6 +28,9 @@ window.onload = function() {
 	/*
     * Functions.
     */
+    // Determine the close button style
+    determineCloseButton();
+
 	// getDisplaySize();
 	getSyntax();
 	getResizing();

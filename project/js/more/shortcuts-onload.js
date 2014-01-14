@@ -2,8 +2,15 @@
 
 window.onload = function() {
 	/*
-	* Function.
+    * Shortcut.
+    */
+    windowClose = document.getElementById("window-close");
+
+	/*
+	* Functions.
 	*/
+    // Determine the close button style
+    determineCloseButton();
 	
 	if (navigator.appVersion.indexOf("Mac") != -1) /* If the user is on a Mac */
 		$(".ctrl-cmd-key").html("&#8984;"); /* Insert the "Cmd" symbol */

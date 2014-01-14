@@ -157,9 +157,7 @@
 
 .alert-part:not(:last-of-type) { padding-bottom: 10px; }
 
-/* ---------------
-	Alert actions
-   ---------------
+/* ALERT ACTIONS
    Contains the style for the alert's footer. The footer itself contains the buttons that respond to the alert. */
 #alert-actions {
 	/* Positioning */
