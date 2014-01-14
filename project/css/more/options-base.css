@@ -2,9 +2,12 @@
 	MISCELLANOUS
    ============== */
 
-body {
+body { padding: 40px 20px 20px; }
+
+#options-container {
 	/* Box-model */
-	padding: 20px;
+	width: 100%;
+	height: 100%;
 	overflow-y: auto;
 }
 
@@ -12,6 +15,23 @@ body {
 /* ===============
 	OPTION STYLES
    =============== */
+
+/* Window bar for the option window */
+#window-bar {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3000;
+
+	/* Box-model */
+	width: 100%;
+	height: 20px;
+
+	/* Visual */
+	-webkit-app-region: drag; /* Enable drag action */
+}
+
 /* Main title for the option window */
 #option-title {
 	/* Box-model */

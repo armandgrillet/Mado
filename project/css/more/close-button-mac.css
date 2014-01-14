@@ -1,0 +1,38 @@
+/* ======================================
+	MAC OS X OPTIONS CLOSE BUTTON STYLES
+   ======================================
+	Specific styles for Mado's options' close button on Mac OS X. */
+
+#window-close {
+	/* Positioning */
+	position: fixed;
+	top: 4px;
+	left: 10px;
+
+	/* Box-model */
+	width: 12px;
+	height: 12px;
+
+	/* Typography */
+	line-height: 12px;
+	text-align: left;
+	color: transparent;
+
+	/* Visual */
+	background-color: #f24848;
+	border-radius: 6px;
+
+	/* Misc */
+	-webkit-app-region: no-drag; /* Disable drag action */
+}
+
+/* These styles make the icons appear centered */
+#window-close:before {
+	/* Positioning */
+	position: relative;
+	left: -2px; /* 16px (original font square size) - 12px (actual buttons' width) = 4px, then 4px / 2 (because it's centered) = 2px */
+}
+
+#window-close:hover { color: #832727; }
+
+#window-close:active { background-color: #d11; }

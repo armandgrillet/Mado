@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/style-base.css">
 
 		<!-- CSS for options -->
+		<link rel="stylesheet" type="text/css" href="../css/icons.css">
 		<link rel="stylesheet" type="text/css" href="../css/more/options-base.css">
 
 		<!-- CSS for Shortcuts -->
@@ -19,7 +20,7 @@
 		<!-- Generic JS -->
 		<script type="text/javascript" src="../js/open-source/jquery-2.0.3.min.js"></script>
 
-		<!-- JS for Option windows -->
+		<!-- JS for options -->
 		<script type="text/javascript" src="../js/more/more-close-button.js"></script>
 
 		<!-- JS for Shortcuts -->
@@ -28,104 +29,109 @@
 	
 	<body>
 
-		<nav id="window-close"></nav>
+		<header id="window-bar">
+			<nav id="window-close"></nav>
+		</header>
 
-		<h1 id="option-title">Shortcuts</h1>
+		<div id="options-container">
 
-		<div class="option-part">
+			<h1 id="option-title">Shortcuts</h1>
 
-		<h2 class="option-part-title">Classic shortcuts</h2>
+			<div class="option-part">
 
-			<div class="shortcut-container">
+			<h2 class="option-part-title">Classic shortcuts</h2>
 
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">N</span>
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">N</span>
+					</div>
+					<p class="shortcut-info">
+						Create a new document.
+					</p>
 				</div>
-				<p class="shortcut-info">
-					Create a new document.
-				</p>
+
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">O</span>
+					</div>
+					<p class="shortcut-info">
+						Open an existing document.
+					</p>
+				</div>
+
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">S</span>
+					</div>
+					<p class="shortcut-info">
+						Save the document.
+					</p>
+				</div>
+
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key shift-key"></span>&nbsp;<span class="shortcut-key">S</span>
+					</div>
+					<p class="shortcut-info">
+						Save the document as…
+					</p>
+				</div>
+
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">H</span>
+					</div>
+					<p class="shortcut-info">
+						Open the quick help tool.
+					</p>
+				</div>
+
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">K</span>
+					</div>
+					<p class="shortcut-info">
+						Insert a link.
+					</p>
+				</div>
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">W</span>
+					</div>
+					<p class="shortcut-info">
+						Close the window.
+					</p>
+				</div>			
 			</div>
 
-			<div class="shortcut-container">
+			<div class="option-part">
 
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">O</span>
+			<h2 class="option-part-title">Mado specific shortcuts</h2>
+				<div class="shortcut-container">
+
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">Alt</span>&nbsp;<span class="shortcut-key">&larr;</span>
+					</div>
+					<p class="shortcut-info">
+						Switch the workspace view to the left.
+					</p>
 				</div>
-				<p class="shortcut-info">
-					Open an existing document.
-				</p>
-			</div>
 
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">S</span>
+				<div class="shortcut-container">
+					<div class="shortcut">
+						<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">Alt</span>&nbsp;<span class="shortcut-key">&rarr;</span>
+					</div>
+					<p class="shortcut-info">
+						Switch the workspace view to the right.
+					</p>
 				</div>
-				<p class="shortcut-info">
-					Save the document.
-				</p>
-			</div>
-
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key shift-key"></span>&nbsp;<span class="shortcut-key">S</span>
-				</div>
-				<p class="shortcut-info">
-					Save the document as…
-				</p>
-			</div>
-
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">H</span>
-				</div>
-				<p class="shortcut-info">
-					Open the quick help tool.
-				</p>
-			</div>
-
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">K</span>
-				</div>
-				<p class="shortcut-info">
-					Insert a link.
-				</p>
-			</div>
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">W</span>
-				</div>
-				<p class="shortcut-info">
-					Close the window.
-				</p>
-			</div>			
-		</div>
-
-		<div class="option-part">
-
-		<h2 class="option-part-title">Mado specific shortcuts</h2>
-			<div class="shortcut-container">
-
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">Alt</span>&nbsp;<span class="shortcut-key">&larr;</span>
-				</div>
-				<p class="shortcut-info">
-					Switch the workspace view to the left.
-				</p>
-			</div>
-
-			<div class="shortcut-container">
-				<div class="shortcut">
-					<span class="shortcut-key ctrl-cmd-key"></span>&nbsp;<span class="shortcut-key">Alt</span>&nbsp;<span class="shortcut-key">&rarr;</span>
-				</div>
-				<p class="shortcut-info">
-					Switch the workspace view to the right.
-				</p>
 			</div>
 		</div>
 	</body>

@@ -4,6 +4,7 @@ window.onload = function() {
 	/*
     * Shortcuts.
     */
+    head = document.getElementsByTagName("head")[0]; // The "head" section of the option window.
     windowClose = document.getElementById("window-close"); // Get the close button
 
 	markdownSyntax = document.getElementById("markdown-radio");
