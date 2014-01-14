@@ -57,7 +57,7 @@ function closeWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
 	});
-	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") // Save not made.
+	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
 	else 
 		chrome.app.window.current().close();
@@ -146,7 +146,7 @@ function saveAsAndQuit () {
 }
 
 function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
+	if (fileEntry == undefined) // Not saved.
 		saveAsAndQuit();
 	else
 		saveAndQuit();
