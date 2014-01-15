@@ -8,8 +8,10 @@ window.onload = function() {
     windowClose = document.getElementById("window-close");
 
     /*
-    * Function.
+    * Functions.
     */
-    // Determine the close button style
-    determineCloseButton();
+    determineCloseButton(); // Determine the close button style.
+    $(windowClose).on("click", function() {
+        chrome.app.window.current().close();
+    });
 }

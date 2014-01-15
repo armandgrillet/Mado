@@ -29,8 +29,7 @@ window.onload = function() {
 	/*
     * Functions.
     */
-    // Determine the close button style
-    determineCloseButton();
+    determineCloseButton(); // Determine the close button style.
 
 	// getDisplaySize();
 	getSyntax();
@@ -49,4 +48,8 @@ window.onload = function() {
 	$(viewOnResize).on("click", setResizing);
 
 	$(analytics).on("click", setAnalytics);
+
+	$(windowClose).on("click", function() {
+        chrome.app.window.current().close();
+    });
 }

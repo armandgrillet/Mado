@@ -81,6 +81,7 @@ function moreWindow (choice) {
 		      	width: 498,
 		      	height: 664
 		    }, 
+		    frame : "none",
 		    // The window can't be resized.
 		    minWidth: 498, 
 		    minHeight: 664,

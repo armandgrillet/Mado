@@ -7,6 +7,9 @@ var windowClose; // The close button.
 
 /*
 * Function.
+*
+* Resume:
+	* determineCloseButton (): choose the button to display for closing the frame.
 */
 function determineCloseButton () {
 	stylesheetLink.setAttribute("rel", "stylesheet");

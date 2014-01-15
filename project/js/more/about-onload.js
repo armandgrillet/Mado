@@ -2,14 +2,17 @@
 
 window.onload = function() {
 	/*
-    * Shortcut.
+    * Shortcuts.
     */
     head = document.getElementsByTagName("head")[0]; // The "head" section of the option window.
     windowClose = document.getElementById("window-close");
 
     /*
-    * Function.
+    * Functions.
     */
-    // Determine the close button style
-    determineCloseButton();
+    determineCloseButton(); // Determine the close button style.
+
+    $(windowClose).on("click", function() {
+        chrome.app.window.current().close();
+    });
 }
