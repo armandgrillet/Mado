@@ -131,6 +131,8 @@ function endOfConversion () {
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
+		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
+			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
 	});
 
