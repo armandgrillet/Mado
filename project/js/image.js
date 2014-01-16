@@ -51,8 +51,11 @@ var rightFile; // If false the JS is looking for an image.
 */
 
 function applyImage () {
-	if (altInput.value == "") // An alternative input is obligatory
+	if (altInput.value == "") { // An alternative input is obligatory
+		altInput.setAttribute("class", "flash");
 		altInput.focus();
+		altInput.removeAttribute("class");
+	}
 	else if (imageLoaded != undefined){ // An image is obligatory
 		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
