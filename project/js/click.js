@@ -20,7 +20,6 @@ $(document).click( function(e) {
 	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
-		imageStatus.style.display = "none";
 		altInput.value = "";
 		titleInput.value = "";
 		imageLoaded = undefined;
