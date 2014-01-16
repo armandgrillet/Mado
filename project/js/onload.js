@@ -36,6 +36,7 @@ window.onload = function() {
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
+    cancelImageButton = document.getElementById("cancel-image");
     galleriesButton = document.getElementById("galleries-button");
     imageButton = document.getElementById("image-button");
     imageDisplayer = document.getElementById("image-insertion-displayer");
@@ -46,6 +47,7 @@ window.onload = function() {
     titleInput = document.getElementById("title-input");
 
     /* link.js */
+    cancelLinkButton = document.getElementById("cancel-link");
     linkButton = document.getElementById("link-button");
     linkDisplayer = document.getElementById("link-insertion-displayer");
     urlInput = document.getElementById("url-input");
@@ -202,6 +204,8 @@ window.onload = function() {
             modifyImage();
     });
 
+    $(cancelImageButton).on("click", cancelImage);
+
     /* link.js */
     $(linkButton).on("mousedown", function() {
         changeContentHighlighted("mado-link");
@@ -236,6 +240,8 @@ window.onload = function() {
         else
             modifyLink();        
     });
+
+    $(cancelLinkButton).on("click", cancelLink);
 
     /* More.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });

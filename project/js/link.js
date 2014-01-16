@@ -6,6 +6,7 @@
 */
 
 /* HTML shortcuts. */
+var cancelLinkButton; // The "Cancel" button.
 var hypertextInput; // The div that contains the hypertext.
 var link; // The content that is added.
 var linkButton; // The "Link" button.
