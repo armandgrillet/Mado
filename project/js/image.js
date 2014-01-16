@@ -15,7 +15,6 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var imageStatus; // The div to display the image path.
 var titleInput; // The input for the title of the image
 
 /* Functions variables. 
@@ -186,12 +185,9 @@ function loadImage () {
 		function(loadedImage) {
 			if (loadedImage) {			    
 				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
-					imageBrowser.innerHTML = "Change the image";
-					imageStatus.innerHTML = fileName(path.replace(/\\/g, "/"));
-					if (imageStatus.innerHTML.length > 35) // Too long to be beautiful.
-						imageStatus.innerHTML = imageStatus.innerHTML.substring(0, 15) + "(...)" + imageStatus.innerHTML.substring(imageStatus.innerHTML.length - 15, imageStatus.innerHTML.length);
-					imageStatus.innerHTML = imageStatus.innerHTML.substring(0, imageStatus.innerHTML.lastIndexOf('.')) + "<span id=\"extension\">" + imageStatus.innerHTML.substring(imageStatus.innerHTML.lastIndexOf('.'), imageStatus.innerHTML.length) + "</span";
-					imageStatus.style.display = "inline-block";
+					imageBrowser.innerHTML = fileName(path.replace(/\\/g, "/"));
+					if (imageBrowser.innerHTML.length > 35) // Too long to be beautiful.
+						imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 5) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 4, imageBrowser.innerHTML.length);
 					imageLoaded = path.replace(/\\/g, "/");
 					modifyImage();
 					altInput.focus();

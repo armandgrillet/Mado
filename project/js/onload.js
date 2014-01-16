@@ -42,7 +42,6 @@ window.onload = function() {
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
-    imageStatus = document.getElementById("image-status");
     altInput = document.getElementById("alt-input");
     titleInput = document.getElementById("title-input");
 
