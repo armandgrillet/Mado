@@ -43,7 +43,7 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 */
 
 function conversion () {
-	if (markdown.innerText.length > 0) { // There is Markdown in the contenteditable.
+	if (markdown.innerText.length > 0 && markdown.innerHTML != "<br>") { // There is Markdown in the contenteditable.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -78,6 +78,7 @@ function conversion () {
 		}
 	}
 	else { // No Markdown here.
+		markdown.innerHTML = ""; // If the innerHTML is "<br>".
 		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
