@@ -281,41 +281,25 @@
 }
 
 /* IMAGE INSERTION SPECIFICS */
-#browse-image-module {
-	/* Positioning */
-	clear: both;
-
+/* The first button, enables the user to choose his galleries */
+#galleries-button {
 	/* Box-model */
-	padding-top: 5px;
+	width: 50%; /* This button takes half the available width */
+	padding: 7px 0; /* Override the default left and right padding so that the text can display in one line */
 }
 
-#image-status-container {
+/* The second button, aside the first one, enables the user to choose an image */
+#browse-image {
 	/* Positioning */
-	float: left;
+	margin-top: 0; /* Override the default top margin so that it aligns with the first button */
+	margin-left: 5px; /* Set a thin margin between the first and the second buttons */
 
 	/* Box-model */
-	width: 50%;
-	height: 32px; /* Matches the button's height */
-	padding-left: 5px;
-
-	/* Typography */
-	line-height: 30px; /* For vertical centering of the text. See #image-statut below */
-}
-
-#image-status {
-	/* Box-model */
-	width: 100%;
-
-	/* Typography */
-	font-size: 0.8em;
-	line-height: 1.1em;
-	font-weight: bold;
-	vertical-align: middle;
-	word-wrap: break-word;
+	width: calc(50% - 5px); /* This button takes half the available width, minus the margin */
 }
 
 /* The textual extension of the chosen image */
-#extension { color: #b5b4b3; }
+#extension { opacity: 0.8; }
 
 /* -----------
 	Workspace
