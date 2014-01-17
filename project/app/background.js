@@ -56,8 +56,8 @@ function windowCreation () {
 	});	
 }
 
-function newBounds (lastX, lastY, lastWidth, lastHeight) {
-	chrome.storage.local.set({"lastX" : lastX, "lastY" : lastY, "lastWidth" : lastWidth, "lastHeight" : lastHeight });
+function newBounds (bounds) {
+	chrome.storage.local.set({"lastX" : bounds.left, "lastY" : bounds.top, "lastWidth" : bounds.width, "lastHeight" : bounds.height });
 }
 
 /*

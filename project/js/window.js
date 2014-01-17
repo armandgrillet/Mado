@@ -55,7 +55,7 @@ function checkSaveState () {
 
 function closeWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
@@ -98,7 +98,7 @@ function minimizeWindow () {
 
 function quitCloseWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
 	chrome.app.window.current().close();
 }

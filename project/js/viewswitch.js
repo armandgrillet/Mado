@@ -39,15 +39,14 @@ function activate (clickedBtn, classState) {
 }
 
 function initActivation () { 
-	console.log(window.innerWidth);
-	if (window.innerWidth > 1365) // Big window
+	if (chrome.app.window.current().getBounds().width > 1365) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {
 		switchToMD.className = "switch-button activated";
 		workspace.className = "markdown-view";
 	}
 
-	previousSize = window.innerWidth; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
+	previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
 }
 
 function setWindowResizing () {
