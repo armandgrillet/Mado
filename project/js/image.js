@@ -186,8 +186,8 @@ function loadImage () {
 			if (loadedImage) {			    
 				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
 					imageBrowser.innerHTML = fileName(path.replace(/\\/g, "/"));
-					if (imageBrowser.innerHTML.length > 35) // Too long to be beautiful.
-						imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 5) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 4, imageBrowser.innerHTML.length);
+					if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
+						imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
 					imageLoaded = path.replace(/\\/g, "/");
 					modifyImage();
 					altInput.focus();
