@@ -39,6 +39,7 @@ function activate (clickedBtn, classState) {
 }
 
 function initActivation () { 
+	console.log(window.innerWidth);
 	if (window.innerWidth > 1365) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {

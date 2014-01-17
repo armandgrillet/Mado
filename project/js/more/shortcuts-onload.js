@@ -1,10 +1,12 @@
 /* All the things to do when shortcuts.html is loaded. */
+var helpShortcut;
 
 window.onload = function() {
 	/*
     * Shortcuts.
     */
     head = document.getElementsByTagName("head")[0]; // The "head" section of the option window.
+    helpShortcut = document.getElementById("help-shortcut");
     windowClose = document.getElementById("window-close");
 
 	/*
@@ -12,8 +14,10 @@ window.onload = function() {
 	*/
     determineCloseButton(); // Determine the close button style.
 	
-	if (navigator.appVersion.indexOf("Mac") != -1) // If the user is on a Mac.
+	if (navigator.appVersion.indexOf("Mac") != -1) {// If the user is on a Mac.
 		$(".ctrl-cmd-key").html("&#8984;"); // Insert the "Cmd" symbol.
+		helpShortcut.style.display = "none"; // Hide the help's shortcut.
+	}
 	else
 		$(".ctrl-cmd-key").html("Ctrl"); // Insert the "Ctrl" string.
 
