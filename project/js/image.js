@@ -214,10 +214,10 @@ function setImageBrowserText (path) {
 }
 
 function setImageInputs () {
-	if (/!\[.+\]\(.+\)/.test(imageDiv.innerText)) { // An image
-		if (/!\[.+\]\(.+\s".+"\)/.test(imageDiv.innerText)) {// Optional title is here.
-			titleInput.value = imageDiv.innerText.match(/".+"\)/)[0].substring(1, imageDiv.innerText.match(/".+"\)/)[0].length - 2); 
-			imageLoaded = imageDiv.innerText.match(/.+\s"/)[0].substring(2, imageDiv.innerText.match(/.+\s"/)[0].length - 2).replace(/\\/g, "/");
+	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
+		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
+			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
+			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
 			setImageBrowserText(fileName(imageLoaded));
 		}
 		else {
