@@ -30,7 +30,7 @@ $(document).click( function(e) {
 		}
 		imageDisplayer.className = "tool-displayer";
 		imageDiv = document.getElementById("mado-image");
-		titleInput.value = imageDiv.innerText;
+		setImageInputs();
 		initialText = titleInput.value;
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 

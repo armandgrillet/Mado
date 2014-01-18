@@ -185,9 +185,7 @@ function loadImage () {
 		function(loadedImage) {
 			if (loadedImage) {			    
 				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
-					imageBrowser.innerHTML = fileName(path.replace(/\\/g, "/"));
-					if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
-						imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
+					setImageBrowserText(fileName(path.replace(/\\/g, "/")));				
 					imageLoaded = path.replace(/\\/g, "/");
 					modifyImage();
 					altInput.focus();
@@ -207,6 +205,28 @@ function modifyImage () {
 	else
 		$(markdown).innerText = $(markdown).innerText + image;		
 	conversion();
+}
+
+function setImageBrowserText (path) {
+	imageBrowser.innerHTML = path;
+	if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
+		imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
+}
+
+function setImageInputs () {
+	if (/!\[.+\]\(.+\)/.test(imageDiv.innerText)) { // An image
+		if (/!\[.+\]\(.+\s".+"\)/.test(imageDiv.innerText)) {// Optional title is here.
+			titleInput.value = imageDiv.innerText.match(/".+"\)/)[0].substring(1, imageDiv.innerText.match(/".+"\)/)[0].length - 2); 
+			imageLoaded = imageDiv.innerText.match(/.+\s"/)[0].substring(2, imageDiv.innerText.match(/.+\s"/)[0].length - 2).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		else {
+			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
+	}
+	
 }
 
 function update () {	
