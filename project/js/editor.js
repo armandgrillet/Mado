@@ -155,6 +155,7 @@ function pasteContent () {
             pasteDiv.innerText = pasteZone.value;       
         else
             $(markdown).innerText = $(markdown).innerText + pasteZone.value;
+        pasteZone.value = ""; // Reset the hidden textarea content.
         selectElementContents(pasteDiv);
         restoreSelection("mado-paste");
         conversion();
