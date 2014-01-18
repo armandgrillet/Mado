@@ -65,7 +65,7 @@ function fileName (path) {
 }
 
 function minFileName (path) {
-	if (path == "")
+	if (path == "") // If there's nothing it returns the basic "document".
 		return "document";
 	else
 		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 

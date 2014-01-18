@@ -1,0 +1,117 @@
+/* ============
+	BOTTOM BAR
+   ============ */
+footer {
+	/* Positioning */
+	position: fixed;
+	bottom: 0;
+	left: 0;
+
+	/* Box-model */
+	width: 100%;
+	height: 20px;
+	padding: 0 45px 0 10px;
+
+	/* Typography */
+	font-size: 0.8em;
+	line-height: 20px;
+	color: #fafafa;
+
+	/* Visual */
+	background-color: #4a4942;
+
+	/* Misc */
+	cursor: default;
+}
+
+footer p { text-align: right; }
+
+#character-nb,
+#word-nb {
+	/* Positioning */
+	display: inline;
+
+	/* Visual */
+	border-radius: 2px;
+
+	/* Misc */
+	cursor: pointer;
+}
+
+#character-nb:hover,
+#word-nb:hover {
+	/* Typography */
+	color: #fff;
+
+	/* Visual */
+	background-color: #5f5e52;
+
+}
+
+#character-nb:active,
+#word-nb:active {
+	/* Visual */
+	background-color: #424139;
+}
+
+/* STYLES TOOL SPECIFICS */
+footer .tool-container {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 10px;
+}
+
+footer .tool {
+	/* Box-model */
+	width: 40px;
+	height: 20px;
+
+	/* Typography */
+	color: #fafafa;
+	line-height: 20px;
+}
+
+footer .tool:hover { color: #fff; }
+
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+footer .tool-displayer {
+	/* Positioning */
+	right: 6px;
+	bottom: 22px;
+
+	/* Box-model */
+	width: 120px;
+
+	/* Misc */
+	-webkit-transform-origin: 105px 96px;
+}
+
+/* The arrow is a gray corner for the "box" (see footer .tool-box below) */
+footer .tool-arrow {
+	/* Positioning */
+	margin: 0 0 0 101px;
+	/* Visual */
+	border-color: #fff transparent transparent transparent;
+	border-width: 4px 4px 0 4px;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see footer .tool-arrow above) */
+footer .tool-box { width: 120px; }
+
+.style-choice-container {
+	/* Box-model */
+	display: block;
+	width: 100%;
+	height: 27px;
+
+	/* Typography */
+	font-size: 1em;
+	line-height: 27px;
+	font-weight: bold;
+	color: #4a4942;
+}
+
+.style-choice-container label:hover { color: #000; }
+
+.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
