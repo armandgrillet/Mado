@@ -52,7 +52,7 @@ $(document).click( function(e) {
 		}
 		linkDisplayer.className = "tool-displayer";
 		linkDiv = document.getElementById("mado-link");
-		hypertextInput.value = linkDiv.innerText;
+		setLinkInputs();
 		initialText = hypertextInput.value;
 		urlInput.focus();			
 	}
