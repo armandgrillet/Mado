@@ -216,6 +216,7 @@ function setImageBrowserText (path) {
 }
 
 function setImageInputs () {
+	initialText = imageDiv.innerText;
 	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
 		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
 			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
