@@ -1,0 +1,89 @@
+/* ==============
+	MISCELLANOUS
+   ============== */
+
+body { padding: 40px 0 20px 20px; }
+
+#options-container {
+	/* Box-model */
+	padding-right: 20px;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+
+
+/* ===============
+	OPTION STYLES
+   =============== */
+
+/* Window bar for the option window */
+#window-bar {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3000;
+
+	/* Box-model */
+	width: 100%;
+	height: 20px;
+
+	/* Visual */
+	-webkit-app-region: drag; /* Enable drag action */
+}
+
+/* Main title for the option window */
+#option-title {
+	/* Box-model */
+	padding-bottom: 14px;
+
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "RobotoLight", "Roboto Light", "Open Sans", sans-serif;
+	font-size: 1.8em;
+	line-height: 40px;
+}
+
+/* Content block inside the option window */
+.option-part { line-height: 27px; }
+
+.option-part:not(:first-of-type) {
+	/* Box-model */
+	padding-top: 10px;
+
+	/* Visual */
+	border-top: 1px solid #f0f0f0;
+}
+
+.option-part:not(:last-of-type) { padding-bottom: 10px; }
+
+.option-part-title {
+	/* Box-model */
+	padding: 14px 0 13px;
+
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto Light", "Open Sans", sans-serif;
+	font-size: 1.2em;
+	line-height: 27px;
+}
+
+.input-container {
+	/* Positioning */
+	float: left;
+
+	/* Box-model */
+	display: block;
+	width: 40px;
+	height: 27px;
+
+	/* Typography */
+	text-align: center;
+}
+
+/* Label positioning; there is a .label-container class because the label itself, displayed as a block, would become clickable on the full window width. */
+.option-part .label-container {
+	/* Box-model */
+	display: block;
+	width: 100%;
+	padding-left: 40px;
+}
