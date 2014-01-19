@@ -61,6 +61,7 @@ function modifyLink () {
 }
 
 function setLinkInputs () {
+	initialText = linkDiv.innerText;
 	if (/\[\w*\]\(.*\)/.test(linkDiv.innerText)) {
 		urlInput.value = linkDiv.innerText.match(/\(.*\)/)[0].substring(1, linkDiv.innerText.match(/\(.*\)/)[0].length - 1); 
 		hypertextInput.value = linkDiv.innerText.match(/\[\w*\]/)[0].substring(1, linkDiv.innerText.match(/\[\w*\]/)[0].length - 1);

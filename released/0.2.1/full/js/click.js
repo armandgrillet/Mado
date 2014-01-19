@@ -31,7 +31,6 @@ $(document).click( function(e) {
 		imageDisplayer.className = "tool-displayer";
 		imageDiv = document.getElementById("mado-image");
 		setImageInputs();
-		initialText = titleInput.value;
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
 		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
@@ -53,7 +52,6 @@ $(document).click( function(e) {
 		linkDisplayer.className = "tool-displayer";
 		linkDiv = document.getElementById("mado-link");
 		setLinkInputs();
-		initialText = hypertextInput.value;
 		urlInput.focus();			
 	}
 	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
