@@ -1,32 +1,3 @@
-/* All the things to do when qanda.html is loaded. */
-var head; // The "head" section of the option window.
-var stylesheetLink = document.createElement("link"); // Create a "link" node.
-var windowClose; // The close button.
-
-window.onload = function() {
-	/*
-    * Shortcut.
-    */
-    head = document.getElementsByTagName("head")[0]; // The "head" section of the option window.
-    windowClose = document.getElementById("window-close");
-
-    /*
-    * Functions.
-    */
-    stylesheetLink.setAttribute("rel", "stylesheet");
-    stylesheetLink.setAttribute("type", "text/css");
-
-    if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac close button styles.
-        stylesheetLink.setAttribute("href", "../css/more/close-button-mac.css");
-        windowClose.setAttribute("class", "cta little-icon-mac-close");
-    }
-    else { // If the user is on another type of computer, redirect to the generic close button styles.
-        stylesheetLink.setAttribute("href", "../css/more/close-button-windows.css");
-        windowClose.setAttribute("class", "cta little-icon-win-close");
-    }
-
-    head.appendChild(stylesheetLink); // Append the link node to the "head" section.
-    $(windowClose).on("click", function() {
-        chrome.app.window.current().close();
-    });
-}
+/* Property of A+A (juridically known as Allan Rope and Armand Grillet). ALL RIGHTS RESERVED.
+See our Terms of Service in the "About" section for further information. */
+var a,b=document.createElement("link"),c; window.onload=function(){a=document.getElementsByTagName("head")[0];c=document.getElementById("window-close");b.setAttribute("rel","stylesheet");b.setAttribute("type","text/css");-1!=navigator.appVersion.indexOf("Mac")?(b.setAttribute("href","../css/more/close-button-mac.css"),c.setAttribute("class","cta little-icon-mac-close")):(b.setAttribute("href","../css/more/close-button-windows.css"),c.setAttribute("class","cta little-icon-win-close"));a.appendChild(b);$(c).on("click",function(){chrome.app.window.current().close()})};
