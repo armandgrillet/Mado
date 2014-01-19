@@ -6,11 +6,11 @@
 		<title>Mado</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<!-- Generic CSS -->
+		
 		<link rel="stylesheet" type="text/css" href="css/reset.css">
 		<link rel="stylesheet" type="text/css" href="css/style-base.css">
 
-		<!-- CSS for documents -->
+		
 		<link rel="stylesheet" type="text/css" href="css/document-base.css">
 		<link rel="stylesheet" type="text/css" href="css/window-bar.css">
 		<link rel="stylesheet" type="text/css" href="css/navbar.css">
@@ -20,12 +20,12 @@
 		<link rel="stylesheet" type="text/css" href="css/icons.css">
 		<link rel="stylesheet" type="text/css" href="css/conversion-view-base.css">
 
-		<!-- CSS themes -->
+		
 		<link rel="stylesheet" type="text/css" href="css/themes/home.css">
 		<link rel="stylesheet" type="text/css" href="css/themes/clinic.css">
 		<link rel="stylesheet" type="text/css" href="css/themes/tramway.css">
 
-		<!-- Generic JS -->
+		
 		<script type="text/javascript" src="js/open-source/countable.js"></script>
 		<script type="text/javascript" src="js/open-source/google-analytics-bundle.js"></script>
 		<script type="text/javascript" src="js/open-source/jquery-2.0.3.min.js"></script>
@@ -34,7 +34,7 @@
 		<script type="text/javascript" src="js/open-source/rangy-core.js"></script>
 		<script type="text/javascript" src="js/open-source/rangy-selectionsaverestore.js"></script>	
 		
-		<!-- JS for Mado (alphabetical order) -->
+		
 		<script type="text/javascript" src="js/mado.js"></script>
 	</head>
 	
@@ -42,7 +42,7 @@
 
 		<section id="document">
 
-			<!-- FIXED TOPBAR -->
+			
 			<header>
 
 				<nav id="window-bar">
@@ -58,7 +58,7 @@
 						<li id="window-close">
 							
 							<div id="window-close-button"></div>
-							<!-- Close alert displayer -->
+							
 							<div class="hidden" id="close-alert-displayer">
 
 								<div id="close-alert-arrow"></div>
@@ -76,11 +76,7 @@
 										</div>
 									</section>
 
-									<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
-										 Three buttons here:
-										 - "Cancel": don't close the document and close the alert;
-										 - "No, don't save": close the document without saving the changes;
-										 - "Save and exit": save the changes, then close the document. -->
+									
 									<footer id="alert-actions">
 										
 										<div class="alert-button-container">
@@ -115,11 +111,11 @@
 							<div class="cta" id="recent-button">
 								<div class="nav-icon icon-recent"></div><div class="nav-label">Recent</div>
 							</div>
-							<!-- Recent files displayer -->
+							
 							<div class="hidden" id="recent-files-displayer">
 
 								<div id="recent-files-arrow"></div>
-								<!-- Recent files container -->
+								
 								<ul id="recent-files-container">
 								</ul>
 							</div>
@@ -135,11 +131,7 @@
 						</li>
 					</ul>
 						
-					<!-- The view switch handles the main container. On big screens, it has three different states:
-						 - "Markdown" to diplay only the markdown area;
-						 - "Both" to display both the markdown and the HTML conversion areas;
-						 - "HTML" to display only the HTML conversion area.
-					See 'viewswitch.js' for further information. -->
+					
 					<div id="view-switch">
 
 						<div class="switch-button" id="switch-md">Markdown</div>
@@ -147,15 +139,14 @@
 						<div class="switch-button" id="switch-html">HTML</div>
 					</div>
 
-					<!-- "More" menu
-						  Deploys "Settings", "Q&A", "Shortcuts" and "About Mado" -->
+					
 					<div id="more">
 						<div class="cta icon-more" id="more-button"></div>
-						<!-- "More" menu displayer -->
+						
 						<div class="hidden" id="more-displayer">
 
 						<div id="more-arrow"></div>
-							<!-- "More" menu container -->
+							
 							<ul id="more-container">
 
 								<li class="more-option" id="settings">
@@ -176,43 +167,32 @@
 				</nav>
 			</header>
 
-			<!-- MAIN CONTENT -->
-			<!-- The main container is called "workspace" and it has three state classes:
-				 - "normal": the default behavior for the app.
-				 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
-				 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
-				 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
+			
+			
 			<section id="workspace" class="normal">
 
 				<div id="switch-cursor"></div>				
-				<!-- Markdown control sidebar
-					 Contains three square buttons:
-					 - The help-input accessor;
-					 - The link shortcut;
-					 - The image shortcut. -->
+				
 				<aside class="sidebar" id="md-control">
 					
 					<ul>
 
-						<!-- Help tool -->
+						
 						<li class="tool-container" id="help-input-container">
 						
-							<div class="cta tool icon-help" id="help-button"></div> <!-- When clicked, displays the help input via javascript. -->
-							<!-- Help input diplayer
-								 Displays the input on click on the "Help" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
+							<div class="cta tool icon-help" id="help-button"></div> 
+							
 							<div class="tool-displayer hidden" id="help-input-displayer">
 							
-								<!-- The arrow that comes with the box (see below) -->
+								
 								<div class="tool-arrow"></div>
-								<!-- The gray box that contains the input -->
+								
 								<div class="tool-box" id="help-input-box">
 
-									<!-- The help input itself -->
+									
 									<input type="text" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
 									
-									<!-- Results container -->
+									
 									<ul class="hidden" id="help-results-container">
 										
 										<li class="result" id="result-1">
@@ -234,59 +214,44 @@
 								</div>
 							</div>
 						</li>
-						<!-- Link tool
-							 Displays one or two inputs, depending on whether text is selected in the markdown area or not. See 'link.js' for further information. -->
+						
 						<li class="tool-container" id="link-insertion-container">
 
-							<div class="cta tool icon-link" id="link-button"></div> <!-- When clicked, displays the link input(s) via javascript. -->
-							<!-- Link insertion diplayer
-								 Displays the input(s) on click on the "Link" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
+							<div class="cta tool icon-link" id="link-button"></div> 
+							
 							<div class="tool-displayer hidden" id="link-insertion-displayer">
 
 								<div class="tool-arrow"></div>
 							
 								<div class="tool-box" id="link-insertion-box">
-									<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
+									
 									<input type="text" id="url-input" placeholder="Type a URL">
-									<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
-										 Three cases here:
-										 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
-										 - No text is selected and the user types something into this input: the typed text will be used as hypertext.
-										 - No text is selected and the user does not type anything into this input: the URL typed into the first input will also be used as hypertext. -->
+									
 									<input type="text" id="hypertext-input" placeholder="Type a text (optional)">
-									<!-- The cancel button enables the user to withdraw his changes over a link he had started writing. -->
+									
 									<div class="cta button button-grey" id="cancel-link">Cancel</div>
 								</div>
 							</div>
 						</li>
-						<!-- Image tool
-							 Displays two inputs for image information, and a browse button to get the image's path. -->
+						
 						<li class="tool-container" id="image-insertion-container">
 
-							<div class="cta tool icon-image" id="image-button"></div> <!-- When clicked, displays the image inputs & browse button via JavaScript. -->
-							<!-- Image insertion displayer
-								 Displays the inputs & browse button on click on the "Image" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
+							<div class="cta tool icon-image" id="image-button"></div> 
+							
 							<div class="tool-displayer hidden" id="image-insertion-displayer">
 								
 								<div class="tool-arrow"></div>
 
 								<div class="tool-box" id="image-insertion-box">
-									<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
+									
 									<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
-									<!-- The browse button is required, it asks the user to choose an image on his hard drive.
-										 Two cases here:
-										 - No image chosen already: the browse button is entitled "Choose an image".
-										 - Already an image chosen: the browse button shows the image title and extension. -->
+									
 									<div class="cta button" id="browse-image"></div>
-									<!-- The first input is required, it asks the user to type the alt text for the image. -->
+									
 									<input type="text" id="alt-input" placeholder="Type an alt text">
-									<!-- The second input is optional, it enables the user to type a title for the image. -->
+									
 									<input type="text" id="title-input" placeholder="Type a title (optional)">
-									<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
+									
 									<div class="cta button button-grey" id="cancel-image">Cancel</div>
 								</div>
 							</div>
@@ -294,40 +259,29 @@
 					</ul>
 				</aside>
 
-				<!-- Markdown area
-					 Contains the textarea itself.
-					 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+				
 				<article class="sheet" id="markdown-container">					
-					<!-- Contenteditable for typing markdown
-						 Controlled via JavaScript. See 'marked.js' for further information. -->
+					
 					<div contenteditable="true" placeholder="Write here" id="markdown"></div>
 				</article>
 
 				<aside id="center-line-container"><div id="center-line"></div></aside>
 
-				<!-- HTML overview area
-					 Contains the displayed version of the markdown after conversion. See 'markup.js' for urther information.
-					 On big screen, it takes the right half of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+				
 				<article class="sheet" id="conversion-container">
 
 					<div id="html-conversion"></div>
 				</article>
 			</section>
 
-			<!-- FIXED BOTTOM BAR
-				 Contains useful information for the user:
-				 - Its number of words;
-				 - Whether it is saved or not.
-				 - The paste zone used when the user pastes content.
-				 These data are set via JavaScript. See 'footer.js' for urther information. -->
+			
 			<footer>
 
 				<p>
 					<span id="character-nb"></span><span id="word-nb">
 				</p>
 
-				<!-- HTML overview control navbar
-					 Contains the CSS picker square button. -->
+				
 				<div class="tool-container" id="style-tool-container">
 				
 					<div class="cta tool icon-style" id="style-tool"></div>
@@ -351,8 +305,7 @@
 					</div>
 				</div>
 
-				<!-- Contenteditable when pasting something
-						Controlled via JavaScript. -->
+				
 				<textarea id="paste-zone"></textarea>
 			</footer>
 		</section>
