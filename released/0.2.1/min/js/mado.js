@@ -2612,12 +2612,9 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
     
-    /* stats.js 
-    * Waiting for the prod.
-    
+    /* stats.js */
     if (navigator.onLine)
         initStats();
-    */
 
     /* styles.js */
     getStyle();
