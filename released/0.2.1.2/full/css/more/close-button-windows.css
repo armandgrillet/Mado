@@ -1,0 +1,30 @@
+/* =====================================
+	WINDOWS OPTIONS CLOSE BUTTON STYLES
+   =====================================
+	Specific styles for Mado's options' close button on Windows. */
+
+#window-close {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	right: 0;
+
+	/* Box-model */
+	width: 40px;
+	height: 20px;
+
+	/* Typography */
+	color: #fff;
+	line-height: 20px;
+	text-align: center;
+
+	/* Visual */
+	background-color: #f24848;
+
+	/* Misc */
+	-webkit-app-region: no-drag; /* Disable drag action */
+}
+
+#window-close:hover { background-color: #d11; }
+
+#window-close:active { background-color: #c01a1a; }
