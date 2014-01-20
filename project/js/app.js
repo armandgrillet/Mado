@@ -203,7 +203,7 @@ function saveAsFile () {
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 				    };
-				    fileWriter.write(new Blob([[markdown.innerText]], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}
@@ -229,7 +229,7 @@ function saveFile () {
 				checkSaveState();
 				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		    };
-		    fileWriter.write(new Blob([[markdown.innerText]], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 		}, errorHandler);
 	}
 }
