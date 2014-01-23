@@ -145,6 +145,12 @@ window.onload = function() {
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
+    chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
+        if (mado["firstLaunch"] == undefined) {
+            markdown.innerHTML = firstMessage;
+            chrome.storage.local.set({ "firstLaunch" : false });
+        }
+    });
     $(markdown).focus();
     $(markdown).on("input propertychange", conversion);
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
