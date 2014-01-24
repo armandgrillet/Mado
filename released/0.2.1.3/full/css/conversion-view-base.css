@@ -1,0 +1,217 @@
+/* ==============
+	MISCELLANOUS
+   ============== */
+
+.sheet:last-of-type {
+	/* Typography */
+	font-size: 1em;
+	line-height: 1.35em;
+}
+
+.sheet:last-of-type img { max-width: 100%; }
+
+.sheet:last-of-type .nofile,
+.sheet:last-of-type .nofile-link
+ { cursor: pointer; }
+
+.sheet:last-of-type .nofile-visual {
+	/* Typography */
+	color: #1c75ea;
+	text-decoration: none;
+}
+
+.sheet:last-of-type .nofile-visual { text-decoration: underline; }
+
+.sheet:last-of-type .nofile-visual { color: #187af9; }
+
+/* ------------
+	Paragraphs
+   ------------ */
+.sheet:last-of-type p,
+.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+.sheet:last-of-type ul {
+	/* Box-model */
+	padding-bottom: 0.7em;
+}
+
+/* --------
+	Titles
+   -------- */
+.sheet:last-of-type h1,
+.sheet:last-of-type h2,
+.sheet:last-of-type h3 {
+	/* Typography */
+	font-family: "Segoe UI Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto Light", "Open Sans", sans-serif;
+}
+
+.sheet:last-of-type h1 {
+	/* Box-model */
+	padding-top: 0.4em;
+
+	/* Typography */
+	font-size: 3em;
+	line-height: 1.35em;
+}
+
+.sheet:last-of-type h2 {
+	/* Box-model */
+	padding-top: 0.3em;
+
+	/* Typography */
+	font-size: 2em;
+	line-height: 1.35em;
+}
+
+.sheet:last-of-type h3 {
+	/* Box-model */
+	padding-top: 0.4em;
+
+	/* Typography */
+	font-size: 1.25em;
+	line-height: 1.1em;
+}
+
+.sheet:last-of-type h4 {
+	/* Box-model */
+	padding-top: 0.7em;
+
+	/* Typography */
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.35em;
+}
+
+.sheet:last-of-type h5 {
+	/* Typography */
+	font-size: 0.8em;
+	font-weight: bold;
+	line-height: 1.7em;
+}
+
+.sheet:last-of-type h6 {
+	/* Typography */
+	font-size: 0.75em;
+	font-weight: bold;
+	line-height: 1.8em;
+}
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+.sheet:last-of-type ul li {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	padding-left: 3em;
+}
+
+.sheet:last-of-type ul li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 3em;
+
+	/* Misc */
+	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
+}
+
+/* Sub-lists */
+.sheet:last-of-type ul ul { padding-bottom: 0; }
+
+/* ORDERED LISTS */
+.sheet:last-of-type ol { counter-reset: list; }
+
+.sheet:last-of-type ol li {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	padding-left: 3em;
+
+	/* Misc */
+	counter-increment: list;
+}
+
+.sheet:last-of-type ol li:before {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* Box-model */
+	display: block;
+	width: 3em;
+
+	/* Misc */
+	content: counter(list);
+}
+
+/* Sub-lists */
+.sheet:last-of-type ol ol { padding-bottom: 0; }
+
+/* -------------
+	Blockquotes
+   ------------- */
+.sheet:last-of-type blockquote {
+	/* Positioning */
+	margin-bottom: 0.7em;
+
+	/* Box-model */
+	padding: 0.7em 0 0 0.7em;
+
+	/* Typography */
+	font-style: italic;
+}
+
+.sheet:last-of-type .clinic blockquote em { font-style: normal; }
+
+/* ------------------
+	Horizontal rules
+   ------------------ */
+.sheet:last-of-type hr {
+	/* Positioning */
+	clear: both;
+	margin: 0.7em auto 1.4em; /* No matter the size of the rule, it will be centered */
+
+	/* Box-model */
+	height: 1px;
+
+	/* Visual */
+	background-color: rgba(0,0,0,.1);
+	border: none;
+}
+
+/* ------
+	Code
+   ------ */
+code {
+	/* Box-model */
+	padding: 0 0.35em;
+
+	/* Typography */
+	font-family: SourceCodePro;
+	font-size: 0.95em;
+	color: #000;
+
+	/* Visual */
+	background-color: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 3px;
+}
+
+pre code {
+	/* Positioning */
+	margin-bottom: 0.7em;
+
+	/* Box-model */
+	display: block;
+	width: 100%;
+	padding: 0.65em;
+	overflow-x: auto;
+}

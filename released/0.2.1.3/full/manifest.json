@@ -1,0 +1,48 @@
+{
+  	"app": {
+    	"background": {
+      		"scripts": [
+      			"app/background.js"
+      		]
+    	}
+  	},
+    "default_locale": "en",
+  	"manifest_version": 2,
+  	"name": "__MSG_appName__",
+  	"version": "0.2.1.3",
+
+    "author": "A+A",
+  	"description": "__MSG_appDesc__",
+  	"file_handlers": {
+		"text": {
+        	"extensions": [
+          		"md"
+        	],
+        	"title": "Mado"
+      	}
+	},
+  	"icons": { 
+      	"16": "app/icon16.png",
+      	"48": "app/icon48.png",
+    	"128": "app/icon128.png",
+    	"256": "app/icon256.png"
+  	},  	
+  	"minimum_chrome_version": "31",
+  	"offline_enabled": true,
+    "permissions": [
+    	"app.window",
+    	{
+    		"fileSystem": [
+    			"write", 
+    			"retainEntries"
+    		]
+    	},
+      	"https://www.google-analytics.com/",
+    	{
+    		"mediaGalleries": [
+    			"read"
+    		]
+    	},
+    	"storage"
+    ] 	
+}

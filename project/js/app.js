@@ -113,7 +113,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.innerText.length > 0 && (markdown.innerText.length != 902 || markdown.innerHTML != firstMessage)) {
+	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
 		chrome.app.window.create(
 			"mado.html", 
 			{

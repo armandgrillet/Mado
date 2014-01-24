@@ -1,0 +1,3 @@
+/* Property of A+A (juridically known as Allan Rope and Armand Grillet). ALL RIGHTS RESERVED.
+See our Terms of Service in the "About" section for further information. */
+var a,b=document.createElement("link"),c; window.onload=function(){a=document.getElementsByTagName("head")[0];c=document.getElementById("window-close");b.setAttribute("rel","stylesheet");b.setAttribute("type","text/css");-1!=navigator.appVersion.indexOf("Mac")?(b.setAttribute("href","../css/more/close-button-mac.css"),c.setAttribute("class","cta little-icon-mac-close")):(b.setAttribute("href","../css/more/close-button-windows.css"),c.setAttribute("class","cta little-icon-win-close"));a.appendChild(b);$(c).on("click",function(){chrome.app.window.current().close()})};
