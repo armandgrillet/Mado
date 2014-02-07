@@ -155,6 +155,9 @@
 /* Sub-lists */
 .sheet:last-of-type ol ol { padding-bottom: 0; }
 
+/* Prevent empty list items to be displayed without a height */
+.sheet:last-of-type li:empty { height: 1.3em; }
+
 /* -------------
 	Blockquotes
    ------------- */
