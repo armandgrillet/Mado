@@ -1,0 +1,21 @@
+/* ========
+	HEADER
+   ========
+	Styles for the header.
+	It is displayed as a 100%*60px blue block. Its position is fixed so that it does not get in the way of other elements. */
+
+#mado-header {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+
+	/* Box-model */
+	width: 100%;
+	height: 60px;
+	overflow: visible;
+
+	/* Visual */
+	background-color: #325c9c;
+}

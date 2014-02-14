@@ -18,8 +18,7 @@
 	width: 100%;
 	height: 20px;
 
-	/* Visual */
-	background-color: #325c9c;
+	/* Misc */
 	-webkit-app-region: drag; /* Enable drag action */
 }
 

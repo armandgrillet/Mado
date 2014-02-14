@@ -12,6 +12,7 @@
 
 		<!-- CSS for documents -->
 		<link rel="stylesheet" type="text/css" href="css/document-base.css">
+		<link rel="stylesheet" type="text/css" href="css/header.css">
 		<link rel="stylesheet" type="text/css" href="css/window-bar.css">
 		<link rel="stylesheet" type="text/css" href="css/navbar.css">
 		<link rel="stylesheet" type="text/css" href="css/main-content.css">
@@ -55,141 +56,141 @@
 	
 	<body>
 
-		<section id="document">
+		<!-- FIXED TOPBAR -->
+		<header id="mado-header">
 
-			<!-- FIXED TOPBAR -->
-			<header>
+			<nav id="window-bar">
 
-				<nav id="window-bar">
+				<div id="app-header">
 
-					<div id="app-header">
-
-						<span id="app-header-centered">
-							<span id="save-state"></span> <span id="doc-name"></span> Mado
-						</span>
-					</div>
-					
-					<ul>
-						<li id="window-close">
-							
-							<div id="window-close-button"></div>
-							<!-- Close alert displayer -->
-							<div class="hidden" id="close-alert-displayer">
-
-								<div id="close-alert-arrow"></div>
-								<div id="close-alert-container">
-
-									<section id="alert-message">
-
-										<h1 id="alert-title">Unsaved changes</h1>
-
-										<div class="alert-part">
-
-											<p>
-												The document <span id="alert-doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
-											</p>
-										</div>
-									</section>
-
-									<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
-										 Three buttons here:
-										 - "Cancel": don't close the document and close the alert;
-										 - "No, don't save": close the document without saving the changes;
-										 - "Save and exit": save the changes, then close the document. -->
-									<footer id="alert-actions">
-										
-										<div class="alert-button-container">
-											<div class="cta button button-grey" id="cancel">Cancel</div>
-										</div>
-										<div class="alert-button-container">
-											<div class="cta button button-grey" id="quit">No, don't save</div>
-										</div>
-										<div class="alert-button-container">
-											<div class="cta button" id="save-quit">Save and exit</div>
-										</div>
-									</footer>
-								</div>
-							</div>
-						</li>
-						<li id="window-maximize"></li>
-						<li id="window-minimize"></li>
-					</ul>
-				</nav>
-
-				<nav id="navbar">
-					
-					<ul>
+					<span id="app-header-centered">
+						<span id="save-state"></span> <span id="doc-name"></span> Mado
+					</span>
+				</div>
+				
+				<ul>
+					<li id="window-close">
 						
-						<li class="cta nav-item" id="new">
-							<div class="nav-icon icon-new"></div><div class="nav-label">New</div>
-						</li>
-						<li class="cta nav-item" id="open">
-							<div class="nav-icon icon-open"></div><div class="nav-label">Open</div>
-						</li>
-						<li class="nav-item" id="recent">
-							<div class="cta" id="recent-button">
-								<div class="nav-icon icon-recent"></div><div class="nav-label">Recent</div>
+						<div id="window-close-button"></div>
+						<!-- Close alert displayer -->
+						<div class="hidden" id="close-alert-displayer">
+
+							<div id="close-alert-arrow"></div>
+							<div id="close-alert-container">
+
+								<section id="alert-message">
+
+									<h1 id="alert-title">Unsaved changes</h1>
+
+									<div class="alert-part">
+
+										<p>
+											The document <span id="alert-doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
+										</p>
+									</div>
+								</section>
+
+								<!-- The footer "Alert actions" contains the action buttons that respond to the alert.
+									 Three buttons here:
+									 - "Cancel": don't close the document and close the alert;
+									 - "No, don't save": close the document without saving the changes;
+									 - "Save and exit": save the changes, then close the document. -->
+								<footer id="alert-actions">
+									
+									<div class="alert-button-container">
+										<div class="cta button button-grey" id="cancel">Cancel</div>
+									</div>
+									<div class="alert-button-container">
+										<div class="cta button button-grey" id="quit">No, don't save</div>
+									</div>
+									<div class="alert-button-container">
+										<div class="cta button" id="save-quit">Save and exit</div>
+									</div>
+								</footer>
 							</div>
-							<!-- Recent files displayer -->
-							<div class="hidden" id="recent-files-displayer">
+						</div>
+					</li>
+					<li id="window-maximize"></li>
+					<li id="window-minimize"></li>
+				</ul>
+			</nav>
 
-								<div id="recent-files-arrow"></div>
-								<!-- Recent files container -->
-								<ul id="recent-files-container">
-								</ul>
-							</div>
-						</li>
-						<li class="cta nav-item" id="save">
-							<div class="nav-icon icon-save"></div><div class="nav-label">Save</div>
-						</li>
-						<li class="cta nav-item" id="save-as">
-							<div class="nav-icon icon-save-as"></div><div class="nav-label">Save as</div>
-						</li>
-						<li class="cta nav-item" id="export">
-							<div class="nav-icon icon-export"></div><div class="nav-label">Export</div>
-						</li>
-					</ul>
-						
-					<!-- The view switch handles the main container. On big screens, it has three different states:
-						 - "Markdown" to diplay only the markdown area;
-						 - "Both" to display both the markdown and the HTML conversion areas;
-						 - "HTML" to display only the HTML conversion area.
-					See 'viewswitch.js' for further information. -->
-					<div id="view-switch">
+			<nav id="navbar">
+				
+				<ul>
+					
+					<li class="cta nav-item" id="new">
+						<div class="nav-icon icon-new"></div><div class="nav-label">New</div>
+					</li>
+					<li class="cta nav-item" id="open">
+						<div class="nav-icon icon-open"></div><div class="nav-label">Open</div>
+					</li>
+					<li class="nav-item" id="recent">
+						<div class="cta" id="recent-button">
+							<div class="nav-icon icon-recent"></div><div class="nav-label">Recent</div>
+						</div>
+						<!-- Recent files displayer -->
+						<div class="hidden" id="recent-files-displayer">
 
-						<div class="switch-button" id="switch-md">Markdown</div>
-						<div class="switch-button" id="switch-both"><div class="little-icon-both"></div></div>
-						<div class="switch-button" id="switch-html">HTML</div>
-					</div>
-
-					<!-- "More" menu
-						  Deploys "Settings", "Q&A", "Shortcuts" and "About Mado" -->
-					<div id="more">
-						<div class="cta icon-more" id="more-button"></div>
-						<!-- "More" menu displayer -->
-						<div class="hidden" id="more-displayer">
-
-						<div id="more-arrow"></div>
-							<!-- "More" menu container -->
-							<ul id="more-container">
-
-								<li class="more-option" id="settings">
-									<div class="more-option-wrapped"><p>Settings</p></div>
-								</li>
-								<li class="more-option" id="q-and-a">
-									<div class="more-option-wrapped"><p>Q&amp;A</p></div>
-								</li>
-								<li class="more-option" id="shortcuts">
-									<div class="more-option-wrapped"><p>Shortcuts</p></div>
-								</li>
-								<li class="more-option" id="about">
-									<div class="more-option-wrapped"><p>About Mado</p></div>
-								</li>
+							<div id="recent-files-arrow"></div>
+							<!-- Recent files container -->
+							<ul id="recent-files-container">
 							</ul>
 						</div>
+					</li>
+					<li class="cta nav-item" id="save">
+						<div class="nav-icon icon-save"></div><div class="nav-label">Save</div>
+					</li>
+					<li class="cta nav-item" id="save-as">
+						<div class="nav-icon icon-save-as"></div><div class="nav-label">Save as</div>
+					</li>
+					<li class="cta nav-item" id="export">
+						<div class="nav-icon icon-export"></div><div class="nav-label">Export</div>
+					</li>
+				</ul>
+					
+				<!-- The view switch handles the main container. On big screens, it has three different states:
+					 - "Markdown" to diplay only the markdown area;
+					 - "Both" to display both the markdown and the HTML conversion areas;
+					 - "HTML" to display only the HTML conversion area.
+				See 'viewswitch.js' for further information. -->
+				<div id="view-switch">
+
+					<div class="switch-button" id="switch-md">Markdown</div>
+					<div class="switch-button" id="switch-both"><div class="little-icon-both"></div></div>
+					<div class="switch-button" id="switch-html">HTML</div>
+				</div>
+
+				<!-- "More" menu
+					  Deploys "Settings", "Q&A", "Shortcuts" and "About Mado" -->
+				<div id="more">
+					<div class="cta icon-more" id="more-button"></div>
+					<!-- "More" menu displayer -->
+					<div class="hidden" id="more-displayer">
+
+					<div id="more-arrow"></div>
+						<!-- "More" menu container -->
+						<ul id="more-container">
+
+							<li class="more-option" id="settings">
+								<div class="more-option-wrapped"><p>Settings</p></div>
+							</li>
+							<li class="more-option" id="q-and-a">
+								<div class="more-option-wrapped"><p>Q&amp;A</p></div>
+							</li>
+							<li class="more-option" id="shortcuts">
+								<div class="more-option-wrapped"><p>Shortcuts</p></div>
+							</li>
+							<li class="more-option" id="about">
+								<div class="more-option-wrapped"><p>About Mado</p></div>
+							</li>
+						</ul>
 					</div>
-				</nav>
-			</header>
+				</div>
+			</nav>
+		</header>
+
+		<section id="document">
 
 			<!-- MAIN CONTENT -->
 			<!-- The main container is called "workspace" and it has three state classes:
@@ -328,48 +329,48 @@
 					<div id="html-conversion"></div>
 				</article>
 			</section>
-
-			<!-- FIXED BOTTOM BAR
-				 Contains useful information for the user:
-				 - Its number of words;
-				 - Whether it is saved or not.
-				 - The paste zone used when the user pastes content.
-				 These data are set via JavaScript. See 'footer.js' for urther information. -->
-			<footer>
-
-				<p>
-					<span id="character-nb"></span><span id="word-nb">
-				</p>
-
-				<!-- HTML overview control navbar
-					 Contains the CSS picker square button. -->
-				<div class="tool-container" id="style-tool-container">
-				
-					<div class="cta tool icon-style" id="style-tool"></div>
-					
-					<div class="tool-displayer hidden" id="style-tool-displayer">
-						
-						<div class="tool-box">
-
-							<div class="style-choice-container">
-								<input type="radio" name="style-choice" class="cta" id="home-style"><label class="cta" for="home-style">Home</label>
-							</div>
-							<div class="style-choice-container">
-								<input type="radio" name="style-choice" class="cta" id="clinic-style"><label class="cta" for="clinic-style">Clinic</label>
-							</div>
-							<div class="style-choice-container">
-								<input type="radio" name="style-choice" class="cta" id="tramway-style"><label class="cta" for="tramway-style">Tramway</label>
-							</div>
-						</div>
-
-						<div class="tool-arrow"></div>
-					</div>
-				</div>
-
-				<!-- Contenteditable when pasting something
-						Controlled via JavaScript. -->
-				<textarea id="paste-zone"></textarea>
-			</footer>
 		</section>
+
+		<!-- FIXED BOTTOM BAR
+			 Contains useful information for the user:
+			 - Its number of words;
+			 - Whether it is saved or not.
+			 - The paste zone used when the user pastes content.
+			 These data are set via JavaScript. See 'footer.js' for urther information. -->
+		<footer id="mado-footer">
+
+			<p>
+				<span id="character-nb"></span><span id="word-nb">
+			</p>
+
+			<!-- HTML overview control navbar
+				 Contains the CSS picker square button. -->
+			<div class="tool-container" id="style-tool-container">
+			
+				<div class="cta tool icon-style" id="style-tool"></div>
+				
+				<div class="tool-displayer hidden" id="style-tool-displayer">
+					
+					<div class="tool-box">
+
+						<div class="style-choice-container">
+							<input type="radio" name="style-choice" class="cta" id="home-style"><label class="cta" for="home-style">Home</label>
+						</div>
+						<div class="style-choice-container">
+							<input type="radio" name="style-choice" class="cta" id="clinic-style"><label class="cta" for="clinic-style">Clinic</label>
+						</div>
+						<div class="style-choice-container">
+							<input type="radio" name="style-choice" class="cta" id="tramway-style"><label class="cta" for="tramway-style">Tramway</label>
+						</div>
+					</div>
+
+					<div class="tool-arrow"></div>
+				</div>
+			</div>
+
+			<!-- Contenteditable when pasting something
+					Controlled via JavaScript. -->
+			<textarea id="paste-zone"></textarea>
+		</footer>
 	</body>
 </html>

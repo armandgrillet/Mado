@@ -67,14 +67,14 @@ function determineFrame () {
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
-	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-mac.css");
+	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-windows.css");
+	else { // If the user is on another type of computer, redirect to the generic window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
