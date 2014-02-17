@@ -59,7 +59,7 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else 
+	else
 		chrome.app.window.current().close();
 }
 
