@@ -25,11 +25,29 @@
 /* Items on the left */
 #navbar .nav-item { float: left; }
 
+#navbar .nav-item:not(#recent),
+#recent-button,
+#more-button {
+	/* Misc */
+	transition: background-color 0.1s ease;
+}
+
+
 #navbar .nav-item:not(#recent):hover,
 #recent-button:hover,
 #more-button:hover {
 	/* Visual */
-	background-color: #3e6aab;
+	background-color: #143d7a;
+}
+
+#navbar .nav-item:not(#recent):active,
+#recent-button:active,
+#more-button:active {
+	/* Visual */
+	background-color: #103365;
+
+	/* Misc */
+	transition: none;
 }
 
 .nav-icon,
