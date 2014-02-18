@@ -1,12 +1,12 @@
-/* Functions who handle Mado's footer. */
+/* Functions that handle Mado's footer. */
 
 /*
 * Variables (in alphabetical order).
 */
 
-var charsDiv; // The div who contains the document's chars number.
-var nameDiv; // The div who contains the name of the opened document.
-var wordsDiv; // The div who contains the document's words number.
+var charsDiv; // The div that contains the document's chars number.
+var nameDiv; // The div that contains the name of the opened document.
+var wordsDiv; // The div that contains the document's words number.
 
 /*
 * Functions (in alphabetical order).

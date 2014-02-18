@@ -21,7 +21,7 @@ window.onload = function() {
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");   
+    nameDiv = document.getElementById("doc-name");
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
