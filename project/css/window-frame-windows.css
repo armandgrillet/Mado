@@ -1,7 +1,8 @@
 /* ===========================
 	WINDOWS WINDOW BAR STYLES
    ===========================
-	Specific styles for Mado's window bar on Windows. */
+	Specific styles for Mado's window bar on Windows.
+	It also sets up a border all around the app window. */
 
 #window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
 

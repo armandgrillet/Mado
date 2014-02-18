@@ -27,6 +27,22 @@
 
 #mado-footer p { text-align: right; }
 
+/* LINK URL
+   Shows the URL of the link element that is currently hovered. */
+#link-url {
+	/* Typograhpy */
+	color: #b3b3b0;
+
+	/* Visual */
+	opacity: 0;
+
+	/* Misc */
+	transition: opacity .1s ease;
+}
+
+#link-url.show { opacity: 1; }
+
+/* NUMBER OF CHARS AND OF WORDS */
 #character-nb,
 #word-nb {
 	/* Positioning */
