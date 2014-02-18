@@ -12,6 +12,7 @@ window.onload = function() {
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
+    windowTitle = document.getElementsByTagName("title")[0];
     
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");

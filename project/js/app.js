@@ -7,6 +7,7 @@
 var fileEntry; // This is the variable who stores the file opened.
 var lastWidth; // This is the last zier of the window.
 var truncated; // To know the size when something is saved.
+var windowsTitle; // Mado's active window's title attribute.
 
 /*
 * Functions (in alphabetical order).
@@ -158,6 +159,7 @@ function openFile(fileToOpen) {
 		 			markdownSaved = markdown.innerText;
 		 			conversion();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
+		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
 	 		};
@@ -207,6 +209,7 @@ function saveAsFile () {
 						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
+		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 				    };
 				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 				}, errorHandler);
@@ -233,6 +236,7 @@ function saveFile () {
 				markdownSaved = markdown.innerText;
 				checkSaveState();
 				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
+		 		windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 		    };
 		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 		}, errorHandler);
