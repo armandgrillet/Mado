@@ -2,9 +2,9 @@
 	MAIN CONTENT
    ============== */
 
-/* ----------
-	Sidebars
-   ---------- */
+/* ---------
+	Sidebar
+   --------- */
 .sidebar {
 	/* Positioning */
 	position: absolute;
@@ -80,6 +80,8 @@
 	border-radius: 5px;
 	box-shadow: 0 0 15px rgba(0,0,0,.2);
 }
+
+.tool-first-item { margin-top: 0 !important; } /* Prevents falsy top margins */
 
 /* Markdown sidebar */
 #md-control { left: 0; }
