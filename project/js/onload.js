@@ -22,6 +22,7 @@ window.onload = function() {
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
     nameDiv = document.getElementById("doc-name");
+    linkUrlSpan = document.getElementById("link-url");
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -165,6 +166,15 @@ window.onload = function() {
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
     $(wordsDiv).on("click", counterSelection);
+
+    $(document).on("mouseenter", "#html-conversion a", function(e) {
+        linkUrlSpan.innerHTML = e.currentTarget.href;
+        linkUrlSpan.className = "show";
+    });
+
+    $(document).on("mouseleave", "#html-conversion a", function() {
+        linkUrlSpan.className = "";
+    });
 
     /* help.js */ 
     Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
