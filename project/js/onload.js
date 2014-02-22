@@ -163,16 +163,27 @@ window.onload = function() {
             e.preventDefault();
     });  
 
+    $("#html-conversion").on("click", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) {
+            e.preventDefault();
+            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
+                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
+        }
+    });
+
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
     $(wordsDiv).on("click", counterSelection);
 
-    $(document).on("mouseenter", "#html-conversion a", function(e) {
-        linkUrlSpan.innerHTML = e.currentTarget.href;
+    $("#html-conversion").on("mouseenter", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") == -1)
+            linkUrlSpan.innerHTML = e.currentTarget.href;
+        else
+            linkUrlSpan.innerHTML = e.currentTarget.hash;
         linkUrlSpan.className = "show";
     });
 
-    $(document).on("mouseleave", "#html-conversion a", function() {
+    $("#html-conversion").on("mouseleave", "a", function() {
         linkUrlSpan.className = "";
     });
 
