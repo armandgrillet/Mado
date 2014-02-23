@@ -52,6 +52,14 @@ function getDisplaySize () {
 } 
 */
 
+function getHighlighting () {
+	chrome.storage.local.get("highlighting",  function(mado) {
+		if (mado["highlighting"] != false) {
+			highlightingCheck.checked = true;
+		}
+	});
+}
+
 function getResizing () {
 	chrome.storage.local.get("resize",  function(mado) {
 		if (mado["resize"] != false) {
@@ -87,6 +95,13 @@ function setDisplaySize (newValue) {
 	chrome.storage.local.set({ "displaySize" : newValue });
 }
 */
+
+function setHighlighting () {
+	if (highlightingCheck.checked)
+		chrome.storage.local.set({ "highlighting" : true });
+	else 
+		chrome.storage.local.set({ "highlighting" : false });
+}
 
 function setResizing () {
 	if (viewOnResize.checked)

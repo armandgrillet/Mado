@@ -10,6 +10,8 @@ window.onload = function() {
 	markdownSyntax = document.getElementById("markdown-radio");
 	gfmSyntax = document.getElementById("gfm-radio");
 
+	highlightingCheck = document.getElementById("highlighting-checkbox");
+
 	smaDisplaySize = document.getElementById("small-display-radio");
 	medDisplaySize = document.getElementById("medium-display-radio");
 	bigDisplaySize = document.getElementById("big-display-radio");
@@ -31,13 +33,17 @@ window.onload = function() {
     */
     determineCloseButton(); // Determine the close button style.
 
-	// getDisplaySize();
+	
 	getSyntax();
+	getHighlighting();
+	// getDisplaySize();
 	getResizing();
 	getAnalytics();
 
 	$(markdownSyntax).on("click", setSyntax);
 	$(gfmSyntax).on("click", setSyntax);
+
+	$(highlightingCheck).on("click", setHighlighting);
 
 	/*
 	$(smaDisplaySize).on("click", function() { setDisplaySize("small"); });

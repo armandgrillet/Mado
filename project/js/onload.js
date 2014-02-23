@@ -154,7 +154,10 @@ window.onload = function() {
         }
     });
     $(markdown).focus();
-    $(markdown).on("input propertychange", conversion);
+    $(markdown).on("input propertychange", function() {
+    	conversion();
+    	syntaxHighlighting();
+    });
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
         pasteContent();   
     });
@@ -164,7 +167,7 @@ window.onload = function() {
     });  
 
     $("#html-conversion").on("click", "a", function(e) {
-        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
             e.preventDefault();
             if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
                 $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');

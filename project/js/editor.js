@@ -1,4 +1,4 @@
-/* Functions linked to the Markdown markdown. */
+/* Functions linked to the Markdown editor. */
 
 /* 
 * Variables (in alphabetical order). 

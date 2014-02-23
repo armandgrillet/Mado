@@ -278,6 +278,8 @@ chrome.storage.onChanged.addListener(function (changes, namespace) { // What to 
             newDisplaySize(); // app.js 
         else if (key == "gfm")
             setEditorSyntax(); // editor.js
+        else if (key == "highlighting")
+            setMarkdownHighlighting(); // syntax-highlighting.js
         else if (key == "resize")
             setWindowResizing(); // viewswitch.js         
     }
