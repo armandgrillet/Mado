@@ -129,17 +129,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .clinic ul li { padding-left: 2em; }
+.sheet:last-of-type .clinic ul > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ul li:before { padding-left: 0; }
-
-/* Sub-lists */
-.sheet:last-of-type .clinic ul ul { padding-bottom: 0; }
+.sheet:last-of-type .clinic ul > li:before { padding-left: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .clinic ol li { padding-left: 2em; }
+.sheet:last-of-type .clinic ol > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ol li:before {
+.sheet:last-of-type .clinic ol > li:before {
 	/* Box-model */
 	padding-left: 0;
 
@@ -151,11 +148,17 @@
 	content: counter(list);
 }
 
-/* Sub-lists */
-.sheet:last-of-type .clinic ol ol { padding-bottom: 0; }
-
 /* Prevent empty list items to be displayed without a height */
 .sheet:last-of-type .clinic li:empty { height: 1.5em; }
+
+/* SUB-LISTS */
+.sheet:last-of-type .clinic ol ol,
+.sheet:last-of-type .clinic ol ul,
+.sheet:last-of-type .clinic ul ul,
+.sheet:last-of-type .clinic ul ol {
+	/* Box-model */
+	padding-bottom: 0;
+}
 
 /* -------------
 	Blockquotes

@@ -113,17 +113,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .tramway ul li { padding-left: 2em; }
+.sheet:last-of-type .tramway ul > li { padding-left: 2em; }
 
-.sheet:last-of-type .tramway ul li:before { width: 2em; }
-
-/* Sub-lists */
-.sheet:last-of-type .tramway ul ul { padding-bottom: 0; }
+.sheet:last-of-type .tramway ul > li:before { width: 2em; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .tramway ol li { padding-left: 2em; }
+.sheet:last-of-type .tramway ol > li { padding-left: 2em; }
 
-.sheet:last-of-type .tramway ol li:before {
+.sheet:last-of-type .tramway ol > li:before {
 	/* Box-model */
 	width: 2em;
 
@@ -131,8 +128,14 @@
 	content: counter(list)".";
 }
 
-/* Sub-lists */
-.sheet:last-of-type .tramway ol ol { padding-bottom: 0; }
+/* SUB-LISTS */
+.sheet:last-of-type .tramway ol ol,
+.sheet:last-of-type .tramway ol ul,
+.sheet:last-of-type .tramway ul ul,
+.sheet:last-of-type .tramway ul ol {
+	/* Box-model */
+	padding-bottom: 0;
+}
 
 /* -------------
 	Blockquotes

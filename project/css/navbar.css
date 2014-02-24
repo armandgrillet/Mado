@@ -32,7 +32,6 @@
 	transition: background-color 0.1s ease;
 }
 
-
 #navbar .nav-item:not(#recent):hover,
 #recent-button:hover,
 #more-button:hover {
