@@ -2,12 +2,25 @@
 
 /* 
 * Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
 */
 
-var fileEntry; // This is the variable who stores the file opened.
-var lastWidth; // This is the last zier of the window.
-var truncated; // To know the size when something is saved.
+/* HTML shortcuts. */
+var exportButton; // "Export" button.
+var newButton; // "New" button.
+var openButton; // "Open" button.
+var printButton; // "Print" button.
+var recentButton; // "Recent Files" button.
+var saveButton; // "Save" button.
+var saveAsButton; // "Save As" button.
 var windowTitle; // Mado's active window's title attribute.
+
+/* Functions variables. */
+var fileEntry; // This is the variable who stores the file opened.
+var lastWidth; // This is the last size of the window.
+var truncated; // To know the size when something is saved.
+
 
 /*
 * Functions (in alphabetical order).

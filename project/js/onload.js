@@ -9,6 +9,7 @@ window.onload = function() {
     exportButton = document.getElementById("export");
     newButton = document.getElementById("new");
     openButton = document.getElementById("open");
+    printButton = document.getElementById("print");
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
@@ -21,8 +22,8 @@ window.onload = function() {
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");
     linkUrlSpan = document.getElementById("link-url");
+    nameDiv = document.getElementById("doc-name");
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -143,6 +144,12 @@ window.onload = function() {
     Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
     
     $(exportButton).on("click", exportFileHTML);
+
+    $(printButton).on("click", function() {
+        window.print();
+    });
+
+    Mousetrap.bind(['command+p', 'ctrl+p'], function(e) { window.print(); return false; }); // Ctrl+p = print.
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
