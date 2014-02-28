@@ -7,7 +7,7 @@
 var fileEntry; // This is the variable who stores the file opened.
 var lastWidth; // This is the last zier of the window.
 var truncated; // To know the size when something is saved.
-var windowsTitle; // Mado's active window's title attribute.
+var windowTitle; // Mado's active window's title attribute.
 
 /*
 * Functions (in alphabetical order).
@@ -235,8 +235,6 @@ function saveFile () {
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();
-				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
-		 		windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 		    };
 		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 		}, errorHandler);

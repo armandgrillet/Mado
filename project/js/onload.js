@@ -114,7 +114,8 @@ window.onload = function() {
                                 markdown.innerText = e.target.result;
                                 markdownSaved = markdown.innerText;
                                 conversion();  
-                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";                     
+                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
+                                windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
                             };
                             reader.readAsText(file);
                         },
@@ -281,7 +282,7 @@ window.onload = function() {
 
     /* recentfiles.js */
     displayRecentFiles();
-    
+
     /* stats.js 
     * Waiting for the prod.
     

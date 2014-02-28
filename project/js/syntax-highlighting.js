@@ -19,7 +19,7 @@ var highlightingWanted; // Boolean used to highlight or not the text.
 */
 
 function removeHighlighting () {
-	console.log("Highlighting removed.");
+	// Syntax-Highlighting removed, we have to delete the style added.
 }
 
 function setMarkdownHighlighting () {
@@ -42,6 +42,6 @@ function syntaxHighlighting () {
 		setMarkdownHighlighting();
 	}
 	else if (highlightingWanted == true) {
-		console.log("Highlighting!");
+		// Highlighting.
 	}
 }
