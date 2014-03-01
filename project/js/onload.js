@@ -149,7 +149,16 @@ window.onload = function() {
         window.print();
     });
 
+    $(markdown).bind('scroll', function() {
+       console.log('Event worked');
+    }); 
+
     Mousetrap.bind(['command+p', 'ctrl+p'], function(e) { window.print(); return false; }); // Ctrl+p = print.
+
+    /* drag-and-drop.js */
+    dragAndDropManager = new DnDManager("#document", function(data) {
+        openDraggedFile(data.items[0].webkitGetAsEntry());
+    });
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
