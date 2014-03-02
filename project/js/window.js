@@ -97,12 +97,11 @@ function maximizeWindow () {
 			chrome.app.window.current().setBounds(bounds);
 	}
 	else {
-		if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
-			bounds = chrome.app.window.current().getBounds();
+		if (! chrome.app.window.current().isMaximized()) { // Maximize.
 			chrome.app.window.current().maximize();
 		}
 		else // Restore the last bounds.
-			chrome.app.window.current().setBounds(bounds);
+			chrome.app.window.current().restore();
 	}
 }
 
