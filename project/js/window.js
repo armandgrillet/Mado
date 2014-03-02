@@ -84,12 +84,26 @@ function determineFrame () {
 }
 
 function maximizeWindow () {
-	if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
-		bounds = chrome.app.window.current().getBounds();
-		chrome.app.window.current().maximize();
+	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
+		if (! (chrome.app.window.current().getBounds().left == 0  
+			&& chrome.app.window.current().getBounds().top == 0
+			&& chrome.app.window.current().getBounds().width == screen.availWidth
+			&& chrome.app.window.current().getBounds().height == screen.availHeight)
+			&& ! chrome.app.window.current().isMaximized()) {
+			bounds = chrome.app.window.current().getBounds();
+			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().setBounds(bounds);
 	}
-	else // Restore the last bounds.
-		chrome.app.window.current().setBounds(bounds);
+	else {
+		if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
+			bounds = chrome.app.window.current().getBounds();
+			chrome.app.window.current().maximize();
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().setBounds(bounds);
+	}
 }
 
 function minimizeWindow () {
