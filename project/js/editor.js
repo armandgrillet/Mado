@@ -7,6 +7,7 @@
 */
 
 /* HTML shortcuts. */
+var centerLine; // The line that separates Markdown and HTML views.
 var conversionDiv; // The div who contains the HTML conversion.
 var markdown; // The contenteditable where the user writes.
 var pasteZone; // The textarea used when the user pastes content.
@@ -159,7 +160,7 @@ function pasteContent () {
         pasteZone.value = ""; // Reset the hidden textarea content.
         selectElementContents(pasteDiv);
         restoreSelection("mado-paste");
-        conversion();
+        contentChanged();
     }, 20);
 }
 
@@ -212,6 +213,6 @@ function setEditorSyntax () {
                 chrome.storage.local.set({ "gfm" : false });
                 editorSyntax = false; 
         }
-        conversion();
+        contentChanged();
     });
 }

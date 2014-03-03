@@ -45,7 +45,7 @@ function cancelLink () {
 	linkDisplayer.className = "tool-displayer hidden";	
 	selectElementContents(linkDiv);
 	restoreSelection("mado-link");
-	conversion();
+	contentChanged();
 }
 
 function modifyLink () {
@@ -57,7 +57,7 @@ function modifyLink () {
 		linkDiv.innerText = link;		
 	else
 		$(markdown).innerText = $(markdown).innerText + link;
-	conversion();
+	contentChanged();
 }
 
 function setLinkInputs () {

@@ -26,6 +26,7 @@ var truncated; // To know the size when something is saved.
 * Functions (in alphabetical order).
 *
 * Resume:
+	* contentChanged(): what to do when the user changes something in Markdown div.
 	* closeWindow(): what to do when the window is closed.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
@@ -41,6 +42,15 @@ var truncated; // To know the size when something is saved.
 	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
 */
 
+function contentChanged () {
+	conversion();
+	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
+            centerLine.style.display = "none";
+        }
+    else
+        centerLine.style.display = "block";
+    syntaxHighlighting();
+}
 function errorHandler() {
 	if (fileInLoading != undefined) {
 		removeFile(fileInLoading);
@@ -145,7 +155,7 @@ function newWindow () {
   	}
   	else if (markdown.innerHTML == firstMessage) {
   		markdown.innerHTML = "";
-  		conversion();
+  		contentChanged();
   		$(markdown).focus();
   	}
 }
@@ -170,7 +180,7 @@ function openFile(fileToOpen) {
 
 		 			// For the footer.
 		 			markdownSaved = markdown.innerText;
-		 			conversion();
+		 			contentChanged();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 	 			}

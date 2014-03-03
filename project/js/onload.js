@@ -16,6 +16,7 @@ window.onload = function() {
     windowTitle = document.getElementsByTagName("title")[0];
     
     /* editor.js */
+    centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
     pasteZone = document.getElementById("paste-zone");
@@ -118,7 +119,7 @@ window.onload = function() {
                             reader.onload = function(e) { 
                                 markdown.innerText = e.target.result;
                                 markdownSaved = markdown.innerText;
-                                conversion();  
+                                contentChanged();  
                                 nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
                                 windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
                             };
@@ -176,8 +177,7 @@ window.onload = function() {
     });
     $(markdown).focus();
     $(markdown).on("input propertychange", function() {
-    	conversion();
-    	syntaxHighlighting();
+    	contentChanged();
     });
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
         pasteContent();   
