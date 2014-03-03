@@ -18,7 +18,7 @@
 }
 
 /* Screens strictly under 1366 pixels */
-@media screen and (max-width: 1365px) {
+@media screen and (max-width: 1159px) {
 	/* ---------------
 		Navbar switch
 	   --------------- */

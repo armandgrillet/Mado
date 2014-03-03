@@ -273,9 +273,9 @@ function theMinWidth () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
+	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1366 && lastWidth < 1366 && windowResizing) 
+	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
 		switchToBoth.click(); // viewswitch.js
 
 	lastWidth = window.innerWidth;
