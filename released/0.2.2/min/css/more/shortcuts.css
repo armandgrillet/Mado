@@ -1,0 +1,40 @@
+﻿/* Wrapping each couple into a box */
+.shortcut-container {
+	/* Box-model */
+	height: auto;
+	padding-bottom: 13px; /* This makes 40 pixels with the line height */
+}
+
+/* Wrapping and positioning each shortcut combination */
+.shortcut {
+	/* Positioning */
+	float: left;
+	
+	/* Box-model */
+	width: 33%;
+}
+
+.shortcut-info {
+	/* Box-model */
+	padding-left: 33%;
+}
+
+/* Styling the keys so that they feel like actual keys */
+.shortcut-key {
+	/* Box-model */
+	display: inline-block;
+	min-width: 27px;
+	padding: 0 5px;
+
+	/* Typography */
+	color: #fff;
+	text-align: center;
+
+	/* Visual */
+	background-color: #4a4942;
+	border-bottom: 1px solid #000;
+	border-radius: 3px;
+}
+
+/* Shift key */
+.shift-key::before { content: "\21e7\a0Shift"; } /* '\21e7' is the escaped Unicode version of '&#8679;' (convert '8679' in hexa, then add a backslash before the result). '\a0' is the escaped Unicode version of '&nbsp;'. This is necessary to insert special chars via "content" CSS property */
