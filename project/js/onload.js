@@ -69,6 +69,9 @@ window.onload = function() {
     recentFilesDisplayer = document.getElementById("recent-files-displayer");
     recentFilesContainer = document.getElementById("recent-files-container");
 
+    /* scroll.js */
+    markdownContainer = document.getElementById("markdown-container");
+
     /* styles.js */
     stylesButton = document.getElementById("style-tool");
     stylesDisplayer = document.getElementById("style-tool-displayer");
@@ -299,6 +302,14 @@ window.onload = function() {
 
     /* recentfiles.js */
     displayRecentFiles();
+
+    /* scroll.js */
+    $(markdownContainer).scroll(function(){
+        asyncScroll("markdown");
+    });
+    $(conversionDiv).scroll(function(){
+        asyncScroll("HTML");
+    });
 
     /* stats.js 
     * Waiting for the prod.
