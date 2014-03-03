@@ -7,6 +7,7 @@
 */
 
 /* HTML shortcuts. */
+var madoFooter; // Mado's footer.
 var switchToBoth; // Both switch.
 var switchToHTML; // HTML switch.
 var switchToMD; // Markdown switch.
@@ -36,6 +37,11 @@ function activate (clickedBtn, classState) {
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+
+	if (classState == "markdown-view")
+		madoFooter.className = classState;
+	else
+		madoFooter.className = "";
 }
 
 function initActivation () { 

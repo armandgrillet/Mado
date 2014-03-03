@@ -77,6 +77,7 @@ window.onload = function() {
     tramwayRadio = document.getElementById("tramway-style");
 
     /* viewswitch.js */
+    madoFooter = document.getElementById("mado-footer");
     workspace = document.getElementById("workspace");
     switchToMD = document.getElementById("switch-md");
     switchToBoth = document.getElementById("switch-both");
