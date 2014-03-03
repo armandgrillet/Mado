@@ -261,7 +261,13 @@
 	display: inline;
 
 	/* Typography */
-	line-height: 40px;
+	line-height: 32px;
+	vertical-align: middle;
+}
+
+#recent-files-info.clear-all .clear-all-text {
+	line-height: 16px;
+	vertical-align: middle;
 }
 
 /* When there are items in the list */

@@ -41,7 +41,7 @@ function activate (clickedBtn, classState) {
 	if (classState == "markdown-view")
 		madoFooter.className = classState;
 	else
-		madoFooter.className = "";
+		madoFooter.removeAttribute("class");
 }
 
 function initActivation () { 

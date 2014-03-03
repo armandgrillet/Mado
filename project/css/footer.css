@@ -23,7 +23,10 @@
 
 	/* Misc */
 	cursor: default;
+	transition: padding .25s ease;
 }
+
+#mado-footer.markdown-view { padding: 0 0 0 10px; }
 
 #mado-footer p { text-align: right; }
 
@@ -77,7 +80,12 @@
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	/* Misc */
+	transition: right .25s ease;
 }
+
+#mado-footer.markdown-view .tool-container { right: -40px; }
 
 #mado-footer .tool {
 	/* Box-model */
