@@ -19,6 +19,7 @@ window.onload = function() {
     centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
+    markdownContainer = document.getElementById("markdown-container");
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
@@ -69,9 +70,6 @@ window.onload = function() {
     recentButton = document.getElementById("recent-button");
     recentFilesDisplayer = document.getElementById("recent-files-displayer");
     recentFilesContainer = document.getElementById("recent-files-container");
-
-    /* scroll.js */
-    markdownContainer = document.getElementById("markdown-container");
 
     /* styles.js */
     stylesButton = document.getElementById("style-tool");
