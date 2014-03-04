@@ -341,6 +341,7 @@ function mb() {
                 V[a][b].substr(jb, r.value.length) + "</span>" + V[a][b].substring(jb + r.value.length) + "</span>: " + kb[a], window["example" + ib].innerHTML = lb[a], ib++, b = V[a].length);
         switch (ib) {
         case 1:
+            answer1.innerHTML = "No help found.";
             s.className = "one-result no-result";
             Ga(2);
             break;
