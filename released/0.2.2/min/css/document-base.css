@@ -1,29 +1,3 @@
-/* ==============
-	MISCELLANOUS
-   ============== */
-
-body { padding: 60px 0 20px; } /* Simplifies positioning according to the topbar and the footer; the padding-top is the sum of the window bar and the navbar */
-
-#document {
-	/* Positioning */
-	position: relative;
-
-	/* Box-model */
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-
-	/* Visual */
-	background-color: #fafafa;
-}
-
-
-/* =======
-	FONTS
-   ======= */
-
-@font-face {
-	/* Typography */
-	font-family: SourceCodePro;
-	src: url('../fonts/SourceCodePro-Regular.ttf');
-}
+/* Property of A+A (juridically known as Allan Rope and Armand Grillet). ALL RIGHTS RESERVED.
+See our Terms of Service in the "About" section for further information. */
+body{padding:60px 0 20px}#document{position:relative;width:100%;height:100%;overflow:hidden;background-color:#fafafa}@font-face{font-family:SourceCodePro;src:url('../fonts/SourceCodePro-Regular.ttf')}

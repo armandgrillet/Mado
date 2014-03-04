@@ -19,8 +19,12 @@ function determineCloseButton () {
 		stylesheetLink.setAttribute("href", "../css/more/more-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 	}
-	else { // If the user is on another type of computer, redirect to the generic frame styles.
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows frame styles.
 		stylesheetLink.setAttribute("href", "../css/more/more-frame-windows.css");
+		windowClose.setAttribute("class", "cta little-icon-win-close");
+	}
+	else { // If the user is on another type of computer, redirect to the generic frame styles.
+		stylesheetLink.setAttribute("href", "../css/more/more-frame-others.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 	}
 
