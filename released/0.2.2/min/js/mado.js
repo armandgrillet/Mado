@@ -209,7 +209,7 @@ function cb() {
     $(".nofile-visual").on("click", function () {
         eb()
     });
-    Countable.m(J, function (a) {
+    Countable.once(J, function (a) {
         S.innerHTML = "&nbsp;" + a.characters + " characters&nbsp;";
         T.innerHTML = "&nbsp;" + a.words + " words&nbsp;";
         1 == a.characters && (S.innerHTML = "&nbsp;" + a.characters + " character&nbsp;");
@@ -929,7 +929,7 @@ function ic() {
 
 function ec() {
     chrome.runtime.getBackgroundPage(function (a) {
-        a.g(chrome.app.window.current().getBounds())
+        a.jBond(chrome.app.window.current().getBounds())
     });
     chrome.app.window.current().close()
 }
