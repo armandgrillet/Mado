@@ -1,2204 +1,968 @@
-/* The JS to control the scripts between Mado and the computer. */
+var aa, ba, ca, da, ea, fa, ga, c, ha, f;
 
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-	* Functions variables.
-*/
-
-/* HTML shortcuts. */
-var exportButton; // "Export" button.
-var newButton; // "New" button.
-var openButton; // "Open" button.
-var printButton; // "Print" button.
-var recentButton; // "Recent Files" button.
-var saveButton; // "Save" button.
-var saveAsButton; // "Save As" button.
-var windowTitle; // Mado's active window's title attribute.
-
-/* Functions variables. */
-var fileEntry; // This is the variable who stores the file opened.
-var lastWidth; // This is the last size of the window.
-var truncated; // To know the size when something is saved.
-
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* contentChanged(): what to do when the user changes something in Markdown div.
-	* closeWindow(): what to do when the window is closed.
-	* errorHandler (): what to do if the users tries to open a removed file.
-	* exportFileHtml (): let the user export its file in HTML.
-	* string fileName (entirePath): return a string who is just the name of the file manipulated (with the extension).
-	* string minFileName (entirePath): return a string who is just the name of the file manipulated (without the extension).
-	* moreWindow (moreChoice): open the correct window when the user clicks on an element of the "More" dropdown.
-	* newDisplaySize (): what to do when the user changes the display size on the options.
-	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's markdown).
-	* openFile (theFile): all the scripts to open correctly a file, used when the user clicks on "Open" or when he clicks on a recent file.
-	* openFileButton (): open a window to choose a file when the user clicks on "Open".
-	* saveAsFile (): what to do when the user clicks on "Save As".
-	* saveFile (): what to do when the user clicks on "Save", if the user haven't save its document yet, the function who's working is saveAsFile ().
-	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
-*/
-
-function contentChanged () {
-	conversion();
-	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
-            centerLine.style.display = "none";
-        }
-    else
-        centerLine.style.display = "block";
+function g() {
+    ia();
+    ja.scrollHeight > $(ja).height() ? ka.style.display = "none" : ka.style.display = "block"
 }
 
-function errorHandler() {
-	if (fileInLoading != undefined) {
-		removeFile(fileInLoading);
-		fileInLoading = undefined;
-	}
+function h() {
+    void 0 != la && (ma(la), la = void 0)
 }
 
-function exportFileHTML () {
-	marked(markdown.innerText, function (err, content) {
-		chrome.fileSystem.chooseEntry(
-			{
-				type: "saveFile", 
-				suggestedName: minFileName(nameDiv.innerHTML) + ".html"
-			}, 
-			function(exportedFile) {
-				if (exportedFile) {
-			 		exportedFile.createWriter(
-			 			function(writer) {
-			 				writer.write(
-			 					new Blob(
-			 						[content],
-									{
-										type: "text/HTML"
-									}
-								)
-							); 	 	
-			 			}, 
-			 		errorHandler);
-		 		}
-			}
-		);
-	});
+function na() {
+    marked(k.innerText, function (a, b) {
+        chrome.fileSystem.chooseEntry({
+            type: "saveFile",
+            suggestedName: oa() + ".html"
+        }, function (a) {
+            a && a.createWriter(function (a) {
+                a.write(new Blob([b], {
+                    type: "text/HTML"
+                }))
+            }, h)
+        })
+    })
 }
 
-function fileName (path) {
-	return path.substring(path.lastIndexOf('/') + 1); 
+function l(a) {
+    return a.substring(a.lastIndexOf("/") + 1)
 }
 
-function minFileName (path) {
-	if (path == "") // If there's nothing it returns the basic "document".
-		return "document";
-	else
-		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+function oa() {
+    var a = m.innerHTML;
+    return "" == a ? "document" : a.substring(a.lastIndexOf("/") + 1, a.lastIndexOf("."))
 }
 
-function moreWindow (choice) {
-	chrome.app.window.create(
-		choice, 
-		{
-		    bounds: {
-		    	left: Math.round((window.screenX + (($(window).width() - 498) / 2))), // Perfect alignement.
-		    	top: Math.round((window.screenY + (($(window).height() - 664) / 2))), // Always perfect.
-		      	width: 498,
-		      	height: 664
-		    }, 
-		    frame : "none",
-		    // The window can't be resized.
-		    minWidth: 498, 
-		    minHeight: 664,
-		    maxWidth: 498,
-		    maxHeight: 664
-	  	}
-  	);
-  	moreButton.click(); // Close the more dropdown.
+function pa(a) {
+    chrome.app.window.create(a, {
+        bounds: {
+            left: Math.round(window.screenX + ($(window).width() - 498) / 2),
+            top: Math.round(window.screenY + ($(window).height() - 664) / 2),
+            width: 498,
+            height: 664
+        },
+        frame: "none",
+        minWidth: 498,
+        minHeight: 664,
+        maxWidth: 498,
+        maxHeight: 664
+    });
+    qa.click()
 }
 
-function newDisplaySize () {
-	chrome.storage.local.get("displaySize",  function(mado) {
-		if (mado["displaySize"] != undefined) {
-			if (mado["displaySize"] == "small")
-				$("body").attr("class", "small");
-			else {
-				if (mado["displaySize"] == "medium")
-					$("body").attr("class", " ");
-				else
-					$("body").attr("class", "big");	
-			}
-		}
-		else {
-			chrome.storage.local.set({ "displaySize" : "medium" });
-			$("body").attr("class", " ");
-		}
-	});
+function ra() {
+    chrome.storage.local.get("displaySize", function (a) {
+        void 0 != a.displaySize ? "small" == a.displaySize ? $("body").attr("class", "small") : "medium" == a.displaySize ? $("body").attr("class", " ") : $("body").attr("class", "big") : (chrome.storage.local.set({
+            displaySize: "medium"
+        }), $("body").attr("class", " "))
+    })
 }
 
-function newWindow () {
-	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
-		chrome.app.window.create(
-			"mado.html", 
-			{
-			    bounds: {
-			    	left: (window.screenX + 20), // "+ 20" to watch this is a new window.
-			    	top: (window.screenY + 20), 
-			      	width: window.innerWidth,
-			      	height: window.innerHeight
-			    }, 
-			    frame: "none",
-			    minWidth: theMinWidth(), 
-				minHeight: 240
-		  	}
-	  	);
-  	}
-  	else if (markdown.innerHTML == firstMessage) {
-  		markdown.innerHTML = "";
-  		contentChanged();
-  		$(markdown).focus();
-  	}
+function sa() {
+    0 < k.innerText.length && (916 != k.innerText.length || k.innerHTML != ta) ? chrome.app.window.create("mado.html", {
+        bounds: {
+            left: window.screenX + 20,
+            top: window.screenY + 20,
+            width: window.innerWidth,
+            height: window.innerHeight
+        },
+        frame: "none",
+        minWidth: 683,
+        minHeight: 240
+    }) : k.innerHTML == ta && (k.innerHTML = "", g(), $(k).focus())
 }
 
-function openFile(fileToOpen) {
-	fileToOpen.file(
-		function(file) {
-	 		var reader = new FileReader();
-	 		reader.onload = function(e) {
-	 			if (markdown.innerText != "") {// Something is already in the markdown, Mado opens a new window. 
-	 				chrome.storage.local.set(
-		 				{
-		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
-		 				}, 
-		 				newWindow
-	 				);
- 				}
-	 			else {
-		 			markdown.innerText = e.target.result; // Display the file content.	
-	 			 			
-		 			fileEntry = fileToOpen; // For save.
-
-		 			// For the footer.
-		 			markdownSaved = markdown.innerText;
-		 			contentChanged();
-		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
-		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
-	 			}
-		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
-	 		};
-			reader.readAsText(file);
-		},
-		errorHandler
-	);
+function ua(a) {
+    a.file(function (b) {
+        var e = new FileReader;
+        e.onload = function (b) {
+            "" != k.innerText ? chrome.storage.local.set({
+                tempFileEntry: chrome.fileSystem.retainEntry(a)
+            }, sa) : (k.innerText = b.target.result, c = a, n = k.innerText, g(), m.innerHTML = l(a.fullPath) + "&nbsp;-", ga.innerHTML = l(a.fullPath) + " - Mado");
+            va(a)
+        };
+        e.readAsText(b)
+    }, h)
 }
 
-function openFileButton () {		
-    chrome.fileSystem.chooseEntry(
-    	{
-	 		type: "openFile",
-	 		accepts:[
-	 			{
-	 				extensions: ["markdown", "md", "txt"]
-	 			}
-	 		] 
-		}, 
-		function(loadedFile) {
-			if (loadedFile) 
-				openFile(loadedFile);
-		}
-	);
+function wa() {
+    chrome.fileSystem.chooseEntry({
+        type: "openFile",
+        accepts: [{
+            extensions: ["markdown", "md", "txt"]
+        }]
+    }, function (a) {
+        a && ua(a)
+    })
 }
 
-function saveAsFile () {
-	chrome.fileSystem.chooseEntry(
-		{
-			type: "saveFile", 
-			suggestedName: "document.md"
-		}, 
-		function(savedFile) {
-			if (savedFile) {
-				savedFile.createWriter(function(fileWriter) {
-				    truncated = false;
-				    fileWriter.onwriteend = function(e) {
-				        if (!truncated) {
-				            truncated = true;
-				            this.truncate(this.position);
-				            return;
-				        }
-				        fileEntry = savedFile; // Save without asking the file.
-				        newRecentFile(fileEntry); // Update the position of the file saved.
-
-						// Footer
-						markdownSaved = markdown.innerText;
-						checkSaveState();
-						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
-		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
-				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
-				}, errorHandler);
-			}
-		}
-	);
+function xa() {
+    chrome.fileSystem.chooseEntry({
+        type: "saveFile",
+        suggestedName: "document.md"
+    }, function (a) {
+        a && a.createWriter(function (b) {
+            f = !1;
+            b.onwriteend = function () {
+                f ? (c = a, va(c), n = k.innerText, ya(), m.innerHTML = l(a.fullPath) + "&nbsp;-", ga.innerHTML = l(fileToOpen.fullPath) + " - Mado") : (f = !0, this.truncate(this.position))
+            };
+            b.write(new Blob([k.innerText], {
+                type: "plain/text"
+            }))
+        }, h)
+    })
 }
 
-function saveFile () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
-		saveAsFile();
-	else { // If we have already loaded the file.
-		fileEntry.createWriter(function(fileWriter) {
-		    truncated = false;
-		    fileWriter.onwriteend = function(e) {
-		        if (!truncated) {
-		            truncated = true;
-		            this.truncate(this.position);
-		            return;
-		        }
-		        newRecentFile(fileEntry); // Update the position of the file saved.
-
-				// Footer
-				markdownSaved = markdown.innerText;
-				checkSaveState();
-		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
-		}, errorHandler);
-	}
+function za() {
+    void 0 == c || "md&nbsp;-" != m.innerHTML.substring(m.innerHTML.length - 9) ? xa() : c.createWriter(function (a) {
+        f = !1;
+        a.onwriteend = function () {
+            f ? (va(c), n = k.innerText, ya()) : (f = !0, this.truncate(this.position))
+        };
+        a.write(new Blob([k.innerText], {
+            type: "plain/text"
+        }))
+    }, h)
 }
-
-function theMinWidth () {
-	/* For the 0.2
-	if (screen.width < 1600)
-		return 683;
-	else
-		return 800;
-	*/
-	return 683;
-}
-
-/*
-* Chrome methods.
-*
-* Resume:
-	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
-	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
-*/
-
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
-		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
-		switchToBoth.click(); // viewswitch.js
-
-	lastWidth = window.innerWidth;
+    1160 > window.innerWidth && "switch-button activated" == p.className ? q.click() : 1160 <= window.innerWidth && 1160 > ha && Aa && p.click();
+    ha = window.innerWidth
 });
-
-chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
-   	for (key in changes) {
-   		if (key == "analytics")
-            setTrackingPermission(); // stats.js 
-        else if (key == "displaySize")
-            newDisplaySize(); // app.js 
-        else if (key == "gfm")
-            setEditorSyntax(); // editor.js
-        else if (key == "resize")
-            setWindowResizing(); // viewswitch.js         
-    }
+chrome.storage.onChanged.addListener(function (a) {
+    for (key in a) "analytics" == key ? Ba() : "displaySize" == key ? ra() : "gfm" == key ? Ca() : "resize" == key && Da()
 });
-/* All the things to do the user clicks in a Mado's window. */
-
-$(document).click( function(e) {
-	/* help.js */
-	if ($(e.target).closest(helpButton).length && 
-		helpDisplayer.className == "tool-displayer hidden") { // Click on the help button with the help input hide.
-		helpDisplayer.className = "tool-displayer";
-    	help.focus();
-	}
-	else if (helpDisplayer.className != "tool-displayer hidden" &&
-		! $(e.target).closest(help).length && 
-		! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed)
-		help.value = ""; // Reset the input of the help
-		resetAnswerDiv(1);
-		resultsContainer.className = "hidden"; // Hide the results container
-		helpDisplayer.className = "tool-displayer hidden";
-	}
-
-	/* image.js */
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
-		/* Reset. */
-		imageBrowser.innerHTML = "Choose an image";
-		altInput.value = "";
-		titleInput.value = "";
-		imageLoaded = undefined;
-
-		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-image");
-		}
-		imageDisplayer.className = "tool-displayer";
-		imageDiv = document.getElementById("mado-image");
-		setImageInputs();
-	}
-	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
-	}
-
-	/* link.js */
-	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
-		/* Reset. */
-		urlInput.value = "";
-		hypertextInput.value = "";
-		
-		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-link");
-		}
-		linkDisplayer.className = "tool-displayer";
-		linkDiv = document.getElementById("mado-link");
-		setLinkInputs();
-		urlInput.focus();			
-	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
-		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
-	}
-
-	/* more.js */
-	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.
-		moreDisplayer.className = " ";
-	}
-	else if (moreDisplayer.className != "hidden" && ! $(e.target).closest(moreBox).length)
-		moreDisplayer.className = "hidden";
-
-	/* recentfiles.js */
-	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
-		displayRecentFiles(); // If the user remove something from another window.
-		recentFilesDisplayer.className = "";
-	}
-	else if (recentFilesDisplayer.className != "hidden" && ! $(e.target).closest(recentFilesContainer).length)
-		recentFilesDisplayer.className = "hidden";
-
-	/* styles.js */
-	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
-		stylesDisplayer.className = "tool-displayer";
-	}
-	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)		
-		stylesDisplayer.className = "tool-displayer hidden";
-
-	/* window.js */
-	if (closeDisplayer.className == "visible" && ( // The close displayer is visible.
-			! $(e.target).closest(windowCloseContainer).length ||  // The click is not on something in the closeDisplayer (closeButton included).
-			$(e.target).closest(cancelCloseButton).length // The click is on the "Cancel" button.
-			)
-		)
-		closeDisplayer.className = "hidden";
+$(document).click(function (a) {
+    $(a.target).closest(Ea).length && "tool-displayer hidden" == Fa.className ? (Fa.className = "tool-displayer", r.focus()) : "tool-displayer hidden" == Fa.className || $(a.target).closest(r).length || $(a.target).closest(s).length || (r.value = "", Ga(1), s.className = "hidden", Fa.className = "tool-displayer hidden");
+    $(a.target).closest(Ha).length && "tool-displayer hidden" == t.className ? (u.innerHTML = "Choose an image", v.value = "", w.value = "", x = void 0, 0 == $(k).find("#mado-image").length && (k.focus(), y("mado-image")),
+        t.className = "tool-displayer", z = document.getElementById("mado-image"), Ia = z.innerText, /!\[.*\]\(.*\)/.test(z.innerText) && (/!\[.*\]\(.*\s".*"\)/.test(z.innerText) ? (w.value = z.innerText.match(/".*"\)/)[0].substring(1, z.innerText.match(/".*"\)/)[0].length - 2), x = z.innerText.match(/.*\s"/)[0].substring(2, z.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/")) : x = z.innerText.match(/\]\(\S+\)/)[0].substring(2, z.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/"), Ja(l(x)), v.value = z.innerText.match(/!\[.+\]/)[0].substring(2,
+            z.innerText.match(/!\[.+\]/)[0].length - 1))) : "tool-displayer" != t.className || $(a.target).closest(Ka).length || (t.className = "tool-displayer hidden", A(z), B("mado-image"));
+    $(a.target).closest(La).length && "tool-displayer hidden" == C.className ? (D.value = "", E.value = "", 0 == $(k).find("#mado-link").length && (k.focus(), y("mado-link")), C.className = "tool-displayer", F = document.getElementById("mado-link"), Ia = F.innerText, /\[\w*\]\(.*\)/.test(F.innerText) ? (D.value = F.innerText.match(/\(.*\)/)[0].substring(1, F.innerText.match(/\(.*\)/)[0].length -
+        1), E.value = F.innerText.match(/\[\w*\]/)[0].substring(1, F.innerText.match(/\[\w*\]/)[0].length - 1)) : E.value = F.innerText, D.focus()) : "tool-displayer" != C.className || $(a.target).closest(C).length || (C.className = "tool-displayer hidden", A(F), B("mado-link"));
+    $(a.target).closest(qa).length && "hidden" == Ma.className ? Ma.className = " " : "hidden" == Ma.className || $(a.target).closest(Na).length || (Ma.className = "hidden");
+    $(a.target).closest(da).length && "hidden" == G.className ? (Oa(), G.className = "") : "hidden" == G.className || $(a.target).closest(H).length ||
+        (G.className = "hidden");
+    $(a.target).closest(Pa).length && "tool-displayer hidden" == I.className ? I.className = "tool-displayer" : "tool-displayer hidden" == I.className || $(a.target).closest(I).length || (I.className = "tool-displayer hidden");
+    "visible" != Qa.className || $(a.target).closest(Ra).length && !$(a.target).closest(Sa).length || (Qa.className = "hidden")
 });
+var ka, J, k, ja, Ta, K, Ua, ta = "# Dear user,<br><br>Thanks for installing **Mado**. For your first launch, here is some information:<br><br>* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.<br>* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.<br>* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, \u201cSettings\u201d section).<br>* See the keyboard shortcuts (top-right button, \u201cShortcuts\u201d section) to use Mado in depth.<br><br>We hope you will enjoy Mado,<br><br>**[A+A](https://twitter.com/AplusA_io)**<br><br>***<br><br>P.S. This message will not appear anymore. Click \u201cNew\u201d in the navbar to start using Mado.",
+    Ia,
+    L, Va, Wa, Xa, Ya, M, Za, $a, ab = document.createElement("div");
+document.createElement("textarea");
+var N, O;
 
-/* Functions that handle D&D. */
-
-/*
-* Variables (in alphabetical order).
-*/
-
-var dragAndDropManager; // The manager launched onload.
-var dragMessageAlreadyVisible = false; // True if the message about Drag and Drop is already visible.
-var extensionsAllowed = new Array(".markdown", ".md", ".txt"); // Extensions allowed by Mado.
-var filePath; // The path of the dragged file.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* counterSelection (): what counter to display.
-	* displayCounter (): change charsDiv and wordsDiv.
-	* resetCounter (): what to display if there is nothing in the contenteditable.
-*/
-
-function DnDManager(selector, onDropCallback) {
-	var el_ = document.querySelector(selector);
-	var overCount = 0;
-
-	this.dragenter = function(e) {
-		e.stopPropagation();
-		e.preventDefault();
-		overCount++;
-		el_.classList.add('dropping');
-	};
-
-	this.dragover = function(e) {  
-		if (! dragMessageAlreadyVisible) {
-			console.log("Something is over me!");
-			dragMessageAlreadyVisible = 1;
-		}
-		e.stopPropagation();
-		e.preventDefault();
-	};
-
-	this.dragleave = function(e) {
-		console.log("The sky is now blue.");
-		dragMessageAlreadyVisible = 0;
-		e.stopPropagation();
-		e.preventDefault();
-		if (--overCount <= 0) {
-			el_.classList.remove('dropping');
-			overCount = 0;
-		}
-	};
-
-	this.drop = function(e) {
-		console.log("The sky is now blue.");
-		dragMessageAlreadyVisible = 0;
-		e.stopPropagation();
-		e.preventDefault();
-
-		el_.classList.remove('dropping');
-
-		onDropCallback(e.dataTransfer)
-	};
-
-	el_.addEventListener('dragenter', this.dragenter, false);
-	el_.addEventListener('dragover', this.dragover, false);
-	el_.addEventListener('dragleave', this.dragleave, false);
-	el_.addEventListener('drop', this.drop, false);
-};
-
-function openDraggedFile (fileEntry) {
-	filePath = fileEntry.fullPath;
-	if (extensionsAllowed.indexOf(filePath.substring(filePath.lastIndexOf("."), filePath.length)) != -1)
-		openFile(fileEntry); // app.js
-}
-/* Functions linked to the Markdown editor. */
-
-/* 
-* Variables (in alphabetical order). 
-	* Shortcuts.
-	* Global.
-*/
-
-/* HTML shortcuts. */
-var centerLine; // The line that separates Markdown and HTML views.
-var conversionDiv; // The div who contains the HTML conversion.
-var markdown; // The contenteditable where the user writes.
-var markdownContainer;
-var pasteZone; // The textarea used when the user pastes content.
-
-/* Global. */
-var closeDiv; // The end of the div.
-var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
-var firstMessage = "# Dear user,<br><br>Thanks for installing **Mado**. For your first launch, here is some information:<br><br>* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.<br>* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.<br>* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, “Settings” section).<br>* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.<br><br>We hope you will enjoy Mado,<br><br>**[A+A](https://twitter.com/AplusA_io)**<br><br>***<br><br>P.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
-var initialText; // A save used when the user cancel a link/image.
-var newCE; // The new contenteditable content (temporary).
-var openDiv; // The beginning of the div.
-var optiMarkdown; // The new Markdown, without useless div.
-var pasteDiv; // The div used when the user pastes content.
-var range; // Get the user's selection.
-var rangeSelection; // Set the user's new range selection.
-var savedSel; // The selection is saved here.
-var selection; // Set the user's new selection.
-var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
-var tempTextarea = document.createElement("textarea"); // Used to add the div to the contenteditable.
-var tempConversion; // A string used to don't display errors when an image is loaded.
-var tempMarkdown; // String used to modify the markdown innerHTML.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* conversion (): what to do when the user change something on the contenteditable.
-	* changeContentHighlighted (id): Add a div with id @param id around the selection. 
-	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
-	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
-	* removeDivWithId (id): Remove a div from content via chechDiv (divCount, content, pos, id), use RegExp for strength.
-	* restoreSelection (id): Restore the previous elements selected by the user.	
-	* selectElementContents(el) : Do weird things with HTML to re-set the selection.
-	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
-*/
-
-function conversion () {
-	if ((markdown.innerHTML > 4) || (markdown.innerText.length > 0 && markdown.innerHTML != "<br>")) { // There is Markdown in the contenteditable.
-		if (editorSyntax == undefined) {
-			chrome.storage.local.get("gfm",  function(mado) {
-				if (mado["gfm"] != undefined)
-					marked.setOptions({ gfm : mado["gfm"] });
-				else {
-					chrome.storage.local.set({ "gfm" : false });
-					marked.setOptions({ gfm : false });
-				}
-				setEditorSyntax();
-				marked(markdown.innerText, function (err, content) { // Marked.js makes the conversion.	    	
-					/* Reset. */
-			    	imagePosition = 0;
-			    	for (var i = 0; i < imagesArray.length; i++) // Reset the images array.
-			       		imagesArray[i][2] = false;
-
-			       	tempConversion = content; 
-			       	displayImages();      
-			    });
-			});	    
-		}
-		else {
-			marked.setOptions({ gfm : editorSyntax });
-			marked(markdown.innerText, function (err, content) {  	
-		    	/* Reset. */
-		    	imagePosition = 0;
-		    	for (var i = 0; i < imagesArray.length; i++)
-		       		imagesArray[i][2] = false;
-
-		       	tempConversion = content;
-		       	displayImages();      
-		    });
-		}
-	}
-	else { // No Markdown here.
-		markdown.innerHTML = ""; // If the innerHTML is "<br>".
-		conversionDiv.innerHTML = "See the result here";
-		resetCounter();
-		checkSaveState();
-	}
+function ia() {
+    4 < k.innerHTML || 0 < k.innerText.length && "<br>" != k.innerHTML ? void 0 == Ua ? chrome.storage.local.get("gfm", function (a) {
+        void 0 != a.gfm ? marked.setOptions({
+            gfm: a.gfm
+        }) : (chrome.storage.local.set({
+            gfm: !1
+        }), marked.setOptions({
+            gfm: !1
+        }));
+        Ca();
+        marked(k.innerText, function (a, e) {
+            for (var d = P = 0; d < Q.length; d++) Q[d][2] = !1;
+            N = e;
+            R()
+        })
+    }) : (marked.setOptions({
+        gfm: Ua
+    }), marked(k.innerText, function (a, b) {
+        for (var e = P = 0; e < Q.length; e++) Q[e][2] = !1;
+        N = b;
+        R()
+    })) : (k.innerHTML = "", J.innerHTML = "See the result here", S.innerHTML = "&nbsp;0 characters&nbsp;", T.innerHTML =
+        "&nbsp;0 words&nbsp;", ya())
 }
 
-function changeContentHighlighted (id) {
-    range = rangy.getSelection().rangeCount ? rangy.getSelection().getRangeAt(0) : null;
-    if (range) {    
-        surroundDiv.id = id;
+function y(a) {
+    if (Ya = rangy.getSelection().rangeCount ? rangy.getSelection().getRangeAt(0) : null) {
+        ab.id = a;
         try {
-            range.surroundContents(surroundDiv);
-        }
-        catch(ex) {
-        }
+            Ya.surroundContents(ab)
+        } catch (b) {}
     }
 }
 
-function checkDiv (divCount, content, pos, id) {
-	openDiv = content.indexOf("<div", pos);
-	closeDiv = content.indexOf("</div>", pos);
-
-	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
-		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
-			return (checkDiv(divCount + 1, content, openDiv + 5, id)); // Recursivity.
-		else { // If </div> is here first.
-			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
-				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
-				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv); 
-				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
-				return [0, newCE];
-			}
-			else
-				return(checkDiv(divCount - 1, content, closeDiv + 6, id)); // Recursivity.
-		}
-	}
-	else
-		return [-1]; // Don't remove the brackets.
+function bb(a, b, e, d) {
+    Va = b.indexOf("<div", e);
+    K = b.indexOf("</div>", e);
+    return -1 != K ? -1 != Va && Va < K ? bb(a + 1, b, Va + 5, d) : 1 == a ? (L = b.substring(0, b.indexOf('<div id="' + d + '">')), L += b.substring(b.indexOf('<div id="' + d + '">') + ('<div id="' + d + '">').length, K), L += b.substring(K + 6), [0, L]) : bb(a - 1, b, K + 6, d) : [-1]
 }
 
-function endOfConversion () {
-	/* Reset. */
-	imagePath = undefined;
-	rightFile = undefined;
-
-	for (var i = 0; i < imagesArray.length; i++) // Remove the images who are not used anymore.
-		if (imagesArray[i][2] == false)
-			imagesArray = imagesArray.splice(imagesArray[i], 1);
-
-	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> <span class=\"nofile-visual\">File not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png");
-	conversionDiv.innerHTML = tempConversion; // Display the conversion.
-
-	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
-		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
-			$(this).attr("href", "http://" + $(this).attr("href"));
-		$(this).attr("target", "_blank");
-	});
-
-	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-link").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-visual").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-
-	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
-	checkSaveState();
+function cb() {
+    db = U = void 0;
+    for (var a = 0; a < Q.length; a++)!1 == Q[a][2] && (Q = Q.splice(Q[a], 1));
+    N = N.replace(/<img src=\"img\/nofile.png/g, '<span class="nofile-link"> <span class="nofile-visual">File not found</span>&nbsp;</span><img class="nofile" src="img/nofile.png');
+    J.innerHTML = N;
+    $("#html-conversion a").each(function () {
+        "#" != $(this).attr("href").substring(0, 1) && "http" != $(this).attr("href").substring(0, 4) && $(this).attr("href", "http://" + $(this).attr("href"));
+        $(this).attr("target", "_blank")
+    });
+    $(".nofile").on("click",
+        function () {
+            eb()
+        });
+    $(".nofile-link").on("click", function () {
+        eb()
+    });
+    $(".nofile-visual").on("click", function () {
+        eb()
+    });
+    Countable.m(J, function (a) {
+        S.innerHTML = "&nbsp;" + a.characters + " characters&nbsp;";
+        T.innerHTML = "&nbsp;" + a.words + " words&nbsp;";
+        1 == a.characters && (S.innerHTML = "&nbsp;" + a.characters + " character&nbsp;");
+        1 == a.words && (T.innerHTML = "&nbsp;" + a.words + " word&nbsp;")
+    }, {
+        s: !0
+    });
+    ya()
 }
 
-function pasteContent () {
-	changeContentHighlighted("mado-paste");  
-	pasteDiv = document.getElementById("mado-paste");      
-    pasteZone.focus();
-
-    setTimeout(function(){
-        if (pasteDiv != undefined)
-            pasteDiv.innerText = pasteZone.value;       
-        else
-            $(markdown).innerText = $(markdown).innerText + pasteZone.value;
-        pasteZone.value = ""; // Reset the hidden textarea content.
-        selectElementContents(pasteDiv);
-        restoreSelection("mado-paste");
-        contentChanged();
-    }, 20);
+function fb() {
+    y("mado-paste");
+    Xa = document.getElementById("mado-paste");
+    Ta.focus();
+    setTimeout(function () {
+        void 0 != Xa ? Xa.innerText = Ta.value : $(k).innerText = $(k).innerText + Ta.value;
+        Ta.value = "";
+        A(Xa);
+        B("mado-paste");
+        g()
+    }, 20)
 }
 
-function removeDivWithId (id) {
-	tempMarkdown = markdown.innerHTML;
-	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
-	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
-	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
-
-	if (tempMarkdown.indexOf("<div id=\"" + id + "\">") != -1) { // Remove the useless div.
-		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div id=\"" + id + "\">"), id);
-		if (optiMarkdown[0] != -1) {
-			tempMarkdown = optiMarkdown[1];
-		}
-	}
-	markdown.innerHTML = tempMarkdown;
+function B(a) {
+    Za = rangy.saveSelection();
+    O = k.innerHTML;
+    O = O.replace(/< *div/g, "<div");
+    O = O.replace(/<div *>/g, "<div>");
+    O = O.replace(/< *\/ *div *>/g, "</div>"); - 1 != O.indexOf('<div id="' + a + '">') && (Wa = bb(0, O, O.indexOf('<div id="' + a + '">'), a), -1 != Wa[0] && (O = Wa[1]));
+    k.innerHTML = O;
+    rangy.restoreSelection(Za);
+    rangy.removeMarkers(Za)
 }
 
-function restoreSelection (id) {
-	savedSel = rangy.saveSelection();
-	removeDivWithId(id);		
-	rangy.restoreSelection(savedSel);
-	rangy.removeMarkers(savedSel);
-}
-
-function selectElementContents(el) {
+function A(a) {
     if (document.createRange && window.getSelection) {
-        rangeSelection = document.createRange();
-        selection = window.getSelection();
-        selection.removeAllRanges();
+        M = document.createRange();
+        $a = window.getSelection();
+        $a.removeAllRanges();
         try {
-            rangeSelection.seleectNodeContents(el);
-            selection.addRange(rangeSelection);
-        } catch (e) {
-            rangeSelection.selectNode(el);
-            selection.addRange(rangeSelection);
+            M.q(a), $a.addRange(M)
+        } catch (b) {
+            M.selectNode(a), $a.addRange(M)
         }
-    } else if (document.body.createTextRange) {
-        rangeSelection = document.body.createTextRange();
-        rangeSelection.moveToElementText(el);
-        rangeSelection.select();
+    } else document.body.createTextRange && (M = document.body.createTextRange(), M.moveToElementText(a), M.select())
+}
+
+function Ca() {
+    chrome.storage.local.get("gfm", function (a) {
+        void 0 != a.gfm ? Ua = a.gfm : (chrome.storage.local.set({
+            gfm: !1
+        }), Ua = !1);
+        g()
+    })
+}
+var S, gb, m, T;
+
+function hb() {
+    "none" == S.style.display ? (S.style.display = "inline", T.style.display = "none") : (S.style.display = "none", T.style.display = "inline")
+}
+var r, Ea, Fa, ib, s, jb, V = [
+        ["Headers", "Titles"],
+        ["Bold", "Strong emphasis"],
+        ["Italic", "Emphasis"],
+        ["Bold italic", "Combined emphasis"],
+        ["Ordered lists"],
+        ["Unordered lists"],
+        ["Inline-style links"],
+        ["Reference-style links"],
+        ["Images (inline)", "Pictures (inline)"],
+        ["Images (reference-style)", "Pictures (reference-style)"],
+        ["Blocks of code"],
+        ["Blockquotes"],
+        ["Inline HTML", "HTML in Markdown"],
+        ["Horizontal rules"],
+        ["Line breaks"],
+        ["Question"]
+    ],
+    kb = [
+        ["Six sizes available, the size depends on the numbers of #. <br> #Big title (size 1, the biggest). <br> ####A less impresive title (size 4 on 6)."],
+        ['<span class="help-code">**bold**</span> or <span class="help-code">__bold__</span>'],
+        ['<span class="help-code">*italic*</span> or <span class="help-code">_italic_</span>'],
+        ['<span class="help-code">**_ bold italic_**</span> or <span class="help-code">*__bold italic__*</span> or <span class="help-code">***this***</span> or <span class="help-code">___this___</span>'],
+        ["1. First ordered list item. <br>2. Another item."],
+        ["* An item. <br>* A second item (you can also use + or -)."],
+        ['<span class="help-code">[Hypertext](http://url.com)</span><br>(Also works with a local path.)'],
+        ['<span class="help-code">[Hypertext][1]<br>[1]: http://url.com</span>'],
+        ['<span class="help-code">![alt text](path/to/image.jpg "Title")</span>'],
+        ['<span class="help-code">![alt text][image Id] <br> [image Id]: path/to/image.jpg "Title"</span>'],
+        ['<span class="help-code">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>'],
+        ['> Blockquotes only need <span class="help-code">></span> to work. <br><br> <span class="help-code">> Two blockquotes without a break (a line who isn\'t a blockquote)  are a single quote.</span>'],
+        ['<span class="help-code">It &lt;strong>works&lt;/strong>.</span>'],
+        ['<span class="help-code">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>'],
+        ['To separate two paragraphs, press <span class="help-code">Enter</span> twice.<br><br>And you have a new paragraph.'],
+        ["Seriously?"]
+    ],
+    lb = [
+        ['Six sizes available, the size depends on the numbers of #.<h1 id="big-title-size-1-the-biggest-">Big title (size 1, the biggest).</h1><h4 id="a-less-impresive-title-size-4-on-6-br-">A less impresive title (size 4 on 6).</h4>'],
+        ["<strong>Bold</strong>"],
+        ["<em>Italic</em>"],
+        ["<strong><em>Bold italic</em></strong>"],
+        ["<ol><li>First ordered list item</li><li>Another item.</li></ol>"],
+        ["<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"],
+        ['<a target="_blank" href="http://aplusa.io/mado">Hypertext</a>'],
+        ['<a target="_blank" href="http://aplusa.io/mado">Hypertext</a>'],
+        ['<div class="example-image"></div>'],
+        ['<div class="example-image"></div>'],
+        ["<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"],
+        ["<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"],
+        ["It <strong>works<strong>"],
+        ["<hr> You can use Hyphens, asterisks or underscores.<hr>"],
+        ["<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"],
+        ["Life's most persistent and urgent question is, 'What are you doing for others?'."]
+    ];
+
+function mb() {
+    for (var a = 1; 3 >= a; a++) "result switched" == window["result" + a].className && (window["result" + a].className = "result");
+    if (0 == r.value.length) s.className = "hidden";
+    else if (3 > r.value.length) {
+    	s.className = "one-result no-result";
+    	Ga(2);
+    	if (r.value.length == 1) answer1.innerHTML = "Add two more characters";
+        else if (r.value.length == 2) answer1.innerHTML = "Add one more character"
+	}
+    else {
+        ib = 1;
+        for (a = 0; a < V.length && 4 > ib; a++)
+            for (var b = 0; b < V[a].length; b++) - 1 != V[a][b].toLowerCase().indexOf(r.value.toLowerCase()) && (jb = V[a][b].toLowerCase().indexOf(r.value.toLowerCase()), window["answer" + ib].innerHTML = '<span class="help-title">' + V[a][b].substring(0, jb) + '<span class="match">' +
+                V[a][b].substr(jb, r.value.length) + "</span>" + V[a][b].substring(jb + r.value.length) + "</span>: " + kb[a], window["example" + ib].innerHTML = lb[a], ib++, b = V[a].length);
+        switch (ib) {
+        case 1:
+            s.className = "one-result no-result";
+            Ga(2);
+            break;
+        case 2:
+            s.className = "one-result";
+            Ga(2);
+            break;
+        case 3:
+            s.className = "two-results";
+            Ga(3);
+            break;
+        case 4:
+            s.className = "three-results"
+        }
     }
 }
 
-function setEditorSyntax () {
-    chrome.storage.local.get("gfm",  function(mado) { 
-        if (mado["gfm"] != undefined)
-                editorSyntax = mado["gfm"]; 
-        else {
-                chrome.storage.local.set({ "gfm" : false });
-                editorSyntax = false; 
-        }
-        contentChanged();
+function Ga(a) {
+    for (; 3 >= a; a++) "" == window["answer" + a].innerHTML ? a = 3 : (window["answer" + a].innerHTML = "", window["result" + a].className = "result", window["example" + a].innerHTML = "")
+}
+
+function nb(a) {
+    window["result" + a].className = "result" == window["result" + a].className ? "result switched" : "result";
+    r.focus()
+}
+var v, ob, pb, Ha, Ka, u, t, z, w, qb, rb = [],
+    sb, x, U, P = 0,
+    Q = [],
+    db;
+
+function tb() {
+    "" == v.value ? (v.setAttribute("class", "flash"), v.focus(), v.removeAttribute("class")) : void 0 != x && (ub(), t.className = "tool-displayer hidden", A(z), B("mado-image"))
+}
+
+function vb() {
+    void 0 != z && (z.innerText = Ia);
+    t.className = "tool-displayer hidden";
+    A(z);
+    B("mado-image");
+    g()
+}
+
+function eb() {
+    chrome.mediaGalleries.getMediaFileSystems({
+        interactive: "yes"
+    }, wb)
+}
+
+function xb(a) {
+    rb = a;
+    yb(0)
+}
+
+function R() {
+    if (-1 != N.indexOf('<img src="', P))
+        if (P = N.indexOf('<img src="', P) + 10, db = !1, U = N.substring(P, N.indexOf('"', P)), "data" != U.substring(0, 4))
+            if (0 < Q.length)
+                for (var a = 0; a < Q.length; a++)
+                    if (Q[a][0] == U)
+                        if (N = N.replace(RegExp(U, "g"), Q[a][1]), Q[a][2] = !0, -1 != N.indexOf('<img src="', P)) {
+                            R();
+                            break
+                        } else cb();
+                        else a == Q.length - 1 && wb();
+                        else wb();
+                        else R();
+                        else cb()
+}
+
+function yb(a) {
+    !1 == db ? a < rb.length ? (qb = a, rb.forEach(function (b, e) {
+        e == a && void 0 != U && !1 == db && b.root.createReader().readEntries(zb)
+    })) : (N = N.replace(RegExp(U, "g"), "img/nofile.png"), -1 != N.indexOf('<img src="', P) ? R() : cb()) : (Q.length = 0, ub())
+}
+
+function Ab(a) {
+    rb[qb].root.getFile(a, {
+        create: !1
+    }, function (a) {
+        a.file(function (a) {
+            var b = new FileReader;
+            b.onloadend = function () {
+                Q.push([U, this.result, !0]);
+                N = N.replace(RegExp(U, "g"), this.result);
+                db = !0; - 1 != N.indexOf('<img src="', P) ? R() : cb()
+            };
+            b.readAsDataURL(a)
+        })
+    })
+}
+
+function zb(a) {
+    for (var b = 0; b < a.length && !1 == db; b++)
+        if (a[b].isDirectory && -1 != U.indexOf(a[b].fullPath)) {
+            a[b].createReader().readEntries(zb);
+            break
+        } else if (-1 != U.indexOf(a[b].fullPath)) {
+        Ab(a[b].fullPath);
+        break
+    } else b == a.length - 1 && yb(qb + 1)
+}
+
+function Bb() {
+    chrome.fileSystem.chooseEntry({
+        type: "openFile",
+        accepts: [{
+            mimeTypes: ["image/*"]
+        }]
+    }, function (a) {
+        a && chrome.fileSystem.getDisplayPath(a, function (a) {
+            Ja(l(a.replace(/\\/g, "/")));
+            x = a.replace(/\\/g, "/");
+            ub();
+            v.focus()
+        })
+    })
+}
+
+function ub() {
+    sb = "" == w.value ? "![" + v.value + "](" + x + ")" : "![" + v.value + "](" + x + ' "' + w.value + '")';
+    void 0 != z ? z.innerText = sb : $(k).innerText = $(k).innerText + sb;
+    g()
+}
+
+function Ja(a) {
+    u.innerHTML = a;
+    15 < u.innerHTML.length && (u.innerHTML = u.innerHTML.substring(0, 6) + "(\u2026)" + u.innerHTML.substring(u.innerHTML.length - 6, u.innerHTML.length))
+}
+
+function wb() {
+    chrome.mediaGalleries.getMediaFileSystems({
+        interactive: "no"
+    }, xb)
+}
+var Cb, E, Db, La, C, D, F;
+
+function Eb() {
+    "" == D.value ? (D.setAttribute("class", "flash"), D.focus(), D.removeAttribute("class")) : (Fb(), C.className = "tool-displayer hidden", A(F), B("mado-link"))
+}
+
+function Gb() {
+    void 0 != F && (F.innerText = Ia);
+    C.className = "tool-displayer hidden";
+    A(F);
+    B("mado-link");
+    g()
+}
+
+function Fb() {
+    Db = "" == E.value ? "[" + D.value + "](" + D.value + ")" : "[" + E.value + "](" + D.value + ")";
+    void 0 != F ? F.innerText = Db : $(k).innerText = $(k).innerText + Db;
+    g()
+}
+var qa, Ma, Na, Hb, Ib, Jb, Kb;
+window.onload = function () {
+    aa = document.getElementById("export");
+    ba = document.getElementById("new");
+    ca = document.getElementById("open");
+    da = document.getElementById("recent");
+    ea = document.getElementById("save");
+    fa = document.getElementById("save-as");
+    ga = document.getElementsByTagName("title")[0];
+    ka = document.getElementById("center-line-container");
+    J = document.getElementById("html-conversion");
+    k = document.getElementById("markdown");
+    ja = document.getElementById("markdown-container");
+    Ta = document.getElementById("paste-zone");
+    S = document.getElementById("character-nb");
+    gb = document.getElementById("link-url");
+    m = document.getElementById("doc-name");
+    T = document.getElementById("word-nb");
+    r = document.getElementById("help-input");
+    Ea = document.getElementById("help-button");
+    Fa = document.getElementById("help-input-displayer");
+    for (var a = 1; 3 >= a; a++) window["answer" + a] = document.getElementById("answer-" + a), window["example" + a] = document.getElementById("example-" + a), window["result" + a] = document.getElementById("result-" + a), window["resultSwitch" +
+        a] = document.getElementById("result-switch-" + a);
+    s = document.getElementById("help-results-container");
+    ob = document.getElementById("cancel-image");
+    pb = document.getElementById("galleries-button");
+    Ha = document.getElementById("image-button");
+    t = document.getElementById("image-insertion-displayer");
+    Ka = document.getElementById("image-insertion-box");
+    u = document.getElementById("browse-image");
+    v = document.getElementById("alt-input");
+    w = document.getElementById("title-input");
+    Cb = document.getElementById("cancel-link");
+    La = document.getElementById("link-button");
+    C = document.getElementById("link-insertion-displayer");
+    D = document.getElementById("url-input");
+    E = document.getElementById("hypertext-input");
+    qa = document.getElementById("more-button");
+    Ma = document.getElementById("more-displayer");
+    Na = document.getElementById("more-container");
+    Hb = document.getElementById("settings");
+    Ib = document.getElementById("q-and-a");
+    Jb = document.getElementById("shortcuts");
+    Kb = document.getElementById("about");
+    da = document.getElementById("recent-button");
+    G = document.getElementById("recent-files-displayer");
+    H = document.getElementById("recent-files-container");
+    Pa = document.getElementById("style-tool");
+    I = document.getElementById("style-tool-displayer");
+    Lb = document.getElementById("home-style");
+    Mb = document.getElementById("clinic-style");
+    Nb = document.getElementById("tramway-style");
+    Ob = document.getElementById("mado-footer");
+    Pb = document.getElementById("workspace");
+    q = document.getElementById("switch-md");
+    p = document.getElementById("switch-both");
+    Qb = document.getElementById("switch-html");
+    W.push(q, p, Qb);
+    Sa = document.getElementById("cancel");
+    Qa = document.getElementById("close-alert-displayer");
+    Rb = document.getElementsByTagName("head")[0];
+    Sb = document.getElementById("quit");
+    Tb = document.getElementById("save-quit");
+    Ub = document.getElementById("save-state");
+    Ra = document.getElementById("window-close");
+    Vb = document.getElementById("window-close-button");
+    Wb = document.getElementById("window-maximize");
+    Xb = document.getElementById("window-minimize");
+    chrome.storage.local.get("tempFileEntry", function (a) {
+        void 0 !=
+            a.tempFileEntry ? chrome.fileSystem.restoreEntry(a.tempFileEntry, function (a) {
+                c = a;
+                chrome.storage.local.remove("tempFileEntry");
+                c.file(function (a) {
+                    var b = new FileReader;
+                    b.onload = function (a) {
+                        k.innerText = a.target.result;
+                        n = k.innerText;
+                        g();
+                        m.innerHTML = l(c.fullPath) + "&nbsp;-";
+                        ga.innerHTML = l(c.fullPath) + " - Mado"
+                    };
+                    b.readAsText(a)
+                }, h)
+            }) : n = void 0
     });
+    ra();
+    $(ba).on("click", sa);
+    Mousetrap.bind(["command+n", "ctrl+n"], function () {
+        sa();
+        return !1
+    });
+    $(ca).on("click", wa);
+    Mousetrap.bind(["command+o", "ctrl+o"], function () {
+        wa();
+        return !1
+    });
+    $(ea).on("click", za);
+    Mousetrap.bind(["command+s", "ctrl+s"], function () {
+        za();
+        return !1
+    });
+    $(fa).on("click", xa);
+    Mousetrap.bind(["command+shift+s", "ctrl+shift+s"], function () {
+        xa();
+        return !1
+    });
+    $(aa).on("click", na);
+    $(k).bind("scroll", function () {
+        console.log("Event worked")
+    });
+    Ca();
+    S.style.display = "none";
+    chrome.storage.local.get("firstLaunch", function (a) {
+        void 0 == a.firstLaunch && (k.innerHTML = ta, chrome.storage.local.set({
+            firstLaunch: !1
+        }))
+    });
+    $(k).focus();
+    $(k).on("input propertychange", function () {
+        g()
+    });
+    $(k).bind("paste", function () {
+        fb()
+    });
+    $(k).keydown(function (a) {
+        9 == a.keyCode && a.preventDefault()
+    });
+    $("#html-conversion").on("click", "a", function (a) {
+        -1 != a.currentTarget.href.indexOf("chrome-extension://") && (a.preventDefault(), "" != a.currentTarget.hash && 0 != $(a.currentTarget.hash).length && $("#html-conversion").animate({
+            scrollTop: $(a.currentTarget.hash).position().top
+        }, "slow"))
+    });
+    $(S).on("click", hb);
+    $(T).on("click", hb);
+    $("#html-conversion").on("mouseenter", "a", function (a) {
+        gb.innerHTML = -1 == a.currentTarget.href.indexOf("chrome-extension://") ?
+            a.currentTarget.href : a.currentTarget.hash;
+        gb.className = "show"
+    });
+    $("#html-conversion").on("mouseleave", "a", function () {
+        gb.className = ""
+    });
+    Mousetrap.bind(["command+h", "ctrl+h"], function () {
+        $(Ea).click();
+        return !1
+    });
+    $(r).keyup(function (a) {
+        27 == a.keyCode && $(Ea).click()
+    });
+    $(r).on("input propertychange", mb);
+    $(resultSwitch1).on("click", function () {
+        nb("1")
+    });
+    $(resultSwitch2).on("click", function () {
+        nb("2")
+    });
+    $(resultSwitch3).on("click", function () {
+        nb("3")
+    });
+    $(Ha).on("mousedown", function () {
+        y("mado-image")
+    });
+    $(u).on("click", Bb);
+    $(pb).on("click",
+        eb);
+    $(v).keyup(function (a) {
+        13 == a.keyCode ? tb() : 27 == a.keyCode ? vb() : ub()
+    });
+    $(w).keydown(function (a) {
+        9 == a.keyCode && (a.preventDefault(), $(v).select())
+    });
+    $(w).keyup(function (a) {
+        13 == a.keyCode ? tb() : 27 == a.keyCode ? vb() : ub()
+    });
+    $(ob).on("click", vb);
+    $(La).on("mousedown", function () {
+        y("mado-link")
+    });
+    Mousetrap.bind(["command+k", "ctrl+k"], function () {
+        y("mado-link");
+        $(La).click();
+        return !1
+    });
+    $(D).keyup(function (a) {
+        13 == a.keyCode ? Eb() : 27 == a.keyCode ? Gb() : Fb()
+    });
+    $(E).keydown(function (a) {
+        9 == a.keyCode && (a.preventDefault(),
+            $(D).select())
+    });
+    $(E).keyup(function (a) {
+        13 == a.keyCode ? Eb() : 27 == a.keyCode ? Gb() : Fb()
+    });
+    $(Cb).on("click", Gb);
+    $(Hb).on("click", function () {
+        pa("more/settings.html")
+    });
+    $(Ib).on("click", function () {
+        pa("more/qanda.html")
+    });
+    $(Jb).on("click", function () {
+        pa("more/shortcuts.html")
+    });
+    $(Kb).on("click", function () {
+        pa("more/about.html")
+    });
+    Oa();
+    navigator.onLine && (Yb = analytics.getService("Mado"), Ba(), Zb = Yb.getTracker("UA-45134408-1"), Zb.sendAppView("mainWindow"));
+    $b();
+    $(Lb).on("click", function () {
+        ac("home")
+    });
+    $(Mb).on("click", function () {
+        ac("clinic")
+    });
+    $(Nb).on("click", function () {
+        ac("tramway")
+    });
+    1159 < chrome.app.window.current().getBounds().width ? p.className = "switch-button activated" : (q.className = "switch-button activated", Pb.className = "markdown-view");
+    chrome.app.window.current().getBounds();
+    Da();
+    $(q).on("click", function () {
+        bc(this.id, "markdown-view")
+    });
+    $(p).on("click", function () {
+        bc(this.id, "normal")
+    });
+    $(Qb).on("click", function () {
+        bc(this.id, "conversion-view")
+    });
+    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function () {
+        cc("left");
+        return !1
+    });
+    Mousetrap.bind(["command+alt+right",
+        "ctrl+alt+right"
+    ], function () {
+        cc("right");
+        return !1
+    });
+    dc.setAttribute("rel", "stylesheet");
+    dc.setAttribute("type", "text/css"); - 1 != navigator.appVersion.indexOf("Mac") ? (dc.setAttribute("href", "css/window-frame-mac.css"), Vb.setAttribute("class", "cta little-icon-mac-close"), Wb.setAttribute("class", "cta little-icon-mac-maximize"), Xb.setAttribute("class", "cta little-icon-mac-minimize")) : (-1 != navigator.appVersion.indexOf("Win") ? dc.setAttribute("href", "css/window-frame-windows.css") : dc.setAttribute("href", "css/window-frame-others.css"),
+        Vb.setAttribute("class", "cta little-icon-win-close"), Wb.setAttribute("class", "cta little-icon-win-maximize"), Xb.setAttribute("class", "cta little-icon-win-minimize"));
+    Rb.appendChild(dc);
+    $(Sb).on("click", ec);
+    $(Tb).on("click", fc);
+    $(Vb).on("click", gc);
+    Mousetrap.bind(["command+w", "ctrl+w"], function () {
+        gc();
+        return !1
+    });
+    $(Wb).on("click", hc);
+    $(Xb).on("click", ic)
+};
+var G, H, X, Y = "",
+    la, Z = {}, jc = "recentFile1 recentFile2 recentFile3 recentFile4 recentFile5 recentFile6 recentFile7 recentFileId1 recentFileId2 recentFileId3 recentFileId4 recentFileId5 recentFileId6 recentFileId7".split(" ");
+
+function kc(a) {
+    7 >= a && chrome.storage.local.get(jc, function (b) {
+        void 0 != b["recentFile" + a] && chrome.fileSystem.isRestorable(b["recentFileId" + a], function (e) {
+            e ? chrome.fileSystem.restoreEntry(b["recentFileId" + a], function (b) {
+                b ? kc(a + 1) : (document.getElementById("recent-" + a).setAttribute("class", "recent-file deleted"), lc(a, "check"))
+            }) : (document.getElementById("recent-" + a).setAttribute("class", "recent-file deleted"), lc(a, "check"))
+        })
+    })
 }
 
-/* Functions that handle Mado's footer. */
-
-/*
-* Variables (in alphabetical order).
-*/
-
-var charsDiv; // The div that contains the document's chars number.
-var linkUrlSpan; // The div that displays the href when a user is overing a link.
-var nameDiv; // The div that contains the name of the opened document.
-var wordsDiv; // The div that contains the document's words number.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* counterSelection (): what counter to display.
-	* displayCounter (): change charsDiv and wordsDiv.
-	* resetCounter (): what to display if there is nothing in the contenteditable.
-*/
-
-
-function counterSelection () {
-	if (charsDiv.style.display == "none") {
-		charsDiv.style.display = "inline";
-		wordsDiv.style.display = "none";
-	}
-	else {
-		charsDiv.style.display = "none";
-		wordsDiv.style.display = "inline";
-	}
+function Oa() {
+    kc(1);
+    H.innerHTML = " ";
+    chrome.storage.local.get(jc, function (a) {
+        for (var b = 1; 7 >= b; b++)
+            if (void 0 != a["recentFile" + b]) H.innerHTML += '<li class="recent-file" id="recent-' + b + '"><div class="recent-file-wrapped"><p>' + l(a["recentFile" + b].toString()) + '</p><div class="delete-recent-button little-icon-delete" id="delete-button-' + b + '"></div></div></li>';
+            else break;
+        $(".recent-file").on("click", function (a) {
+            $(a.target).closest("#delete-button-" + this.id.charAt(this.id.length - 1)).length || (la = this.id.charAt(this.id.length -
+                1).valueOf(), Y = "recentFileId" + this.id.charAt(this.id.length - 1), chrome.storage.local.get(Y, function (a) {
+                chrome.fileSystem.restoreEntry(a[Y], function (a) {
+                    ua(a);
+                    G.className = "hidden"
+                })
+            }))
+        });
+        $(".delete-recent-button").on("click", function () {
+            ma(this.id.charAt(this.id.length - 1))
+        });
+        X = document.createElement("li");
+        X.setAttribute("id", "recent-files-info");
+        " " != H.innerHTML ? (X.setAttribute("class", "clear-all"), X.innerHTML = '<div class="icon-recent-clear"></div><span class="clear-all-text">Clear all</span>') : (X.setAttribute("class",
+            " "), X.innerHTML = "No recent document.");
+        H.appendChild(X);
+        $(".clear-all").on("click", function () {
+            mc()
+        })
+    })
 }
 
-function displayCounter (counter) {
-	charsDiv.innerHTML = "&nbsp;" + counter.characters + " characters&nbsp;";
-  	wordsDiv.innerHTML = "&nbsp;" + counter.words + " words&nbsp;";
-  	if (counter.characters == 1)
-  		charsDiv.innerHTML = "&nbsp;" + counter.characters + " character&nbsp;";
-  	if (counter.words == 1)
-		wordsDiv.innerHTML = "&nbsp;" + counter.words + " word&nbsp;";
+function va(a, b) {
+    chrome.storage.local.get(jc, function (e) {
+        for (var d = 1; 7 >= d; d++)
+            if (void 0 == e["recentFile" + d] || e["recentFile" + d] == a.fullPath || 7 == d) {
+                for (; 0 < d; d--) 1 < d ? (Y = ("recentFileId" + d).toString(), Z[Y] = e["recentFileId" + (d - 1)], chrome.storage.local.set(Z), Z = {}, Y = ("recentFile" + d).toString(), Z[Y] = e["recentFile" + (d - 1)], chrome.storage.local.set(Z), Z = {}) : (chrome.storage.local.set({
+                        recentFileId1: chrome.fileSystem.retainEntry(a)
+                    }), chrome.storage.local.set({
+                        recentFile1: a.fullPath
+                    }), Oa(), void 0 != b && "quit" == b &&
+                    ec());
+                break
+            }
+    })
 }
 
-function resetCounter () {
-	charsDiv.innerHTML = "&nbsp;0 characters&nbsp;";
-  	wordsDiv.innerHTML = "&nbsp;0 words&nbsp;";
-}
-/* The JS to help the user when he types something on the help input. */
-
-/*
-* Variables (in alphabetical order):
-	* Everything except arrays.
-	* Arrays.
-*/
-
-var answer1, answer2, answer3; // The divs who contain the answers.
-var answersContainer; // The div who contains the answers displayed.
-var example1, example2, example3; // The divs who contain the examples.
-var help; // The input where the user writes what he wants.
-var helpButton; // The help button.
-var helpDisplayer; // The div who contains all the help divs.
-var maxAnswers; // Check the number of answers displayed, max = 3.
-var result1, result2, result3; // The divs who contain the results.
-var resultsContainer; // Will contain the HTML results container.
-var resultSwitch1, resultSwitch2, resultSwitch3; // The divs who contain the result switchs.
-var wordPos; // Shortcut for "words[i][j].toLowerCase().indexOf(help.value.toLowerCase());".
-
-var words = [ // All the words that can be used on the help input, each line corresponding to the same line in 'answers'.
-	// Headers
-	["Headers", "Titles"],
-
-	// Emphasys
-	["Bold", "Strong emphasis"],
-	["Italic", "Emphasis"],
-	["Bold italic", "Combined emphasis"],
-
-	// Lists 
-	["Ordered lists"],
-	["Unordered lists"],
-
-	// Links 
-	["Inline-style links"],
-	["Reference-style links"],
-
-	// Images 
-	["Images (inline)", "Pictures (inline)"],
-	["Images (reference-style)", "Pictures (reference-style)"],
-
-	// Code and Syntax Highlighting
-	["Blocks of code"],
-
-	// Tables
-
-	// Blockquotes
-	["Blockquotes"],
-
-	// Inline HTML
-	["Inline HTML", "HTML in Markdown"],
-
-	// Horizontal Rules
-	["Horizontal rules"],
-
-	// Line Breaks
-	["Line breaks"],
-
-	// Joke
-	["Question"]
-];
-
-var answers = [ // The answers displayed.
-	// Headers
-	["Six sizes available, the size depends on the numbers of #. <br> #Big title (size 1, the biggest). <br> ####A less impresive title (size 4 on 6)."],
-
-	// Emphasys
-	["<span class=\"help-code\">**bold**</span> or <span class=\"help-code\">__bold__</span>"],
-	["<span class=\"help-code\">*italic*</span> or <span class=\"help-code\">_italic_</span>"],
-	["<span class=\"help-code\">**_ bold italic_**</span> or <span class=\"help-code\">*__bold italic__*</span> or <span class=\"help-code\">***this***</span> or <span class=\"help-code\">___this___</span>"],
-
-	// Lists 
-	["1. First ordered list item. <br>2. Another item."],
-	["* An item. <br>* A second item (you can also use + or -)."],
-
-	// Links 
-	["<span class=\"help-code\">[Hypertext](http://url.com)</span><br>(Also works with a local path.)"], // TODO : Change the link
-	["<span class=\"help-code\">[Hypertext][1]<br>[1]: http://url.com</span>"],
-
-	// Images
-	['<span class=\"help-code\">![alt text](path/to/image.jpg "Title")</span>'], 
-	['<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg "Title"</span>'],
-
-	// Code and Syntax Highlighting
-	["<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>"],
-
-	// Tables
-
-	// Blockquotes
-	["> Blockquotes only need <span class=\"help-code\">></span> to work. <br><br> <span class=\"help-code\">> Two blockquotes without a break (a line who isn't a blockquote)  are a single quote.</span>"],
-
-	// Inline HTML
-	["<span class=\"help-code\">It &lt;strong>works&lt;/strong>.</span>"],
-
-	// Horizontal Rules
-	["<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>"],
-
-	// Line Breaks
-	["To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."],
-
-	// Joke
-	["Seriously?"]
-];
-
-var examples = [
-	// Headers
-	["Six sizes available, the size depends on the numbers of #.<h1 id=\"big-title-size-1-the-biggest-\">Big title (size 1, the biggest).</h1><h4 id=\"a-less-impresive-title-size-4-on-6-br-\">A less impresive title (size 4 on 6).</h4>"],
-
-	// Emphasys
-	["<strong>Bold</strong>"],
-	["<em>Italic</em>"],
-	["<strong><em>Bold italic</em></strong>"],
-
-	// Lists TODO
-	["<ol><li>First ordered list item</li><li>Another item.</li></ol>"],
-	["<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"],
-
-	// Links 
-	["<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"], // TODO : Change the link
-	["<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"],
-
-	// Images
-	["<div class=\"example-image\"></div>"],
-	["<div class=\"example-image\"></div>"],
-
-	// Code and Syntax Highlighting
-	["<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"],
-
-	// Tables
-
-	// Blockquotes
-	["<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"],
-
-	// Inline HTML
-	["It <strong>works<strong>"],
-
-	// Horizontal Rules
-	["<hr> You can use Hyphens, asterisks or underscores.<hr>"],
-
-	// Line Breaks
-	["<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"],
-
-	// Joke
-	["Life's most persistent and urgent question is, 'What are you doing for others?'."]
-];
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* activateHelp (): show the help input and focus when the help button is clicked.
-	* answer (): find the answers and the examples for the question.
-	* displayAnswers (): display the answers.
-	* resetAnswerDiv (): clear the Help divs.
-	* switchResult (result number): show the answer or the example when the user click on a switch.
-*/
-
-function activateHelp () { // Show the help input and focus when the help button is clicked. MAYBE USELESS
-	if (helpDisplayer.className == "hidden") {
-		helpDisplayer.className = " ";
-    	help.focus();
-	}	
+function ma(a) {
+    document.getElementById("recent-" + a).setAttribute("class", "recent-file deleted");
+    setTimeout(function () {
+        lc(a, "display")
+    }, 100)
 }
 
-function answer () {
-	maxAnswers = 1; // Reset the number of answers that can be diplayed (max: 4)
-	for (var i = 0; i < words.length && maxAnswers < 4; i++) // A line = a syntax, this loop runs through each line.
-		for (var j = 0; j < words[i].length; j++) // A line can have many columns (different ways to say the same thing), this loop run through each column.
-			if (words[i][j].toLowerCase().indexOf(help.value.toLowerCase()) != -1) { // Everything in lower case to help the condition.
-				wordPos = words[i][j].toLowerCase().indexOf(help.value.toLowerCase());
-				window["answer" + maxAnswers].innerHTML = "<span class=\"help-title\">" + words[i][j].substring(0, wordPos) + "<span class=\"match\">" + words[i][j].substr(wordPos, help.value.length) + "</span>" + words[i][j].substring(wordPos + help.value.length) + "</span>: " + answers[i]; // Put the answer in the appropriate div.
-				window["example" + maxAnswers].innerHTML = examples[i]; // Put the answer in the appropriate div.
-				maxAnswers++; // You can't have more than 3 answers.
-				j = words[i].length; // Change the line (to don't have 2 times the same answer).
-			}
-	switch (maxAnswers) {
-		case 1: // Nothing found.
-			answer1.innerHTML = "No help found.";
-			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
-			break;
-		case 2: // One answer found.
-			resultsContainer.className = "one-result";
-			resetAnswerDiv(2);
-			break;
-		case 3: // Two answers found.
-			resultsContainer.className = "two-results";
-			resetAnswerDiv(3);
-			break;
-		case 4: // Three answers found, maximum number possible at the same time.
-			resultsContainer.className = "three-results";
-			break;
-	}
-}
-
-function displayAnswers () {
-	for (var i = 1; i <= 3; i++) // Reset the results' position.
-		if (window["result" + i].className == "result switched")
-			window["result" + i].className = "result";
-
-	if (help.value.length == 0)
-		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
-	else {
-		if (help.value.length < 3) {
-			resultsContainer.className = "one-result no-result";
-			if (help.value.length == 1)
-				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
-			else if (help.value.length == 2)
-				answer1.innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
-		}
-		else
-			answer(); // Find the answers.
-	}
-}
-
-function resetAnswerDiv(begin) {
-	for (var i = begin; i <= 3; i++) { 
-		if (window["answer" + i].innerHTML == "")
-			i = 3;
-		else {
-			window["answer" + i].innerHTML = "";
-			window["result" + i].className = "result";
-			window["example" + i].innerHTML = "";
-		}
-	}
-}
-
-function switchResult (numResult) {
-	if (window["result" + numResult].className == "result") // If Markdown style displayed
-		window["result" + numResult].className = "result switched";
-	else // If corresponding example displayed
-		window["result" + numResult].className = "result";
-	help.focus();
-}
-/* This document handles the image insertion. */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-	* Functions variables.
-*/
-
-/* HTML shortcuts. */
-var altInput; // The input for the alternative text.
-var cancelImageButton; // The "Cancel" button.
-var galleriesButton; // The "Galleries" button.
-var imageButton; // The "Image" button.
-var imageBox; // The clickable zone of the image insertion tool.
-var imageBrowser; // The button to choose an image.
-var imageDisplayer; // The div that displays or not the image insertion tool.
-var imageDiv; // The div with id="mado-image".
-var titleInput; // The input for the title of the image
-
-/* Functions variables. 
-* startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.
-*/
-
-var currentGallery; // Used when the code is searching an image to know where it is.
-var galleriesList = []; // List who contains the galleries.
-var image; // The content who is added.
-var imageLoaded; // The path of the image selected.
-var imagePath; // The path of the image.
-var imagePosition = 0; // Used to don't keep on the same part of the document.
-var imagesArray = new Array(); // All the images on the file.
-var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
-var rightFile; // If false the JS is looking for an image.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* applyImage (): what to do when the user press enter after choosing an image.
-	* cancelImage (): what to do if the user press elsewhere the image container when he was adding an image.
-	* chooseGalleries (): open a pop-up to let the user chooses his galleries.
-	* chromeUpdate (newGalleries): set the galleries to be used in getImages().
-	* displayImages (): find the images on the document and display the correct corresponding data.
-	* fileNotFound (): what to do if Mado doesn't find the image.
-	* galleryAnalysis (theGallery): open a gallery and launch the search.
-	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
-	* getImages (): search the image in the gallery.
-	* loadImage (): let the user choose an image when he clicks on the button.
-	* modifyImage (): enables the realtime modification of an image.
-	* update (): update the list of folders and analyse the files in folders.
-	* setBrowserText (imagePath): set the text in the button with the image's path.
-	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
-*/
-
-function applyImage () {
-	if (altInput.value == "") { // An alternative input is obligatory
-		altInput.setAttribute("class", "flash");
-		altInput.focus();
-		altInput.removeAttribute("class");
-	}
-	else if (imageLoaded != undefined){ // An image is obligatory
-		modifyImage();	
-		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
-	}
-}
-
-function cancelImage () {
-	if (imageDiv != undefined)
-		imageDiv.innerText = initialText;		
-	imageDisplayer.className = "tool-displayer hidden";
-	selectElementContents(imageDiv);
-	restoreSelection("mado-image");
-	contentChanged();
-}
-
-function chooseGalleries () {
-	chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, update); // Let the user chooses his folders.
-}
-
-function chromeUpdate (results) { 
-	galleriesList = results; 
-	galleryAnalysis(0);
-}
-
-function displayImages () {
-	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
-		rightFile = false;
-		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
-
-		if(imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
-			if (imagesArray.length > 0){ // Files are already stored.
-				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
-					if(imagesArray[i][0] == imagePath) { // The file is already here.
-						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[i][1]); // Replace the path.		
-		    			imagesArray[i][2] = true; // The file has been used.
-		    			if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		    				displayImages();
-		    				break;
-		    			}
-		    			else
-	                     	endOfConversion();
-		        	}
-		        	else if (i == imagesArray.length - 1) // The file isn't here.   	
-		    			update(); // Get the ID of the file.
-				}       			
-			}
-			else // The array doesn't exist yet.
-				update(); // Get the ID of the file.   	
-		}
-		else
-			displayImages();
-	}
-	else
-		endOfConversion();
-}
-
-function fileNotFound () {
-	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.png"); 
-	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
- 		displayImages();
- 	else // The end.
- 		endOfConversion();
-}
-
-function galleryAnalysis (index) {
-	if (rightFile == false) {
-		if (index < galleriesList.length) {
-			currentGallery = index;
-			galleriesList.forEach(
-				function(item, indx, arr) { // For each gallery.
-		     		if (indx == index && imagePath != undefined && rightFile == false) {// If we're looking for a file.  
-		     			item.root.createReader().readEntries(getImages); // Get the images of the folder.
-		     		}
-		  		}
-			)
-		}
-		else
-			fileNotFound();
-	}
-	else {
-		imagesArray.length = 0;
-		modifyImage();
-	}
-}
-
-function getImage (entryPath) {
-	galleriesList[currentGallery].root.getFile(entryPath, {create: false}, function(fileEntry) { // Time to get the ID of the file.
-		fileEntry.file(function(theFile) {
-			var reader = new FileReader();
-          	reader.onloadend = function(e) { // We have the file (.result).
-          		imagesArray.push([imagePath, this.result, true]); // Add a new line.
-             	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), this.result);  
-             	rightFile = true;
-             	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
-             		displayImages();
-             	else // The end.
-             		endOfConversion();       	
-          	};
-          	reader.readAsDataURL(theFile);                 	
-		});
-	}); 	
-}
-
-function getImages (entries) {
-	for (var i = 0; i < entries.length && rightFile == false; i++) { // All the files in the repository, the correct file is not found yet.
-		if (entries[i].isDirectory && imagePath.indexOf(entries[i].fullPath) != -1) {// If the file is a directory and the right directory.
-			entries[i].createReader().readEntries(getImages); // Recursivity.
-			break;
-		}
-		else if (imagePath.indexOf(entries[i].fullPath) != -1) {// It's the correct image!
-			getImage(entries[i].fullPath);
-			break; 			
-		}
-		else if (i == (entries.length - 1)) // End of the gallery.
-			galleryAnalysis(currentGallery + 1);
-	}
-}
-
-function loadImage () {	
-    chrome.fileSystem.chooseEntry(
-		{
-	 		type: "openFile",
-	 		accepts:[{ mimeTypes: ["image/*"] }] 
-		}, 
-		function(loadedImage) {
-			if (loadedImage) {			    
-				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
-					setImageBrowserText(fileName(path.replace(/\\/g, "/")));				
-					imageLoaded = path.replace(/\\/g, "/");
-					modifyImage();
-					altInput.focus();
-				});
-			}
-		}
-	);
-}
-
-function modifyImage () {
-	if (titleInput.value == "")
-		image = "![" + altInput.value + "](" + imageLoaded + ')';
-	else 
-		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-	if (imageDiv != undefined)
-		imageDiv.innerText = image;		
-	else
-		$(markdown).innerText = $(markdown).innerText + image;		
-	contentChanged();
-}
-
-function setImageBrowserText (path) {
-	imageBrowser.innerHTML = path;
-	if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
-		imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
-}
-
-function setImageInputs () {
-	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
-		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
-			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
-			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
-		}
-		else {
-			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
-		}
-		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
-	}
-	
-}
-
-function update () {	
-	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
-}
-/* Set how the link div has to work */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-*/
-
-/* HTML shortcuts. */
-var cancelLinkButton; // The "Cancel" button.
-var hypertextInput; // The div that contains the hypertext.
-var link; // The content that is added.
-var linkButton; // The "Link" button.
-var linkDisplayer; // The div that contains all the link divs.
-var urlInput; // The div that contains the url.
-var linkDiv; // The div with id="mado-link".
-
-/*
-* Function.
-*
-* Resume:
-	* applyLink (): what to do when the user press enter after setting the link.
-	* cancelLink (): what to do if the user press elsewhere the link container when he was adding a link.
-	* modifyLink (): enables the realtime modification of a link.
-	* setLinkInputs (): recognizes when the selected text is a link and set the inputs in consequence.
-*/
-
-function applyLink () {
-	if (urlInput.value == "") {
-		urlInput.setAttribute("class", "flash");
-		urlInput.focus();
-		urlInput.removeAttribute("class");
-	}
-	else {
-		modifyLink();
-		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
-	}
-}
-
-function cancelLink () {
-	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;	
-
-	linkDisplayer.className = "tool-displayer hidden";	
-	selectElementContents(linkDiv);
-	restoreSelection("mado-link");
-	contentChanged();
-}
-
-function modifyLink () {
-	if (hypertextInput.value == "")
-		link = '[' + urlInput.value + "](" + urlInput.value + ')';
-	else 
-		link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-	if (linkDiv != undefined)
-		linkDiv.innerText = link;		
-	else
-		$(markdown).innerText = $(markdown).innerText + link;
-	contentChanged();
-}
-
-function setLinkInputs () {
-	initialText = linkDiv.innerText;
-	if (/\[\w*\]\(.*\)/.test(linkDiv.innerText)) {
-		urlInput.value = linkDiv.innerText.match(/\(.*\)/)[0].substring(1, linkDiv.innerText.match(/\(.*\)/)[0].length - 1); 
-		hypertextInput.value = linkDiv.innerText.match(/\[\w*\]/)[0].substring(1, linkDiv.innerText.match(/\[\w*\]/)[0].length - 1);
-	}
-	else
-		hypertextInput.value = linkDiv.innerText;
-}
-/* This document handles the "More" button and his behavior. */
-
-/* 
-* Variables (in alphabetical order). 
-*/
-
-var moreButton; // The "More" button (three square on top of each other).
-var moreDisplayer; // The div that displays or not the list of options.
-var moreBox; // The clickable zone of the list.
-var settingsLine; // Link to the settings.
-var qAndALine; // Link to the questions & answers.
-var shortcutsLine; // Link to an exhaustive list of the shortcuts.
-var aboutLine; // Link to the additional information about Mado.
-/* All the things to do when mado.html is loaded, event listeners are here because Chrome doesn't want JS in the HTML. */
-
-window.onload = function() {
-    /*
-    * Shortcuts (JS files in alphabetical order).
-    */
-
-    /* app.js */
-    exportButton = document.getElementById("export");
-    newButton = document.getElementById("new");
-    openButton = document.getElementById("open");
-    recentButton = document.getElementById("recent");
-    saveButton = document.getElementById("save");
-    saveAsButton = document.getElementById("save-as");
-    windowTitle = document.getElementsByTagName("title")[0];
-    
-    /* editor.js */
-    centerLine = document.getElementById("center-line-container");
-    conversionDiv = document.getElementById("html-conversion");
-    markdown = document.getElementById("markdown");   
-    markdownContainer = document.getElementById("markdown-container");   
-    pasteZone = document.getElementById("paste-zone");
-    
-    /* footer.js */
-    charsDiv = document.getElementById("character-nb");
-    linkUrlSpan = document.getElementById("link-url");
-    nameDiv = document.getElementById("doc-name");
-    wordsDiv = document.getElementById("word-nb");
-    
-    /* help.js */ 
-    help = document.getElementById("help-input");
-    helpButton = document.getElementById("help-button");
-    helpDisplayer = document.getElementById("help-input-displayer");
-    for (var i = 1; i <= 3; i++) {
-        window["answer" + i] = document.getElementById("answer-" + i);
-        window["example" + i] = document.getElementById("example-" + i);
-        window["result" + i] = document.getElementById("result-" + i);
-        window["resultSwitch" + i] = document.getElementById("result-switch-" + i);
-    }
-    resultsContainer = document.getElementById("help-results-container");
-
-    /* image.js */
-    cancelImageButton = document.getElementById("cancel-image");
-    galleriesButton = document.getElementById("galleries-button");
-    imageButton = document.getElementById("image-button");
-    imageDisplayer = document.getElementById("image-insertion-displayer");
-    imageBox = document.getElementById("image-insertion-box");
-    imageBrowser = document.getElementById("browse-image");
-    altInput = document.getElementById("alt-input");
-    titleInput = document.getElementById("title-input");
-
-    /* link.js */
-    cancelLinkButton = document.getElementById("cancel-link");
-    linkButton = document.getElementById("link-button");
-    linkDisplayer = document.getElementById("link-insertion-displayer");
-    urlInput = document.getElementById("url-input");
-    hypertextInput = document.getElementById("hypertext-input");
-
-    /* more.js */
-    moreButton = document.getElementById("more-button");
-    moreDisplayer = document.getElementById("more-displayer");
-    moreBox = document.getElementById("more-container");
-    settingsLine = document.getElementById("settings");
-    qAndALine = document.getElementById("q-and-a");
-    shortcutsLine = document.getElementById("shortcuts");
-    aboutLine = document.getElementById("about");
-
-    /* recentfiles.js */
-    recentButton = document.getElementById("recent-button");
-    recentFilesDisplayer = document.getElementById("recent-files-displayer");
-    recentFilesContainer = document.getElementById("recent-files-container");
-
-    /* styles.js */
-    stylesButton = document.getElementById("style-tool");
-    stylesDisplayer = document.getElementById("style-tool-displayer");
-    homeRadio = document.getElementById("home-style");
-    clinicRadio = document.getElementById("clinic-style");
-    tramwayRadio = document.getElementById("tramway-style");
-
-    /* viewswitch.js */
-    madoFooter = document.getElementById("mado-footer");
-    workspace = document.getElementById("workspace");
-    switchToMD = document.getElementById("switch-md");
-    switchToBoth = document.getElementById("switch-both");
-    switchToHTML = document.getElementById("switch-html");
-    switchButtons.push(switchToMD, switchToBoth, switchToHTML); // Wrapping the switch buttons in an array.
-
-    /* window.js */
-    cancelCloseButton = document.getElementById("cancel"); 
-    closeDisplayer = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
-    head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
-    quitCloseButton = document.getElementById("quit");
-    saveQuitCloseButton = document.getElementById("save-quit");
-    saveState = document.getElementById("save-state");
-    windowCloseContainer = document.getElementById("window-close");
-    windowClose = document.getElementById("window-close-button");
-    windowMax = document.getElementById("window-maximize");
-    windowMin = document.getElementById("window-minimize");
-
-    /*
-    * Functions (JS files in alphabetical order).
-    */
-
-    /* app.js (with Mousetrap functions) */
-    chrome.storage.local.get("tempFileEntry", function(mado) {  // If you're loading a file.
-        if (mado["tempFileEntry"] != undefined) {
-            chrome.fileSystem.restoreEntry(
-                mado["tempFileEntry"],
-                function (theFileEntry) {
-                    fileEntry = theFileEntry;
-                    chrome.storage.local.remove("tempFileEntry");
-    
-                    fileEntry.file(
-                        function(file) {
-                            var reader = new FileReader();
-                            reader.onload = function(e) { 
-                                markdown.innerText = e.target.result;
-                                markdownSaved = markdown.innerText;
-                                contentChanged();  
-                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
-                                windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
-                            };
-                            reader.readAsText(file);
-                        },
-                        errorHandler
-                    );
+function lc(a, b) {
+    chrome.storage.local.get(jc, function (e) {
+        if (void 0 != e["recentFile" + a]) {
+            for (var d = parseInt(a); 7 >= d; d++)
+                if (void 0 != e["recentFile" + (d + 1)]) Y = ("recentFileId" + d).toString(), Z[Y] = e["recentFileId" + (d + 1)], chrome.storage.local.set(Z), Z = {}, Y = ("recentFile" + d).toString(), Z[Y] = e["recentFile" + (d + 1)], chrome.storage.local.set(Z), Z = {};
+                else {
+                    Y = ("recentFileId" + d).toString();
+                    chrome.storage.local.remove(Y);
+                    Y = ("recentFile" + d).toString();
+                    chrome.storage.local.remove(Y);
+                    Y = "";
+                    break
                 }
-            );          
-        }
-        else
-            markdownSaved = undefined;
-    });
-
-    newDisplaySize(); // Set the class of the body.
-
-    $(newButton).on("click", newWindow);
-    Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
-    
-    $(openButton).on("click", openFileButton);
-    Mousetrap.bind(['command+o', 'ctrl+o'], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
-    
-    $(saveButton).on("click", saveFile);
-    Mousetrap.bind(['command+s', 'ctrl+s'], function(e) { saveFile(); return false; }); // Ctrl+s = save.
-    
-    $(saveAsButton).on("click", saveAsFile);
-    Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
-    
-    $(exportButton).on("click", exportFileHTML);
-
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    }); 
-
-    /* drag-and-drop.js */
-    dragAndDropManager = new DnDManager("#document", function(data) {
-        openDraggedFile(data.items[0].webkitGetAsEntry());
-    });
-
-    /* editor.js */    
-    setEditorSyntax(); // A conversion is made when the window is opened.
-    charsDiv.style.display = "none"; // On launch we just display the number of words.
-
-    chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
-        if (mado["firstLaunch"] == undefined) {
-            markdown.innerHTML = firstMessage;
-            chrome.storage.local.set({ "firstLaunch" : false });
-        }
-    });
-    $(markdown).focus();
-    $(markdown).on("input propertychange", function() {
-    	contentChanged();
-    });
-    $(markdown).bind('paste', function(){ // What to do if the user pastes something.
-        pasteContent();   
-    });
-    $(markdown).keydown(function(e){
-        if (e.keyCode == 9) // The user press tab        
-            e.preventDefault();
-    });  
-
-    $("#html-conversion").on("click", "a", function(e) {
-        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
-            e.preventDefault();
-            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
-                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
-        }
-    });
-
-    /* footer.js */
-    $(charsDiv).on("click", counterSelection);
-    $(wordsDiv).on("click", counterSelection);
-
-    $("#html-conversion").on("mouseenter", "a", function(e) {
-        if (e.currentTarget.href.indexOf("chrome-extension://") == -1)
-            linkUrlSpan.innerHTML = e.currentTarget.href;
-        else
-            linkUrlSpan.innerHTML = e.currentTarget.hash;
-        linkUrlSpan.className = "show";
-    });
-
-    $("#html-conversion").on("mouseleave", "a", function() {
-        linkUrlSpan.className = "";
-    });
-
-    /* help.js */ 
-    Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
-    $(help).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(helpButton).click();
-    });
-    $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
-
-    $(resultSwitch1).on("click", function() { switchResult("1"); });
-    $(resultSwitch2).on("click", function() { switchResult("2"); });
-    $(resultSwitch3).on("click", function() { switchResult("3"); });
-
-    /* image.js */
-    $(imageButton).on("mousedown", function() {
-        changeContentHighlighted("mado-image");
-    });
-
-    $(imageBrowser).on("click", loadImage);
-    $(galleriesButton).on("click", chooseGalleries);   
-
-    $(altInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-           applyImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelImage();
-        else
-            modifyImage();
-    });
-
-    $(titleInput).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab
-            e.preventDefault();
-            $(altInput).select();
+                "display" == b ? Oa() : "check" ==
+                b && kc(a)
         }
     })
-    $(titleInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelImage();
-        else
-            modifyImage();
-    });
+}
 
-    $(cancelImageButton).on("click", cancelImage);
-
-    /* link.js */
-    $(linkButton).on("mousedown", function() {
-        changeContentHighlighted("mado-link");
-    });
-    
-    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
-        changeContentHighlighted("mado-link");
-        $(linkButton).click(); 
-        return false; 
-    }); 
-
-    $(urlInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-           applyLink();
-        else if (e.keyCode == 27) // The user press echap
-            cancelLink();       
-        else
-            modifyLink();
-    });
-
-    $(hypertextInput).keydown(function(e){
-        if (e.keyCode == 9)  {
-            e.preventDefault();
-            $(urlInput).select();
-        }
+function mc() {
+    chrome.storage.local.get(jc, function (a) {
+        for (var b = 1; 7 >= b; b++)
+            if (void 0 == a["recentFile" + (b + 1)]) {
+                nc(b);
+                break
+            }
     })
-    $(hypertextInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyLink();
-        else if (e.keyCode == 27) // The user press echap
-            cancelLink();        
-        else
-            modifyLink();        
+}
+
+function nc(a) {
+    chrome.storage.local.get(jc, function () {
+        Y = ("recentFileId" + a).toString();
+        chrome.storage.local.remove(Y);
+        Y = ("recentFile" + a).toString();
+        chrome.storage.local.remove(Y);
+        Y = "";
+        1 < a ? nc(a - 1) : H.innerHTML = '<li id="recent-files-info" class=" ">No recent document.</li>'
+    })
+}
+var Yb, Zb;
+
+function Ba() {
+    chrome.storage.local.get("analytics", function (a) {
+        void 0 != a.analytics ? Yb.t.setTrackingPermitted(a.analytics) : (chrome.storage.local.set({
+            analytics: !0
+        }), Yb.t.setTrackingPermitted(!0))
+    })
+}
+var Pa, I, Mb, Lb, Nb;
+
+function $b() {
+    chrome.storage.local.get("style", function (a) {
+        void 0 != a.style ? ("home" == a.style ? Lb.checked = !0 : "clinic" == a.style ? Mb.checked = !0 : Nb.checked = !0, $(J).attr("class", a.style)) : (Lb.checked = !0, ac("home"))
+    })
+}
+
+function ac(a) {
+    chrome.storage.local.set({
+        style: a
+    }, function () {
+        $(J).attr("class", a)
+    })
+}
+var Ob, p, Qb, q, Pb, W = [],
+    Aa;
+
+function bc(a, b) {
+    for (var e = 0; e < W.length; e++) W[e].className = W[e].id != a ? "switch-button" : "switch-button activated";
+    Pb.className = b;
+    "markdown-view" == b ? Ob.className = b : Ob.removeAttribute("class")
+}
+
+function Da() {
+    chrome.storage.local.get("resize", function (a) {
+        void 0 != a.resize ? Aa = a.resize : (chrome.storage.local.set({
+            resize: !0
+        }), Aa = !0)
+    })
+}
+
+function cc(a) {
+    if (1159 < window.innerWidth)
+        for (var b = 0; b < W.length; b++) "switch-button activated" == W[b].className && ("left" == a && 0 < b ? W[b - 1].click() : "right" == a && b < W.length - 1 && W[b + 1].click(), b = W.length);
+    else "left" == a ? q.click() : Qb.click()
+}
+var Sa, Qa, Rb, n, Sb, Tb, Ub, dc = document.createElement("link"),
+    Ra, Vb, Wb, Xb, oc;
+
+function ya() {
+    Ub.innerHTML = "" != k.innerText ? void 0 == n || k.innerText != n ? '<span class="little-icon-unsaved"></span>' : "" : void 0 != n ? '<span class="little-icon-unsaved"></span>' : ""
+}
+
+function gc() {
+    chrome.runtime.getBackgroundPage(function (a) {
+        a.jBond(chrome.app.window.current().getBounds())
     });
-
-    $(cancelLinkButton).on("click", cancelLink);
-
-    /* More.js */
-    $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
-    $(qAndALine).on("click", function() { moreWindow("more/qanda.html"); });
-    $(shortcutsLine).on("click", function() { moreWindow("more/shortcuts.html"); });
-    $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
-
-    /* recentfiles.js */
-    displayRecentFiles();
-
-    /* stats.js */   
-    if (navigator.onLine)
-        initStats();
-
-    /* styles.js */
-    getStyle();
-
-    $(homeRadio).on("click", function() { setStyle("home"); });
-    $(clinicRadio).on("click", function() { setStyle("clinic"); });
-    $(tramwayRadio).on("click", function() { setStyle("tramway"); });
-
-    /* viewswitch.js */
-    initActivation(); // Initializing the workspace and the switch.
-    setWindowResizing();
-
-    // Getting and setting the click event on each of the switch buttons.
-    $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });
-    $(switchToBoth).on("click", function() { activate(this.id, "normal"); });
-    $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
-    Mousetrap.bind(['command+alt+left', 'ctrl+alt+left'], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
-    Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
-
-    /* window.js */
-    determineFrame();
-
-    $(quitCloseButton).on("click", quitCloseWindow);
-    $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
-
-    $(windowClose).on("click", closeWindow);
-    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
-
-    $(windowMax).on("click", maximizeWindow);
-
-    $(windowMin).on("click", minimizeWindow);    
-}
-/* This document handles how to manage the recent files: what to do if a document is deleted, what to do if a user clik on a recent file etc. */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-	* Functions variables.
-*/
-
-/* HTML shortcuts. */
-var recentButton; // The button that shows the recent files.
-var recentFilesDisplayer; // The div that contains the displayer of the recent files.
-var recentFilesContainer; // The div that contains the recent files.
-var footerHelp; // The footer of the recent files' div.
-
-/* Functions variables. */
-var chromeLocalFile = ""; // Used when I have to use storage.local.set with variables as parameters.
-var fileInLoading; // The file who is loading, manipulated in app.js.
-var nameContainer = {}; // Used when I have to use storage.local.set with variables as parameters.
-var recentFiles = [ // Name of the recent files and the corresponding ids on the local storage.
-"recentFile1",  "recentFile2", "recentFile3", "recentFile4", "recentFile5", "recentFile6", "recentFile7",
-"recentFileId1", "recentFileId2", "recentFileId3", "recentFileId4", "recentFileId5", "recentFileId6", "recentFileId7"];
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* checkRecentFile (numberOfTheFile): check if the recent files are available for Mado.
-	* displayRecentFiles (): it just displays the recent files, no animation.
-	* newRecentFile (theFile): add a recent file.
-	* removeFile (numberOfTheFile): remove a file with an animation, removeFile(numberOfTheFile) -> removefileInStorage() -> displayRecentFiles().
-	* removefileInStorage (numberOfTheFile, OPTION whatToDoAfter): remove a file in the local storage.
-	* removeAllFiles (): remove all the recent files in the div and calls removeAllFilesInStorage().
-	* removeAllFilesInStorage (): remove all the files in the local storage.
-*/
-
-function checkRecentFile (fileNumber) { 
-	if (fileNumber <= 7) {
-		chrome.storage.local.get(
-			recentFiles,  
-			function(mado) { 
-				if (mado["recentFile" + fileNumber] != undefined) {
-					chrome.fileSystem.isRestorable(mado["recentFileId" + fileNumber], function (isRestorable){ // We checked if it's still restorable.
-						if (! isRestorable) { // If it's not restorable.
-							document.getElementById("recent-" + fileNumber).setAttribute("class", "recent-file deleted"); // Change the class to do the visual effect.
-							removeFileInStorage(fileNumber, "check");
-						}
-						else {
-							chrome.fileSystem.restoreEntry(
-								mado["recentFileId" + fileNumber],
-								function (fileToOpen) {
-									if (fileToOpen) // The file is real.
-										checkRecentFile(fileNumber + 1);				
-									else { // The file is empty or deleted.
-										document.getElementById("recent-" + fileNumber).setAttribute("class", "recent-file deleted"); // Change the class to do the visual effect.
-										removeFileInStorage(fileNumber, "check");
-									}
-		 						}
-	 						);
-						}
-			    	});
-				}
-		    }        
-	    ); 	
-	}
+    '<span class="little-icon-unsaved"></span>' == Ub.innerHTML ? Qa.className = "visible" : chrome.app.window.current().close()
 }
 
-function displayRecentFiles () {
-	checkRecentFile(1);
-	recentFilesContainer.innerHTML = " "; // Reset.
-
-	chrome.storage.local.get(
-		recentFiles,  
-		function(mado) { 	
-			for (var i = 1; i <= 7; i++) {
-				if (mado["recentFile" + i] != undefined) // There's a file at this position, time to create a div for the file.
-					recentFilesContainer.innerHTML += "<li class=\"recent-file\" id=\"recent-" + i + "\"><div class=\"recent-file-wrapped\"><p>" + fileName(mado["recentFile" + i].toString()) + "</p><div class=\"delete-recent-button little-icon-delete\" id=\"delete-button-" + i + "\"></div></div></li>";   
-	    		else
-	    			break; // End of the loop.    		
-		 	}	
-		 	$(".recent-file").on("click", function(e) { // The user clicks on a recent file.
-		 		if (! $(e.target).closest("#delete-button-" + this.id.charAt(this.id.length-1)).length) { 
-		 			fileInLoading = this.id.charAt(this.id.length-1).valueOf();
-			 		chromeLocalFile = "recentFileId" + this.id.charAt(this.id.length-1); // Get a var with the name of the file clicked.
-			 		chrome.storage.local.get(
-			 			chromeLocalFile, // We get the file.
-			 			function(mado) {
-			 				chrome.fileSystem.restoreEntry(
-								mado[chromeLocalFile],
-								function (fileToOpen) {
-									openFile(fileToOpen); // We open the file.
-									recentFilesDisplayer.className = "hidden";
-		 						}
-	 						);
-		 				}
-			 		);
-		 		}
-		 	});
-		 	$(".delete-recent-button").on("click", function() { removeFile(this.id.charAt(this.id.length-1)); }); // Add the event listeners for the remove buttons.		
-		 	/* Footer */
-		 	footerHelp = document.createElement("li");
-		    footerHelp.setAttribute("id", "recent-files-info");
-		    if (recentFilesContainer.innerHTML != " ") {// Something in the div for recent files.
-		    	footerHelp.setAttribute("class", "clear-all");
-		    	footerHelp.innerHTML = "<div class=\"icon-recent-clear\"></div><span class=\"clear-all-text\">Clear all</span>";
-	    	}
-		    else {
-		    	footerHelp.setAttribute("class", " "); // Nothing in the div for recent files.
-				footerHelp.innerHTML = "No recent document.";
-			}			
-			recentFilesContainer.appendChild(footerHelp); // Add the footer to the container.
-			$(".clear-all").on("click", function() {removeAllFiles();});
-	    }        
-    ); 
+function hc() {
+    -1 != navigator.appVersion.indexOf("Win") ? 0 == chrome.app.window.current().getBounds().left && 0 == chrome.app.window.current().getBounds().top && chrome.app.window.current().getBounds().width == screen.availWidth && chrome.app.window.current().getBounds().height == screen.availHeight || chrome.app.window.current().isMaximized() ? chrome.app.window.current().setBounds(oc) : (oc = chrome.app.window.current().getBounds(), chrome.app.window.current().setBounds({
+        left: 0,
+        top: 0,
+        width: screen.availWidth,
+        height: screen.availHeight
+    })) :
+        chrome.app.window.current().isMaximized() ? chrome.app.window.current().restore() : chrome.app.window.current().maximize()
 }
 
-function newRecentFile (file, after) {
-	chrome.storage.local.get( // We have to affect the local storage
-		recentFiles, // Get all the recent files.
-		function(mado) { 
-			for (var i = 1; i <= 7; i++) { // Max : 7
-				if (mado["recentFile" + i] == undefined || mado["recentFile" + i] == file.fullPath || i == 7) { // If there's no file here or the file at this position is the file who is set, or it's just the end.
-					for (var j = i; j > 0; j--) { // The second loop begins, j -> j - 1.
-						if (j > 1) {
-							/* Two things in local storage to change, the name of the file and its id.
-							First : The id */
-							chromeLocalFile = ("recentFileId" + j).toString(); // This is j.
-							nameContainer[chromeLocalFile] = mado["recentFileId" + (j - 1)]; // This is j - 1.
-							chrome.storage.local.set(nameContainer); // j is now j - 1.
-							nameContainer = {}; // Reset.
-
-							// Secondly : the file name. (Same functions than for the id).
-							chromeLocalFile = ("recentFile" + j).toString();
-							nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
-							chrome.storage.local.set(nameContainer);
-							nameContainer = {};	
-						}
-						else { // The end.
-							// Now the first recent file is empty, we set the ID and the name.
-							chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}); 	 	
-							chrome.storage.local.set({"recentFile1" : file.fullPath});
-
-							displayRecentFiles(); // Update the div.
-
-							if (after != undefined && after == "quit")
-								quitCloseWindow();
-						}							
-					}
-					break; // End of the loop
-				}
-			}
-			
-		}
-	);
+function ic() {
+    chrome.app.window.current().minimize()
 }
 
-function removeFile (fileNumber) { 
-	document.getElementById("recent-" + fileNumber).setAttribute("class", "recent-file deleted"); // Change the class to do the visual effect.	
-	setTimeout(function() { // After the visual effect.		
-		removeFileInStorage(fileNumber, "display");
-	}, 100);
+function ec() {
+    chrome.runtime.getBackgroundPage(function (a) {
+        a.g(chrome.app.window.current().getBounds())
+    });
+    chrome.app.window.current().close()
 }
 
-function removeFileInStorage (fileNumber, after) { 
-	chrome.storage.local.get(
-		recentFiles,  
-		function(mado) {
-			if (mado["recentFile" + fileNumber] != undefined) {
-				for (var i = parseInt(fileNumber); i <= 7; i++) {
-					if (mado["recentFile" + (i + 1)] != undefined) { // File i -> File i-1
-						chromeLocalFile = ("recentFileId" + i).toString();
-						nameContainer[chromeLocalFile] = mado["recentFileId" + (i + 1)];
-						chrome.storage.local.set(nameContainer);
-						nameContainer = {};
-
-						chromeLocalFile = ("recentFile" + i).toString();
-						nameContainer[chromeLocalFile] = mado["recentFile" + (i + 1)];
-						chrome.storage.local.set(nameContainer);		
-						nameContainer = {};	
-					}
-					else { // The last one is deleted.
-						chromeLocalFile = ("recentFileId" + i).toString();
-						chrome.storage.local.remove(chromeLocalFile);
-
-						chromeLocalFile = ("recentFile" + i).toString();
-						chrome.storage.local.remove(chromeLocalFile);
-
-						chromeLocalFile = "";
-						break; // End of the loop
-					}
-				}
-				if (after == "display")
-					displayRecentFiles();
-				else if (after == "check")
-					checkRecentFile(fileNumber);			
-			}	
-		}
-	);
+function pc() {
+    c.createWriter(function (a) {
+        f = !1;
+        a.onwriteend = function () {
+            f ? va(c, "quit") : (f = !0, this.truncate(this.position))
+        };
+        a.write(new Blob([k.innerText], {
+            type: "plain/text"
+        }))
+    }, h)
 }
 
-function removeAllFiles () { 
-	chrome.storage.local.get(
-		recentFiles,  
-		function(mado) {
-			for (var i = 1; i <= 7; i++)
-				if (mado["recentFile" + (i + 1)] == undefined) {
-					removeAllFilesInStorage(i);
-					break;
-				}
-		}	
-	);
+function qc() {
+    chrome.fileSystem.chooseEntry({
+        type: "saveFile",
+        suggestedName: "document.md"
+    }, function (a) {
+        a && a.createWriter(function (b) {
+            f = !1;
+            b.onwriteend = function () {
+                f ? va(a, "quit") : (f = !0, this.truncate(this.position))
+            };
+            b.write(new Blob([k.innerText], {
+                type: "plain/text"
+            }))
+        }, h)
+    })
 }
 
-function removeAllFilesInStorage (fileNumber) {
-	chrome.storage.local.get(
-		recentFiles,  
-		function(mado) {
-			chromeLocalFile = ("recentFileId" + fileNumber).toString();
-			chrome.storage.local.remove(chromeLocalFile);
-
-			chromeLocalFile = ("recentFile" + fileNumber).toString();
-			chrome.storage.local.remove(chromeLocalFile);
-
-			chromeLocalFile = ""; // Reset.
-
-			if (fileNumber > 1)
-				removeAllFilesInStorage(fileNumber - 1);
-			else {
-				recentFilesContainer.innerHTML = "<li id=\"recent-files-info\" class=\" \">No recent document.</li>";
-			}
-		}	
-	);
-}
-/* The JS to send data to Analytics. */
-
-/* 
-* Variables (in alphabetical order). 
-*/
-
-var service;
-var tracker;
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* initStats (): create a new service for Analytics.
-	* setTrackingPermission (analyticsService): set the tracking permission.
-*/
-
-
-function initStats () {
-    // Initialize the Analytics service object with the name of your app.
-    service = analytics.getService("Mado");
-
-    setTrackingPermission();
-
-    // Get a Tracker using your Google Analytics app Tracking ID.
-    tracker = service.getTracker("UA-45134408-1"); // Need to change for the real ID.
-
-    // Record an "appView" each time the user launches your app or goes to a new
-    // screen within the app.
-    tracker.sendAppView("mainWindow");
-}
-
-function setTrackingPermission () {
-	chrome.storage.local.get("analytics",  function(mado) {
-		if (mado["analytics"] != undefined) 
-			service.t.setTrackingPermitted(mado["analytics"]);
-		else {
-			chrome.storage.local.set({ "analytics" : true });
-			service.t.setTrackingPermitted(true);
-		}
-	});
-}
-
-
-/* The JS to control Mado's styles. */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML div shortcuts.
-	* HTML radio shortcuts.
-*/
-
-/* HTML div shortcuts. */
-var stylesButton; // The "Styles" button.
-var stylesDisplayer; // The div that contains and displays the style selection tool.
-
-/* HTML radio shortcuts. */
-var clinicRadio; // Clinic style.
-var homeRadio; // Home style.
-var tramwayRadio; // Tramway style.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* getStyle (): get the storage variable style.
-	* setStyle (newStyleToApply): set the storage variable "style".
-*/
-
-function getStyle () {
-	chrome.storage.local.get("style",  function(mado) {
-		if (mado["style"] != undefined) {
-			if (mado["style"] == "home") 
-				homeRadio.checked = true;	
-			else if (mado["style"] == "clinic") 
-				clinicRadio.checked = true;	
-			else 
-				tramwayRadio.checked = true;
-
-			$(conversionDiv).attr("class", mado["style"]);			
-		}
-		else {
-			homeRadio.checked = true;
-			setStyle ("home");
-		}
-	});
-}
-
-function setStyle (newStyle) {
-	chrome.storage.local.set({ "style" : newStyle }, function () {
-		$(conversionDiv).attr("class", newStyle);
-	});
-}
-/* This document handles the view switch on the topbar. */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-	* Functions variables.
-*/
-
-/* HTML shortcuts. */
-var madoFooter; // Mado's footer.
-var switchToBoth; // Both switch.
-var switchToHTML; // HTML switch.
-var switchToMD; // Markdown switch.
-var workspace; // Getting the main container (workspace).
-
-/* Functions variables. */
-var previousSize; // The previous size of the window.
-var switchButtons = new Array(); // The array for the switch. 
-var windowResizing; // Get the storage variable "resize".
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* activate (buttonClicked, stateOfTheClass): handles the behavior of a switch button when it is clicked. The function sets the main container's class name according to the button.
-	* initActivation (): initalize the switch's look on Mado's launch.
-	* setWindowResizing (): set the storage variable "resize".
-	* switchShortcuts (theDirection): change the switch when the user uses a keyboard shortcut.
-*/
-
-function activate (clickedBtn, classState) {
-	for (var i = 0; i < switchButtons.length; i++) {
-		if (switchButtons[i].id != clickedBtn) // Deactivating the switch buttons that are not clicked.
-			switchButtons[i].className = "switch-button";
-		else // Activating the clicked button.
-			switchButtons[i].className = "switch-button activated";
-	}	
-
-	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
-
-	if (classState == "markdown-view")
-		madoFooter.className = classState;
-	else
-		madoFooter.removeAttribute("class");
-}
-
-function initActivation () { 
-	if (chrome.app.window.current().getBounds().width > 1159) // Big window
-		switchToBoth.className = "switch-button activated";
-	else {
-		switchToMD.className = "switch-button activated";
-		workspace.className = "markdown-view";
-	}
-
-	previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
-}
-
-function setWindowResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != undefined)			
-			windowResizing = mado["resize"];
-		else {
-			chrome.storage.local.set({ "resize" : true });
-			windowResizing = true;
-		}
-	});
-}
-
-function switchShortcuts (direction) {
-	if (window.innerWidth > 1159) { // Normal window
-		for (var i = 0; i < switchButtons.length; i++) {
-			if (switchButtons[i].className == "switch-button activated") { // We found what button is activated.
-				if (direction == "left" && i > 0) 
-					switchButtons[i - 1].click(); // The previous button is now activated.
-				else if (direction == "right" && i < switchButtons.length -1)
-					switchButtons[i + 1].click(); // The next button is now activated.
-				i = switchButtons.length; // End of the loop.
-			}
-		}
-	}
-	else { // Small window, only Markdown and HTML views are available.
-		if (direction == "left")
-			switchToMD.click();
-		else
-			switchToHTML.click();
-	}	
-}
-/* The JS to control the scripts for Mado's window. */
-
-/* 
-* Variables (in alphabetical order). 
-	* HTML shortcuts.
-	* Functions variable.
-*/
-
-/* HTML shortcuts. */
-var cancelCloseButton; // The "Cancel" button.
-var closeDisplayer; // The div that contains all the close divs.
-var head; // The "head" section of the main app.
-var markdownSaved; // The last Markdown text saved.
-var quitCloseButton; // The "No, don't save" button.
-var saveQuitCloseButton; // The "Save and exit" button.
-var saveState; // The div who displays if the document is saved or not.
-var stylesheetLink = document.createElement("link"); // Create a "link" node.
-var windowCloseContainer; // The close container.
-var windowClose; // The close button.
-var windowMax; // The maximize button.
-var windowMin; // The minimize button.
-
-/* Functions variable. */
-var bounds; // This is the variable who stores the bounds when the window is maximised.
-
-/*
-* Functions (in alphabetical order).
-*
-* Resume:
-	* checkSaveState (): change saveState's innerHTML.
-	* closeWindow (): what to do when the user clicks on close.
-	* determineFrame (): which window bar style to display on launch, according to the OS.
-	* maximizeWindow (): what to do when the user clicks on maximize.
-	* minimizeWindow (): what to do when the user clicks on minimize. 
-	* quitCloseWindow (): what to do when the user clicks on "No, don't save".
-	* saveAndQuit (): save an already existing file and quit.
-	* saveAsAndQuit (): save a new file and quit.
-	* saveQuitCloseWindow (): what to do when the user clicks on "Save and exit".
-*/
-
-function checkSaveState () {
-	if (markdown.innerText != "") {
-		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
-			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-		else
-			saveState.innerHTML = "";
-	}
-	else {
-		if (markdownSaved != undefined)
-			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-		else
-			saveState.innerHTML = "";
-	}
-}
-
-function closeWindow () {
-	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
-	});
-	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
-		closeDisplayer.className = "visible";
-	else
-		chrome.app.window.current().close();
-}
-
-function determineFrame () {
-	stylesheetLink.setAttribute("rel", "stylesheet");
-	stylesheetLink.setAttribute("type", "text/css");
-
-	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
-		windowClose.setAttribute("class", "cta little-icon-mac-close");
-		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
-		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
-	}
-	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
-	}
-	else { // If the user is on another type of computer, redirect to the generic window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
-	}
-
-	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
-}
-
-function maximizeWindow () {
-	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
-		if (! (chrome.app.window.current().getBounds().left == 0  
-			&& chrome.app.window.current().getBounds().top == 0
-			&& chrome.app.window.current().getBounds().width == screen.availWidth
-			&& chrome.app.window.current().getBounds().height == screen.availHeight)
-			&& ! chrome.app.window.current().isMaximized()) {
-			bounds = chrome.app.window.current().getBounds();
-			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
-		}
-		else // Restore the last bounds.
-			chrome.app.window.current().setBounds(bounds);
-	}
-	else {
-		if (! chrome.app.window.current().isMaximized()) { // Maximize.
-			chrome.app.window.current().maximize();
-		}
-		else // Restore the last bounds.
-			chrome.app.window.current().restore();
-	}
-}
-
-function minimizeWindow () {
-	chrome.app.window.current().minimize();
-}
-
-function quitCloseWindow () {
-	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
-	});
-	chrome.app.window.current().close();
-}
-
-function saveAndQuit () {
-	fileEntry.createWriter(function(fileWriter) {
-		    truncated = false;
-		    fileWriter.onwriteend = function(e) {
-		        if (!truncated) {
-		            truncated = true;
-		            this.truncate(this.position);
-		            return;
-		        }
-		        newRecentFile(fileEntry, "quit");
-		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
-		}, errorHandler);
-}
-
-function saveAsAndQuit () {
-	chrome.fileSystem.chooseEntry(
-		{
-			type: "saveFile", 
-			suggestedName: "document.md"
-		}, 
-		function(savedFile) {
-			if (savedFile) {
-				savedFile.createWriter(function(fileWriter) {
-				    truncated = false;
-				    fileWriter.onwriteend = function(e) {
-				        if (!truncated) {
-				            truncated = true;
-				            this.truncate(this.position);
-				            return;
-				        }
-				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
-				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
-				}, errorHandler);
-			}
-		}
-	);
-}
-
-function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved pr the document is not in Markdown.
-		saveAsAndQuit();
-	else
-		saveAndQuit();
-}
+function fc() {
+    void 0 == c || "md&nbsp;-" != m.innerHTML.substring(m.innerHTML.length - 9) ? qc() : pc()
+};

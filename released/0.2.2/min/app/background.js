@@ -36,7 +36,7 @@ function firstWindow () {
 	});
 }
 
-function newBounds (bounds) {
+function jBond (bounds) {
 	chrome.storage.local.set({"lastX" : bounds.left, "lastY" : bounds.top, "lastWidth" : bounds.width, "lastHeight" : bounds.height });
 }
 

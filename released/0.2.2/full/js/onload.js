@@ -149,11 +149,6 @@ window.onload = function() {
 
     $(markdown).bind('scroll', function() {
        console.log('Event worked');
-    }); 
-
-    /* drag-and-drop.js */
-    dragAndDropManager = new DnDManager("#document", function(data) {
-        openDraggedFile(data.items[0].webkitGetAsEntry());
     });
 
     /* editor.js */    
