@@ -152,10 +152,6 @@ window.onload = function() {
         window.print();
     });
 
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    }); 
-
     Mousetrap.bind(['command+p', 'ctrl+p'], function(e) { window.print(); return false; }); // Ctrl+p = print.
 
     /* drag-and-drop.js */
