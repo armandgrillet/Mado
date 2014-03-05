@@ -4,6 +4,7 @@
 * Variables (in alphabetical order).
 */
 
+var documentSection; // The section named "document" in the HTML.
 var dragAndDropManager; // The manager launched onload.
 var dragMessageAlreadyVisible = false; // True if the message about Drag and Drop is already visible.
 var extensionsAllowed = new Array(".markdown", ".md", ".txt"); // Extensions allowed by Mado.
@@ -31,7 +32,7 @@ function DnDManager(selector, onDropCallback) {
 
 	this.dragover = function(e) {  
 		if (! dragMessageAlreadyVisible) {
-			console.log("Something is over me!");
+			documentSection.className = "dragging";
 			dragMessageAlreadyVisible = 1;
 		}
 		e.stopPropagation();
@@ -39,7 +40,7 @@ function DnDManager(selector, onDropCallback) {
 	};
 
 	this.dragleave = function(e) {
-		console.log("The sky is now blue.");
+		documentSection.removeAttribute("class");
 		dragMessageAlreadyVisible = 0;
 		e.stopPropagation();
 		e.preventDefault();
@@ -50,7 +51,7 @@ function DnDManager(selector, onDropCallback) {
 	};
 
 	this.drop = function(e) {
-		console.log("The sky is now blue.");
+		documentSection.removeAttribute("class");
 		dragMessageAlreadyVisible = 0;
 		e.stopPropagation();
 		e.preventDefault();

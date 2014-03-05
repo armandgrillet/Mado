@@ -201,143 +201,152 @@
 
 		<section id="document">
 
-			<!-- MAIN CONTENT -->
-			<!-- The main container is called "workspace" and it has three state classes:
-				 - "normal": the default behavior for the app.
-				 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
-				 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
-				 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
-			<section id="workspace" class="normal">
+			<!-- Drag & drop container
+				 Enables the animation on hover while dragging a file into Mado. -->
+			<div id="drag-and-drop-container">
 
-				<div id="switch-cursor"></div>				
-				<!-- Markdown control sidebar
-					 Contains three square buttons:
-					 - The help-input accessor;
-					 - The link shortcut;
-					 - The image shortcut. -->
-				<aside class="sidebar" id="md-control">
-					
-					<ul>
+				<!-- MAIN CONTENT -->
+				<!-- The main container is called "workspace" and it has three state classes:
+					 - "normal": the default behavior for the app.
+					 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
+					 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
+					 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
+				<section id="workspace" class="normal">
 
-						<!-- Help tool -->
-						<li class="tool-container" id="help-input-container">
+					<div id="switch-cursor"></div>				
+					<!-- Markdown control sidebar
+						 Contains three square buttons:
+						 - The help-input accessor;
+						 - The link shortcut;
+						 - The image shortcut. -->
+					<aside class="sidebar" id="md-control">
 						
-							<div class="cta tool icon-help" id="help-button"></div> <!-- When clicked, displays the help input via javascript. -->
-							<!-- Help input diplayer
-								 Displays the input on click on the "Help" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
-							<div class="tool-displayer hidden" id="help-input-displayer">
+						<ul>
+
+							<!-- Help tool -->
+							<li class="tool-container" id="help-input-container">
 							
-								<!-- The arrow that comes with the box (see below) -->
-								<div class="tool-arrow"></div>
-								<!-- The gray box that contains the input -->
-								<div class="tool-box" id="help-input-box">
-
-									<!-- The help input itself -->
-									<input type="text" class="tool-first-item" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
-									
-									<!-- Results container -->
-									<ul class="hidden" id="help-results-container">
-										
-										<li class="result" id="result-1">
-											<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-1"></div></div>
-											<div class="answer" id="answer-1"></div>
-											<div class="example" id="example-1"></div>
-										</li>
-										<li class="result" id="result-2">
-											<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-2"></div></div>
-											<div class="answer" id="answer-2"></div>
-											<div class="example" id="example-2"></div>
-										</li>
-										<li class="result" id="result-3">
-											<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-3"></div></div>
-											<div class="answer" id="answer-3"></div>
-											<div class="example" id="example-3"></div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<!-- Link tool
-							 Displays one or two inputs, depending on whether text is selected in the markdown area or not. See 'link.js' for further information. -->
-						<li class="tool-container" id="link-insertion-container">
-
-							<div class="cta tool icon-link" id="link-button"></div> <!-- When clicked, displays the link input(s) via javascript. -->
-							<!-- Link insertion diplayer
-								 Displays the input(s) on click on the "Link" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
-							<div class="tool-displayer hidden" id="link-insertion-displayer">
-
-								<div class="tool-arrow"></div>
-							
-								<div class="tool-box" id="link-insertion-box">
-									<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
-									<input type="text" class="tool-first-item" id="url-input" placeholder="Type a URL">
-									<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
-										 Three cases here:
-										 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
-										 - No text is selected and the user types something into this input: the typed text will be used as hypertext.
-										 - No text is selected and the user does not type anything into this input: the URL typed into the first input will also be used as hypertext. -->
-									<input type="text" id="hypertext-input" placeholder="Type a text (optional)">
-									<!-- The cancel button enables the user to withdraw his changes over a link he had started writing. -->
-									<div class="cta button button-grey" id="cancel-link">Cancel</div>
-								</div>
-							</div>
-						</li>
-						<!-- Image tool
-							 Displays two inputs for image information, and a browse button to get the image's path. -->
-						<li class="tool-container" id="image-insertion-container">
-
-							<div class="cta tool icon-image" id="image-button"></div> <!-- When clicked, displays the image inputs & browse button via JavaScript. -->
-							<!-- Image insertion displayer
-								 Displays the inputs & browse button on click on the "Image" button. It has two class states:
-								 - "hidden": hides its children.
-								 - No class: displays everything. -->
-							<div class="tool-displayer hidden" id="image-insertion-displayer">
+								<div class="cta tool icon-help" id="help-button"></div> <!-- When clicked, displays the help input via javascript. -->
+								<!-- Help input diplayer
+									 Displays the input on click on the "Help" button. It has two class states:
+									 - "hidden": hides its children.
+									 - No class: displays everything. -->
+								<div class="tool-displayer hidden" id="help-input-displayer">
 								
-								<div class="tool-arrow"></div>
+									<!-- The arrow that comes with the box (see below) -->
+									<div class="tool-arrow"></div>
+									<!-- The gray box that contains the input -->
+									<div class="tool-box" id="help-input-box">
 
-								<div class="tool-box" id="image-insertion-box">
-									<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
-									<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
-									<!-- The browse button is required, it asks the user to choose an image on his hard drive.
-										 Two cases here:
-										 - No image chosen already: the browse button is entitled "Choose an image".
-										 - Already an image chosen: the browse button shows the image title and extension. -->
-									<div class="cta button" id="browse-image"></div>
-									<!-- The first input is required, it asks the user to type the alt text for the image. -->
-									<input type="text" id="alt-input" placeholder="Type an alt text">
-									<!-- The second input is optional, it enables the user to type a title for the image. -->
-									<input type="text" id="title-input" placeholder="Type a title (optional)">
-									<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
-									<div class="cta button button-grey" id="cancel-image">Cancel</div>
+										<!-- The help input itself -->
+										<input type="text" class="tool-first-item" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
+										
+										<!-- Results container -->
+										<ul class="hidden" id="help-results-container">
+											
+											<li class="result" id="result-1">
+												<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-1"></div></div>
+												<div class="answer" id="answer-1"></div>
+												<div class="example" id="example-1"></div>
+											</li>
+											<li class="result" id="result-2">
+												<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-2"></div></div>
+												<div class="answer" id="answer-2"></div>
+												<div class="example" id="example-2"></div>
+											</li>
+											<li class="result" id="result-3">
+												<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-3"></div></div>
+												<div class="answer" id="answer-3"></div>
+												<div class="example" id="example-3"></div>
+											</li>
+										</ul>
+									</div>
 								</div>
-							</div>
-						</li>
-					</ul>
-				</aside>
+							</li>
+							<!-- Link tool
+								 Displays one or two inputs, depending on whether text is selected in the markdown area or not. See 'link.js' for further information. -->
+							<li class="tool-container" id="link-insertion-container">
 
-				<!-- Markdown area
-					 Contains the textarea itself.
-					 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
-				<article class="sheet" id="markdown-container">					
-					<!-- Contenteditable for typing markdown
-						 Controlled via JavaScript. See 'marked.js' for further information. -->
-					<div contenteditable="true" placeholder="Write here" id="markdown"></div>
-				</article>
+								<div class="cta tool icon-link" id="link-button"></div> <!-- When clicked, displays the link input(s) via javascript. -->
+								<!-- Link insertion diplayer
+									 Displays the input(s) on click on the "Link" button. It has two class states:
+									 - "hidden": hides its children.
+									 - No class: displays everything. -->
+								<div class="tool-displayer hidden" id="link-insertion-displayer">
 
-				<aside id="center-line-container"><div id="center-line"></div></aside>
+									<div class="tool-arrow"></div>
+								
+									<div class="tool-box" id="link-insertion-box">
+										<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
+										<input type="text" class="tool-first-item" id="url-input" placeholder="Type a URL">
+										<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
+											 Three cases here:
+											 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
+											 - No text is selected and the user types something into this input: the typed text will be used as hypertext.
+											 - No text is selected and the user does not type anything into this input: the URL typed into the first input will also be used as hypertext. -->
+										<input type="text" id="hypertext-input" placeholder="Type a text (optional)">
+										<!-- The cancel button enables the user to withdraw his changes over a link he had started writing. -->
+										<div class="cta button button-grey" id="cancel-link">Cancel</div>
+										<!-- The ok button enables the user to confirm his changes over a link he had started writing. -->
+										<div class="cta button" id="insert-link">Ok</div>
+									</div>
+								</div>
+							</li>
+							<!-- Image tool
+								 Displays two inputs for image information, and a browse button to get the image's path. -->
+							<li class="tool-container" id="image-insertion-container">
 
-				<!-- HTML overview area
-					 Contains the displayed version of the markdown after conversion. See 'markup.js' for urther information.
-					 On big screen, it takes the right half of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
-				<article class="sheet" id="conversion-container">
+								<div class="cta tool icon-image" id="image-button"></div> <!-- When clicked, displays the image inputs & browse button via JavaScript. -->
+								<!-- Image insertion displayer
+									 Displays the inputs & browse button on click on the "Image" button. It has two class states:
+									 - "hidden": hides its children.
+									 - No class: displays everything. -->
+								<div class="tool-displayer hidden" id="image-insertion-displayer">
+									
+									<div class="tool-arrow"></div>
 
-					<div id="html-conversion"></div>
-				</article>
-			</section>
+									<div class="tool-box" id="image-insertion-box">
+										<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
+										<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
+										<!-- The browse button is required, it asks the user to choose an image on his hard drive.
+											 Two cases here:
+											 - No image chosen already: the browse button is entitled "Choose an image".
+											 - Already an image chosen: the browse button shows the image title and extension. -->
+										<div class="cta button" id="browse-image"></div>
+										<!-- The first input is required, it asks the user to type the alt text for the image. -->
+										<input type="text" id="alt-input" placeholder="Type an alt text">
+										<!-- The second input is optional, it enables the user to type a title for the image. -->
+										<input type="text" id="title-input" placeholder="Type a title (optional)">
+										<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
+										<div class="cta button button-grey" id="cancel-image">Cancel</div>
+										<!-- The ok button enables the user to confirm his changes over an image he had started importing. -->
+										<div class="cta button" id="insert-image">Ok</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</aside>
+
+					<!-- Markdown area
+						 Contains the textarea itself.
+						 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+					<article class="sheet" id="markdown-container">					
+						<!-- Contenteditable for typing markdown
+							 Controlled via JavaScript. See 'marked.js' for further information. -->
+						<div contenteditable="true" placeholder="Write here" id="markdown"></div>
+					</article>
+
+					<aside id="center-line-container"><div id="center-line"></div></aside>
+
+					<!-- HTML overview area
+						 Contains the displayed version of the markdown after conversion. See 'markup.js' for urther information.
+						 On big screen, it takes the right half of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
+					<article class="sheet" id="conversion-container">
+
+						<div id="html-conversion"></div>
+					</article>
+				</section>
+			</div>
 		</section>
 
 		<!-- FIXED BOTTOM BAR

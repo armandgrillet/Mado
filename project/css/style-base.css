@@ -31,6 +31,7 @@ body {
 /* The button class renders a generic clickable button */
 .button {
 	/* Box-model */
+	min-width: 40px;
 	float: left;
 	padding: 7px 10px;
 

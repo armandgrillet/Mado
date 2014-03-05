@@ -14,6 +14,9 @@ window.onload = function() {
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
     windowTitle = document.getElementsByTagName("title")[0];
+
+    /* drag-and-drop.js */
+    documentSection = document.getElementById("document");
     
     /* editor.js */
     centerLine = document.getElementById("center-line-container");
@@ -155,7 +158,7 @@ window.onload = function() {
     Mousetrap.bind(['command+p', 'ctrl+p'], function(e) { window.print(); return false; }); // Ctrl+p = print.
 
     /* drag-and-drop.js */
-    dragAndDropManager = new DnDManager("#document", function(data) {
+    dragAndDropManager = new DnDManager("body", function(data) {
         openDraggedFile(data.items[0].webkitGetAsEntry());
     });
 
