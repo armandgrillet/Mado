@@ -164,6 +164,10 @@ window.onload = function() {
     });
 
     /* editor.js */    
+
+    markdownObserver = new MutationObserver(contentChanged);
+    markdownObserver.observe(markdown, {characterData: true, subtree: true});
+
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
@@ -174,9 +178,6 @@ window.onload = function() {
         }
     });
     $(markdown).focus();
-    $(markdown).on("input propertychange", function() {
-    	contentChanged();
-    });
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
         pasteContent();   
     });
