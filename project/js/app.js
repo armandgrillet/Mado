@@ -18,6 +18,7 @@ var windowTitle; // Mado's active window's title attribute.
 
 /* Functions variables. */
 var fileEntry; // This is the variable who stores the file opened.
+var lastMarkdownHeight = 0;
 var lastWidth; // This is the last size of the window.
 var truncated; // To know the size when something is saved.
 
@@ -43,6 +44,12 @@ var truncated; // To know the size when something is saved.
 */
 
 function contentChanged () {
+	if (lastMarkdownHeight == 0)
+		lastMarkdownHeight = markdownContainer.scrollHeight;
+	else if(lastMarkdownHeight < markdownContainer.scrollHeight) {
+		toTheBottom(); // scroll.js
+	}
+
 	conversion();
 	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
             centerLine.style.display = "none";

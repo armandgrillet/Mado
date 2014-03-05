@@ -298,11 +298,16 @@ window.onload = function() {
     displayRecentFiles();
 
     /* scroll.js */
-    $(markdownContainer).scroll(function(){
-        asyncScroll("markdown");
+
+    $(markdownContainer).bind('scroll mousedown wheel mousewheel keyup', function(e){
+        if ( e.which > 0 || e.type == "mousedown" || e.type == "mousewheel"){
+            asyncScroll("markdown");
+        }
     });
-    $(conversionDiv).scroll(function(){
-        asyncScroll("HTML");
+    $(conversionDiv).bind('scroll mousedown wheel mousewheel keyup', function(e){
+        if ( e.which > 0 || e.type == "mousedown" || e.type == "mousewheel"){
+            asyncScroll("HTML");
+        }
     });
 
     /* stats.js 

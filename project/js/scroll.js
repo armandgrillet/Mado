@@ -1,22 +1,27 @@
 var markdownContainer;
-var	preventWeirdScroll;
+var atTheBottom;
+
+// Si on est tout à la fin et qu'on voit que la hauteur est aggrandie alors on le remet à la fin. 
 
 function asyncScroll (zone) {
-	if (zone == "markdown" && preventWeirdScroll != "markdown") {
-		$(conversionDiv).scrollTop(conversionDiv.scrollHeight * $(markdownContainer).scrollTop() / markdown.scrollHeight);
-		preventWeirdScroll = "HTML";
-		scrollManager();
+	if (zone == "markdown") {
+		// if ($(markdownContainer).scrollTop() + markdownContainer.offsetHeight != markdownContainer.scrollHeight) 
+			$(conversionDiv).scrollTop(($(markdownContainer).scrollTop() / (markdownContainer.scrollHeight  - markdownContainer.offsetHeight)) * (conversionDiv.scrollHeight - conversionDiv.offsetHeight));
+		//else
+		//	$(conversionDiv).scrollTop(conversionDiv.scrollHeight  - conversionDiv.offsetHeight);		
 	}
-	else if (zone == "HTML" && preventWeirdScroll != "HTML") {
-		$(markdownContainer).scrollTop(markdownContainer.scrollHeight * $(conversionDiv).scrollTop() / conversionDiv.scrollHeight);
-		preventWeirdScroll = "markdown";
-		scrollManager();
-	}
+	else 
+		$(markdownContainer).scrollTop(($(conversionDiv).scrollTop() / (conversionDiv.scrollHeight  - conversionDiv.offsetHeight)) * (markdownContainer.scrollHeight - markdownContainer.offsetHeight));
+
+	if ($(markdownContainer).scrollTop() + markdownContainer.offsetHeight == markdownContainer.scrollHeight)
+		atTheBottom = true;
+	else
+		atTheBottom = false;
 }
 
-function scrollManager() {
-	setTimeout(function () {
-		console.log("meuh");
-        preventWeirdScroll = "";
-    }, 10);
+function toTheBottom () {
+	if (atTheBottom == true) {
+		$(markdownContainer).scrollTop(markdownContainer.scrollHeight - markdownContainer.offsetHeight);
+		$(conversionDiv).scrollTop(conversionDiv.scrollHeight - conversionDiv.offsetHeight);
+	}
 }
