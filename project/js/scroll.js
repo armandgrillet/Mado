@@ -1,17 +1,18 @@
 var markdownContainer;
 var atTheBottom;
+var newHeight;
 
 // Si on est tout à la fin et qu'on voit que la hauteur est aggrandie alors on le remet à la fin. 
 
-function asyncScroll (zone) {
+function asyncScroll (zone, scroll) {
 	if (zone == "markdown") {
-		// if ($(markdownContainer).scrollTop() + markdownContainer.offsetHeight != markdownContainer.scrollHeight) 
-			$(conversionDiv).scrollTop(($(markdownContainer).scrollTop() / (markdownContainer.scrollHeight  - markdownContainer.offsetHeight)) * (conversionDiv.scrollHeight - conversionDiv.offsetHeight));
-		//else
-		//	$(conversionDiv).scrollTop(conversionDiv.scrollHeight  - conversionDiv.offsetHeight);		
+		newHeight = $(markdownContainer).scrollTop() + scroll;
+		$(conversionDiv).scrollTop((newHeight / (markdownContainer.scrollHeight  - markdownContainer.offsetHeight)) * (conversionDiv.scrollHeight - conversionDiv.offsetHeight));
 	}
-	else 
-		$(markdownContainer).scrollTop(($(conversionDiv).scrollTop() / (conversionDiv.scrollHeight  - conversionDiv.offsetHeight)) * (markdownContainer.scrollHeight - markdownContainer.offsetHeight));
+	else {
+		newHeight = $(conversionDiv).scrollTop() + scroll;
+		$(markdownContainer).scrollTop((newHeight / (conversionDiv.scrollHeight  - conversionDiv.offsetHeight)) * (markdownContainer.scrollHeight - markdownContainer.offsetHeight));
+	}
 
 	if ($(markdownContainer).scrollTop() + markdownContainer.offsetHeight == markdownContainer.scrollHeight)
 		atTheBottom = true;

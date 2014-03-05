@@ -302,17 +302,13 @@ window.onload = function() {
 
     /* scroll.js */
 
-    $(markdownContainer).bind('scroll mousedown wheel mousewheel keyup', function(e){
-        if ( e.which > 0 || e.type == "mousedown" || e.type == "mousewheel"){
-            asyncScroll("markdown");
-        }
-    });
-    $(conversionDiv).bind('scroll mousedown wheel mousewheel keyup', function(e){
-        if ( e.which > 0 || e.type == "mousedown" || e.type == "mousewheel"){
-            asyncScroll("HTML");
-        }
+    $(markdownContainer).on ('mousewheel', function (e) {
+        asyncScroll("markdown", e.originalEvent.deltaY);
     });
 
+    $(conversionDiv).on ('mousewheel', function (e) {
+        asyncScroll("HTML", e.originalEvent.deltaY);
+    });
     /* stats.js 
     * Waiting for the prod.
     
