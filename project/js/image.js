@@ -71,6 +71,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
+	contentChanged();
 }
 
 function chooseGalleries () {
