@@ -292,7 +292,7 @@ function theMinWidth () {
 chrome.app.window.current().onBoundsChanged.addListener(function () {
 	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
+	else if (window.innerWidth >= 1160 && lastWidth < 1160) 
 		switchToBoth.click(); // viewswitch.js
 
 	lastWidth = window.innerWidth;
@@ -307,8 +307,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) { // What to 
         else if (key == "gfm")
             setEditorSyntax(); // editor.js
         else if (key == "highlighting")
-            setMarkdownHighlighting(); // syntax-highlighting.js
-        else if (key == "resize")
-            setWindowResizing(); // viewswitch.js         
+            setMarkdownHighlighting(); // syntax-highlighting.js   
     }
 });

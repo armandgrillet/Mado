@@ -84,6 +84,7 @@ window.onload = function() {
     /* viewswitch.js */
     madoFooter = document.getElementById("mado-footer");
     workspace = document.getElementById("workspace");
+    switchCursor = document.getElementById("switch-cursor");
     switchToMD = document.getElementById("switch-md");
     switchToBoth = document.getElementById("switch-both");
     switchToHTML = document.getElementById("switch-html");
@@ -331,7 +332,6 @@ window.onload = function() {
 
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
-    setWindowResizing();
 
     // Getting and setting the click event on each of the switch buttons.
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });

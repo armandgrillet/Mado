@@ -60,14 +60,6 @@ function getHighlighting () {
 	});
 }
 
-function getResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != false) {
-			viewOnResize.checked = true;
-		}
-	});
-}
-
 function getSyntax () {
 	chrome.storage.local.get("gfm",  function(mado) {
 		if (mado["gfm"] != undefined) {
@@ -101,13 +93,6 @@ function setHighlighting () {
 		chrome.storage.local.set({ "highlighting" : true });
 	else 
 		chrome.storage.local.set({ "highlighting" : false });
-}
-
-function setResizing () {
-	if (viewOnResize.checked)
-		chrome.storage.local.set({ "resize" : true });
-	else 
-		chrome.storage.local.set({ "resize" : false });
 }
 
 function setSyntax () {

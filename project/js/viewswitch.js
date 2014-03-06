@@ -17,7 +17,6 @@ var workspace; // Getting the main container (workspace).
 /* Functions variables. */
 var previousSize; // The previous size of the window.
 var switchButtons = new Array(); // The array for the switch.
-var windowResizing; // Get the storage variable "resize".
 
 /*
 * Functions (in alphabetical order).
@@ -25,7 +24,6 @@ var windowResizing; // Get the storage variable "resize".
 * Resume:
 	* activate (buttonClicked, stateOfTheClass): handles the behavior of a switch button when it is clicked. The function sets the main container's class name according to the button.
 	* initActivation (): initalize the switch's look on Mado's launch.
-	* setWindowResizing (): set the storage variable "resize".
 	* switchShortcuts (theDirection): change the switch when the user uses a keyboard shortcut.
 */
 
@@ -55,17 +53,6 @@ function initActivation () {
 	}
 
 	previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
-}
-
-function setWindowResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != undefined)			
-			windowResizing = mado["resize"];
-		else {
-			chrome.storage.local.set({ "resize" : true });
-			windowResizing = true;
-		}
-	});
 }
 
 function switchShortcuts (direction) {

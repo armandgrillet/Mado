@@ -37,7 +37,6 @@ window.onload = function() {
 	getSyntax();
 	getHighlighting();
 	// getDisplaySize();
-	getResizing();
 	getAnalytics();
 
 	$(markdownSyntax).on("click", setSyntax);
@@ -51,8 +50,6 @@ window.onload = function() {
 	$(bigDisplaySize).on("click", function() { setDisplaySize("big"); });
 	*/
 	
-	$(viewOnResize).on("click", setResizing);
-
 	$(analytics).on("click", setAnalytics);
 
 	$(windowClose).on("click", function() {
