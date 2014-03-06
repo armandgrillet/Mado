@@ -35,7 +35,7 @@
 	src: url('../../fonts/arvo-bold-italic.ttf');
 }
 
-.sheet:last-of-type .tramway {
+.sheet:last-of-type {
 	/* Typography */
 	font-family: Arvo, serif;
 	font-size: 1em;
@@ -45,9 +45,9 @@
 /* ------------
 	Paragraphs
    ------------ */
-.sheet:last-of-type .tramway p,
-.sheet:last-of-type .tramway ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
-.sheet:last-of-type .tramway ul {
+.sheet:last-of-type p,
+.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+.sheet:last-of-type ul {
 	/* Box-model */
 	padding-bottom: 0.65em;
 }
@@ -55,14 +55,14 @@
 /* --------
 	Titles
    -------- */
-.sheet:last-of-type .tramway h1,
-.sheet:last-of-type .tramway h2,
-.sheet:last-of-type .tramway h3 {
+.sheet:last-of-type h1,
+.sheet:last-of-type h2,
+.sheet:last-of-type h3 {
 	/* Typography */
 	font-family: Arvo;
 }
 
-.sheet:last-of-type .tramway h1 {
+.sheet:last-of-type h1 {
 	/* Box-model */
 	padding: 0.35em 0;
 
@@ -70,7 +70,7 @@
 	font-size: 3em;
 }
 
-.sheet:last-of-type .tramway h2 {
+.sheet:last-of-type h2 {
 	/* Box-model */
 	padding: 0.3em 0 0.65em;
 
@@ -78,7 +78,7 @@
 	font-size: 2em;
 }
 
-.sheet:last-of-type .tramway h3 {
+.sheet:last-of-type h3 {
 	/* Box-model */
 	padding: 0.5em 0;
 
@@ -86,7 +86,7 @@
 	font-size: 1.25em;
 }
 
-.sheet:last-of-type .tramway h4 {
+.sheet:last-of-type h4 {
 	/* Box-model */
 	padding: 0.65em 0;
 
@@ -94,7 +94,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .tramway h5 {
+.sheet:last-of-type h5 {
 	/* Box-model */
 	padding-bottom: 0.8em;
 
@@ -103,7 +103,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .tramway h6 {
+.sheet:last-of-type h6 {
 	/* Typography */
 	font-size: 0.75em;
 	font-weight: bold;
@@ -113,14 +113,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .tramway ul > li { padding-left: 2em; }
+.sheet:last-of-type ul > li { padding-left: 2em; }
 
-.sheet:last-of-type .tramway ul > li:before { width: 2em; }
+.sheet:last-of-type ul > li:before { width: 2em; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .tramway ol > li { padding-left: 2em; }
+.sheet:last-of-type ol > li { padding-left: 2em; }
 
-.sheet:last-of-type .tramway ol > li:before {
+.sheet:last-of-type ol > li:before {
 	/* Box-model */
 	width: 2em;
 
@@ -129,10 +129,10 @@
 }
 
 /* SUB-LISTS */
-.sheet:last-of-type .tramway ol ol,
-.sheet:last-of-type .tramway ol ul,
-.sheet:last-of-type .tramway ul ul,
-.sheet:last-of-type .tramway ul ol {
+.sheet:last-of-type ol ol,
+.sheet:last-of-type ol ul,
+.sheet:last-of-type ul ul,
+.sheet:last-of-type ul ol {
 	/* Box-model */
 	padding-bottom: 0;
 }
@@ -140,7 +140,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type .tramway blockquote {
+.sheet:last-of-type blockquote {
 	/* Box-model */
 	padding: 0 1.35em;
 
@@ -152,7 +152,7 @@
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type .tramway hr {
+.sheet:last-of-type hr {
 	margin: 0.65em auto 1.35em; /* No matter the size of the rule, it will be centered */
 
 	/* Box-model */

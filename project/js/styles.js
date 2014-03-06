@@ -34,7 +34,7 @@ function getStyle () {
 			else
 				tramwayRadio.checked = true;
 
-			$(conversionDiv).attr("class", mado["style"]);
+			themeStylesheetLink.setAttribute("href", "css/themes/" + mado["style"] + ".css");
 		}
 		else {
 			homeRadio.checked = true;
@@ -44,10 +44,8 @@ function getStyle () {
 }
 
 function setStyle (newStyle) {
-	themeStylesheetLink.setAttribute("rel", "stylesheet");
-	themeStylesheetLink.setAttribute("type", "text/css");
-
 	chrome.storage.local.set({ "style" : newStyle }, function () {
-		$(conversionDiv).attr("class", newStyle);
+		console.log("New style " + mado["style"]);
+		themeStylesheetLink.setAttribute("href", "css/themes/" + newStyle + ".css");
 	});
 }

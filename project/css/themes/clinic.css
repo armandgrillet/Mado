@@ -50,7 +50,7 @@
 	src: url('../../fonts/bariol_light_italic.ttf');
 }
 
-.sheet:last-of-type .clinic {
+.sheet:last-of-type {
 	/* Typography */
 	font-family: Bariol, sans-serif;
 	font-size: 1.1em;
@@ -71,13 +71,13 @@
 /* --------
 	Titles
    -------- */
-.sheet:last-of-type .clinic h1,
-.sheet:last-of-type .clinic h2 {
+.sheet:last-of-type h1,
+.sheet:last-of-type h2 {
 	/* Typography */
 	font-family: BariolLight;
 }
 
-.sheet:last-of-type .clinic h1 {
+.sheet:last-of-type h1 {
 	/* Box-model */
 	padding: 0.6em 0 0.3em;
 
@@ -85,7 +85,7 @@
 	font-size: 3em;
 }
 
-.sheet:last-of-type .clinic h2 {
+.sheet:last-of-type h2 {
 	/* Box-model */
 	padding: 0.7em 0 0.5em;
 
@@ -93,7 +93,7 @@
 	font-size: 2em;
 }
 
-.sheet:last-of-type .clinic h3 {
+.sheet:last-of-type h3 {
 	/* Box-model */
 	padding: 0.75em 0;
 
@@ -102,7 +102,7 @@
 	font-size: 1.25em;
 }
 
-.sheet:last-of-type .clinic h4 {
+.sheet:last-of-type h4 {
 	/* Box-model */
 	padding: 0.7em 0;
 
@@ -110,7 +110,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .clinic h5 {
+.sheet:last-of-type h5 {
 	/* Box-model */
 	padding-bottom: 0.85em;
 
@@ -119,7 +119,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .clinic h6 {
+.sheet:last-of-type h6 {
 	/* Typography */
 	font-size: 0.8em;
 	font-weight: bold;
@@ -129,14 +129,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .clinic ul > li { padding-left: 2em; }
+.sheet:last-of-type ul > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ul > li:before { padding-left: 0; }
+.sheet:last-of-type ul > li:before { padding-left: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .clinic ol > li { padding-left: 2em; }
+.sheet:last-of-type ol > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ol > li:before {
+.sheet:last-of-type ol > li:before {
 	/* Box-model */
 	padding-left: 0;
 
@@ -149,13 +149,13 @@
 }
 
 /* Prevent empty list items to be displayed without a height */
-.sheet:last-of-type .clinic li:empty { height: 1.5em; }
+.sheet:last-of-type li:empty { height: 1.5em; }
 
 /* SUB-LISTS */
-.sheet:last-of-type .clinic ol ol,
-.sheet:last-of-type .clinic ol ul,
-.sheet:last-of-type .clinic ul ul,
-.sheet:last-of-type .clinic ul ol {
+.sheet:last-of-type ol ol,
+.sheet:last-of-type ol ul,
+.sheet:last-of-type ul ul,
+.sheet:last-of-type ul ol {
 	/* Box-model */
 	padding-bottom: 0;
 }
@@ -163,7 +163,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type .clinic blockquote {
+.sheet:last-of-type blockquote {
 	/* Positioning */
 	margin-bottom: 0.7em;
 
@@ -178,12 +178,12 @@
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type .clinic hr { margin: 0.7em auto 1.5em; }
+.sheet:last-of-type hr { margin: 0.7em auto 1.5em; }
 
 /* ------
 	Code
    ------ */
-.sheet:last-of-type .clinic code {
+.sheet:last-of-type code {
 	/* Typography */
 	font-size: 0.85em;
 	line-height: 1.45em;

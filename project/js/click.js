@@ -78,7 +78,7 @@ $(document).click( function(e) {
 	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
 		stylesDisplayer.className = "tool-displayer";
 	}
-	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)		
+	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)
 		stylesDisplayer.className = "tool-displayer hidden";
 
 	/* window.js */
