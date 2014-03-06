@@ -302,12 +302,14 @@ window.onload = function() {
 
     /* scroll.js */
 
-    $(markdownContainer).on ('mousewheel', function (e) {
-        asyncScroll("markdown", e.originalEvent.deltaY);
+    $(markdownContainer).on ("scroll", function (e) {
+        if ($(markdownContainer).is(":hover"))
+            asyncScroll("markdown");
     });
 
-    $(conversionDiv).on ('mousewheel', function (e) {
-        asyncScroll("HTML", e.originalEvent.deltaY);
+    $(conversionDiv).on ("scroll", function (e) {
+        if ($(conversionDiv).is(":hover"))
+            asyncScroll("HTML");
     });
     /* stats.js 
     * Waiting for the prod.
