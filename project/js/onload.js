@@ -223,7 +223,10 @@ window.onload = function() {
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
-        changeContentHighlighted("mado-image");
+        if (linkDisplayer.className == "tool-displayer")
+            cancelLink(); 
+        if (imageDisplayer.className == "tool-displayer hidden")
+             changeContentHighlighted("mado-image");
     });
 
     $(imageBrowser).on("click", loadImage);
@@ -244,6 +247,7 @@ window.onload = function() {
             $(altInput).select();
         }
     })
+
     $(titleInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
             applyImage();
@@ -257,7 +261,8 @@ window.onload = function() {
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
-        changeContentHighlighted("mado-link");
+        if (linkDisplayer.className == "tool-displayer hidden")
+            changeContentHighlighted("mado-link");
     });
     
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
@@ -312,6 +317,7 @@ window.onload = function() {
         if ($(conversionDiv).is(":hover"))
             asyncScroll("HTML");
     });
+
     /* stats.js 
     * Waiting for the prod.
     
