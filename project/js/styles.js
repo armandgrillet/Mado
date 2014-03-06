@@ -44,8 +44,6 @@ function getStyle () {
 }
 
 function setStyle (newStyle) {
-	chrome.storage.local.set({ "style" : newStyle }, function () {
-		console.log("New style " + mado["style"]);
-		themeStylesheetLink.setAttribute("href", "css/themes/" + newStyle + ".css");
-	});
+	themeStylesheetLink.setAttribute("href", "css/themes/" + newStyle + ".css");
+	chrome.storage.local.set({ "style" : newStyle });
 }
