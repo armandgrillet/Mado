@@ -403,9 +403,9 @@
 /* The switch cursor is a triangle showing which display mode is on */
 #switch-cursor {
 	/* Positioning */
-	position: fixed;
-	top: 57px;
+	position: absolute;
 	left: 50%;
+	bottom: 0;
 	z-index: 1500;
 
 	/* Box-model */
@@ -422,13 +422,13 @@
 }
 
 /* Switch cursor's position when in normal mode */
-.normal #switch-cursor { margin-left: -4px; }
+#switch-cursor.normal { margin-left: -4px; }
 
 /* Switch cursor's position when in markdown view */
-.markdown-view #switch-cursor { margin-left: -69px; }
+#switch-cursor.markdown-view { margin-left: -69px; }
 
 /* Switch cursor's position when in HTML view */
-.conversion-view #switch-cursor { margin-left: 61px; }
+#switch-cursor.conversion-view { margin-left: 61px; }
 
 /* ----------------
 	"More" options

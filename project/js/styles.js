@@ -14,6 +14,7 @@ var stylesDisplayer; // The div that contains and displays the style selection t
 var clinicRadio; // Clinic style.
 var homeRadio; // Home style.
 var tramwayRadio; // Tramway style.
+var themeStylesheetLink = document.createElement("link"); // Create a "link" node.
 
 /*
 * Functions (in alphabetical order).
@@ -26,14 +27,14 @@ var tramwayRadio; // Tramway style.
 function getStyle () {
 	chrome.storage.local.get("style",  function(mado) {
 		if (mado["style"] != undefined) {
-			if (mado["style"] == "home") 
-				homeRadio.checked = true;	
-			else if (mado["style"] == "clinic") 
-				clinicRadio.checked = true;	
-			else 
+			if (mado["style"] == "home")
+				homeRadio.checked = true;
+			else if (mado["style"] == "clinic")
+				clinicRadio.checked = true;
+			else
 				tramwayRadio.checked = true;
 
-			$(conversionDiv).attr("class", mado["style"]);			
+			$(conversionDiv).attr("class", mado["style"]);
 		}
 		else {
 			homeRadio.checked = true;
@@ -43,6 +44,9 @@ function getStyle () {
 }
 
 function setStyle (newStyle) {
+	themeStylesheetLink.setAttribute("rel", "stylesheet");
+	themeStylesheetLink.setAttribute("type", "text/css");
+
 	chrome.storage.local.set({ "style" : newStyle }, function () {
 		$(conversionDiv).attr("class", newStyle);
 	});

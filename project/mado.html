@@ -91,7 +91,7 @@
 									<div class="alert-part">
 
 										<p>
-											The document <span id="alert-doc-name"></span> has unsaved changes. Do you want to save these changes before exiting?
+											This document has unsaved changes. Do you want to save these changes before exiting?
 										</p>
 									</div>
 								</section>
@@ -159,8 +159,8 @@
 				</ul>
 					
 				<!-- The view switch handles the main container. On big screens, it has three different states:
-					 - "Markdown" to diplay only the markdown area;
-					 - "Both" to display both the markdown and the HTML conversion areas;
+					 - "Markdown" to diplay only the markdown area.
+					 - "Both" to display both the markdown and the HTML conversion areas.
 					 - "HTML" to display only the HTML conversion area.
 				See 'viewswitch.js' for further information. -->
 				<div id="view-switch">
@@ -169,6 +169,8 @@
 					<div class="switch-button" id="switch-both"><div class="little-icon-both"></div></div>
 					<div class="switch-button" id="switch-html">HTML</div>
 				</div>
+
+				<div id="switch-cursor"></div>
 
 				<!-- "More" menu
 					  Deploys "Settings", "Q&A", "Shortcuts" and "About Mado" -->
@@ -199,21 +201,27 @@
 			</nav>
 		</header>
 
+		<!-- DOCUMENT SECTION -->
+		<!-- The document section contains all the central elements:
+			 - The drag & drop container.
+				 - The workspace.
+					 - The document itself.
+						 - Its Markdown view.
+						 - Its HTML view.
+					 - The sidebars. -->
 		<section id="document">
 
 			<!-- Drag & drop container
 				 Enables the animation on hover while dragging a file into Mado. -->
 			<div id="drag-and-drop-container">
 
-				<!-- MAIN CONTENT -->
+				<!-- WORKSPACE -->
 				<!-- The main container is called "workspace" and it has three state classes:
 					 - "normal": the default behavior for the app.
 					 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
 					 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
 					 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
-				<section id="workspace" class="normal">
-
-					<div id="switch-cursor"></div>				
+				<section id="workspace" class="normal">			
 					<!-- Markdown control sidebar
 						 Contains three square buttons:
 						 - The help-input accessor;
@@ -330,7 +338,7 @@
 					<!-- Markdown area
 						 Contains the textarea itself.
 						 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
-					<article class="sheet" id="markdown-container">					
+					<article class="sheet" id="markdown-container">
 						<!-- Contenteditable for typing markdown
 							 Controlled via JavaScript. See 'marked.js' for further information. -->
 						<div contenteditable="true" placeholder="Write here" id="markdown"></div>

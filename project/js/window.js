@@ -14,7 +14,7 @@ var markdownSaved; // The last Markdown text saved.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
 var saveState; // The div who displays if the document is saved or not.
-var stylesheetLink = document.createElement("link"); // Create a "link" node.
+var frameStylesheetLink = document.createElement("link"); // Create a "link" node.
 var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
@@ -64,29 +64,29 @@ function closeWindow () {
 }
 
 function determineFrame () {
-	stylesheetLink.setAttribute("rel", "stylesheet");
-	stylesheetLink.setAttribute("type", "text/css");
+	frameStylesheetLink.setAttribute("rel", "stylesheet");
+	frameStylesheetLink.setAttribute("type", "text/css");
 
 	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
+		frameStylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
 	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
+		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
 	}
 	else { // If the user is on another type of computer, redirect to the generic window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
+		frameStylesheetLink.setAttribute("href", "css/window-frame-others.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
 	}
 
-	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
+	head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
 }
 
 function maximizeWindow () {

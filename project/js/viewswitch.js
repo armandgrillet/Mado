@@ -8,6 +8,7 @@
 
 /* HTML shortcuts. */
 var madoFooter; // Mado's footer.
+var switchCursor; // Mado's switch cursor.
 var switchToBoth; // Both switch.
 var switchToHTML; // HTML switch.
 var switchToMD; // Markdown switch.
@@ -15,7 +16,7 @@ var workspace; // Getting the main container (workspace).
 
 /* Functions variables. */
 var previousSize; // The previous size of the window.
-var switchButtons = new Array(); // The array for the switch. 
+var switchButtons = new Array(); // The array for the switch.
 var windowResizing; // Get the storage variable "resize".
 
 /*
@@ -37,6 +38,7 @@ function activate (clickedBtn, classState) {
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+	switchCursor.className = classState; // Setting the cursor's class name according to the clicked button.
 
 	if (classState == "markdown-view")
 		madoFooter.className = classState;

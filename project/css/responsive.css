@@ -32,14 +32,14 @@
 	}
 
 	/* Switch cursor's position when in markdown view and normal view */
-	.markdown-view #switch-cursor,
-	.normal #switch-cursor {
+	#switch-cursor.markdown-view,
+	#switch-cursor.normal {
 		/* Positioning */
 		margin-left: -49px;
 	}
 
 	/* Switch cursor's position when in HTML view */
-	.conversion-view #switch-cursor { margin-left: 41px; }
+	#switch-cursor.conversion-view { margin-left: 41px; }
 
 	/* -----------
 		Workspace
