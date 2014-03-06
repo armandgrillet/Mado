@@ -3,38 +3,6 @@
 /* -------
 	Fonts
    ------- */
-/* Arvo Regular */
-@font-face {
-	/* Typography */
-	font-family: Arvo;
-	src: url('../../fonts/arvo-regular.ttf');
-}
-
-/* Arvo Bold */
-@font-face {
-	/* Typography */
-	font-family: Arvo;
-	font-weight: bold;
-	src: url('../../fonts/arvo-bold.ttf');
-}
-
-/* Arvo Italic */
-@font-face {
-	/* Typography */
-	font-family: Arvo;
-	font-style: italic;
-	src: url('../../fonts/arvo-italic.ttf');
-}
-
-/* Arvo Bold Italic */
-@font-face {
-	/* Typography */
-	font-family: Arvo;
-	font-style: italic;
-	font-weight: bold;
-	src: url('../../fonts/arvo-bold-italic.ttf');
-}
-
 .sheet:last-of-type {
 	/* Typography */
 	font-family: Arvo, serif;

@@ -2,17 +2,106 @@
 	MISCELLANOUS
    ============== */
 
+/* -------
+	Fonts
+   ------- */
+/* BARIOL (CLINIC) */
+/* Bariol Regular */
+@font-face {
+	/* Typography */
+	font-family: Bariol;
+	src: url('../../fonts/bariol_regular.ttf') format('truetype');
+}
+
+/* Bariol Bold */
+@font-face {
+	/* Typography */
+	font-family: Bariol;
+	font-weight: bold;
+	src: url('../../fonts/bariol_bold.ttf') format('truetype');
+}
+
+/* Bariol Light */
+@font-face {
+	/* Typography */
+	font-family: BariolLight;
+	src: url('../../fonts/bariol_light.ttf') format('truetype');
+}
+
+/* Bariol Italic */
+@font-face {
+	/* Typography */
+	font-family: Bariol;
+	font-style: italic;
+	src: url('../../fonts/bariol_regular_italic.ttf') format('truetype');
+}
+
+/* Bariol Bold Italic */
+@font-face {
+	/* Typography */
+	font-family: Bariol;
+	font-style: italic;
+	font-weight: bold;
+	src: url('../../fonts/bariol_bold_italic.ttf') format('truetype');
+}
+
+/* Bariol Light Italic */
+@font-face {
+	/* Typography */
+	font-family: BariolLight;
+	font-style: italic;
+	src: url('../../fonts/bariol_light_italic.ttf') format('truetype');
+}
+
+/* ARVO (TRAMWAY) */
+/* Arvo Regular */
+@font-face {
+	/* Typography */
+	font-family: Arvo;
+	src: url('../../fonts/arvo-regular.ttf') format('truetype');
+}
+
+/* Arvo Bold */
+@font-face {
+	/* Typography */
+	font-family: Arvo;
+	font-weight: bold;
+	src: url('../../fonts/arvo-bold.ttf') format('truetype');
+}
+
+/* Arvo Italic */
+@font-face {
+	/* Typography */
+	font-family: Arvo;
+	font-style: italic;
+	src: url('../../fonts/arvo-italic.ttf') format('truetype');
+}
+
+/* Arvo Bold Italic */
+@font-face {
+	/* Typography */
+	font-family: Arvo;
+	font-style: italic;
+	font-weight: bold;
+	src: url('../../fonts/arvo-bold-italic.ttf') format('truetype');
+}
+
 .sheet:last-of-type {
 	/* Typography */
 	font-size: 1em;
 	line-height: 1.35em;
 }
 
+/* ---------
+	General
+   --------- */
 .sheet:last-of-type img { max-width: 100%; }
 
 .sheet:last-of-type .nofile,
-.sheet:last-of-type .nofile-link
- { cursor: pointer; }
+.sheet:last-of-type .nofile-link {
+	/* Misc */
+	cursor: pointer;
+}
 
 .sheet:last-of-type .nofile-visual {
 	/* Typography */

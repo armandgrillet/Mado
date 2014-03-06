@@ -3,53 +3,6 @@
 /* -------
 	Fonts
    ------- */
-/* Bariol Regular */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	src: url('../../fonts/bariol_regular.ttf');
-}
-
-/* Bariol Bold */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-weight: bold;
-	src: url('../../fonts/bariol_bold.ttf');
-}
-
-/* Bariol Light */
-@font-face {
-	/* Typography */
-	font-family: BariolLight;
-	src: url('../../fonts/bariol_light.ttf');
-}
-
-/* Bariol Italic */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-style: italic;
-	src: url('../../fonts/bariol_regular_italic.ttf');
-}
-
-/* Bariol Bold Italic */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-style: italic;
-	font-weight: bold;
-	src: url('../../fonts/bariol_bold_italic.ttf');
-}
-
-/* Bariol Light Italic */
-@font-face {
-	/* Typography */
-	font-family: BariolLight;
-	font-style: italic;
-	src: url('../../fonts/bariol_light_italic.ttf');
-}
-
 .sheet:last-of-type {
 	/* Typography */
 	font-family: Bariol, sans-serif;
