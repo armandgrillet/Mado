@@ -218,15 +218,13 @@ function setImageBrowserText (path) {
 function setImageInputs () {
 	initialText = imageDiv.innerText;
 	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
-		if (/!\[.*\]\(.*\s".*"\)/.test(initialText)) {// Optional title is here.
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
 			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
-			imageLoaded = initialText.match(/.*\s"/)[0].substring(2, initialText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
 		}
-		else {
-			imageLoaded = initialText.match(/\]\(\S+\)/)[0].substring(2, initialText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
-		}
+		else
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
+		setImageBrowserText(fileName(imageLoaded));
 		altInput.value = initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1); 
 	}
 	else
