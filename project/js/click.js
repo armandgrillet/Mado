@@ -21,7 +21,6 @@ $(document).click( function(e) {
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
-		titleInput.value = "";
 		imageLoaded = undefined;
 
 		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.

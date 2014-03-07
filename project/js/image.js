@@ -15,7 +15,6 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var titleInput; // The input for the title of the image
 
 /* Functions variables. 
 * startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.
@@ -198,10 +197,7 @@ function loadImage () {
 }
 
 function modifyImage () {
-	if (titleInput.value == "")
-		image = "![" + altInput.value + "](" + imageLoaded + ')';
-	else 
-		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	image = "![" + altInput.value + "](" + imageLoaded + ')';
 	if (imageDiv != undefined)
 		imageDiv.innerText = image;		
 	else
@@ -218,10 +214,8 @@ function setImageBrowserText (path) {
 function setImageInputs () {
 	initialText = imageDiv.innerText;
 	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
-		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
-			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) // Optional title is here.
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
-		}
 		else
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
 		setImageBrowserText(fileName(imageLoaded));

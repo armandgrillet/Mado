@@ -51,7 +51,6 @@ window.onload = function() {
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
     altInput = document.getElementById("alt-input");
-    titleInput = document.getElementById("title-input");
 
     /* link.js */
     cancelLinkButton = document.getElementById("cancel-link");
@@ -235,22 +234,6 @@ window.onload = function() {
     $(altInput).keyup(function(e){
         if (e.keyCode == 13) // The user press enter
            applyImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelImage();
-        else
-            modifyImage();
-    });
-
-    $(titleInput).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab
-            e.preventDefault();
-            $(altInput).select();
-        }
-    })
-
-    $(titleInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyImage();
         else if (e.keyCode == 27) // The user press echap
             cancelImage();
         else
