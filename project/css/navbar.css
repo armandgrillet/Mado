@@ -406,6 +406,7 @@
 	position: absolute;
 	left: 50%;
 	bottom: 0;
+	margin-left: -4px;
 	z-index: 1500;
 
 	/* Box-model */
