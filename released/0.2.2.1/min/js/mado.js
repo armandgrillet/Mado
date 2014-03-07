@@ -245,9 +245,9 @@ function B(a) {
         Za = window.getSelection();
         Za.removeAllRanges();
         try {
-            N.q(a), Za.charactersddRange(N)
+            N.q(a), Za.addRange(N)
         } catch (b) {
-            N.selectNode(a), Za.charactersddRange(N)
+            N.selectNode(a), Za.addRange(N)
         }
     } else document.body.createTextRange && (N = document.body.createTextRange(), N.moveToElementText(a), N.select())
 }
