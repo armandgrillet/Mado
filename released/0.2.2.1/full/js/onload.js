@@ -147,10 +147,6 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    });
-
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -292,18 +288,6 @@ window.onload = function() {
 
     /* recentfiles.js */
     displayRecentFiles();
-
-    /* scroll.js */
-
-    $(markdownContainer).on ("scroll", function (e) {
-        if ($(markdownContainer).is(":hover"))
-            asyncScroll("markdown");
-    });
-
-    $(conversionDiv).on ("scroll", function (e) {
-        if ($(conversionDiv).is(":hover"))
-            asyncScroll("HTML");
-    });
 
     /* stats.js 
     * Waiting for the prod.

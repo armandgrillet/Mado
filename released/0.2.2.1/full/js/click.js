@@ -32,8 +32,7 @@ $(document).click( function(e) {
 		imageDiv = document.getElementById("mado-image");
 		setImageInputs();
 	}
-	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
@@ -54,7 +53,7 @@ $(document).click( function(e) {
 		setLinkInputs();
 		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
 		linkDisplayer.className = "tool-displayer hidden";
 		selectElementContents(linkDiv);
 		restoreSelection("mado-link");

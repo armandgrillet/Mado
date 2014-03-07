@@ -337,8 +337,7 @@ $(document).click( function(e) {
 		imageDiv = document.getElementById("mado-image");
 		setImageInputs();
 	}
-	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
@@ -359,7 +358,7 @@ $(document).click( function(e) {
 		setLinkInputs();
 		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
 		linkDisplayer.className = "tool-displayer hidden";
 		selectElementContents(linkDiv);
 		restoreSelection("mado-link");
@@ -1364,10 +1363,6 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    });
-
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -1510,19 +1505,7 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
 
-    /* scroll.js */
-
-    $(markdownContainer).on ("scroll", function (e) {
-        if ($(markdownContainer).is(":hover"))
-            asyncScroll("markdown");
-    });
-
-    $(conversionDiv).on ("scroll", function (e) {
-        if ($(conversionDiv).is(":hover"))
-            asyncScroll("HTML");
-    });
-
-    /* stats.js */    
+    /* stats.js */
     if (navigator.onLine)
         initStats();
 
@@ -1788,29 +1771,6 @@ function removeAllFilesInStorage (fileNumber) {
 			}
 		}	
 	);
-}
-var markdownContainer;
-var atTheBottom;
-
-// Si on est tout à la fin et qu'on voit que la hauteur est aggrandie alors on le remet à la fin. 
-
-function asyncScroll (zone, scroll) {
-	if (zone == "markdown")
-		$(conversionDiv).scrollTop(($(markdownContainer).scrollTop() / (markdownContainer.scrollHeight  - markdownContainer.offsetHeight)) * (conversionDiv.scrollHeight - conversionDiv.offsetHeight));
-	else
-		$(markdownContainer).scrollTop(($(conversionDiv).scrollTop() / (conversionDiv.scrollHeight  - conversionDiv.offsetHeight)) * (markdownContainer.scrollHeight - markdownContainer.offsetHeight));
-
-	if ($(markdownContainer).scrollTop() + markdownContainer.offsetHeight == markdownContainer.scrollHeight)
-		atTheBottom = true;
-	else
-		atTheBottom = false;
-}
-
-function toTheBottom () {
-	if (atTheBottom == true) {
-		$(markdownContainer).scrollTop(markdownContainer.scrollHeight - markdownContainer.offsetHeight);
-		$(conversionDiv).scrollTop(conversionDiv.scrollHeight - conversionDiv.offsetHeight);
-	}
 }
 /* The JS to send data to Analytics. */
 
