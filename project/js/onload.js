@@ -189,7 +189,7 @@ window.onload = function() {
         if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
             e.preventDefault();
             if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
-                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
+                $('#html-conversion').scrollTop($(e.currentTarget.hash).position().top);
         }
     });
 
