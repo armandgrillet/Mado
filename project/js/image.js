@@ -87,8 +87,11 @@ function displayImages () {
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
 		rightFile = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
-
-		if(imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
+		if (imagePath.substring(0, 4) == "http") {
+			// Image from the web, we have to create a webview to display it.
+			endOfConversion();
+		}
+		else if (imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
 			if (imagesArray.length > 0){ // Files are already stored.
 				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
 					if(imagesArray[i][0] == imagePath) { // The file is already here.
