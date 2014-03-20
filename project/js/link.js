@@ -26,9 +26,9 @@ var linkDiv; // The div with id="mado-link".
 
 function applyLink () {
 	if (urlInput.value == "") {
-		urlInput.setAttribute("class", "flash");
+		urlInput.setAttribute("class", "tool-first-item flash");
 		urlInput.focus();
-		urlInput.removeAttribute("class");
+		urlInput.setAttribute("class", "tool-first-item");
 	}
 	else {
 		modifyLink();
@@ -40,7 +40,7 @@ function applyLink () {
 
 function cancelLink () {
 	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;	
+		linkDiv.innerText = initialText;
 
 	linkDisplayer.className = "tool-displayer hidden";	
 	selectElementContents(linkDiv);
