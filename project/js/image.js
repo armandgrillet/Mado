@@ -88,9 +88,11 @@ function displayImages () {
 		rightFile = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
 		if (imagePath.substring(0, 4) == "http") {
-			// Image from the web, we have to create a webview to display it.
-			endOfConversion();
-		}
+			imageWebview = document.createElement("webview");
+			imageWebview.setAttribute("src", "http://aplusa.io/img/aplusa-logo.png");
+			tempConversion += imageWebview; // Replace the path.	
+			endOfConversion();		
+        }
 		else if (imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
 			if (imagesArray.length > 0){ // Files are already stored.
 				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
