@@ -55,29 +55,21 @@ function conversion () {
 					marked.setOptions({ gfm : false });
 				}
 				setEditorSyntax();
-				marked(markdown.innerText, function (err, content) { // Marked.js makes the conversion.	    	
-					/* Reset. */
-			    	imagePosition = 0;
-			    	for (var i = 0; i < imagesArray.length; i++) // Reset the images array.
-			       		imagesArray[i][2] = false;
-
-			       	tempConversion = content; 
-			       	displayImages();      
-			    });
 			});	    
 		}
-		else {
+		else
 			marked.setOptions({ gfm : editorSyntax });
-			marked(markdown.innerText, function (err, content) {  	
-		    	/* Reset. */
-		    	imagePosition = 0;
-		    	for (var i = 0; i < imagesArray.length; i++)
-		       		imagesArray[i][2] = false;
 
-		       	tempConversion = content;
-		       	displayImages();      
-		    });
-		}
+		marked(markdown.innerText, function (err, content) {  
+			console.log(content);	
+	    	/* Reset. */
+	    	imagePosition = 0;
+	    	for (var i = 0; i < imagesArray.length; i++)
+	       		imagesArray[i][2] = false;
+
+	       	tempConversion = content;
+	       	displayImages();      
+	    });
 	}
 	else { // No Markdown here.
 		markdown.innerHTML = ""; // If the innerHTML is "<br>".
@@ -130,13 +122,22 @@ function endOfConversion () {
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
 
-	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> <span class=\"nofile-visual\">File not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png");
+	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Image not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png");
+	tempConversion = tempConversion.replace(/<img src=\"img\/notimage.png/g, "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" src=\"img/notimage.png");
+	tempConversion = tempConversion.replace(/<img src=\"img\/nointernet.png/g, "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" src=\"img/nointernet.png");
+
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
 		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
 			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
+	});
+
+	$('img:not([src]), img[src=""]').each(function() { 
+	 	imageWebview = document.createElement("webview");
+		imageWebview.setAttribute("src", $(this).attr('class'));
+		$(this).replaceWith(imageWebview);
 	});
 
 	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.

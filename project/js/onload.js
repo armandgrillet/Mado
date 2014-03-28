@@ -168,7 +168,8 @@ window.onload = function() {
 
     chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
         if (mado["firstLaunch"] == undefined) {
-            markdown.innerHTML = firstMessage;
+            if (markdownSaved == undefined) // User has not open a file.
+                markdown.innerHTML = firstMessage;
             chrome.storage.local.set({ "firstLaunch" : false });
         }
     });

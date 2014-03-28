@@ -29,6 +29,8 @@ var imagePosition = 0; // Used to don't keep on the same part of the document.
 var imagesArray = new Array(); // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
+var researching; // If we're searching an image.
+var imageWebview;
 
 /*
 * Functions (in alphabetical order).
@@ -86,34 +88,42 @@ function displayImages () {
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
 		rightFile = false;
+		researching = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
-		if (imagePath.substring(0, 4) == "http") {
-			imageWebview = document.createElement("webview");
-			imageWebview.setAttribute("src", "http://aplusa.io/img/aplusa-logo.png");
-			tempConversion += imageWebview; // Replace the path.	
-			endOfConversion();		
-        }
-		else if (imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
-			if (imagesArray.length > 0){ // Files are already stored.
-				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
-					if(imagesArray[i][0] == imagePath) { // The file is already here.
-						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[i][1]); // Replace the path.		
-		    			imagesArray[i][2] = true; // The file has been used.
-		    			if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		    				displayImages();
-		    				break;
-		    			}
-		    			else
-	                     	endOfConversion();
-		        	}
-		        	else if (i == imagesArray.length - 1) // The file isn't here.   	
-		    			update(); // Get the ID of the file.
-				}       			
+
+		for (var i = 0; i < imgFormats.length; i++) {
+			if (imagePath.substring(imagePath.length - imgFormats[i].length).toLowerCase() == imgFormats[i]) {			
+				if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
+					if (navigator.onLine)
+						tempConversion = tempConversion.replace(new RegExp("<img src=\"" + imagePath + "\"", "g"), "<img src=\"\" class=\"" + imagePath + "\"");
+					else
+						tempConversion = tempConversion.replace(new RegExp(imagePath, "i"), "img\/nointernet.png");					
+		        }
+				else if (imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
+					if (imagesArray.length > 0) { // Files are already stored.
+						for (var j = 0; j < imagesArray.length; j++) { // Search if the image is in the array.
+							if(imagesArray[j][0] == imagePath) { // The file is already here.
+								tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[j][1]); // Replace the path.		
+				    			imagesArray[j][2] = true; // The file has been used.
+				    			break;
+				        	}
+				        	else if (j == (imagesArray.length - 1) || imagesArray.length == 0) {// The file isn't here.   
+				        		researching	= true;
+				    			update(); // Get the ID of the file.
+				    		}
+						}       			
+					}
+					else {// The array doesn't exist yet.
+						researching	= true;
+						update(); // Get the ID of the file.   	
+					}
+				}
+				break; // End of the for.
 			}
-			else // The array doesn't exist yet.
-				update(); // Get the ID of the file.   	
+			else if (i == (imgFormats.length - 1))
+				tempConversion = tempConversion.replace(new RegExp(imagePath, "i"), "img\/notimage.png");
 		}
-		else
+		if (! researching)
 			displayImages();
 	}
 	else
