@@ -10,6 +10,7 @@
 var centerLine; // The line that separates Markdown and HTML views.
 var conversionDiv; // The div who contains the HTML conversion.
 var markdown; // The contenteditable where the user writes.
+var newConversion; // The hidden div which contains the new conversion.
 var pasteZone; // The textarea used when the user pastes content.
 
 /* Global. */
@@ -61,7 +62,6 @@ function conversion () {
 			marked.setOptions({ gfm : editorSyntax });
 
 		marked(markdown.innerText, function (err, content) {  
-			console.log(content);	
 	    	/* Reset. */
 	    	imagePosition = 0;
 	    	for (var i = 0; i < imagesArray.length; i++)
@@ -126,23 +126,39 @@ function endOfConversion () {
 	tempConversion = tempConversion.replace(/<img src=\"img\/notimage.png/g, "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" src=\"img/notimage.png");
 	tempConversion = tempConversion.replace(/<img src=\"img\/nointernet.png/g, "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" src=\"img/nointernet.png");
 
-	conversionDiv.innerHTML = tempConversion; // Display the conversion.
+	newConversion.innerHTML = tempConversion; // Display the conversion.
 
-	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
+	$("#new-conversion a").each(function() { // Add target="_blank" to make links work.
 		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
 			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
 	});
 
-	$('img:not([src]), img[src=""]').each(function() { 
+	$('#new-conversion img:not([src]), #new-conversion img[src=""]').each(function() { 
 	 	imageWebview = document.createElement("webview");
 		imageWebview.setAttribute("src", $(this).attr('class'));
 		$(this).replaceWith(imageWebview);
 	});
 
-	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-link").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-visual").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
+	var dmp = new diff_match_patch();
+	var diff = dmp.diff_main(conversionDiv.innerHTML, newConversion.innerHTML);
+	for (var i = 0; i < diff.length; i++) {
+		if (diff[i][0] == 0) { // Same code.
+			console.log("On garde " + diff[i][1]);
+			where += diff[i][1].length;
+		}
+		else if (diff[i][0] == -1) { // Code removed.
+			console.log("On enlève " + diff[i][1]);
+			conversionDiv.innerHTML = conversionDiv.innerHTML.substring(0, where) + conversionDiv.innerHTML.substring(where + diff[i][1].length - 1, conversionDiv.innerHTML.length);
+		}
+		else { // Code added.
+			console.log("On ajoute " + diff[i][1]);
+			conversionDiv.innerHTML = conversionDiv.innerHTML.substring(0, where) + diff[i][1] + conversionDiv.innerHTML.substring(where + diff[i][1].length - 1, conversionDiv.innerHTML.length);
+			where += diff[i][1].length;
+		}
+	}
+
+	$("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", chooseGalleries); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();

@@ -23,6 +23,7 @@ window.onload = function() {
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
     markdownContainer = document.getElementById("markdown-container");
+    newConversion = document.getElementById("new-conversion");
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
