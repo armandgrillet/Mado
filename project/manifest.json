@@ -43,6 +43,7 @@
     		]
     	},
     	"storage",
-      "webview"
+      "webview",
+      "<all_urls>"
     ] 	
 }

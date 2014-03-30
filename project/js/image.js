@@ -30,7 +30,6 @@ var imagesArray = new Array(); // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
 var researching; // If we're searching an image.
-var imageWebview;
 
 /*
 * Functions (in alphabetical order).
@@ -94,8 +93,25 @@ function displayImages () {
 		for (var i = 0; i < imgFormats.length; i++) {
 			if (imagePath.substring(imagePath.length - imgFormats[i].length).toLowerCase() == imgFormats[i]) {			
 				if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
-					if (navigator.onLine)
-						tempConversion = tempConversion.replace(new RegExp("<img src=\"" + imagePath + "\"", "g"), "<img src=\"\" class=\"" + imagePath + "\"");
+					if (navigator.onLine) {
+						if (imagesArray.length > 0) { // Files are already stored.
+							for (var j = 0; j < imagesArray.length; j++) { // Search if the image is in the array.
+								if(imagesArray[j][0] == imagePath) { // The file is already here.
+									tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[j][1]); // Replace the path.		
+					    			imagesArray[j][2] = true; // The file has been used.
+					    			break;
+					        	}
+					        	else if (j == (imagesArray.length - 1) || imagesArray.length == 0) {// The file isn't here.   
+					        		researching	= true;
+					    			updateOnline(imagePath); // Get the ID of the file.
+					    		}
+							}       			
+						}
+						else {// The array doesn't exist yet.
+							researching	= true;
+							updateOnline(imagePath); // Get the ID of the file.   	
+						}
+					}
 					else
 						tempConversion = tempConversion.replace(new RegExp(imagePath, "i"), "img\/nointernet.png");					
 		        }
@@ -243,4 +259,26 @@ function setImageInputs () {
 
 function update () {	
 	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
+}
+
+function updateOnline () {
+	window.loadImage(imagePath, function(blob_uri, requested_uri) {
+	  	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), blob_uri); 
+	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line.
+		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
+	 		displayImages();
+	 	else // The end.
+	 		endOfConversion();
+	});
+    
+}
+
+var loadImage = function(uri, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.responseType = 'blob';
+	xhr.onload = function() {
+		callback(window.URL.createObjectURL(xhr.response), uri);
+	}
+	xhr.open('GET', uri, true);
+	xhr.send();
 }

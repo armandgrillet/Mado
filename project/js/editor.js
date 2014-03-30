@@ -140,6 +140,8 @@ function endOfConversion () {
 		$(this).replaceWith(imageWebview);
 	});
 
+	conversionDiv.innerHTML = newConversion.innerHTML;
+	/*
 	var dmp = new diff_match_patch();
 	var diff = dmp.diff_main(conversionDiv.innerHTML, newConversion.innerHTML);
 	for (var i = 0; i < diff.length; i++) {
@@ -157,6 +159,7 @@ function endOfConversion () {
 			where += diff[i][1].length;
 		}
 	}
+	*/
 
 	$("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", chooseGalleries); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
