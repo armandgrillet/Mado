@@ -67,7 +67,6 @@
 /* Navbar icons */
 .nav-icon {
 	/* Box-model */
-	padding-left: 10px;
 	float: left;
 
 	/* Misc */
@@ -82,6 +81,7 @@
 	overflow: hidden;
 
 	/* Typography */
+	font-size: 0.9em;
 	line-height: 40px;
 
 	/* Misc */
