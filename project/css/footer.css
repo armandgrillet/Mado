@@ -93,7 +93,7 @@
 	height: 20px;
 
 	/* Typography */
-	color: #fafafa;
+	color: #e9e9e9;
 	line-height: 20px;
 }
 
@@ -137,6 +137,12 @@
 	color: #4a4942;
 }
 
-.style-choice-container label:hover { color: #000; }
+.style-choice-container label:hover,
+.style-choice-container input[type="radio"]:hover + label {
+	color: #000;
+}
 
-.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
+.style-choice-container input[type="radio"]:checked + label:hover,
+.style-choice-container input[type="radio"]:checked:hover + label {
+	color: #4a4942;
+}
