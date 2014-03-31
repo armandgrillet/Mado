@@ -7,8 +7,8 @@
 
 @font-face {
 	font-family: 'Mado-Icons-Normal';
-	src:url('../fonts/Mado-Icons-Normal.ttf') format('truetype'),
-		url('../fonts/Mado-Icons-Normal.svg#Mado-Icons-Normal') format('svg');
+	src:url('../fonts/Mado-Icons-Normal.svg#Mado-Icons-Normal') format('svg'),
+		url('../fonts/Mado-Icons-Normal.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -79,8 +79,8 @@
 
 @font-face {
 	font-family: 'Mado-Little-Icons-Normal';
-	src:url('../fonts/Mado-Little-Icons-Normal.ttf') format('truetype'),
-		url('../fonts/Mado-Little-Icons-Normal.svg#Mado-Little-Icons-Normal') format('svg');
+	src:url('../fonts/Mado-Little-Icons-Normal.svg#Mado-Little-Icons-Normal') format('svg'),
+		url('../fonts/Mado-Little-Icons-Normal.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -92,6 +92,12 @@
 .little-icon-mac-close,
 .little-icon-mac-minimize,
 .little-icon-mac-maximize,
+.little-icon-chr-close,
+.little-icon-chr-maximize,
+.little-icon-chr-minimize,
+.little-icon-lin-close,
+.little-icon-lin-maximize,
+.little-icon-lin-minimize,
 .little-icon-both,
 .little-icon-switch,
 .little-icon-delete,
@@ -125,6 +131,20 @@
 
 .little-icon-mac-maximize:before { content: "\e302"; }
 
+/* CHROME OS FRAME ICONS */
+.little-icon-chr-close:before { content: "\e400"; }
+
+.little-icon-chr-maximize:before { content: "\e401"; }
+
+.little-icon-chr-minimize:before { content: "\e402"; }
+
+/* LINUX UBUNTU FRAME ICONS */
+.little-icon-lin-close:before { content: "\e500"; }
+
+.little-icon-lin-maximize:before { content: "\e501"; }
+
+.little-icon-lin-minimize:before { content: "\e502"; }
+
 /* ---------------------------
 	Navbar switch "Both" icon
    --------------------------- */
@@ -137,7 +157,7 @@
 
 .little-icon-delete:before { content: "\e001"; }
 
-/* --------------
-	Footer icons
-   -------------- */
+/* -------------
+	Topbar icon
+   ------------- */
 .little-icon-unsaved:before { content: "\e002"; }
