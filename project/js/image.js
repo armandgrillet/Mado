@@ -30,6 +30,8 @@ var imagesArray = new Array(); // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
 var researching; // If we're searching an image.
+var imagePathsArray = new Array();
+var imagePositionInArray;
 
 /*
 * Functions (in alphabetical order).
@@ -89,22 +91,18 @@ function displayImages () {
 		rightFile = false;
 		researching = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
+		imagePathsArray.length = 0;
+	   	for(var i = 0; i < imagesArray.length; i++){
+	      	imagePathsArray.push(imagesArray[i][0]);
+	   	}
+	   	imagePositionInArray = imagePathsArray.indexOf(imagePath);
 
-		if (imgFormats.indexOf(imagePath.substr(imagePath.lastIndexOf('.') + 1) > -1) {		
+		if (imgFormats.indexOf(imagePath.substr(imagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {		
 			if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
 				if (navigator.onLine) {
-					if (imagesArray.length > 0) { // Files are already stored.
-						for (var j = 0; j < imagesArray.length; j++) { // Search if the image is in the array.
-							if(imagesArray[j][0] == imagePath) { // The file is already here.
-								tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[j][1]); // Replace the path.		
-				    			imagesArray[j][2] = true; // The file has been used.
-				    			break;
-				        	}
-				        	else if (j == (imagesArray.length - 1) || imagesArray.length == 0) {// The file isn't here.   
-				        		researching	= true;
-				    			updateOnline(imagePath); // Get the ID of the file.
-				    		}
-						}       			
+					if (imagePositionInArray != -1) { // Image is already stored.
+						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[imagePositionInArray][1]); // Replace the path.		
+		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.				        	}    			
 					}
 					else {// The array doesn't exist yet.
 						researching	= true;
@@ -115,20 +113,11 @@ function displayImages () {
 					tempConversion = tempConversion.replace(new RegExp(imagePath, "i"), "img\/nointernet.png");					
 	        }
 	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {// Not already translated
-				if (imagesArray.length > 0) { // Files are already stored.
-					for (var j = 0; j < imagesArray.length; j++) { // Search if the image is in the array.
-						if(imagesArray[j][0] == imagePath) { // The file is already here.
-							tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[j][1]); // Replace the path.		
-			    			imagesArray[j][2] = true; // The file has been used.
-			    			break;
-			        	}
-			        	else if (j == (imagesArray.length - 1) || imagesArray.length == 0) {// The file isn't here.   
-			        		researching	= true;
-			    			update(); // Get the ID of the file.
-			    		}
-					}       			
-				}
-				else {// The array doesn't exist yet.
+				if (imagePositionInArray != -1) { // Image is already stored.
+					tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[imagePositionInArray][1]); // Replace the path.		
+	    			imagesArray[imagePositionInArray][2] = true; // The file has been used.
+	        	}
+				else { // The image is not in the array.
 					researching	= true;
 					update(); // Get the ID of the file.   	
 				}
