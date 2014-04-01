@@ -73,17 +73,23 @@ function determineFrame () {
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
 		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window frame styles.
-		frameStylesheetLink.setAttribute("href", "css/window-frame-others.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	else if (navigator.appVersion.indexOf("Linux") != -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
+		frameStylesheetLink.setAttribute("href", "css/window-frame-linux.css");
+		windowClose.setAttribute("class", "cta little-icon-lin-close");
+		windowMax.setAttribute("class", "cta little-icon-lin-maximize");
+		windowMin.setAttribute("class", "cta little-icon-lin-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window frame styles (which are primarily Chrome OS's styles).
+		frameStylesheetLink.setAttribute("href", "css/window-frame-chromeos.css");
+		windowClose.setAttribute("class", "cta little-icon-chr-close");
+		windowMax.setAttribute("class", "cta little-icon-chr-maximize");
+		windowMin.setAttribute("class", "cta little-icon-chr-minimize");
 	}
 
 	head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.

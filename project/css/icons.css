@@ -139,9 +139,9 @@
 /* LINUX UBUNTU FRAME ICONS */
 .little-icon-lin-close:before { content: "\e500"; }
 
-.little-icon-lin-maximize:before { content: "\e501"; }
+.little-icon-lin-minimize:before { content: "\e501"; }
 
-.little-icon-lin-minimize:before { content: "\e502"; }
+.little-icon-lin-maximize:before { content: "\e502"; }
 
 /* ---------------------------
 	Navbar switch "Both" icon
