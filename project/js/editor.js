@@ -68,7 +68,7 @@ function conversion () {
 	       		imagesArray[i][2] = false;
 
 	       	tempConversion = content;
-	       	displayImages();      
+	       	displayImages();    
 	    });
 	}
 	else { // No Markdown here.

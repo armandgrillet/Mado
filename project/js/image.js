@@ -88,11 +88,10 @@ function chromeUpdate (results) {
 function displayImages () {
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
-		rightFile = false;
 		researching = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
-		imagePathsArray.length = 0;
-	   	for(var i = 0; i < imagesArray.length; i++){
+		imagePathsArray.length = 0; // Reset
+	   	for(var i = 0; i < imagesArray.length; i++) { // Put all the names 
 	      	imagePathsArray.push(imagesArray[i][0]);
 	   	}
 	   	imagePositionInArray = imagePathsArray.indexOf(imagePath);
@@ -101,7 +100,7 @@ function displayImages () {
 			if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
 				if (navigator.onLine) {
 					if (imagePositionInArray != -1) { // Image is already stored.
-						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[imagePositionInArray][1]); // Replace the path.		
+						tempConversion = tempConversion.replace(imagePath, imagesArray[imagePositionInArray][1]); // Replace the path.		
 		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.				        	}    			
 					}
 					else {// The array doesn't exist yet.
@@ -110,23 +109,24 @@ function displayImages () {
 					}
 				}
 				else
-					tempConversion = tempConversion.replace(new RegExp(imagePath, "i"), "img\/nointernet.png");					
+					tempConversion = tempConversion.replace(imagePath, "img\/nointernet.png");					
 	        }
-	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {// Not already translated
+	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
 				if (imagePositionInArray != -1) { // Image is already stored.
-					tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[imagePositionInArray][1]); // Replace the path.		
+					tempConversion = tempConversion.replace(imagePath, imagesArray[imagePositionInArray][1]); // Replace the path.		
 	    			imagesArray[imagePositionInArray][2] = true; // The file has been used.
 	        	}
 				else { // The image is not in the array.
 					researching	= true;
+					rightFile = false;
 					update(); // Get the ID of the file.   	
 				}
 			}		
-			if (! researching)
+			if (! researching) // We're not searching an image in the PC or the web.
 				displayImages();
 		}
 		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
-			tempConversion = tempConversion.replace(new RegExp(imagePath), "img\/notimage.png");
+			tempConversion = tempConversion.replace(imagePath, "img\/notimage.png");
 			displayImages();
 		}
 	}
@@ -135,7 +135,7 @@ function displayImages () {
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.png"); 
+	tempConversion = tempConversion.replace(imagePath, "img/nofile.png"); 
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -148,9 +148,8 @@ function galleryAnalysis (index) {
 			currentGallery = index;
 			galleriesList.forEach(
 				function(item, indx, arr) { // For each gallery.
-		     		if (indx == index && imagePath != undefined && rightFile == false) {// If we're looking for a file.  
+		     		if (indx == index && imagePath != undefined && rightFile == false) // If we're looking for a file.  
 		     			item.root.createReader().readEntries(getImages); // Get the images of the folder.
-		     		}
 		  		}
 			)
 		}
@@ -250,15 +249,14 @@ function update () {
 }
 
 function updateOnline () {
-	window.loadOnlineImage(imagePath, function(blob_uri, requested_uri) {
-	  	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), blob_uri); 
-	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line.
+	loadOnlineImage(imagePath, function(blob_uri, requested_uri) {
+	  	tempConversion = tempConversion.replace(imagePath, blob_uri); 
+	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line in the array of images.
 		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
 	 		displayImages();
 	 	else // The end.
 	 		endOfConversion();
-	});
-    
+	}); 
 }
 
 var loadOnlineImage = function(uri, callback) {
