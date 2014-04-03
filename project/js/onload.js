@@ -36,12 +36,6 @@ window.onload = function() {
     help = document.getElementById("help-input");
     helpButton = document.getElementById("help-button");
     helpDisplayer = document.getElementById("help-input-displayer");
-    for (var i = 1; i <= 3; i++) {
-        window["answer" + i] = document.getElementById("answer-" + i);
-        window["example" + i] = document.getElementById("example-" + i);
-        window["result" + i] = document.getElementById("result-" + i);
-        window["resultSwitch" + i] = document.getElementById("result-switch-" + i);
-    }
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
@@ -218,9 +212,9 @@ window.onload = function() {
     });
     $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
-    $(resultSwitch1).on("click", function() { switchResult("1"); });
-    $(resultSwitch2).on("click", function() { switchResult("2"); });
-    $(resultSwitch3).on("click", function() { switchResult("3"); });
+    $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) { 
+        switchResult(e.target.id.substr(e.target.id.length - 1));
+    });
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
