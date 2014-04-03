@@ -1,0 +1,85 @@
+/* =============================
+	CHROME OS WINDOW BAR STYLES
+   =============================
+	Specific styles for Mado's window bar on Chrome OS. */
+
+#window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
+
+#window-bar li {
+	/* Positioning */
+	float: right;
+
+	/* Box-model */
+	width: 30px;
+	height: 100%;
+
+	/* Typography */
+	color: #103365;
+	line-height: 24px;
+	text-align: center;
+
+	/* Visual */
+	background: transparent;
+
+	/* Misc */
+	transition: all 0.2s ease;
+	-webkit-app-region: no-drag; /* Disable drag action */
+}
+
+#window-close { width: 40px !important; }
+
+#window-close-button,
+#window-maximize,
+#window-minimize {
+	/* Visual */
+	text-shadow: 0 0 1px rgba(255,255,255,.3);
+	
+	/* Misc */
+	transition: all 0.1s ease;
+}
+
+#window-close-button { height: 100%; }
+
+#window-bar li:active,
+#window-close-button:active { transition: none; }
+
+/* Background colors for the buttons */
+#window-close-button:hover,
+#window-maximize:hover,
+#window-minimize:hover {
+	/* Typography */
+	color: #194584;
+
+	/* Visual */
+	background-color: #4a7aba;
+	box-shadow: 0 0 9px rgba(255,255,255,.1) inset;
+	text-shadow: 0 0 1px rgba(255,255,255,.4);
+}
+
+#window-close-button:active,
+#window-maximize:active,
+#window-minimize:active {
+	/* Typography */
+	color: #000;
+
+	/* Visual */
+	background-color: #143d7a;
+	box-shadow: 0 0 9px rgba(0,0,0,.1) inset;
+	text-shadow: 0 0 1px rgba(255,255,255,.4);
+}
+
+/* -------
+	Alert
+   ------- */
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	top: 20px;
+	right: 5px;
+
+	/* Misc */
+	-webkit-transform-origin: 430px 1px;
+}
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow { margin: 1px 0 0 432px; }
