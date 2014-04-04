@@ -19,7 +19,6 @@ var windowTitle; // Mado's active window's title attribute.
 /* Functions variables. */
 var fileEntry; // This is the variable who stores the file opened.
 var lastMarkdownHeight = 0;
-var lastWidth; // This is the last size of the window.
 var truncated; // To know the size when something is saved.
 
 
@@ -285,18 +284,8 @@ function theMinWidth () {
 * Chrome methods.
 *
 * Resume:
-	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
 	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
 */
-
-chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
-		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1160 && lastWidth < 1160) 
-		switchToBoth.click(); // viewswitch.js
-
-	lastWidth = window.innerWidth;
-});
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {

@@ -281,7 +281,7 @@ window.onload = function() {
     $(qAndALine).on("click", function() { moreWindow("more/qanda.html"); });
     $(shortcutsLine).on("click", function() { moreWindow("more/shortcuts.html"); });
     $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
-
+    
     /* recentfiles.js */
     displayRecentFiles();
 
@@ -327,6 +327,7 @@ window.onload = function() {
 
     /* window.js */
     determineFrame();
+    lastBounds = chrome.app.window.current().getBounds(); // Set the bounds at launch.
 
     $(quitCloseButton).on("click", quitCloseWindow);
     $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
