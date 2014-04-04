@@ -104,7 +104,7 @@ function maximizeWindow () {
 			chrome.app.window.current().restore();
 	}
 	else {
-		if (chrome.app.window.current().getBounds().width < screen.availWidth && 
+		if (chrome.app.window.current().getBounds().width < screen.availWidth || 
 			chrome.app.window.current().getBounds().height < screen.availHeight) {
 			boundsBeforeMaximized = chrome.app.window.current().getBounds();
 			chrome.app.window.current().setBounds({
@@ -114,7 +114,7 @@ function maximizeWindow () {
 			 	height: screen.availHeight 
 			});
 		}
-		else {// Restore the last bounds.
+		else { // Restore the last bounds.
 			if (boundsBeforeMaximized != undefined)
 				chrome.app.window.current().setBounds(boundsBeforeMaximized);
 			else
