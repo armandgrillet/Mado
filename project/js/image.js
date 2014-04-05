@@ -26,11 +26,11 @@ var image; // The content who is added.
 var imageLoaded; // The path of the image selected.
 var imagePath; // The path of the image.
 var imagePosition = 0; // Used to don't keep on the same part of the document.
-var imagesArray = new Array(); // All the images on the file.
+var imagesArray = []; // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
 var researching; // If we're searching an image.
-var imagePathsArray = new Array();
+var imagePathsArray = [];
 var imagePositionInArray;
 
 /*
@@ -47,10 +47,12 @@ var imagePositionInArray;
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* loadOnlineImage (): get the external image with a request.
 	* modifyImage (): enables the realtime modification of an image.
-	* update (): update the list of folders and analyse the files in folders.
 	* setBrowserText (imagePath): set the text in the button with the image's path.
 	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
+	* update (): update the list of folders and analyse the files in folders.
+	* updateOnline(): apply the new URL of the external image. 
 */
 
 function applyImage () {
@@ -99,9 +101,9 @@ function displayImages () {
 		if (imgFormats.indexOf(imagePath.substr(imagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {		
 			if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
 				if (navigator.onLine) {
-					if (imagePositionInArray != -1) { // Image is already stored.
-						tempConversion = tempConversion.replace(imagePath, imagesArray[imagePositionInArray][1]); // Replace the path.		
-		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.				        	}    			
+					if (imagePositionInArray > -1) { // Image is already stored.
+						tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
+		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.	
 					}
 					else {// The array doesn't exist yet.
 						researching	= true;
@@ -109,11 +111,11 @@ function displayImages () {
 					}
 				}
 				else
-					tempConversion = tempConversion.replace(imagePath, "img\/nointernet.png");					
+					tempConversion = tempConversion.substring(0, imagePosition) + "img\/nointernet.png" + tempConversion.substring(imagePosition + imagePath.length);			
 	        }
 	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
-				if (imagePositionInArray != -1) { // Image is already stored.
-					tempConversion = tempConversion.replace(imagePath, imagesArray[imagePositionInArray][1]); // Replace the path.		
+				if (imagePositionInArray > -1) { // Image is already stored.
+					tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
 	    			imagesArray[imagePositionInArray][2] = true; // The file has been used.
 	        	}
 				else { // The image is not in the array.
@@ -126,7 +128,7 @@ function displayImages () {
 				displayImages();
 		}
 		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
-			tempConversion = tempConversion.replace(imagePath, "img\/notimage.png");
+			tempConversion = tempConversion.substring(0, imagePosition) + "img\/notimage.png" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
 		}
 	}
@@ -135,7 +137,7 @@ function displayImages () {
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.replace(imagePath, "img/nofile.png"); 
+	tempConversion = tempConversion.substring(0, imagePosition) + "img\/nofile.png" + tempConversion.substring(imagePosition + imagePath.length);	 
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -214,6 +216,16 @@ function loadImage () {
 	);
 }
 
+var loadOnlineImage = function(uri, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.responseType = 'blob';
+	xhr.onload = function() {
+		callback(window.URL.createObjectURL(xhr.response), uri);
+	}
+	xhr.open('GET', uri, true);
+	xhr.send();
+}
+
 function modifyImage () {
 	image = "![" + altInput.value + "](" + imageLoaded + ')';
 	if (imageDiv != undefined)
@@ -257,14 +269,4 @@ function updateOnline () {
 	 	else // The end.
 	 		endOfConversion();
 	}); 
-}
-
-var loadOnlineImage = function(uri, callback) {
-	var xhr = new XMLHttpRequest();
-	xhr.responseType = 'blob';
-	xhr.onload = function() {
-		callback(window.URL.createObjectURL(xhr.response), uri);
-	}
-	xhr.open('GET', uri, true);
-	xhr.send();
 }
