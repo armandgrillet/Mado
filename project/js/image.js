@@ -111,7 +111,7 @@ function displayImages () {
 					}
 				}
 				else
-					tempConversion = tempConversion.substring(0, imagePosition) + "img\/nointernet.png" + tempConversion.substring(imagePosition + imagePath.length);			
+					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" src=\"img/nointernet.png" + tempConversion.substring(imagePosition + imagePath.length);			
 	        }
 	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
 				if (imagePositionInArray > -1) { // Image is already stored.
@@ -128,7 +128,7 @@ function displayImages () {
 				displayImages();
 		}
 		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
-			tempConversion = tempConversion.substring(0, imagePosition) + "img\/notimage.png" + tempConversion.substring(imagePosition + imagePath.length);;
+			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" src=\"img/notimage.png" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
 		}
 	}
@@ -137,7 +137,7 @@ function displayImages () {
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.substring(0, imagePosition) + "img\/nofile.png" + tempConversion.substring(imagePosition + imagePath.length);	 
+	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png" + tempConversion.substring(imagePosition + imagePath.length);
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -170,7 +170,7 @@ function getImage (entryPath) {
 			var reader = new FileReader();
           	reader.onloadend = function(e) { // We have the file (.result).
           		imagesArray.push([imagePath, this.result, true]); // Add a new line.
-             	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), this.result);  
+          		tempConversion = tempConversion.substring(0, imagePosition) + this.result + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
              	rightFile = true;
              	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
              		displayImages();

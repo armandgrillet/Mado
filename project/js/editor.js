@@ -117,13 +117,9 @@ function endOfConversion () {
 	imagePath = undefined;
 	rightFile = undefined;
 
-	for (var i = 0; i < imagesArray.length; i++) // Remove the images who are not used anymore.
+	for (var i = 0; i < imagesArray.length; i++) // Remove the images that are not used anymore.
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
-
-	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Image not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png");
-	tempConversion = tempConversion.replace(/<img src=\"img\/notimage.png/g, "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" src=\"img/notimage.png");
-	tempConversion = tempConversion.replace(/<img src=\"img\/nointernet.png/g, "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" src=\"img/nointernet.png");
 
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
