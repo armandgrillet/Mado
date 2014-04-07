@@ -266,6 +266,18 @@
 
 .sheet:last-of-type .clinic blockquote em { font-style: normal; }
 
+/* --------
+	Tables
+   -------- */
+.sheet:last-of-type td,
+.sheet:last-of-type th {
+	/* Box-model */
+	padding: 0.5em;
+
+	/* Visual */
+	border: 1px solid #000;
+}
+
 /* ------------------
 	Horizontal rules
    ------------------ */
