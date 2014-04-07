@@ -1,0 +1,1 @@
+/* The JS to get the history of modifications from the user */

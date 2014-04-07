@@ -132,16 +132,16 @@ window.onload = function() {
     newDisplaySize(); // Set the class of the body.
 
     $(newButton).on("click", newWindow);
-    Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
+    Mousetrap.bind(["command+n", "ctrl+n"], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
     
     $(openButton).on("click", openFileButton);
-    Mousetrap.bind(['command+o', 'ctrl+o'], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
+    Mousetrap.bind(["command+o", "ctrl+o"], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
     
     $(saveButton).on("click", saveFile);
-    Mousetrap.bind(['command+s', 'ctrl+s'], function(e) { saveFile(); return false; }); // Ctrl+s = save.
+    Mousetrap.bind(["command+s", "ctrl+s"], function(e) { saveFile(); return false; }); // Ctrl+s = save.
     
     $(saveAsButton).on("click", saveAsFile);
-    Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
+    Mousetrap.bind(["command+shift+s", "ctrl+shift+s"], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
     
     $(exportButton).on("click", exportFileHTML);
 
@@ -149,7 +149,11 @@ window.onload = function() {
         window.print();
     });
 
-    Mousetrap.bind(['command+p', 'ctrl+p'], function(e) { window.print(); return false; }); // Ctrl+p = print.
+    Mousetrap.bind(["command+p", "ctrl+p"], function(e) { window.print(); return false; }); // Ctrl+p = print.
+
+    /* diff.js */
+    Mousetrap.bind(["command+z", "ctrl+z"], function(e) { return false; }); // Ctrl+z = back.
+    Mousetrap.bind(["command+shift+z", "ctrl+y"], function(e) { return false; }); // Ctrl+y = forward.
 
     /* drag-and-drop.js */
     dragAndDropManager = new DnDManager("body", function(data) {
@@ -173,7 +177,7 @@ window.onload = function() {
     $(markdown).on("input propertychange", function() {
     	contentChanged();
     });
-    $(markdown).bind('paste', function(){ // What to do if the user pastes something.
+    $(markdown).bind("paste", function(){ // What to do if the user pastes something.
         pasteContent();   
     });
     $(markdown).keydown(function(e){
@@ -185,7 +189,7 @@ window.onload = function() {
         if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
             e.preventDefault();
             if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
-                $('#html-conversion').scrollTop($(e.currentTarget.hash).position().top);
+                $("#html-conversion").scrollTop($(e.currentTarget.hash).position().top);
         }
     });
 
@@ -206,7 +210,7 @@ window.onload = function() {
     });
 
     /* help.js */ 
-    Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
+    Mousetrap.bind(["command+h", "ctrl+h"], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
     $(help).keyup(function(e){
         if(e.keyCode == 27) // The user press echap
             $(helpButton).click();
@@ -245,7 +249,7 @@ window.onload = function() {
             changeContentHighlighted("mado-link");
     });
     
-    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
+    Mousetrap.bind(["command+k", "ctrl+k"], function(e) { // Ctrl+k = link.
         changeContentHighlighted("mado-link");
         $(linkButton).click(); 
         return false; 
@@ -323,8 +327,8 @@ window.onload = function() {
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });
     $(switchToBoth).on("click", function() { activate(this.id, "normal"); });
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
-    Mousetrap.bind(['command+alt+left', 'ctrl+alt+left'], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
-    Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
 
     /* window.js */
     determineFrame();
@@ -334,7 +338,7 @@ window.onload = function() {
     $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
 
     $(windowClose).on("click", closeWindow);
-    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+    Mousetrap.bind(["command+w", "ctrl+w"], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
 
     $(windowMax).on("click", maximizeWindow);
 
