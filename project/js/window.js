@@ -199,5 +199,9 @@ chrome.app.window.current().onBoundsChanged.addListener(function () {
 	else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) 
 		switchToBoth.click(); // viewswitch.js
 
+	if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600)
+		addTopbarLabels();
+	else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600)
+		removeTopbarLabels();
 	lastBounds = chrome.app.window.current().getBounds();
 });

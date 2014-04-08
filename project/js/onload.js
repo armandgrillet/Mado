@@ -290,8 +290,11 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
 
-    /* scroll.js */
+    /* responsive.js */
+    if (chrome.app.window.current().getBounds().width < 1600)
+        addTopbarLabels();
 
+    /* scroll.js */
     $(markdownContainer).on ("scroll", function (e) {
         if ($(markdownContainer).is(":hover"))
             asyncScroll("markdown");
