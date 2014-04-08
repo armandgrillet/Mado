@@ -10,11 +10,11 @@
 	float: right;
 
 	/* Box-model */
-	width: 30px;
+	width: 40px;
 	height: 100%;
 
 	/* Typography */
-	color: #103365;
+	color: #0c2a54;
 	line-height: 24px;
 	text-align: center;
 
@@ -26,13 +26,11 @@
 	-webkit-app-region: no-drag; /* Disable drag action */
 }
 
-#window-close { width: 40px !important; }
-
 #window-close-button,
 #window-maximize,
 #window-minimize {
 	/* Visual */
-	text-shadow: 0 0 1px rgba(255,255,255,.3);
+	text-shadow: 0 0 1px rgba(255,255,255,.15);
 	
 	/* Misc */
 	transition: all 0.1s ease;
@@ -47,9 +45,6 @@
 #window-close-button:hover,
 #window-maximize:hover,
 #window-minimize:hover {
-	/* Typography */
-	color: #194584;
-
 	/* Visual */
 	background-color: #4a7aba;
 	box-shadow: 0 0 9px rgba(255,255,255,.1) inset;
@@ -65,7 +60,7 @@
 	/* Visual */
 	background-color: #143d7a;
 	box-shadow: 0 0 9px rgba(0,0,0,.1) inset;
-	text-shadow: 0 0 1px rgba(255,255,255,.4);
+	text-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 /* -------
@@ -78,7 +73,7 @@
 	right: 5px;
 
 	/* Misc */
-	-webkit-transform-origin: 430px 1px;
+	-webkit-transform-origin: 436px 1px;
 }
 
 /* The arrow is a gray corner for the container */

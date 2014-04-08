@@ -128,6 +128,23 @@
 	border-left: none;
 }
 
+.sheet:last-of-type blockquote em { font-style: normal; }
+
+/* --------
+	Tables
+   -------- */
+.sheet:last-of-type td,
+.sheet:last-of-type th {
+	/* Box-model */
+	padding: 0.6em;
+
+	/* Visual */
+	border: 1px solid #dfdfdf;
+}
+
+/* Zebra stripes for the table's body */
+.sheet:last-of-type tbody tr:nth-child(2n+1) { background-color: #f3f3f3; }
+
 /* ------------------
 	Horizontal rules
    ------------------ */

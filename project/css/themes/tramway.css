@@ -117,6 +117,12 @@
 	text-align: center;
 }
 
+/* --------
+	Tables
+   -------- */
+.sheet:last-of-type td,
+.sheet:last-of-type th { border: 1px solid #4a4942; }
+
 /* ------------------
 	Horizontal rules
    ------------------ */

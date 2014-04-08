@@ -264,19 +264,22 @@
 	font-style: italic;
 }
 
-.sheet:last-of-type .clinic blockquote em { font-style: normal; }
-
 /* --------
 	Tables
    -------- */
+.sheet:last-of-type table { margin-bottom: 0.7em; }
+
 .sheet:last-of-type td,
 .sheet:last-of-type th {
 	/* Box-model */
 	padding: 0.5em;
 
 	/* Visual */
-	border: 1px solid #000;
+	border: 1px solid #dadada;
 }
+
+/* Zebra stripes for the table's body */
+.sheet:last-of-type tbody tr:nth-child(2n+1) { background-color: #f0f0f0; }
 
 /* ------------------
 	Horizontal rules
