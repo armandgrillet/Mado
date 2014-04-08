@@ -67,6 +67,7 @@ function conversion () {
 	       		imagesArray[i][2] = false;
 
 	       	tempConversion = content;
+	       	addDiff(); // diff.js
 	       	displayImages();    
 	    });
 	}
@@ -129,23 +130,7 @@ function endOfConversion () {
 		$(this).attr("target", "_blank");
 	});
 	/*
-	var dmp = new diff_match_patch();
-	var diff = dmp.diff_main(conversionDiv.innerHTML, newConversion.innerHTML);
-	for (var i = 0; i < diff.length; i++) {
-		if (diff[i][0] == 0) { // Same code.
-			console.log("On garde " + diff[i][1]);
-			where += diff[i][1].length;
-		}
-		else if (diff[i][0] == -1) { // Code removed.
-			console.log("On enlève " + diff[i][1]);
-			conversionDiv.innerHTML = conversionDiv.innerHTML.substring(0, where) + conversionDiv.innerHTML.substring(where + diff[i][1].length - 1, conversionDiv.innerHTML.length);
-		}
-		else { // Code added.
-			console.log("On ajoute " + diff[i][1]);
-			conversionDiv.innerHTML = conversionDiv.innerHTML.substring(0, where) + diff[i][1] + conversionDiv.innerHTML.substring(where + diff[i][1].length - 1, conversionDiv.innerHTML.length);
-			where += diff[i][1].length;
-		}
-	}
+	
 	*/
 
 	$("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", chooseGalleries); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
