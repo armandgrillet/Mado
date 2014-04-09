@@ -86,4 +86,13 @@
 		/* Typography */
 		page-break-after: avoid; /* No break after these elements */
 	}
+
+	td,
+	th {
+		/* Visual */
+		border: 1px solid #000 !important;
+	}
+
+	/* Zebra stripes canceled */
+	tbody tr:nth-child(2n+1) { background: transparent !important; }
 }
