@@ -3,7 +3,7 @@
 /* -------
 	Fonts
    ------- */
-.sheet:last-of-type {
+#html-conversion {
 	/* Typography */
 	font-family: Arvo, serif;
 	font-size: 1em;
@@ -13,9 +13,9 @@
 /* ------------
 	Paragraphs
    ------------ */
-.sheet:last-of-type p,
-.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
-.sheet:last-of-type ul {
+#html-conversion p,
+#html-conversion ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+#html-conversion ul {
 	/* Box-model */
 	padding-bottom: 0.65em;
 }
@@ -23,14 +23,14 @@
 /* --------
 	Titles
    -------- */
-.sheet:last-of-type h1,
-.sheet:last-of-type h2,
-.sheet:last-of-type h3 {
+#html-conversion h1,
+#html-conversion h2,
+#html-conversion h3 {
 	/* Typography */
 	font-family: Arvo;
 }
 
-.sheet:last-of-type h1 {
+#html-conversion h1 {
 	/* Box-model */
 	padding: 0.35em 0;
 
@@ -38,7 +38,7 @@
 	font-size: 3em;
 }
 
-.sheet:last-of-type h2 {
+#html-conversion h2 {
 	/* Box-model */
 	padding: 0.3em 0 0.65em;
 
@@ -46,7 +46,7 @@
 	font-size: 2em;
 }
 
-.sheet:last-of-type h3 {
+#html-conversion h3 {
 	/* Box-model */
 	padding: 0.5em 0;
 
@@ -54,7 +54,7 @@
 	font-size: 1.25em;
 }
 
-.sheet:last-of-type h4 {
+#html-conversion h4 {
 	/* Box-model */
 	padding: 0.65em 0;
 
@@ -62,7 +62,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type h5 {
+#html-conversion h5 {
 	/* Box-model */
 	padding-bottom: 0.8em;
 
@@ -71,7 +71,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type h6 {
+#html-conversion h6 {
 	/* Typography */
 	font-size: 0.75em;
 	font-weight: bold;
@@ -81,14 +81,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type ul > li { padding-left: 2em; }
+#html-conversion ul > li { padding-left: 2em; }
 
-.sheet:last-of-type ul > li:before { width: 2em; }
+#html-conversion ul > li:before { width: 2em; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type ol > li { padding-left: 2em; }
+#html-conversion ol > li { padding-left: 2em; }
 
-.sheet:last-of-type ol > li:before {
+#html-conversion ol > li:before {
 	/* Box-model */
 	width: 2em;
 
@@ -97,10 +97,10 @@
 }
 
 /* SUB-LISTS */
-.sheet:last-of-type ol ol,
-.sheet:last-of-type ol ul,
-.sheet:last-of-type ul ul,
-.sheet:last-of-type ul ol {
+#html-conversion ol ol,
+#html-conversion ol ul,
+#html-conversion ul ul,
+#html-conversion ul ol {
 	/* Box-model */
 	padding-bottom: 0;
 }
@@ -108,7 +108,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type blockquote {
+#html-conversion blockquote {
 	/* Box-model */
 	padding: 0 1.35em;
 
@@ -120,13 +120,13 @@
 /* --------
 	Tables
    -------- */
-.sheet:last-of-type td,
-.sheet:last-of-type th { border: 1px solid #4a4942; }
+#html-conversion td,
+#html-conversion th { border: 1px solid #4a4942; }
 
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type hr {
+#html-conversion hr {
 	margin: 0.65em auto 1.35em; /* No matter the size of the rule, it will be centered */
 
 	/* Box-model */

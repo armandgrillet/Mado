@@ -3,7 +3,7 @@
 /* -------
 	Fonts
    ------- */
-.sheet:last-of-type {
+#html-conversion {
 	/* Typography */
 	font-family: Bariol, sans-serif;
 	font-size: 1.1em;
@@ -14,9 +14,9 @@
 /* ------------
 	Paragraphs
    ------------ */
-.sheet:last-of-type p,
-.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
-.sheet:last-of-type ul {
+#html-conversion p,
+#html-conversion ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+#html-conversion ul {
 	/* Box-model */
 	padding-bottom: 0.7em;
 }
@@ -24,13 +24,13 @@
 /* --------
 	Titles
    -------- */
-.sheet:last-of-type h1,
-.sheet:last-of-type h2 {
+#html-conversion h1,
+#html-conversion h2 {
 	/* Typography */
 	font-family: BariolLight;
 }
 
-.sheet:last-of-type h1 {
+#html-conversion h1 {
 	/* Box-model */
 	padding: 0.6em 0 0.3em;
 
@@ -38,7 +38,7 @@
 	font-size: 3em;
 }
 
-.sheet:last-of-type h2 {
+#html-conversion h2 {
 	/* Box-model */
 	padding: 0.7em 0 0.5em;
 
@@ -46,7 +46,7 @@
 	font-size: 2em;
 }
 
-.sheet:last-of-type h3 {
+#html-conversion h3 {
 	/* Box-model */
 	padding: 0.75em 0;
 
@@ -55,7 +55,7 @@
 	font-size: 1.25em;
 }
 
-.sheet:last-of-type h4 {
+#html-conversion h4 {
 	/* Box-model */
 	padding: 0.7em 0;
 
@@ -63,7 +63,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type h5 {
+#html-conversion h5 {
 	/* Box-model */
 	padding-bottom: 0.85em;
 
@@ -72,7 +72,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type h6 {
+#html-conversion h6 {
 	/* Typography */
 	font-size: 0.8em;
 	font-weight: bold;
@@ -82,14 +82,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type ul > li { padding-left: 2em; }
+#html-conversion ul > li { padding-left: 2em; }
 
-.sheet:last-of-type ul > li:before { padding-left: 0; }
+#html-conversion ul > li:before { padding-left: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type ol > li { padding-left: 2em; }
+#html-conversion ol > li { padding-left: 2em; }
 
-.sheet:last-of-type ol > li:before {
+#html-conversion ol > li:before {
 	/* Box-model */
 	padding-left: 0;
 
@@ -102,13 +102,13 @@
 }
 
 /* Prevent empty list items to be displayed without a height */
-.sheet:last-of-type li:empty { height: 1.5em; }
+#html-conversion li:empty { height: 1.5em; }
 
 /* SUB-LISTS */
-.sheet:last-of-type ol ol,
-.sheet:last-of-type ol ul,
-.sheet:last-of-type ul ul,
-.sheet:last-of-type ul ol {
+#html-conversion ol ol,
+#html-conversion ol ul,
+#html-conversion ul ul,
+#html-conversion ul ol {
 	/* Box-model */
 	padding-bottom: 0;
 }
@@ -116,7 +116,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type blockquote {
+#html-conversion blockquote {
 	/* Positioning */
 	margin-bottom: 0.7em;
 
@@ -128,13 +128,13 @@
 	border-left: none;
 }
 
-.sheet:last-of-type blockquote em { font-style: normal; }
+#html-conversion blockquote em { font-style: normal; }
 
 /* --------
 	Tables
    -------- */
-.sheet:last-of-type td,
-.sheet:last-of-type th {
+#html-conversion td,
+#html-conversion th {
 	/* Box-model */
 	padding: 0.6em;
 
@@ -143,17 +143,17 @@
 }
 
 /* Zebra stripes for the table's body */
-.sheet:last-of-type tbody tr:nth-child(2n+1) { background-color: #f3f3f3; }
+#html-conversion tbody tr:nth-child(2n+1) { background-color: #f3f3f3; }
 
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type hr { margin: 0.7em auto 1.5em; }
+#html-conversion hr { margin: 0.7em auto 1.5em; }
 
 /* ------
 	Code
    ------ */
-.sheet:last-of-type code {
+#html-conversion code {
 	/* Typography */
 	font-size: 0.85em;
 	line-height: 1.45em;
