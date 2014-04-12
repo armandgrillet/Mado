@@ -151,7 +151,7 @@
 /* HELP INPUT SPECIFICS: HELP RESULTS */
 #help-results-container {
 	/* Box-model */
-	/* No default height set: its height is set by its possible classes. */
+	padding-top: 5px;
 	overflow: hidden;
 	
 	/* Typography */
@@ -168,6 +168,7 @@
 #help-results-container.hidden {
 	/* Box-model */
 	height: 0;
+	padding-top: 0;
 
 	/* Misc */
 	opacity: 0;
@@ -179,17 +180,27 @@
 
 #help-results-container.three-results { height: 150px; }
 
+#help-results-wrapper { width: 200%; }
+
 /* Container for both the answer and the example, also features a switch button to navigate between each */
 .result {
 	/* Positioning */
 	position: relative;
 
 	/* Box-model */
-	width: 200%; /* Twice the #help-results-container's width */
-	height: 50px;
+	height: auto;
+
+	/* Misc */
+	transition: -webkit-transform .1s ease;
 }
 
 .result:not(:first-of-type) { border-top: 1px solid #fafafa; }
+
+.result:first-of-type td { padding: 0 0 5px; }
+
+.result td { padding: 5px 0; }
+
+.result:last-of-type td { padding: 5px 0 0; }
 
 /* The button to switch between the answer and the example */
 .result-switch-container {
@@ -235,30 +246,15 @@
 
 .answer,
 .example {
-	/* Positioning */
-	position: absolute;
-	top: 5px;
-	padding-right: 30px;
-
 	/* Box-model */
 	width: 50%; /* Half the .result's width, which means all the #help-results-container's width */
-	height: 100%; /* All the .result's height */
+	padding-right: 30px; /* Space for the result's switch */
 
 	/* Misc */
 	transition: left .1s ease-out;
 }
 
-/* Markdown answer of the help result, visible until the switch button is clicked */
-.answer { left: 0; }
-
-/* Answer behaviour when the switch is activated: it slides to the left and disappears */
-.result.switched .answer { left: -50%; }
-
-/* Example version of the help result, visible once the switch button is clicked */
-.example { left: 50%; }
-
-/* Example behaviour once the switch is activated: it slides to the left and shows up */
-.result.switched .example { left: 0; }
+.result.switched { -webkit-transform: translate(-50%,0); }
 
 /* When there is no result yet (less than 3 characters in the input), or no result at all */
 .no-result { font-weight: bold; }
