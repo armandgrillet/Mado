@@ -43,35 +43,55 @@ function addDiff () {
 	}
 }
 
+function getCaretCharacterOffsetWithin(element) {
+    var caretOffset = 0;
+    var doc = element.ownerDocument || element.document;
+    var win = doc.defaultView || doc.parentWindow;
+    var sel;
+    if (typeof win.getSelection != "undefined") {
+        var range = win.getSelection().getRangeAt(0);
+        var preCaretRange = range.cloneRange();
+        preCaretRange.selectNodeContents(element);
+        preCaretRange.setEnd(range.endContainer, range.endOffset);
+        caretOffset = preCaretRange.toString().length;
+    } else if ( (sel = doc.selection) && sel.type != "Control") {
+        var textRange = sel.createRange();
+        var preCaretTextRange = doc.body.createTextRange();
+        preCaretTextRange.moveToElementText(element);
+        preCaretTextRange.setEndPoint("EndToEnd", textRange);
+        caretOffset = preCaretTextRange.text.length;
+    }
+    return caretOffset;
+}
+
 function goBack () {
 	console.log("BACK");
 	if (diffArray.length > 0) {
 		console.log("le tableau n'est pas vide");
 		for (var i = diffArray.length - 1; i >= 0; i--) {
 			console.log(diffArray[i]);
-			if (diffArray[i][1] == true) { // This is the line with the diffs.
-				console.log("Ligne avec ce qu'on veut et comme nombre de modifications : " + diffArray[i][0].length - 1);
-				diffArray[i][1] = false;
+			if (diffArray[i][diffArray[i].length - 1] == true) { // This is the line with the diffs.
+				diffArray[i][diffArray[i].length - 1] = false;
 
-				for (var j = diffArray[i][0].length - 1; j >= 0; j--) {
+				for (var j = diffArray[i].length - 2; j >= 0; j--) {
 					console.log("Truc à changer");
-					console.log(diffArray[i][0][j]);
-					console.log(diffArray[i][0][j][0]);
-					if (diffArray[i][0][j][0] == 1) { // Something was added.
-						console.log("A enlever");
-						markdown.innerHTML = markdown.innerHTML.slice(0, diffArray[i][0][j][2]) + markdown.innerHTML.slice(diffArray[i][0][j][1].length + diffArray[i][0][j][2]);
+					console.log(diffArray[i][j]);
+					if (diffArray[i][j][0] == 1) { // Something was added.
+						console.log("A enlever : " + diffArray[i][0][1]);
+						markdown.innerHTML = markdown.innerHTML.slice(0, diffArray[i][j][2]) + markdown.innerHTML.slice(diffArray[i][0][1].length + diffArray[i][j][2]);
 					}
 					else if (diffArray[i][0][j][0] == -1) {// Something was removed.
-						console.log("A ajouter");
-						markdown.innerHTML = markdown.innerHTML.slice(0, diffArray[i][0][j][2]) + diffArray[i][0][j][1] + markdown.innerHTML.slice(diffArray[i][0][j][2]);
+						console.log("A ajouter : " + diffArray[i][0][1]);
+						markdown.innerHTML = markdown.innerHTML.slice(0, diffArray[i][j][2]) + diffArray[i][j][1] + markdown.innerHTML.slice(diffArray[i][j][2]);
 					}
 				}
 
 				if (diffArray[i - 1] != undefined) // If the array is not finished
-					diffArray[i - 1][1] = true;
+					diffArray[i - 1][diffArray[i - 1].length - 1] = true;
+				lastMarkdown.innerHTML = markdown.innerHTML; 
+				break;
 			}			
-			lastMarkdown.innerHTML = markdown.innerHTML; 
-			break;
+			
 		}
 	}
 }
