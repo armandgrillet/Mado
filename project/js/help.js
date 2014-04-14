@@ -123,18 +123,18 @@ function answer () {
 		case 0: // Nothing found.
 			document.getElementById("answer-1").innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
-			setResultsHeight(1);
 			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
+			//setResultsHeight(1);
 			break;
 		case 1: // One answer found.
 			resultsContainer.className = "one-result";
-			setResultsHeight(1);
 			resetAnswerDiv(2);
+			//setResultsHeight(1);
 			break;
 		case 2: // Two answers found.
 			resultsContainer.className = "two-results";
-			setResultsHeight(2);
 			resetAnswerDiv(3);
+			//setResultsHeight(2);
 			break;
 		case 3: // Three answers found, maximum number possible at the same time.
 			resultsContainer.className = "three-results";
@@ -177,16 +177,21 @@ function resetAnswerDiv(begin) {
 			document.getElementById("example-" + i).innerHTML = "";
 		}
 	}
+
+	setResultsHeight(begin - 1);
 }
 
 function setResultsHeight(nbResults) {
 	var totalHeight = 0;
 
-	for (var i = 1; i <= nbResults; i++) {
-		totalHeight += $("#result-" + i).height();
+	if (nbResults > 0 && nbResults <= 3) { // Only if the number of results is 1, 2 or 3
+		for (var i = 1; i <= nbResults; i++) // Check all the results, depending on the number of results
+			totalHeight += $("#result-" + i).height(); // Add the height of the current result to the total height
 	}
 
 	resultsContainer.setAttribute("style", "height: " + totalHeight + "px;"); // Set the help results container's height
+
+	console.log(totalHeight);
 }
 
 function switchResult (numResult) {
