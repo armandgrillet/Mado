@@ -217,7 +217,7 @@ window.onload = function() {
     });
     $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
-    $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) { 
+    $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) {
         switchResult(e.target.id.substr(e.target.id.length - 1));
     });
 

@@ -104,6 +104,7 @@ var helpArray = [
 	* answer (): find the answers and the examples for the question.
 	* displayAnswers (): display the answers.
 	* resetAnswerDiv (): clear the Help divs.
+	* setResultsHeight (number of results): set the help container's height, depending on the number of results.
 	* switchResult (result number): show the answer or the example when the user click on a switch.
 */
 
@@ -113,7 +114,7 @@ function answer () {
 		for (var j = 0; j < helpArray[i][0].length; j++) // A line can have many columns (different ways to say the same thing), this loop run through each column.
 			if (helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase()) > -1) { // Everything in lower case to help the condition.
 				wordPos = helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase());
-				document.getElementById("answer-" + (maxAnswers + 1)).innerHTML = "<span class=\"help-title\">" + helpArray[i][0][j].substring(0, wordPos) + "<span class=\"match\">" + helpArray[i][0][j].substr(wordPos, help.value.length) + "</span>" + helpArray[i][0][j].substring(wordPos + help.value.length) + "</span>: " + helpArray[i][1]; // Put the answer in the appropriate div.
+				document.getElementById("answer-" + (maxAnswers + 1)).innerHTML = "<h1 class=\"help-title\">" + helpArray[i][0][j].substring(0, wordPos) + "<span class=\"match\">" + helpArray[i][0][j].substr(wordPos, help.value.length) + "</span>" + helpArray[i][0][j].substring(wordPos + help.value.length) + "</h1>: " + helpArray[i][1]; // Put the answer in the appropriate div.
 				document.getElementById("example-" + (maxAnswers + 1)).innerHTML = helpArray[i][2]; // Put the answer in the appropriate div.
 				maxAnswers++; // You can't have more than 3 answers.
 				j = helpArray[i][0].length; // Change the line (to don't have 2 times the same answer).
@@ -122,18 +123,22 @@ function answer () {
 		case 0: // Nothing found.
 			document.getElementById("answer-1").innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
+			setResultsHeight(1);
 			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
 			break;
 		case 1: // One answer found.
 			resultsContainer.className = "one-result";
+			setResultsHeight(1);
 			resetAnswerDiv(2);
 			break;
 		case 2: // Two answers found.
 			resultsContainer.className = "two-results";
+			setResultsHeight(2);
 			resetAnswerDiv(3);
 			break;
 		case 3: // Three answers found, maximum number possible at the same time.
 			resultsContainer.className = "three-results";
+			setResultsHeight(3);
 			break;
 	}
 }
@@ -143,8 +148,10 @@ function displayAnswers () {
 		if (document.getElementById("result-" + i).className == "result switched")
 			document.getElementById("result-" + i).className = "result";
 
-	if (help.value.length == 0)
+	if (help.value.length == 0) {
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
+		setResultsHeight(0);
+	}
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
@@ -152,6 +159,8 @@ function displayAnswers () {
 				document.getElementById("answer-1").innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
 			else if (help.value.length == 2)
 				document.getElementById("answer-1").innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
+
+			setResultsHeight(1);
 		}
 		else
 			answer(); // Find the answers.
@@ -168,6 +177,16 @@ function resetAnswerDiv(begin) {
 			document.getElementById("example-" + i).innerHTML = "";
 		}
 	}
+}
+
+function setResultsHeight(nbResults) {
+	var totalHeight = 0;
+
+	for (var i = 1; i <= nbResults; i++) {
+		totalHeight += $("#result-" + i).height();
+	}
+
+	resultsContainer.setAttribute("style", "height: " + totalHeight + "px;"); // Set the help results container's height
 }
 
 function switchResult (numResult) {

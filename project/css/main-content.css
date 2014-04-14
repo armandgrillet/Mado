@@ -151,7 +151,6 @@
 /* HELP INPUT SPECIFICS: HELP RESULTS */
 #help-results-container {
 	/* Box-model */
-	padding-top: 5px;
 	overflow: hidden;
 	
 	/* Typography */
@@ -196,11 +195,7 @@
 
 .result:not(:first-of-type) { border-top: 1px solid #fafafa; }
 
-.result:first-of-type td { padding: 0 0 5px; }
-
-.result td { padding: 5px 0; }
-
-.result:last-of-type td { padding: 5px 0 0; }
+.result td { padding: 10px 0; }
 
 /* The button to switch between the answer and the example */
 .result-switch-container {
