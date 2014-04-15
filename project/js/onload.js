@@ -313,10 +313,6 @@ window.onload = function() {
     */
 
     /* styles.js */
-    themeStylesheetLink.setAttribute("rel", "stylesheet");
-    themeStylesheetLink.setAttribute("type", "text/css");
-    head.appendChild(themeStylesheetLink);
-
     getStyle();
 
     $(homeRadio).on("click", function() { setStyle("home"); });

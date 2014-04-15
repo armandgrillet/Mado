@@ -14,7 +14,6 @@ var stylesDisplayer; // The div that contains and displays the style selection t
 var clinicRadio; // Clinic style.
 var homeRadio; // Home style.
 var tramwayRadio; // Tramway style.
-var themeStylesheetLink = document.createElement("link"); // Create a "link" node.
 
 /*
 * Functions (in alphabetical order).
@@ -33,8 +32,13 @@ function getStyle () {
 				clinicRadio.checked = true;
 			else
 				tramwayRadio.checked = true;
-
-			themeStylesheetLink.setAttribute("href", "css/themes/" + mado["style"] + ".css");
+			for (var i = 0; i < document.styleSheets.length; i++)
+				if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
+			    	if (document.styleSheets.item(i).href.indexOf(mado["style"]) == -1) 
+			    		document.styleSheets.item(i).disabled = true;
+			    	else
+			    		document.styleSheets.item(i).disabled = false;
+				}
 		}
 		else {
 			homeRadio.checked = true;
@@ -44,6 +48,12 @@ function getStyle () {
 }
 
 function setStyle (newStyle) {
-	themeStylesheetLink.setAttribute("href", "css/themes/" + newStyle + ".css");
+	for (var i = 0; i < document.styleSheets.length; i++)
+		if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
+	    	if (document.styleSheets.item(i).href.indexOf(newStyle) == -1) 
+	    		document.styleSheets.item(i).disabled = true;
+	    	else
+	    		document.styleSheets.item(i).disabled = false;
+		}
 	chrome.storage.local.set({ "style" : newStyle });
 }
