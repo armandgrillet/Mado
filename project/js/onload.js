@@ -45,6 +45,9 @@ window.onload = function() {
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
     altInput = document.getElementById("alt-input");
+    webimageButton = document.getElementById("webimage-button");
+    webimageDisplayer = document.getElementById("webimage-insertion-displayer");
+    webimageBox = document.getElementById("webimage-insertion-box");
 
     /* link.js */
     cancelLinkButton = document.getElementById("cancel-link");

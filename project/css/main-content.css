@@ -308,6 +308,10 @@
 /* The "Ok" button */
 #insert-link { margin-left: 5px; }
 
+/* WEB IMAGE INSERTION SPECIFICS */
+/* The "Ok" button */
+#insert-webimage { margin-left: 5px; }
+
 /* IMAGE INSERTION SPECIFICS */
 /* The first button, enables the user to choose his galleries */
 #galleries-button {

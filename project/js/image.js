@@ -15,6 +15,9 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
+var webimageButton; // The "Web image" button.
+var webimageBox; // The clickable zone of the Web image insertion tool.
+var webimageDisplayer; // The div that displays or not the Web image insertion tool.
 
 /* Functions variables. 
 * startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.

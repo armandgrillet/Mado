@@ -296,7 +296,7 @@
 								
 									<div class="tool-box" id="link-insertion-box">
 										<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
-										<input type="text" class="tool-first-item" id="url-input" placeholder="Type a URL">
+										<input type="text" class="tool-first-item" id="url-input" placeholder="Type the URL">
 										<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
 											 Three cases here:
 											 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
@@ -310,13 +310,38 @@
 									</div>
 								</div>
 							</li>
-							<!-- Image tool
+							<!-- Web image tool
 								 Displays two inputs for image information, and a browse button to get the image's path. -->
+							<li class="tool-container" id="webimage-insertion-container">
+
+								<div class="cta tool icon-webimage" id="webimage-button"></div> <!-- When clicked, displays the image inputs & browse button via JavaScript. -->
+								<!-- Web image insertion displayer
+									 Displays the inputs on click on the "Web image" button. It has two class states:
+									 - "hidden": hides its children.
+									 - No class: displays everything. -->
+								<div class="tool-displayer hidden" id="webimage-insertion-displayer">
+									
+									<div class="tool-arrow"></div>
+
+									<div class="tool-box" id="webimage-insertion-box">
+										<!-- The first input is required, it asks the user to type the URL for the Web image. -->
+										<input type="text" class="tool-first-item" id="webimage-url" placeholder="Type the image's URL">
+										<!-- The first input is required, it asks the user to type the alt text for the Web image. -->
+										<input type="text" id="webimage-alt-input" placeholder="Type an alt text">
+										<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
+										<div class="cta button button-grey" id="cancel-webimage">Cancel</div>
+										<!-- The ok button enables the user to confirm his changes over a Web image he had started importing. -->
+										<div class="cta button" id="insert-webimage">Ok</div>
+									</div>
+								</div>
+							</li>
+							<!-- Image tool
+								 Displays one input for image information, and a browse button to get the image's path. -->
 							<li class="tool-container" id="image-insertion-container">
 
 								<div class="cta tool icon-image" id="image-button"></div> <!-- When clicked, displays the image inputs & browse button via JavaScript. -->
 								<!-- Image insertion displayer
-									 Displays the inputs & browse button on click on the "Image" button. It has two class states:
+									 Displays the input & browse button on click on the "Image" button. It has two class states:
 									 - "hidden": hides its children.
 									 - No class: displays everything. -->
 								<div class="tool-displayer hidden" id="image-insertion-displayer">
@@ -331,7 +356,7 @@
 											 - No image chosen already: the browse button is entitled "Choose an image".
 											 - Already an image chosen: the browse button shows the image title and extension. -->
 										<div class="cta button" id="browse-image"></div>
-										<!-- The first input is required, it asks the user to type the alt text for the image. -->
+										<!-- The input is required, it asks the user to type the alt text for the image. -->
 										<input type="text" id="alt-input" placeholder="Type an alt text">
 										<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
 										<div class="cta button button-grey" id="cancel-image">Cancel</div>

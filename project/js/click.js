@@ -17,7 +17,7 @@ $(document).click( function(e) {
 	}
 
 	/* image.js */
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
+	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") {
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
@@ -35,6 +35,13 @@ $(document).click( function(e) {
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
+	}
+
+	if ($(e.target).closest(webimageButton).length && webimageDisplayer.className == "tool-displayer hidden") {
+		webimageDisplayer.className = "tool-displayer";
+	}
+	else if (webimageDisplayer.className == "tool-displayer" && (! $(e.target).closest(webimageBox).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
+		webimageDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* link.js */
