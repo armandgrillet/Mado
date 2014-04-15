@@ -48,7 +48,7 @@ function checkRecentFile (fileNumber) {
 							chrome.fileSystem.restoreEntry(
 								mado["recentFileId" + fileNumber],
 								function (fileToOpen) {
-									if (fileToOpen) // The file is real.
+									if (fileToOpen) // The file still exists.
 										checkRecentFile(fileNumber + 1);				
 									else { // The file is empty or deleted.
 										document.getElementById("recent-" + fileNumber).setAttribute("class", "recent-file deleted"); // Change the class to do the visual effect.

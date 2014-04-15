@@ -21,6 +21,7 @@ var tramwayRadio; // Tramway style.
 * Resume:
 	* getStyle (): get the storage variable style.
 	* setStyle (newStyleToApply): set the storage variable "style".
+	* setStyleInHTML (newStyleToApply): Disable useless links in HTML and activate the good one.
 */
 
 function getStyle () {
@@ -32,22 +33,21 @@ function getStyle () {
 				clinicRadio.checked = true;
 			else
 				tramwayRadio.checked = true;
-			for (var i = 0; i < document.styleSheets.length; i++)
-				if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
-			    	if (document.styleSheets.item(i).href.indexOf(mado["style"]) == -1) 
-			    		document.styleSheets.item(i).disabled = true;
-			    	else
-			    		document.styleSheets.item(i).disabled = false;
-				}
+			setStyleInHTML(mado["style"]);
 		}
 		else {
 			homeRadio.checked = true;
-			setStyle ("home");
+			setStyle("home");
 		}
 	});
 }
 
 function setStyle (newStyle) {
+	setStyleInHTML(newStyle);
+	chrome.storage.local.set({ "style" : newStyle });
+}
+
+function setStyleInHTML (newStyle) {
 	for (var i = 0; i < document.styleSheets.length; i++)
 		if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
 	    	if (document.styleSheets.item(i).href.indexOf(newStyle) == -1) 
@@ -55,5 +55,4 @@ function setStyle (newStyle) {
 	    	else
 	    		document.styleSheets.item(i).disabled = false;
 		}
-	chrome.storage.local.set({ "style" : newStyle });
 }
