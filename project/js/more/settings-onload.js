@@ -23,10 +23,11 @@ window.onload = function() {
 	analytics = document.getElementById("analytics-checkbox");
 
 	/* Functions. */
-	if (screen.width < 1366) { // Don't show "Big" if the screen is too small
-		bigInputContainer.style.display = "none";
-		bigLabelContainer.style.display = "none";
-	}
+	// if (screen.width < 1366) { // Don't show "Big" if the screen is too small
+	// 	bigInputContainer.style.display = "none";
+	// 	$(bigInputContainer).css("display", "none");
+	// 	$(bigLabelContainer).css("display", "none");
+	// }
 
 	/*
     * Functions.

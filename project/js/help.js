@@ -184,12 +184,9 @@ function resetAnswerDiv(begin) {
 function setResultsHeight(nbResults) {
 	var totalHeight = 0;
 
-	if (nbResults > 0 && nbResults <= 3) { // Only if the number of results is 1, 2 or 3
-		for (var i = 1; i <= nbResults; i++) // Check all the results, depending on the number of results
-			totalHeight += $("#result-" + i).height(); // Add the height of the current result to the total height
-	}
-
-	resultsContainer.setAttribute("style", "height: " + totalHeight + "px;"); // Set the help results container's height
+	for (var i = 1; i <= nbResults && i <= 3; i++) // Check all the results, depending on the number of results
+		totalHeight += $("#result-" + i).height(); // Add the height of the current result to the total height
+	$(resultsContainer).css("height", totalHeight + "px");
 
 	console.log(totalHeight);
 }

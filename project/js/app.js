@@ -50,11 +50,10 @@ function contentChanged () {
 	}
 
 	conversion();
-	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
-            centerLine.style.display = "none";
-        }
+	if (markdownContainer.scrollHeight > $(markdownContainer).height())
+        $(centerLine).css("display", "none");
     else
-        centerLine.style.display = "block";
+        $(centerLine).css("display", "block");
     syntaxHighlighting();
 }
 function errorHandler() {

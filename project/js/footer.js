@@ -21,12 +21,12 @@ var wordsDiv; // The div that contains the document's words number.
 
 function counterSelection () {
 	if (charsDiv.style.display == "none") {
-		charsDiv.style.display = "inline";
-		wordsDiv.style.display = "none";
+		$(charsDiv).css("display", "inline");
+		$(wordsDiv).css("display", "none");
 	}
 	else {
-		charsDiv.style.display = "none";
-		wordsDiv.style.display = "inline";
+		$(charsDiv).css("display", "none");
+		$(wordsDiv).css("display", "inline");
 	}
 }
 

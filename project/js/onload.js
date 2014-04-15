@@ -162,7 +162,7 @@ window.onload = function() {
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
-    charsDiv.style.display = "none"; // On launch we just display the number of words.
+    $(charsDiv).css("display", "none"); // On launch we just display the number of words.
 
     chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
         if (mado["firstLaunch"] == undefined) {
@@ -330,8 +330,8 @@ window.onload = function() {
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });
     $(switchToBoth).on("click", function() { activate(this.id, "normal"); });
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
-    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
-    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { switchShortcuts("left"); return false; }); // Ctrl + -> = to the left.
+    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { switchShortcuts("right"); return false; }); // Ctrl + <- = to the right.
 
     /* window.js */
     determineFrame();
