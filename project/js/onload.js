@@ -151,10 +151,6 @@ window.onload = function() {
 
     Mousetrap.bind(["command+p", "ctrl+p"], function(e) { window.print(); return false; }); // Ctrl+p = print.
 
-    /* diff.js */
-    Mousetrap.bind(["command+z", "ctrl+z"], function(e) { goBack(); return false; }); // Ctrl+z = back.
-    Mousetrap.bind(["command+shift+z", "ctrl+y"], function(e) { goForward(); return false; }); // Ctrl+y = forward.
-
     /* drag-and-drop.js */
     dragAndDropManager = new DnDManager("body", function(data) {
         openDraggedFile(data.items[0].webkitGetAsEntry());

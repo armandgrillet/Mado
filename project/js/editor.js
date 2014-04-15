@@ -67,7 +67,6 @@ function conversion () {
 	       		imagesArray[i][2] = false;
 
 	       	tempConversion = content;
-	       	addDiff(); // diff.js
 	       	displayImages();    
 	    });
 	}
