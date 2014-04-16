@@ -49,20 +49,27 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
+		initialText = markdown.value;
+		newEndSelect = undefined;
 		
-		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-link");
-		}
 		linkDisplayer.className = "tool-displayer";
-		linkDiv = document.getElementById("mado-link");
+		console.log(markdown.selectionStart);
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
 		setLinkInputs();
-		urlInput.focus();			
+		urlInput.focus();		
 	}
 	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
 		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
 	}
 
 	/* more.js */

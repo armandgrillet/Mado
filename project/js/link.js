@@ -31,20 +31,16 @@ function applyLink () {
 		urlInput.setAttribute("class", "tool-first-item");
 	}
 	else {
-		modifyLink();
-		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
+		$(markdown).click();
+		markdown.focus();
 	}
 }
 
 function cancelLink () {
-	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;
-
+	markdown.value = initialText;
 	linkDisplayer.className = "tool-displayer hidden";	
-	selectElementContents(linkDiv);
-	restoreSelection("mado-link");
+	markdown.focus();
+	markdown.setSelectionRange(startSelect, newEndSelect);
 	contentChanged();
 }
 
@@ -53,15 +49,15 @@ function modifyLink () {
 		link = '[' + urlInput.value + "](" + urlInput.value + ')';
 	else 
 		link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-	if (linkDiv != undefined)
-		linkDiv.innerText = link;		
-	else
-		$(markdown).innerText = $(markdown).innerText + link;
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;
+	markdown.value = markdown.value.substring(0, startSelect) + link + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + link).length;
 	contentChanged();
 }
 
 function setLinkInputs () {
-	initialText = linkDiv.innerText;
+	initialText = markdown.value.substring(startSelect, endSelect);
 	if (/\[.*\]\(.*\)/.test(initialText)) {
 		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
 		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);

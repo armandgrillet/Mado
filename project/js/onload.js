@@ -115,8 +115,8 @@ window.onload = function() {
                         function(file) {
                             var reader = new FileReader();
                             reader.onload = function(e) { 
-                                markdown.innerText = e.target.result;
-                                markdownSaved = markdown.innerText;
+                                markdown.value = e.target.result;
+                                markdownSaved = markdown.value;
                                 contentChanged();  
                                 nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
                                 windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
@@ -166,7 +166,7 @@ window.onload = function() {
     chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
         if (mado["firstLaunch"] == undefined) {
             if (markdownSaved == undefined) { // User has not open a file.
-                markdown.innerHTML = firstMessage;
+                markdown.value = firstMessage;
                 contentChanged();
             }
             chrome.storage.local.set({ "firstLaunch" : false });
@@ -175,9 +175,6 @@ window.onload = function() {
     $(markdown).focus();
     $(markdown).on("input propertychange", function() {
     	contentChanged();
-    });
-    $(markdown).bind("paste", function(){ // What to do if the user pastes something.
-        pasteContent();   
     });
     $(markdown).keydown(function(e){
         if (e.keyCode == 9) // The user press tab        
@@ -245,15 +242,9 @@ window.onload = function() {
     });
 
     $(cancelImageButton).on("click", cancelImage);
-
-    /* link.js */
-    $(linkButton).on("mousedown", function() {
-        if (linkDisplayer.className == "tool-displayer hidden")
-            changeContentHighlighted("mado-link");
-    });
     
     Mousetrap.bind(["command+k", "ctrl+k"], function(e) { // Ctrl+k = link.
-        changeContentHighlighted("mado-link");
+        // changeContentHighlighted("mado-link");
         $(linkButton).click(); 
         return false; 
     }); 

@@ -40,8 +40,8 @@ var boundsBeforeMaximized;
 */
 
 function checkSaveState () {
-	if (markdown.innerText != "") {
-		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
+	if (markdown.value != "") {
+		if ((markdownSaved == undefined) || (markdown.value != markdownSaved))
 			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "";
@@ -150,7 +150,7 @@ function saveAndQuit () {
 		        }
 		        newRecentFile(fileEntry, "quit");
 		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 		}, errorHandler);
 }
 
@@ -172,7 +172,7 @@ function saveAsAndQuit () {
 				        }
 				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
 				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}

@@ -64,7 +64,7 @@ function errorHandler() {
 }
 
 function exportFileHTML () {
-	marked(markdown.innerText, function (err, content) {
+	marked(markdown.value, function (err, content) {
 		chrome.fileSystem.chooseEntry(
 			{
 				type: "saveFile", 
@@ -142,7 +142,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
+	if (markdown.value.length > 0 && (markdown.value.length != 916 || markdown.value != firstMessage)) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -158,8 +158,8 @@ function newWindow () {
 		  	}
 	  	);
   	}
-  	else if (markdown.innerHTML == firstMessage) {
-  		markdown.innerHTML = "";
+  	else if (markdown.value == firstMessage) {
+  		markdown.value = "";
   		contentChanged();
   		$(markdown).focus();
   	}
@@ -170,7 +170,7 @@ function openFile(fileToOpen) {
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (markdown.innerText != "") {// Something is already in the markdown, Mado opens a new window. 
+	 			if (markdown.value != "") {// Something is already in the markdown, Mado opens a new window. 
 	 				chrome.storage.local.set(
 		 				{
 		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
@@ -179,12 +179,12 @@ function openFile(fileToOpen) {
 	 				);
  				}
 	 			else {
-		 			markdown.innerText = e.target.result; // Display the file content.	
+		 			markdown.value = e.target.result; // Display the file content.	
 	 			 			
 		 			fileEntry = fileToOpen; // For save.
 
 		 			// For the footer.
-		 			markdownSaved = markdown.innerText;
+		 			markdownSaved = markdown.value;
 		 			contentChanged();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
@@ -234,12 +234,12 @@ function saveAsFile () {
 				        newRecentFile(fileEntry); // Update the position of the file saved.
 
 						// Footer
-						markdownSaved = markdown.innerText;
+						markdownSaved = markdown.value;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}
@@ -261,10 +261,10 @@ function saveFile () {
 		        newRecentFile(fileEntry); // Update the position of the file saved.
 
 				// Footer
-				markdownSaved = markdown.innerText;
+				markdownSaved = markdown.value;
 				checkSaveState();
 		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 		}, errorHandler);
 	}
 }

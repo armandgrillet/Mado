@@ -32,18 +32,14 @@
 		<!-- Generic JS -->
 		<script type="text/javascript" src="js/open-source/countable.js"></script>	
 		<script type="text/javascript" src="js/open-source/google-analytics-bundle.js"></script>
-		<script type="text/javascript" src="js/open-source/google-diff-match-patch.js"></script>
 		<script type="text/javascript" src="js/open-source/jquery-2.1.0.min.js"></script>
 		<script type="text/javascript" src="js/open-source/marked.js"></script>
 		<script type="text/javascript" src="js/open-source/mutate.js"></script>
 		<script type="text/javascript" src="js/open-source/mousetrap.min.js"></script>
-		<script type="text/javascript" src="js/open-source/rangy-core.js"></script>
-		<script type="text/javascript" src="js/open-source/rangy-selectionsaverestore.js"></script>	
 		
 		<!-- JS for Mado (alphabetical order) -->
 		<script type="text/javascript" src="js/app.js"></script>
 		<script type="text/javascript" src="js/click.js"></script>
-		<script type="text/javascript" src="js/diff.js"></script>
 		<script type="text/javascript" src="js/drag-and-drop.js"></script>
 		<script type="text/javascript" src="js/editor.js"></script>
 		<script type="text/javascript" src="js/footer.js"></script>
@@ -373,9 +369,9 @@
 						 Contains the textarea itself.
 						 On big screen, it takes the left part of the screen. On smaller screen, it takes all the screen. It can always be hidden via the view switch. -->
 					<article class="sheet" id="markdown-container">
-						<!-- Contenteditable for typing markdown
-							 Controlled via JavaScript. See 'marked.js' for further information. -->
-						<div contenteditable="true" placeholder="Write here" id="markdown"></div>
+						<!-- Textarea for typing markdown
+					 Controlled via JavaScript. See 'marked.js' for further information. -->
+						<textarea placeholder="Write here" id="markdown" autofocus></textarea>
 					</article>
 
 					<aside id="center-line-container"><div id="center-line"></div></aside>
@@ -428,10 +424,6 @@
 					<div class="tool-arrow"></div>
 				</div>
 			</div>
-
-			<!-- Contenteditable when pasting something
-					Controlled via JavaScript. -->
-			<textarea id="paste-zone"></textarea>
 		</footer>
 	</body>
 </html>

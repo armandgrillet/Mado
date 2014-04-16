@@ -9,7 +9,7 @@
 /* HTML shortcuts. */
 var centerLine; // The line that separates Markdown and HTML views.
 var conversionDiv; // The div who contains the HTML conversion.
-var markdown; // The contenteditable where the user writes.
+var markdown; // The textarea where the user writes.
 var pasteZone; // The textarea used when the user pastes content.
 
 /* Global. */
@@ -17,24 +17,22 @@ var closeDiv; // The end of the div.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
 var firstMessage = "# Dear user,<br><br>Thanks for installing **Mado**. For your first launch, here is some information:<br><br>* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.<br>* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.<br>* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, “Settings” section).<br>* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.<br><br>We hope you will enjoy Mado,<br><br>**[A+A](https://twitter.com/AplusA_io)**<br><br>***<br><br>P.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
 var initialText; // A save used when the user cancel a link/image.
-var newCE; // The new contenteditable content (temporary).
+var newCE; // The new textarea content (temporary).
 var openDiv; // The beginning of the div.
 var optiMarkdown; // The new Markdown, without useless div.
-var pasteDiv; // The div used when the user pastes content.
-var range; // Get the user's selection.
-var rangeSelection; // Set the user's new range selection.
-var savedSel; // The selection is saved here.
-var selection; // Set the user's new selection.
-var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
-var tempTextarea = document.createElement("textarea"); // Used to add the div to the contenteditable.
 var tempConversion; // A string used to don't display errors when an image is loaded.
 var tempMarkdown; // String used to modify the markdown innerHTML.
+
+var starSelect;
+var endSelect;
+var newStartSelect;
+var newEndSelect;
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
-	* conversion (): what to do when the user change something on the contenteditable.
+	* conversion (): what to do when the user change something on the textarea.
 	* changeContentHighlighted (id): Add a div with id @param id around the selection. 
 	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
@@ -45,7 +43,7 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 */
 
 function conversion () {
-	if ((markdown.innerHTML > 4) || (markdown.innerText.length > 0 && markdown.innerHTML != "<br>")) { // There is Markdown in the contenteditable.
+	if (markdown.value.length > 0) { // There is Markdown in the textarea.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -60,7 +58,7 @@ function conversion () {
 		else
 			marked.setOptions({ gfm : editorSyntax });
 
-		marked(markdown.innerText, function (err, content) {  
+		marked(markdown.value, function (err, content) {  
 	    	/* Reset. */
 	    	imagePosition = 0;
 	    	for (var i = 0; i < imagesArray.length; i++)
@@ -71,23 +69,10 @@ function conversion () {
 	    });
 	}
 	else { // No Markdown here.
-		markdown.innerHTML = ""; // If the innerHTML is "<br>".
 		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
 	}
-}
-
-function changeContentHighlighted (id) {
-    range = rangy.getSelection().rangeCount ? rangy.getSelection().getRangeAt(0) : null;
-    if (range) {    
-        surroundDiv.id = id;
-        try {
-            range.surroundContents(surroundDiv);
-        }
-        catch(ex) {
-        }
-    }
 }
 
 function checkDiv (divCount, content, pos, id) {
@@ -128,72 +113,11 @@ function endOfConversion () {
 			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
 	});
-	/*
-	
-	*/
 
 	$("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", chooseGalleries); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();
-}
-
-function pasteContent () {
-	changeContentHighlighted("mado-paste");  
-	pasteDiv = document.getElementById("mado-paste");      
-    pasteZone.focus();
-
-    setTimeout(function(){
-        if (pasteDiv != undefined)
-            pasteDiv.innerText = pasteZone.value;       
-        else
-            $(markdown).innerText = $(markdown).innerText + pasteZone.value;
-        pasteZone.value = ""; // Reset the hidden textarea content.
-        selectElementContents(pasteDiv);
-        restoreSelection("mado-paste");
-        contentChanged();
-    }, 20);
-}
-
-function removeDivWithId (id) {
-	tempMarkdown = markdown.innerHTML;
-	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
-	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
-	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
-
-	if (tempMarkdown.indexOf("<div id=\"" + id + "\">") != -1) { // Remove the useless div.
-		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div id=\"" + id + "\">"), id);
-		if (optiMarkdown[0] != -1) {
-			tempMarkdown = optiMarkdown[1];
-		}
-	}
-	markdown.innerHTML = tempMarkdown;
-}
-
-function restoreSelection (id) {
-	savedSel = rangy.saveSelection();
-	removeDivWithId(id);		
-	rangy.restoreSelection(savedSel);
-	rangy.removeMarkers(savedSel);
-}
-
-function selectElementContents(el) {
-    if (document.createRange && window.getSelection) {
-        rangeSelection = document.createRange();
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        try {
-            rangeSelection.seleectNodeContents(el);
-            selection.addRange(rangeSelection);
-        } catch (e) {
-            rangeSelection.selectNode(el);
-            selection.addRange(rangeSelection);
-        }
-    } else if (document.body.createTextRange) {
-        rangeSelection = document.body.createTextRange();
-        rangeSelection.moveToElementText(el);
-        rangeSelection.select();
-    }
 }
 
 function setEditorSyntax () {
