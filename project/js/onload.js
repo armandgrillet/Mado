@@ -219,6 +219,10 @@ window.onload = function() {
     $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) {
         switchResult(e.target.id.substr(e.target.id.length - 1));
     });
+    $("#answer-1, #answer-2, #answer-3").mutate('height',function (e, info){  
+        if (help.value.length >= 3)
+            setResultsHeight(e.id.slice(-1));
+    });  
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
