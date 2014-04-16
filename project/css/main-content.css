@@ -392,13 +392,17 @@
 }
 
 /* MARKDOWN AREA */
-#markdown-container { overflow: auto; }
+#markdown-container {
+	/* Box-model */
+	padding: 0 0 0 40px;
+	overflow: hidden;
+}
 
 #markdown {
 	/* Box-model */
 	width: 100%;
 	min-height: 100%;
-	padding: 40px 10px 40px;
+	padding: 40px 50px 40px 10px;
 
 	/* Typography */
 	font-family: SourceCodePro;
