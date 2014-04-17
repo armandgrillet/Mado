@@ -140,7 +140,7 @@ function displayImages () {
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
+	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
