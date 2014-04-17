@@ -44,18 +44,19 @@ var truncated; // To know the size when something is saved.
 
 function contentChanged () {
 	if (lastMarkdownHeight == 0)
-		lastMarkdownHeight = markdownContainer.scrollHeight;
-	else if(lastMarkdownHeight < markdownContainer.scrollHeight) {
+		lastMarkdownHeight = markdown.scrollHeight;
+	else if(lastMarkdownHeight < markdown.scrollHeight) {
 		toTheBottom(); // scroll.js
 	}
 
 	conversion();
-	if (markdownContainer.scrollHeight > $(markdownContainer).height())
+	if (markdown.clientHeight < markdown.scrollHeight)
         $(centerLine).css("display", "none");
     else
         $(centerLine).css("display", "block");
     syntaxHighlighting();
 }
+
 function errorHandler() {
 	if (fileInLoading != undefined) {
 		removeFile(fileInLoading);

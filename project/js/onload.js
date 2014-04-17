@@ -22,7 +22,6 @@ window.onload = function() {
     centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
-    markdownContainer = document.getElementById("markdown-container");
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
@@ -289,8 +288,8 @@ window.onload = function() {
         addTopbarLabels();
 
     /* scroll.js */
-    $(markdownContainer).on ("scroll", function (e) {
-        if ($(markdownContainer).is(":hover"))
+    $(markdown).on ("scroll", function (e) {
+        if ($(markdown).is(":hover"))
             asyncScroll("markdown");
     });
 
