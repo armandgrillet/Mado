@@ -114,7 +114,7 @@ function answer () {
 		for (var j = 0; j < helpArray[i][0].length; j++) // A line can have many columns (different ways to say the same thing), this loop run through each column.
 			if (helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase()) > -1) { // Everything in lower case to help the condition.
 				wordPos = helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase());
-				document.getElementById("answer-" + (maxAnswers + 1)).innerHTML = "<h1 class=\"help-title\">" + helpArray[i][0][j].substring(0, wordPos) + "<span class=\"match\">" + helpArray[i][0][j].substr(wordPos, help.value.length) + "</span>" + helpArray[i][0][j].substring(wordPos + help.value.length) + "</h1>: " + helpArray[i][1]; // Put the answer in the appropriate div.
+				document.getElementById("answer-" + (maxAnswers + 1)).innerHTML = "<h1 class=\"help-title\">" + helpArray[i][0][j].substring(0, wordPos) + "<span class=\"match\">" + helpArray[i][0][j].substr(wordPos, help.value.length) + "</span>" + helpArray[i][0][j].substring(wordPos + help.value.length) + "</h1>" + helpArray[i][1]; // Put the answer in the appropriate div.
 				document.getElementById("example-" + (maxAnswers + 1)).innerHTML = helpArray[i][2]; // Put the answer in the appropriate div.
 				maxAnswers++; // You can't have more than 3 answers.
 				j = helpArray[i][0].length; // Change the line (to don't have 2 times the same answer).

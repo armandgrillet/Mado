@@ -114,7 +114,7 @@ function displayImages () {
 					}
 				}
 				else
-					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" src=\"img/nointernet.png" + tempConversion.substring(imagePosition + imagePath.length);			
+					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);			
 	        }
 	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
 				if (imagePositionInArray > -1) { // Image is already stored.
@@ -131,7 +131,7 @@ function displayImages () {
 				displayImages();
 		}
 		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
-			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" src=\"img/notimage.png" + tempConversion.substring(imagePosition + imagePath.length);;
+			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
 		}
 	}
@@ -140,7 +140,7 @@ function displayImages () {
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png" + tempConversion.substring(imagePosition + imagePath.length);
+	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
