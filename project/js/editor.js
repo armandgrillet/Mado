@@ -25,8 +25,8 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 
 var starSelect;
 var endSelect;
-var newStartSelect;
 var newEndSelect;
+var newRange;
 
 /*
 * Functions (in alphabetical order).
@@ -131,3 +131,20 @@ function setEditorSyntax () {
         contentChanged();
     });
 }
+
+$.fn.setRange = function (start, end) { 
+    if (!end) 
+    	end = start; 
+    return this.each(function() {
+        if (this.setSelectionRange) {
+            this.focus();
+            this.setSelectionRange(start, end);
+        } else if (this.createTextRange) {
+            newRange = this.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', end);
+            range.moveStart('character', start);
+            range.select();
+        }
+    });
+};

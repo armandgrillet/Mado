@@ -53,7 +53,6 @@ $(document).click( function(e) {
 		newEndSelect = undefined;
 		
 		linkDisplayer.className = "tool-displayer";
-		console.log(markdown.selectionStart);
 		if (markdown.selectionStart != markdown.selectionEnd
 			|| $(markdown).is(':focus')) {
 			startSelect = markdown.selectionStart;
@@ -68,8 +67,11 @@ $(document).click( function(e) {
 		setLinkInputs();
 		urlInput.focus();		
 	}
-	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
-		linkDisplayer.className = "tool-displayer hidden";
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {	
+		if ($(e.target).closest(document.getElementById("insert-link")).length)
+			applyLink();
+		else
+			linkDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* more.js */

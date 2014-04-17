@@ -31,8 +31,9 @@ function applyLink () {
 		urlInput.setAttribute("class", "tool-first-item");
 	}
 	else {
-		$(markdown).click();
+		linkDisplayer.className = "tool-displayer hidden";
 		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
 	}
 }
 
@@ -58,10 +59,13 @@ function modifyLink () {
 
 function setLinkInputs () {
 	initialText = markdown.value.substring(startSelect, endSelect);
-	if (/\[.*\]\(.*\)/.test(initialText)) {
+	if (/\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '[' &&
+		initialText[initialText.length - 1] == ')') {
 		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
 		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);
 	}
 	else
 		hypertextInput.value = initialText;
+	$(markdown).setRange(startSelect, newEndSelect);
 }
