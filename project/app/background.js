@@ -47,7 +47,7 @@ function theMinWidth () {
 	else
 		return 800;
 	*/
-	return 683;
+	return 750;
 }
 
 function windowCreation () {
