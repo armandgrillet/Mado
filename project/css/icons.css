@@ -24,6 +24,7 @@
 .icon-more,
 .icon-help,
 .icon-link,
+.icon-webimage,
 .icon-image,
 .icon-style {
 	/* Typography */
@@ -66,7 +67,9 @@
 
 .icon-link:before { content: "\e011"; }
 
-.icon-image:before { content: "\e012"; }
+.icon-webimage:before { content: "\e012"; }
+
+.icon-image:before { content: "\e013"; }
 
 /* RIGHT SIDEBAR ICON */
 .icon-style:before { content: "\e020"; }
