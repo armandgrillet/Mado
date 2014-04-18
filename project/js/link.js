@@ -38,11 +38,11 @@ function applyLink () {
 }
 
 function cancelLink () {
-	markdown.value = initialText;
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
+	contentChanged();
 	linkDisplayer.className = "tool-displayer hidden";	
 	markdown.focus();
-	markdown.setSelectionRange(startSelect, newEndSelect);
-	contentChanged();
+	$(markdown).setRange(startSelect, endSelect);
 }
 
 function modifyLink () {
