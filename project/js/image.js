@@ -65,20 +65,18 @@ function applyImage () {
 		altInput.removeAttribute("class");
 	}
 	else if (imageLoaded != undefined){ // An image is obligatory
-		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
 	}
 }
 
 function cancelImage () {
-	if (imageDiv != undefined)
-		imageDiv.innerText = initialText;		
-	imageDisplayer.className = "tool-displayer hidden";
-	selectElementContents(imageDiv);
-	restoreSelection("mado-image");
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
 	contentChanged();
+	imageDisplayer.className = "tool-displayer hidden";	
+	markdown.focus();
+	$(markdown).setRange(startSelect, endSelect);
 }
 
 function chooseGalleries () {
@@ -234,7 +232,11 @@ function modifyImage () {
 	if (imageDiv != undefined)
 		imageDiv.innerText = image;		
 	else
-		$(markdown).innerText = $(markdown).innerText + image;		
+		$(markdown).innerText = $(markdown).innerText + image;	
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;	
+	markdown.value = markdown.value.substring(0, startSelect) + image + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + image).length;
 	contentChanged();
 }
 
@@ -245,8 +247,10 @@ function setImageBrowserText (path) {
 }
 
 function setImageInputs () {
-	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
+	initialText = markdown.value.substring(startSelect, endSelect);
+	if (/!\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '!' &&
+		initialText[initialText.length - 1] == ')') {
 		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) // Optional title is here.
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
 		else
@@ -256,7 +260,7 @@ function setImageInputs () {
 	}
 	else
 		altInput.value = initialText;
-	
+	$(markdown).setRange(startSelect, newEndSelect);
 }
 
 function update () {	

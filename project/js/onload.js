@@ -218,12 +218,6 @@ window.onload = function() {
     $("#answer-1, #answer-2, #answer-3, #example-1, #example-2, #example-3").mutate('height', setResultsHeight);  
 
     /* image.js */
-    $(imageButton).on("mousedown", function() {
-        if (linkDisplayer.className == "tool-displayer")
-            cancelLink(); 
-        if (imageDisplayer.className == "tool-displayer hidden")
-             changeContentHighlighted("mado-image");
-    });
 
     $(imageBrowser).on("click", loadImage);
     $(galleriesButton).on("click", chooseGalleries);   
@@ -239,6 +233,7 @@ window.onload = function() {
 
     $(cancelImageButton).on("click", cancelImage);
     
+    /* link.js */
     Mousetrap.bind(["command+k", "ctrl+k"], function(e) { // Ctrl+k = link.
         // changeContentHighlighted("mado-link");
         $(linkButton).click(); 

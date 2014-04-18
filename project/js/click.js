@@ -21,20 +21,29 @@ $(document).click( function(e) {
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
+		initialText = markdown.value;
+		newEndSelect = undefined;
 		imageLoaded = undefined;
 
-		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-image");
-		}
 		imageDisplayer.className = "tool-displayer";
-		imageDiv = document.getElementById("mado-image");
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
 		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		if ($(e.target).closest(document.getElementById("insert-image")).length)
+			applyImage();
+		else
+			imageDisplayer.className = "tool-displayer hidden";
 	}
 
 	if ($(e.target).closest(webimageButton).length && webimageDisplayer.className == "tool-displayer hidden") {
