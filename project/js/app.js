@@ -154,7 +154,7 @@ function newWindow () {
 			    }, 
 			    frame: "none",
 			    minWidth: theMinWidth(), 
-				minHeight: 240
+				minHeight: 330
 		  	}
 	  	);
   	}

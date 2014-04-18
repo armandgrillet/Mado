@@ -20,7 +20,7 @@ function anotherWindow (theX, theY, theWidth, theHeight) {
 	    }, 
     	frame: "none",
 	    minWidth: theMinWidth(), 
-	    minHeight: 240
+	    minHeight: 330
 	});
 }
 
@@ -32,7 +32,7 @@ function firstWindow () {
 	    }, 
 	    frame: "none",
 	    minWidth: theMinWidth(), 
-	    minHeight: 240
+	    minHeight: 330
 	});
 }
 
