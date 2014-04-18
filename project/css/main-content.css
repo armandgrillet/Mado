@@ -205,6 +205,9 @@
 
 	/* Visual */
 	background-color: #fff; /* Hides the text underneath it during the transition */
+
+	/* Misc */
+	transition: right .1s ease;
 }
 
 .result-switch {
@@ -231,6 +234,8 @@
 .result-switch:hover { color: #000; }
 
 /* The button's behavior when activated */
+.result.switched .result-switch-container { right: 0; }
+
 .result.switched .result-switch { -webkit-transform: rotate(180deg); }
 
 .answer,
