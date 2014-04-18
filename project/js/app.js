@@ -54,7 +54,6 @@ function contentChanged () {
         $(centerLine).css("display", "none");
     else
         $(centerLine).css("display", "block");
-    syntaxHighlighting();
 }
 
 function errorHandler() {
@@ -295,7 +294,5 @@ chrome.storage.onChanged.addListener(function (changes, namespace) { // What to 
             newDisplaySize(); // app.js 
         else if (key == "gfm")
             setEditorSyntax(); // editor.js
-        else if (key == "highlighting")
-            setMarkdownHighlighting(); // syntax-highlighting.js   
     }
 });
