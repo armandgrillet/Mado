@@ -43,10 +43,7 @@ window.onload = function() {
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
-    altInput = document.getElementById("alt-input");
-    webimageButton = document.getElementById("webimage-button");
-    webimageDisplayer = document.getElementById("webimage-insertion-displayer");
-    webimageBox = document.getElementById("webimage-insertion-box");
+    altInput = document.getElementById("alt-input");  
 
     /* link.js */
     cancelLinkButton = document.getElementById("cancel-link");
@@ -63,6 +60,13 @@ window.onload = function() {
     qAndALine = document.getElementById("q-and-a");
     shortcutsLine = document.getElementById("shortcuts");
     aboutLine = document.getElementById("about");
+
+    /* online-image.js */
+    onlineImageButton = document.getElementById("webimage-button");
+    onlineImageUrlInput = document.getElementById("webimage-url");
+    onlineImageAltInput = document.getElementById("webimage-alt-input");
+    onlineImageDisplayer = document.getElementById("webimage-insertion-displayer");
+    onlineImageBox = document.getElementById("webimage-insertion-box");
 
     /* recentfiles.js */
     recentButton = document.getElementById("recent-button");
@@ -266,11 +270,13 @@ window.onload = function() {
 
     $(cancelLinkButton).on("click", cancelLink);
 
-    /* More.js */
+    /* more.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
     $(qAndALine).on("click", function() { moreWindow("more/qanda.html"); });
     $(shortcutsLine).on("click", function() { moreWindow("more/shortcuts.html"); });
     $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
+    
+    /* online-image.js */
     
     /* recentfiles.js */
     displayRecentFiles();

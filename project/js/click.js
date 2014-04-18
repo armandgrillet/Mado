@@ -46,13 +46,6 @@ $(document).click( function(e) {
 			imageDisplayer.className = "tool-displayer hidden";
 	}
 
-	if ($(e.target).closest(webimageButton).length && webimageDisplayer.className == "tool-displayer hidden") {
-		webimageDisplayer.className = "tool-displayer";
-	}
-	else if (webimageDisplayer.className == "tool-displayer" && (! $(e.target).closest(webimageBox).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
-		webimageDisplayer.className = "tool-displayer hidden";
-	}
-
 	/* link.js */
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
 		/* Reset. */
@@ -90,6 +83,34 @@ $(document).click( function(e) {
 	else if (moreDisplayer.className != "hidden" && ! $(e.target).closest(moreBox).length)
 		moreDisplayer.className = "hidden";
 
+	/* online-image.js */
+	if ($(e.target).closest(onlineImageButton).length && onlineImageDisplayer.className == "tool-displayer hidden") {
+		onlineImageDisplayer.className = "tool-displayer";
+		/* Reset. */
+		onlineImageUrlInput.value = "";
+		onlineImageAltInput.value = "";
+		initialText = markdown.value;
+		newEndSelect = undefined;
+		
+		onlineImageDisplayer.className = "tool-displayer";
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		setOnlineImageInputs();
+		onlineImageUrlInput.focus();
+	}
+	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageBox).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
+		onlineImageDisplayer.className = "tool-displayer hidden";
+	}
+	
 	/* recentfiles.js */
 	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
 		displayRecentFiles(); // If the user remove something from another window.

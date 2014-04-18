@@ -62,8 +62,8 @@ function setLinkInputs () {
 	if (/\[.*\]\(.*\)/.test(initialText) &&
 		initialText[0] == '[' &&
 		initialText[initialText.length - 1] == ')') {
-		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
 		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);
+		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1);
 	}
 	else
 		hypertextInput.value = initialText;

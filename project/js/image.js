@@ -15,9 +15,6 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var webimageButton; // The "Web image" button.
-var webimageBox; // The clickable zone of the Web image insertion tool.
-var webimageDisplayer; // The div that displays or not the Web image insertion tool.
 
 /* Functions variables. 
 * startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.
@@ -217,16 +214,6 @@ function loadImage () {
 	);
 }
 
-var loadOnlineImage = function(uri, callback) {
-	var xhr = new XMLHttpRequest();
-	xhr.responseType = 'blob';
-	xhr.onload = function() {
-		callback(window.URL.createObjectURL(xhr.response), uri);
-	}
-	xhr.open('GET', uri, true);
-	xhr.send();
-}
-
 function modifyImage () {
 	image = "![" + altInput.value + "](" + imageLoaded + ')';
 	if (imageDiv != undefined)
@@ -265,15 +252,4 @@ function setImageInputs () {
 
 function update () {	
 	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
-}
-
-function updateOnline () {
-	loadOnlineImage(imagePath, function(blob_uri, requested_uri) {
-	  	tempConversion = tempConversion.replace(imagePath, blob_uri); 
-	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line in the array of images.
-		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
-	 		displayImages();
-	 	else // The end.
-	 		endOfConversion();
-	}); 
 }
