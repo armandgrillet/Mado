@@ -52,13 +52,13 @@ function getDisplaySize () {
 } 
 */
 
-function getHighlighting () {
+/*function getHighlighting () {
 	chrome.storage.local.get("highlighting",  function(mado) {
 		if (mado["highlighting"] != false) {
 			highlightingCheck.checked = true;
 		}
 	});
-}
+}*/
 
 function getSyntax () {
 	chrome.storage.local.get("gfm",  function(mado) {
@@ -88,12 +88,12 @@ function setDisplaySize (newValue) {
 }
 */
 
-function setHighlighting () {
+/*function setHighlighting () {
 	if (highlightingCheck.checked)
 		chrome.storage.local.set({ "highlighting" : true });
 	else 
 		chrome.storage.local.set({ "highlighting" : false });
-}
+}*/
 
 function setSyntax () {
 	if (markdownSyntax.checked)

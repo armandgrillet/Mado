@@ -36,14 +36,14 @@ window.onload = function() {
 
 	
 	getSyntax();
-	getHighlighting();
+	// getHighlighting();
 	// getDisplaySize();
 	getAnalytics();
 
 	$(markdownSyntax).on("click", setSyntax);
 	$(gfmSyntax).on("click", setSyntax);
 
-	$(highlightingCheck).on("click", setHighlighting);
+	// $(highlightingCheck).on("click", setHighlighting);
 
 	/*
 	$(smaDisplaySize).on("click", function() { setDisplaySize("small"); });

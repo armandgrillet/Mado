@@ -49,8 +49,8 @@ function conversion () {
 				if (mado["gfm"] != undefined)
 					marked.setOptions({ gfm : mado["gfm"] });
 				else {
-					chrome.storage.local.set({ "gfm" : false });
-					marked.setOptions({ gfm : false });
+					chrome.storage.local.set({ "gfm" : true });
+					marked.setOptions({ gfm : true });
 				}
 				setEditorSyntax();
 			});	    
@@ -125,8 +125,8 @@ function setEditorSyntax () {
         if (mado["gfm"] != undefined)
                 editorSyntax = mado["gfm"]; 
         else {
-                chrome.storage.local.set({ "gfm" : false });
-                editorSyntax = false; 
+                chrome.storage.local.set({ "gfm" : true });
+                editorSyntax = true; 
         }
         contentChanged();
     });
