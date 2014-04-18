@@ -107,8 +107,11 @@ $(document).click( function(e) {
 		setOnlineImageInputs();
 		onlineImageUrlInput.focus();
 	}
-	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageBox).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
-		onlineImageDisplayer.className = "tool-displayer hidden";
+	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageDisplayer).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
+		if ($(e.target).closest(document.getElementById("insert-webimage")).length)
+			applyOnlineImage();
+		else
+			onlineImageDisplayer.className = "tool-displayer hidden";
 	}
 	
 	/* recentfiles.js */

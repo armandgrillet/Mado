@@ -62,6 +62,7 @@ window.onload = function() {
     aboutLine = document.getElementById("about");
 
     /* online-image.js */
+    cancelOnlineImageButton = document.getElementById("cancel-webimage");
     onlineImageButton = document.getElementById("webimage-button");
     onlineImageUrlInput = document.getElementById("webimage-url");
     onlineImageAltInput = document.getElementById("webimage-alt-input");
@@ -277,6 +278,31 @@ window.onload = function() {
     $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
     
     /* online-image.js */
+    $(onlineImageUrlInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+           applyOnlineImage();
+        else if (e.keyCode == 27) // The user press echap
+            cancelOnlineImage();       
+        else
+            modifyOnlineImage();
+    });
+
+    $(onlineImageAltInput).keydown(function(e){
+        if (e.keyCode == 9)  {
+            e.preventDefault();
+            $(onlineImageUrlInput).select();
+        }
+    })
+    $(onlineImageAltInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+            applyOnlineImage();
+        else if (e.keyCode == 27) // The user press echap
+            cancelOnlineImage();        
+        else
+            modifyOnlineImage();        
+    });
+
+    $(cancelOnlineImageButton).on("click", cancelLink);
     
     /* recentfiles.js */
     displayRecentFiles();
