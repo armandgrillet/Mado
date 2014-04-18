@@ -213,13 +213,9 @@ window.onload = function() {
     $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
     $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) {
-        console.log("em");
         switchResult(e.target.id.substr(e.target.id.length - 1));
     });
-    $("#answer-1, #answer-2, #answer-3").mutate('height',function (e, info){  
-        if (help.value.length >= 3)
-            setResultsHeight(e.id.slice(-1));
-    });  
+    $("#answer-1, #answer-2, #answer-3, #example-1, #example-2, #example-3").mutate('height', setResultsHeight);  
 
     /* image.js */
     $(imageButton).on("mousedown", function() {

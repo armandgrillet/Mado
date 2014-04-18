@@ -165,6 +165,9 @@
 
 /* The four cases for the help results */
 #help-results-container.hidden {
+	/* Radical */
+	display: none;
+	
 	/* Box-model */
 	height: 0;
 	padding-top: 0;

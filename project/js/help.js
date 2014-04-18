@@ -146,17 +146,19 @@ function displayAnswers () {
 
 	if (help.value.length == 0) {
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
-		setResultsHeight(0);
+		resetAnswerDiv(3);
+		setResultsHeight();	
 	}
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
+			resetAnswerDiv(2);
 			if (help.value.length == 1)
 				document.getElementById("answer-1").innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
 			else if (help.value.length == 2)
 				document.getElementById("answer-1").innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
 
-			setResultsHeight(1);
+			setResultsHeight();
 		}
 		else
 			answer(); // Find the answers.
@@ -175,10 +177,23 @@ function resetAnswerDiv(begin) {
 	}
 }
 
-function setResultsHeight(nbResults) {
+function setResultsHeight() {
 	var totalHeight = 0;
-	for (var i = 1; i <= nbResults && i <= 3; i++) // Check all the results, depending on the number of results
-		totalHeight += $("#result-" + i).outerHeight(); // Add the height of the current result to the total height
+	for (var i = 1; i <= 3; i++) {// Check all the results, depending on the number of results
+		if ($("#answer-" + i).html() != "") {
+			$("#result-" + i).css("display", "block");
+			if ($("#answer-" + i).outerHeight() >= $("#example-" + i).outerHeight()) 
+				$("#result-" + i).css("height", $("#answer-" + i).outerHeight() + "px");
+			else
+				$("#result-" + i).css("height", $("#example-" + i).outerHeight() + "px");
+			totalHeight += $("#result-" + i).outerHeight(); // Add the height of the current result to the total height
+		}
+		else {
+			$("#result-" + i).css("height", 0);
+			$("#result-" + i).css("display", "none");
+		}
+		
+	}
 	$(resultsContainer).css("height", totalHeight + "px");
 
 }
