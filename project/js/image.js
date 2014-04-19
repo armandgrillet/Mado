@@ -109,7 +109,7 @@ function displayImages () {
 					}
 				}
 				else
-					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">Internet not available</span>&nbsp;<img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);			
+					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Internet not available</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);			
 	        }
 	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
 				if (imagePositionInArray > -1) { // Image is already stored.
@@ -119,14 +119,14 @@ function displayImages () {
 				else { // The image is not in the array.
 					researching	= true;
 					rightFile = false;
-					update(); // Get the ID of the file.   	
+					update(); // Get the ID of the file.
 				}
-			}		
+			}
 			if (! researching) // We're not searching an image in the PC or the web.
 				displayImages();
 		}
 		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
-			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-visual\">This is not an image</span>&nbsp;<img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);;
+			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">This is not an image</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
 		}
 	}

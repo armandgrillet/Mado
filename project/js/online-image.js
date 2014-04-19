@@ -30,9 +30,9 @@ var onlineImage; // The content that is added.
 
 function applyOnlineImage () {
 	if (onlineImageUrlInput.value == "") { // An URL is obligatory
-		onlineImageUrlInput.setAttribute("class", "flash");
+		onlineImageUrlInput.setAttribute("class", "tool-first-item flash");
 		onlineImageUrlInput.focus();
-		onlineImageUrlInput.removeAttribute("class");
+		onlineImageUrlInput.setAttribute("class", "tool-first-item");
 	}
 	else {
 		onlineImageDisplayer.className = "tool-displayer hidden";
@@ -44,7 +44,7 @@ function applyOnlineImage () {
 function cancelOnlineImage () {
 	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
 	contentChanged();
-	onlineImageDisplayer.className = "tool-displayer hidden";	
+	onlineImageDisplayer.className = "tool-displayer hidden";
 	markdown.focus();
 	$(markdown).setRange(startSelect, endSelect);
 }

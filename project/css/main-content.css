@@ -294,15 +294,11 @@
 
 /* Example images for the image insertion syntax */
 .example-image {
-	/* Positioning */
-	margin: 0 auto;
-
 	/* Box-model */
-	width: 33%;
-	height: calc(100% - 10px); /* Delete the visual padding */
+	width: 40px;
+	height: 36px;
 
 	/* Visual */
-	background-color: #e0e0e0;
 	background-image: url("../img/example-image.png");
 	background-repeat: no-repeat;
 	background-position: center;
