@@ -91,10 +91,15 @@ var helpArray = [
 		"<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"
 	],
 	[
+		["Tables", "Arrays"],
+		"| Tables&nbsp; | Are&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Cool&nbsp;&nbsp;|<br>| -------- |:----------------:| ------:|<br>| col 3 is | right-aligned | $13 &nbsp;&nbsp; |<br>| col 2 is | centered&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | $37 &nbsp;&nbsp; |",
+		"<table> <thead><tr> <th>Tables</th> <th align=\"center\">Are</th> <th align=\"right\">Cool</th> </tr></thead> <tbody> <tr> <td>col 3 is</td> <td align=\"center\">right-aligned</td> <td align=\"right\">$13</td> </tr> <tr> <td>col 2 is</td> <td align=\"center\">centered</td> <td align=\"right\">$37</td> </tr> </tbody> </table>"
+	],
+	[
 		["Question"],
 		"Seriously?",
 		"Life's most persistent and urgent question is, 'What are you doing for others?'."
-	],
+	]
 ];
 
 /*
