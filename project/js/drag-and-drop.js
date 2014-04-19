@@ -7,7 +7,7 @@
 var documentSection; // The section named "document" in the HTML.
 var dragAndDropManager; // The manager launched onload.
 var dragMessageAlreadyVisible = false; // True if the message about Drag and Drop is already visible.
-var extensionsAllowed = new Array(".markdown", ".md", ".txt"); // Extensions allowed by Mado.
+var extensionsAllowed = [".markdown", ".md", ".txt"]; // Extensions allowed by Mado.
 var filePath; // The path of the dragged file.
 
 /*

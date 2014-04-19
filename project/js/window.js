@@ -60,8 +60,10 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else
+	else {
+		sendClosing(); // stats.js
 		chrome.app.window.current().close();
+	}
 }
 
 function determineFrame () {
@@ -133,10 +135,10 @@ function minimizeWindow () {
 }
 
 function quitCloseWindow () {
+	sendClosing(); // stats.js
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
-	chrome.app.window.current().close();
 }
 
 function saveAndQuit () {

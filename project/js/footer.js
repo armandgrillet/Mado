@@ -23,10 +23,12 @@ function counterSelection () {
 	if (charsDiv.style.display == "none") {
 		$(charsDiv).css("display", "inline");
 		$(wordsDiv).css("display", "none");
+		sendEvent("Number of chars diplayed");
 	}
 	else {
 		$(charsDiv).css("display", "none");
 		$(wordsDiv).css("display", "inline");
+		sendEvent("Number of words diplayed");
 	}
 }
 

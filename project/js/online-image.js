@@ -80,7 +80,7 @@ function setOnlineImageInputs () {
 		onlineImageUrlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1);
 	}
 	else
-		onlineImageUrlInput.value = initialText;
+		onlineImageAltInput.value = initialText;
 	$(markdown).setRange(startSelect, newEndSelect);
 }
 

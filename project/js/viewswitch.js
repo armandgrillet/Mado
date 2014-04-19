@@ -16,7 +16,7 @@ var workspace; // Getting the main container (workspace).
 
 /* Functions variables. */
 var previousSize; // The previous size of the window.
-var switchButtons = new Array(); // The array for the switch.
+var switchButtons = []; // The array for the switch.
 
 /*
 * Functions (in alphabetical order).

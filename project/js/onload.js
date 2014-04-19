@@ -179,7 +179,9 @@ window.onload = function() {
     $(markdown).focus();
     $(markdown).on("input propertychange", function() {
     	contentChanged();
+        newInputForStats();
     });
+    $(markdown).on("paste", newInputForStats);
     $(markdown).keydown(function(e){
         if (e.keyCode == 9) // The user press tab        
             e.preventDefault();
@@ -240,7 +242,6 @@ window.onload = function() {
     
     /* link.js */
     Mousetrap.bind(["command+k", "ctrl+k"], function(e) { // Ctrl+k = link.
-        // changeContentHighlighted("mado-link");
         $(linkButton).click(); 
         return false; 
     }); 
@@ -322,13 +323,12 @@ window.onload = function() {
             asyncScroll("HTML");
     });
 
-    /* stats.js 
-    * Waiting for the prod.
-    
+    /* stats.js */
+    /* Waiting for prod
     if (navigator.onLine)
         initStats();
     */
-
+    
     /* styles.js */
     getStyle();
 

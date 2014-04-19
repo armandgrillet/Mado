@@ -102,6 +102,7 @@ function minFileName (path) {
 }
 
 function moreWindow (choice) {
+	sendEvent("Window '" + choice + "' opened");
 	chrome.app.window.create(
 		choice, 
 		{
@@ -142,7 +143,8 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.value.length > 0 && (markdown.value.length != 916 || markdown.value != firstMessage)) {
+	sendEvent("New file");
+	if (markdown.value.length > 0 && markdown.value != firstMessage) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -166,6 +168,7 @@ function newWindow () {
 }
 
 function openFile(fileToOpen) {
+	sendEvent("File opened");
 	fileToOpen.file(
 		function(file) {
 	 		var reader = new FileReader();
