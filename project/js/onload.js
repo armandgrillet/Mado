@@ -303,7 +303,7 @@ window.onload = function() {
             modifyOnlineImage();        
     });
 
-    $(cancelOnlineImageButton).on("click", cancelLink);
+    $(cancelOnlineImageButton).on("click", cancelOnlineImage);
     
     /* recentfiles.js */
     displayRecentFiles();

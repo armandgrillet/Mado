@@ -103,7 +103,7 @@ function displayImages () {
 						tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
 		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.	
 					}
-					else {// The array doesn't exist yet.
+					else { // The array doesn't exist yet.
 						researching	= true;
 						updateOnline(imagePath); // Get the ID of the file.   	
 					}

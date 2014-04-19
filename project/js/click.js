@@ -22,7 +22,6 @@ $(document).click( function(e) {
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
 		initialText = markdown.value;
-		newEndSelect = undefined;
 		imageLoaded = undefined;
 
 		imageDisplayer.className = "tool-displayer";
@@ -37,6 +36,7 @@ $(document).click( function(e) {
 		}
 		if (startSelect != endSelect)
 			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
@@ -52,7 +52,6 @@ $(document).click( function(e) {
 		urlInput.value = "";
 		hypertextInput.value = "";
 		initialText = markdown.value;
-		newEndSelect = undefined;
 		
 		linkDisplayer.className = "tool-displayer";
 		if (markdown.selectionStart != markdown.selectionEnd
@@ -66,6 +65,7 @@ $(document).click( function(e) {
 		}
 		if (startSelect != endSelect)
 			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setLinkInputs();
 		urlInput.focus();		
 	}
@@ -90,7 +90,6 @@ $(document).click( function(e) {
 		onlineImageUrlInput.value = "";
 		onlineImageAltInput.value = "";
 		initialText = markdown.value;
-		newEndSelect = undefined;
 		
 		onlineImageDisplayer.className = "tool-displayer";
 		if (markdown.selectionStart != markdown.selectionEnd
@@ -104,6 +103,7 @@ $(document).click( function(e) {
 		}
 		if (startSelect != endSelect)
 			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setOnlineImageInputs();
 		onlineImageUrlInput.focus();
 	}
