@@ -1,0 +1,139 @@
+/* ===========================
+	WINDOWS WINDOW BAR STYLES
+   ===========================
+	Specific styles for Mado's window bar on Windows.
+	It also sets up a border all around the app window. */
+
+#window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
+
+#window-bar li {
+	/* Positioning */
+	float: right;
+
+	/* Box-model */
+	width: 40px;
+	height: 100%;
+
+	/* Typography */
+	color: #fff;
+	line-height: 18px;
+	text-align: center;
+
+	/* Visual */
+	background: transparent;
+
+	/* Misc */
+	transition: background-color 0.1s ease;
+	-webkit-app-region: no-drag; /* Disable drag action */
+}
+
+#window-bar li:active { transition: none; }
+
+/* Borders for the Windows frame */
+#window-maximize,
+#window-minimize,
+#window-close-button {
+	/* Visual */
+	border-color: transparent;
+	border-style: solid;
+}
+
+#window-maximize,
+#window-minimize {
+	/* Visual */
+	border-width: 1px 0 0;
+}
+
+#window-close-button {
+	/* Box-model */
+	padding-left: 1px; /* Counterbalance the right border */
+
+	/* Visual */
+	border-width: 1px 1px 0 0;
+}
+
+#window-close-button:hover,
+#window-close-button:active { border-color: #991515; }
+
+#window-maximize:hover,
+#window-maximize:active,
+#window-minimize:hover,
+#window-minimize:active { border-color: #103365; }
+
+/* Background colors for the buttons */
+#window-close-button:hover {
+	/* Visual */
+	background-color: #d11;
+}
+
+#window-close-button:active { background-color: #c01a1a; }
+
+#window-maximize:hover,
+#window-minimize:hover { background-color: #143d7a; }
+
+#window-maximize:active,
+#window-minimize:active { background-color: #103365; }
+
+/* -------
+	Alert
+   ------- */
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	top: 20px;
+	right: 5px;
+
+	/* Misc */
+	-webkit-transform-origin: 434px 1px;
+}
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow { margin: 1px 0 0 431px; }
+
+/* --------
+	Header
+   -------- */
+#mado-header {
+	/* Visual */
+	border-color: #103365;
+	border-style: solid;
+	border-width: 1px 1px 0;
+}
+
+/* NAVBAR */
+#new,
+#more-button {
+	/* Visual */
+	border-color: #103365;
+	border-style: solid;
+}
+
+#new { border-width: 0 0 0 1px; }
+
+#more-button {
+	/* Box-model */
+	padding-left: 1px; /* Counterbalance the right border */
+
+	/* Visual */
+	border-width: 0 1px 0 0;
+}
+
+/* -----------
+	Workspace
+   ----------- */
+#document {
+	/* Visual */
+	border-color: #4a4942;
+	border-style: solid;
+	border-width: 0 1px;
+}
+
+/* --------
+	Footer
+   -------- */
+#mado-footer {
+	/* Visual */
+	border-color: #21201d;
+	border-style: solid;
+	border-width: 0 1px 1px;
+}

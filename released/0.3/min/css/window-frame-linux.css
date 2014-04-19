@@ -1,0 +1,109 @@
+/* ===========================
+	LINUX WINDOW FRAME STYLES
+   ===========================
+	Specific styles for Mado's window frame on Linux (based on Ubuntu). */
+
+#window-bar li {
+	/* Positioning */
+	position: absolute;
+	top: 50%;
+	margin-top: -6px;
+
+	/* Box-model */
+	width: 15px;
+	height: 15px;
+
+	/* Typography */
+	/*line-height: 15px;*/
+	text-align: left;
+	color: #325c9c;
+
+	/* Visual */
+	border-radius: 8px;
+
+	/* Misc */
+	transition: color 0.05s linear;
+	-webkit-app-region: no-drag; /* Disable drag action */
+}
+
+/* These styles make the icons appear centered */
+#window-close-button:before,
+#window-bar li:before {
+	/* Positioning */
+	position: relative;
+}
+
+#window-close { left: 10px; }
+
+#window-close-button {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+
+	/* Typography */
+	color: #691700;
+
+	/* Visual */
+	background-color: #e0652c;
+	border-radius: 10px;
+}
+
+#window-minimize { left: 28px; }
+
+#window-maximize { left: 46px; }
+
+#window-minimize,
+#window-maximize {
+	/* Visual */
+	background-color: #5489d3;
+}
+
+#window-close-button:hover {
+	/* Typography */
+	color: #7f1b00;
+
+	/* Visual */
+	background-color: #ea885d;
+}
+
+#window-close-button:active {
+	/* Typography */
+	color: #4c0f00;
+
+	/* Visual */
+	background-color: #b24d1e;
+}
+
+#window-maximize:hover,
+#window-minimize:hover {
+	/* Typography */
+	color: #426aa5;
+
+	/* Visual */
+	background-color: #77a7d8;
+}
+
+#window-maximize:active,
+#window-minimize:active {
+	/* Typography */
+	color: #194584;
+
+	/* Visual */
+	background-color: #4779b2;
+}
+
+/* -------
+	Alert
+   ------- */
+/* When the user clicks the "Close" button with unsaved changes, the displayer is deployed and shows the alert */
+#close-alert-displayer {
+	/* Positioning */
+	top: 17px;
+	left: -2px;
+
+	/* Misc */
+	-webkit-transform-origin: 9px 1px;
+}
+
+/* The arrow is a gray corner for the container */
+#close-alert-arrow { margin: 1px 0 0 5px; }

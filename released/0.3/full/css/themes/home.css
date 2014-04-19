@@ -1,0 +1,41 @@
+/* Default style for the conversion view. Its name, "Home", is obvious and reminds of the comfort and softness of a familiar house. */
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+#html-conversion ul > li:before {
+	/* Box-model */
+	width: 2em;
+
+	/* Typography */
+	text-align: right;
+}
+
+/* ORDERED LISTS */
+#html-conversion ol > li:before {
+	/* Box-model */
+	width: 2em;
+
+	/* Typography */
+	text-align: right;
+
+	/* Misc */
+	content: counter(list)".";
+}
+
+/* -------------
+	Blockquotes
+   ------------- */
+#html-conversion blockquote {
+	/* Positioning */
+	margin-bottom: 0.7em;
+	margin-left: auto;
+
+	/* Box-model */
+	width: calc(100% - 2.4em);
+	padding: 0.7em 0 0 1.2em;
+
+	/* Visual */
+	border-left: 0.7em solid rgba(0,0,0,.1);
+}

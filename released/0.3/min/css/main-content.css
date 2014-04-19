@@ -1,0 +1,477 @@
+/* ==============
+	MAIN CONTENT
+   ============== */
+
+/* -----------------------
+	Drag & drop container
+   ----------------------- */
+#document { transition: box-shadow .1s ease; }
+
+#drag-and-drop-container {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
+	/* Misc */
+	transition: -webkit-transform .05s ease-in;
+	-webkit-transform-origin: center;
+}
+
+/* When a document is being dragged over Mado */
+#document.dragging {
+	/* Visual */
+	box-shadow: 0 0 20px 0 rgba(0,0,0,.1) inset;
+
+	/* Misc */
+	transition: box-shadow .2s ease;
+}
+
+#document.dragging #drag-and-drop-container {
+	/* Misc */
+	transition: -webkit-transform .2s ease;
+	-webkit-transform: scale(.9);
+}
+
+/* ---------
+	Sidebar
+   --------- */
+.sidebar {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+
+	/* Box-model */
+	width: 40px;
+}
+
+/* Icon buttons in the sidebars */
+.tool {
+	/* Box-model */
+	width: 40px;
+	height: 40px;
+
+	/* Typography */
+	color: #4a4942;
+	text-align: center;
+	line-height: 40px;
+}
+
+.tool:hover { color: #000; }
+
+/* SIDEBAR TOOLS */
+/* Sidebar tool container */
+.tool-container {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	width: 40px; /* In order not to interfere with the textarea */
+	overflow: visible; /* In order to let the help input displayer display properly */
+}
+
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+.tool-displayer {
+	/* Positioning */
+	position: absolute;
+
+	/* Box-model */
+	width: 315px;
+
+	/* Misc */
+	transition: all .1s ease-out;
+}
+
+/* When the displayer is hidden */
+.tool-displayer.hidden { -webkit-transform: scale(0); }
+
+/* The arrow is a gray corner for the "box" (see .tool-box below) */
+.tool-arrow {
+	/* Positioning */
+	position: relative; /* For the Z-index */
+	margin-top: 11px; /* The tip matches the middle of the button */
+	z-index: 1000;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-style: solid;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see .tool-arrow above) */
+.tool-box {
+	/* Box-model */
+	height: auto;
+	padding: 5px;
+
+	/* Visual */
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0,0,0,.2);
+}
+
+.tool-first-item { margin-top: 0 !important; } /* Prevents falsy top margins */
+
+/* Markdown sidebar */
+#md-control { left: 0; }
+
+/* LEFT SIDEBAR TOOLS */
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+#md-control .tool-displayer {
+	/* Positioning */
+	top: 5px;
+	left: 40px;
+
+	/* Misc */
+	-webkit-transform-origin: 1px 15px;
+}
+
+/* The arrow is a gray corner for the "box" (see #md-control .tool-box below) */
+#md-control .tool-arrow {
+	/* Positioning */
+	margin-left: 1px;
+
+	/* Box-model */
+	float: left;
+
+	/* Visual */
+	border-color: transparent #fff transparent transparent;
+	border-width: 4px 4px 4px 0;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #md-control .tool-arrow above) */
+#md-control .tool-box {
+	/* Box-model */
+	width: 310px;
+	float: left;
+}
+
+/* HELP INPUT SPECIFICS: HELP RESULTS */
+#help-results-container {
+	/* Box-model */
+	overflow: hidden;
+	
+	/* Typography */
+	font-size: 0.8em;
+	line-height: 1.2em;
+	color: #1a1a1a;
+
+	/* Misc */
+	opacity: 1;
+	transition: all .1s ease-out;
+}
+
+/* The four cases for the help results */
+#help-results-container.hidden {
+	/* Radical */
+	display: none;
+	
+	/* Box-model */
+	height: 0;
+	padding-top: 0;
+
+	/* Misc */
+	opacity: 0;
+}
+
+/* Container for both the answer and the example, also features a switch button to navigate between each */
+.result {
+	/* Positioning */
+	position: relative;
+	clear: both;
+
+	/* Box-model */
+	width: 200%; /* Twice the #help-results-container's width */
+
+	/* Misc */
+	transition: -webkit-transform .1s ease;
+}
+
+.result:not(:first-of-type) { border-top: 1px solid #fafafa; }
+
+/* The button to switch between the answer and the example */
+.result-switch-container {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 50%;
+	z-index: 1000;
+
+	/* Box-model */
+	width: 30px;
+	height: 100%;
+
+	/* Visual */
+	background-color: #fff; /* Hides the text underneath it during the transition */
+
+	/* Misc */
+	transition: right .1s ease;
+}
+
+.result-switch {
+	/* Positioning */
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin: -15px 0 0; /* Auto vertical centering, more flexible in case of modification */
+
+	/* Box-model */
+	width: 30px;
+	height: 30px;
+
+	/* Typography */
+	color: #4a4942;
+	text-align: center;
+	line-height: 30px;
+
+	/* Misc */
+	cursor: pointer;
+	transition: all .1s ease-out;
+}
+
+.result-switch:hover { color: #000; }
+
+/* The button's behavior when activated */
+.result.switched .result-switch-container { right: 0; }
+
+.result.switched .result-switch { -webkit-transform: rotate(180deg); }
+
+.answer,
+.example {
+	/* Positionning */
+	float: left;
+
+	/* Box-model */
+	width: 50%; /* Half the .result's width, which means all the #help-results-container's width */
+	padding: 10px 30px 10px 0; /* Space for the result's switch */
+}
+
+.result.switched { -webkit-transform: translate(-50%,0); }
+
+/* When there is no result yet (less than 3 characters in the input), or no result at all */
+.no-result { font-weight: bold; }
+
+.no-result .result-switch { display: none; } /* Hide the switch */
+
+.no-result .result { transition: none; } /* Cancel transitions for visual stability */
+
+/* Part of the answer that matches the input */
+.match {
+	/* Visual */
+	border-radius: 2px;
+
+	/* Typography */
+	color: #0a0a0a;
+
+	/* Visual */
+	background-color: #f0f0f0;
+}
+
+/* Title of the help item */
+.help-title {
+	/* Positioning */
+	margin-bottom: 5px;
+
+	/* Typography */
+	font-size: 0.85em;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* Code in the help item */
+.help-code {
+	/* Typography */
+	font-family: SourceCodePro;
+	color: #4a4942;
+
+	/* Misc */
+	cursor: text; /* Visually inform the user that the example code is selectable */
+	-webkit-user-select: text; /* Enable the user to select the example code */
+}
+
+/* Example images for the image insertion syntax */
+.example-image {
+	/* Box-model */
+	width: 40px;
+	height: 36px;
+
+	/* Visual */
+	background-image: url("../img/example-image.png");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* LINK INSERTION SPECIFICS */
+/* The "Ok" button */
+#insert-link { margin-left: 5px; }
+
+/* WEB IMAGE INSERTION SPECIFICS */
+/* The "Ok" button */
+#insert-webimage { margin-left: 5px; }
+
+/* IMAGE INSERTION SPECIFICS */
+/* The first button, enables the user to choose his galleries */
+#galleries-button {
+	/* Box-model */
+	width: 50%; /* This button takes half the available width */
+	padding: 7px 0; /* Override the default left and right padding so that the text can display in one line */
+}
+
+/* The second button, aside the first one, enables the user to choose an image */
+#browse-image {
+	/* Positioning */
+	margin-top: 0; /* Override the default top margin so that it aligns with the first button */
+	margin-left: 5px; /* Set a thin margin between the first and the second buttons */
+
+	/* Box-model */
+	width: calc(50% - 5px); /* This button takes half the available width, minus the margin */
+}
+
+/* The textual extension of the chosen image */
+#extension { opacity: 0.8; }
+
+/* The "Ok" button */
+#insert-image { margin-left: 5px; }
+
+/* -----------
+	Workspace
+   ----------- */
+/* Wrapping all the content in the "workspace" div. */
+#workspace {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	height: 100%;
+}
+
+#workspace,
+#center-line-container {
+	/* Misc */
+	transition: all .25s ease-out; /* The workspace and the center-line must have the same transition */
+}
+
+/* Setting the possible states for the "workspace" div and their behavior. */
+#workspace.markdown-view {
+	/* Positioning */
+	margin-left: 0;
+
+	/* Box-model */
+	width: 200%;
+}
+
+#workspace.normal {
+	/* Positioning */
+	margin-left: 0;
+
+	/* Box-model */
+	width: 100%;
+}
+
+#workspace.conversion-view {
+	/* Positioning */
+	margin-left: -100%;
+
+	/* Box-model */
+	width: 200%;
+}
+
+/* SHEETS */
+.sheet {
+	/* Box-model */
+	float: left;
+	width: 50%;
+	height: 100%;
+	padding: 0 40px;
+
+	/* Typography */
+	color: #4a4942;
+}
+
+/* MARKDOWN AREA */
+#markdown-container {
+	/* Box-model */
+	padding: 0 0 0 40px;
+	overflow: hidden;
+}
+
+#markdown {
+	/* Box-model */
+	width: 100%;
+	min-height: 100%;
+	padding: 40px 50px 40px 10px;
+
+	/* Typography */
+	font-family: SourceCodePro;
+	font-size: 0.95em;
+
+	/* Visual */
+	border: none;
+	background-color: transparent;
+
+	/* Misc */
+	cursor: text;
+	resize: none;
+}
+
+/* Placeholder for the Markdown area */
+#markdown:empty:before{
+  	content: attr(placeholder); /* Gets and displays the "placeholder" attribute's value */
+  	color: #808080; /* This hexa color is the equivalent of "grey" */
+}
+
+/* Selected Markdown when inserting a link or an image */
+#mado-link, #mado-image, #mado-paste {
+	display: inline;
+	color: #fafafa;
+	background-color: #1c75ea;
+}
+
+#paste-zone {
+	width: 0;
+	height: 0;
+}
+
+/* HTML AREA */
+.sheet:last-of-type { padding: 0 0 0 40px; }
+
+#html-conversion {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	padding: 40px 40px 40px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+/* CENTER VERTICAL LINE */
+#center-line-container {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	left: 50%;
+
+	/* Box-model */
+	width: 1px;
+	height: 100%;
+	padding: 40px 0;
+}
+
+/* Center line behavior according to the workspace mode */
+.markdown-view #center-line-container { left: 100%; }
+
+/* Center line behavior according to the conversion view mode */
+.conversion-view #center-line-container { left: -1%; }
+
+/* The visual center line. Nothing to change here. */
+#center-line {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+
+	/* Visual */
+	background-color: #e0e0e0;
+}

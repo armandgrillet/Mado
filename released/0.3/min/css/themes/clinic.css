@@ -1,0 +1,160 @@
+/* Minimalistic and futuristic style for the conversion view. Its name, "Clinic", reminds of the purity of a hospital. */
+
+/* -------
+	Fonts
+   ------- */
+#html-conversion {
+	/* Typography */
+	font-family: Bariol, sans-serif;
+	font-size: 1.1em;
+	line-height: 1.5em;
+	/*-webkit-font-smoothing: antialiased;*/
+}
+
+/* ------------
+	Paragraphs
+   ------------ */
+#html-conversion p,
+#html-conversion ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+#html-conversion ul {
+	/* Box-model */
+	padding-bottom: 0.7em;
+}
+
+/* --------
+	Titles
+   -------- */
+#html-conversion h1,
+#html-conversion h2 {
+	/* Typography */
+	font-family: BariolLight;
+}
+
+#html-conversion h1 {
+	/* Box-model */
+	padding: 0.6em 0 0.3em;
+
+	/* Typography */
+	font-size: 3em;
+}
+
+#html-conversion h2 {
+	/* Box-model */
+	padding: 0.7em 0 0.5em;
+
+	/* Typography */
+	font-size: 2em;
+}
+
+#html-conversion h3 {
+	/* Box-model */
+	padding: 0.75em 0;
+
+	/* Typography */
+	font-family: Bariol;
+	font-size: 1.25em;
+}
+
+#html-conversion h4 {
+	/* Box-model */
+	padding: 0.7em 0;
+
+	/* Typography */
+	font-weight: bold;
+}
+
+#html-conversion h5 {
+	/* Box-model */
+	padding-bottom: 0.85em;
+
+	/* Typography */
+	font-size: 0.85em;
+	font-weight: bold;
+}
+
+#html-conversion h6 {
+	/* Typography */
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+#html-conversion ul > li { padding-left: 2em; }
+
+#html-conversion ul > li:before { padding-left: 0; }
+
+/* ORDERED LISTS */
+#html-conversion ol > li { padding-left: 2em; }
+
+#html-conversion ol > li:before {
+	/* Box-model */
+	padding-left: 0;
+
+	/* Typography */
+	font-weight: bold;
+	text-align: left;
+
+	/* Misc */
+	content: counter(list);
+}
+
+/* Prevent empty list items to be displayed without a height */
+#html-conversion li:empty { height: 1.5em; }
+
+/* SUB-LISTS */
+#html-conversion ol ol,
+#html-conversion ol ul,
+#html-conversion ul ul,
+#html-conversion ul ol {
+	/* Box-model */
+	padding-bottom: 0;
+}
+
+/* -------------
+	Blockquotes
+   ------------- */
+#html-conversion blockquote {
+	/* Positioning */
+	margin-bottom: 0.7em;
+
+	/* Box-model */
+	padding: 0.7em 0 0 1em;
+
+	/* Visual */
+	background-color: rgba(0,0,0,.05);
+	border-left: none;
+}
+
+#html-conversion blockquote em { font-style: normal; }
+
+/* --------
+	Tables
+   -------- */
+#html-conversion td,
+#html-conversion th {
+	/* Box-model */
+	padding: 0.6em;
+
+	/* Visual */
+	border: 1px solid #dfdfdf;
+}
+
+/* Zebra stripes for the table's body */
+#html-conversion tbody tr:nth-child(2n+1) { background-color: #f3f3f3; }
+
+/* ------------------
+	Horizontal rules
+   ------------------ */
+#html-conversion hr { margin: 0.7em auto 1.5em; }
+
+/* ------
+	Code
+   ------ */
+#html-conversion code {
+	/* Typography */
+	font-size: 0.85em;
+	line-height: 1.45em;
+}
