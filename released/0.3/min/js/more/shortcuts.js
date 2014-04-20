@@ -1,0 +1,5 @@
+var a,b=document.createElement("link"),c,d;
+window.onload=function(){a=document.getElementsByTagName("head")[0];d=document.getElementById("help-shortcut");c=document.getElementById("window-close");b.setAttribute("rel","stylesheet");b.setAttribute("type","text/css");-1!=navigator.appVersion.indexOf("Mac")?(b.setAttribute("href","../css/more/more-frame-mac.css"),c.setAttribute("class","cta little-icon-mac-close")):(-1!=navigator.appVersion.indexOf("Win")?b.setAttribute("href","../css/more/more-frame-windows.css"):b.setAttribute("href","../css/more/more-frame-others.css"),
+/* Property of A+A (juridically known as Allan Rope and Armand Grillet). ALL RIGHTS RESERVED.
+See our Terms of Service in the "About" section for further information. */
+c.setAttribute("class","cta little-icon-win-close"));a.appendChild(b);-1!=navigator.appVersion.indexOf("Mac")?($(".ctrl-cmd-key").html("&#8984;"),$(d).css("display","none")):$(".ctrl-cmd-key").html("Ctrl");$(c).on("click",function(){chrome.app.window.current().close()})};
