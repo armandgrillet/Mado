@@ -994,7 +994,8 @@ function ic() {
     uc();
     chrome.runtime.getBackgroundPage(function (a) {
         a.jBond(chrome.app.window.current().getBounds())
-    })
+    });
+    chrome.app.window.current().close();
 }
 
 function xc() {

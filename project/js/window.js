@@ -139,6 +139,7 @@ function quitCloseWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
+	chrome.app.window.current().close();
 }
 
 function saveAndQuit () {
