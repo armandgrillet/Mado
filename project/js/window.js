@@ -70,19 +70,18 @@ function determineFrame () {
 	frameStylesheetLink.setAttribute("rel", "stylesheet");
 	frameStylesheetLink.setAttribute("type", "text/css");
 
-	//if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-	if (navigator.appVersion.indexOf("Win") != -1) {
+	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
 		frameStylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	/*else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
 		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
-	}*/
+	}
 	else if (navigator.appVersion.indexOf("Linux") != -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
 		frameStylesheetLink.setAttribute("href", "css/window-frame-linux.css");
 		windowClose.setAttribute("class", "cta little-icon-lin-close");
