@@ -104,19 +104,18 @@ function quitCloseWindow () {
 }
 
 function saveAndQuit () {
-	fileEntry.createWriter(
-		function(writer) {
-	 		writer.write(
-	 			new Blob(
-		 			[markdown.innerText],
-					{
-						type: "text/plain"
-					}
-				)
-			); 
-			newRecentFile(fileEntry, "quit"); // Update the position of the file saved.
-	 	}, 
-	errorHandler);
+	fileEntry.createWriter(function(fileWriter) {
+		    truncated = false;
+		    fileWriter.onwriteend = function(e) {
+		        if (!truncated) {
+		            truncated = true;
+		            this.truncate(this.position);
+		            return;
+		        }
+		        newRecentFile(fileEntry, "quit");
+		    };
+		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		}, errorHandler);
 }
 
 function saveAsAndQuit () {
@@ -127,19 +126,18 @@ function saveAsAndQuit () {
 		}, 
 		function(savedFile) {
 			if (savedFile) {
-				savedFile.createWriter(
-					function(writer) {
-				 		writer.write(
-				 			new Blob(
-					 			[markdown.innerText],
-								{
-									type: "text/plain"
-								}
-							)
-						); 		
-						newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.										
-				 	}, 
-				errorHandler);
+				savedFile.createWriter(function(fileWriter) {
+				    truncated = false;
+				    fileWriter.onwriteend = function(e) {
+				        if (!truncated) {
+				            truncated = true;
+				            this.truncate(this.position);
+				            return;
+				        }
+				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
+				    };
+				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				}, errorHandler);
 			}
 		}
 	);

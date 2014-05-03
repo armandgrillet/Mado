@@ -6,6 +6,7 @@
 
 var fileEntry; // This is the variable who stores the file opened.
 var lastWidth; // This is the last zier of the window.
+var truncated; // To know the size when something is saved.
 
 /*
 * Functions (in alphabetical order).
@@ -186,27 +187,24 @@ function saveAsFile () {
 		}, 
 		function(savedFile) {
 			if (savedFile) {
-				savedFile.createWriter(
-					function(writer) {
-				 		writer.write(
-				 			new Blob(
-					 			[markdown.innerText],
-								{
-									type: "text/plain"
-								}
-							)
-						); 						
-						fileEntry = savedFile; // Save without asking the file.
-						newRecentFile(fileEntry); // Update the local storage, the file opened is now on top.
+				savedFile.createWriter(function(fileWriter) {
+				    truncated = false;
+				    fileWriter.onwriteend = function(e) {
+				        if (!truncated) {
+				            truncated = true;
+				            this.truncate(this.position);
+				            return;
+				        }
+				        fileEntry = savedFile; // Save without asking the file.
+				        newRecentFile(fileEntry); // Update the position of the file saved.
 
 						// Footer
 						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
-
-						
-				 	}, 
-				errorHandler);
+				    };
+				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				}, errorHandler);
 			}
 		}
 	);
@@ -216,24 +214,23 @@ function saveFile () {
 	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
 		saveAsFile();
 	else { // If we have already loaded the file.
-		fileEntry.createWriter(
-			function(writer) {
-		 		writer.write(
-		 			new Blob(
-			 			[markdown.innerText],
-						{
-							type: "text/plain"
-						}
-					)
-				); 
-				newRecentFile(fileEntry); // Update the position of the file saved.
+		fileEntry.createWriter(function(fileWriter) {
+		    truncated = false;
+		    fileWriter.onwriteend = function(e) {
+		        if (!truncated) {
+		            truncated = true;
+		            this.truncate(this.position);
+		            return;
+		        }
+		        newRecentFile(fileEntry); // Update the position of the file saved.
 
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();
 				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
-		 	}, 
-		errorHandler);
+		    };
+		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		}, errorHandler);
 	}
 }
 
@@ -1441,7 +1438,7 @@ window.onload = function() {
     /* stats.js */
     if (navigator.onLine)
         initStats();
-    
+
     /* styles.js */
     getStyle();
 
@@ -1985,19 +1982,18 @@ function quitCloseWindow () {
 }
 
 function saveAndQuit () {
-	fileEntry.createWriter(
-		function(writer) {
-	 		writer.write(
-	 			new Blob(
-		 			[markdown.innerText],
-					{
-						type: "text/plain"
-					}
-				)
-			); 
-			newRecentFile(fileEntry, "quit"); // Update the position of the file saved.
-	 	}, 
-	errorHandler);
+	fileEntry.createWriter(function(fileWriter) {
+		    truncated = false;
+		    fileWriter.onwriteend = function(e) {
+		        if (!truncated) {
+		            truncated = true;
+		            this.truncate(this.position);
+		            return;
+		        }
+		        newRecentFile(fileEntry, "quit");
+		    };
+		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		}, errorHandler);
 }
 
 function saveAsAndQuit () {
@@ -2008,19 +2004,18 @@ function saveAsAndQuit () {
 		}, 
 		function(savedFile) {
 			if (savedFile) {
-				savedFile.createWriter(
-					function(writer) {
-				 		writer.write(
-				 			new Blob(
-					 			[markdown.innerText],
-								{
-									type: "text/plain"
-								}
-							)
-						); 		
-						newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.										
-				 	}, 
-				errorHandler);
+				savedFile.createWriter(function(fileWriter) {
+				    truncated = false;
+				    fileWriter.onwriteend = function(e) {
+				        if (!truncated) {
+				            truncated = true;
+				            this.truncate(this.position);
+				            return;
+				        }
+				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
+				    };
+				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				}, errorHandler);
 			}
 		}
 	);
