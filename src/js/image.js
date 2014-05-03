@@ -8,13 +8,13 @@
 
 /* HTML shortcuts. */
 var altInput; // The input for the alternative text.
+var cancelImageButton; // The "Cancel" button.
 var galleriesButton; // The "Galleries" button.
 var imageButton; // The "Image" button.
 var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var imageStatus; // The div to display the image path.
 var titleInput; // The input for the title of the image
 
 /* Functions variables. 
@@ -45,25 +45,23 @@ var rightFile; // If false the JS is looking for an image.
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* modifyImage (): enables the realtime modification of an image.
 	* update (): update the list of folders and analyse the files in folders.
+	* setBrowserText (imagePath): set the text in the button with the image's path.
+	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
 */
 
 function applyImage () {
-	if (altInput.value == "") // An alternative input is obligatory
+	if (altInput.value == "") { // An alternative input is obligatory
+		altInput.setAttribute("class", "flash");
 		altInput.focus();
+		altInput.removeAttribute("class");
+	}
 	else if (imageLoaded != undefined){ // An image is obligatory
-		if (titleInput.value == "")
-			image = "![" + altInput.value + "](" + imageLoaded + ')';
-		else 
-			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-		if (imageDiv != undefined)
-			imageDiv.innerText = image;		
-		else
-			$(markdown).innerText = $(markdown).innerText + image;		
+		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
-		conversion();
 	}
 }
 
@@ -73,6 +71,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
+	conversion();
 }
 
 function chooseGalleries () {
@@ -142,7 +141,7 @@ function galleryAnalysis (index) {
 	}
 	else {
 		imagesArray.length = 0;
-		conversion();
+		modifyImage();
 	}
 }
 
@@ -188,18 +187,49 @@ function loadImage () {
 		function(loadedImage) {
 			if (loadedImage) {			    
 				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
-					imageBrowser.innerHTML = "Change the image";
-					imageStatus.innerHTML = fileName(path.replace(/\\/g, "/"));
-					if (imageStatus.innerHTML.length > 35) // Too long to be beautiful.
-						imageStatus.innerHTML = imageStatus.innerHTML.substring(0, 15) + "(...)" + imageStatus.innerHTML.substring(imageStatus.innerHTML.length - 15, imageStatus.innerHTML.length);
-					imageStatus.innerHTML = imageStatus.innerHTML.substring(0, imageStatus.innerHTML.lastIndexOf('.')) + "<span id=\"extension\">" + imageStatus.innerHTML.substring(imageStatus.innerHTML.lastIndexOf('.'), imageStatus.innerHTML.length) + "</span";
-					imageStatus.style.display = "inline-block";
+					setImageBrowserText(fileName(path.replace(/\\/g, "/")));				
 					imageLoaded = path.replace(/\\/g, "/");
+					modifyImage();
 					altInput.focus();
 				});
 			}
 		}
 	);
+}
+
+function modifyImage () {
+	if (titleInput.value == "")
+		image = "![" + altInput.value + "](" + imageLoaded + ')';
+	else 
+		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	if (imageDiv != undefined)
+		imageDiv.innerText = image;		
+	else
+		$(markdown).innerText = $(markdown).innerText + image;		
+	conversion();
+}
+
+function setImageBrowserText (path) {
+	imageBrowser.innerHTML = path;
+	if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
+		imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
+}
+
+function setImageInputs () {
+	initialText = imageDiv.innerText;
+	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
+		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
+			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
+			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		else {
+			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
+	}
+	
 }
 
 function update () {	

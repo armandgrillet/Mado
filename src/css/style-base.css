@@ -117,8 +117,19 @@ input[type="text"] {
 
 	/* Visual */
 	border: 1px solid #f0f0f0;
+
+	/* Misc */
+	transition: border-color 0.8s ease 0.2s;
 }
 
 input[type="text"]:not(:first-child) { margin-top: 5px; }
 
-input[type="text"]:focus { border: 1px solid #e0e0e0; }
+input[type="text"]:focus { border-color: #e0e0e0; }
+
+input[type="text"].flash {
+	/* Visual */
+	border-color: #3ea2f9;
+
+	/* Misc */
+	transition: none;
+}

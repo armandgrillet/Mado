@@ -20,8 +20,7 @@ window.onload = function() {
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");
-    saveState = document.getElementById("save-state");
+    nameDiv = document.getElementById("doc-name");   
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -37,16 +36,17 @@ window.onload = function() {
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
+    cancelImageButton = document.getElementById("cancel-image");
     galleriesButton = document.getElementById("galleries-button");
     imageButton = document.getElementById("image-button");
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
-    imageStatus = document.getElementById("image-status");
     altInput = document.getElementById("alt-input");
     titleInput = document.getElementById("title-input");
 
     /* link.js */
+    cancelLinkButton = document.getElementById("cancel-link");
     linkButton = document.getElementById("link-button");
     linkDisplayer = document.getElementById("link-insertion-displayer");
     urlInput = document.getElementById("url-input");
@@ -86,6 +86,7 @@ window.onload = function() {
     head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
     quitCloseButton = document.getElementById("quit");
     saveQuitCloseButton = document.getElementById("save-quit");
+    saveState = document.getElementById("save-state");
     windowCloseContainer = document.getElementById("window-close");
     windowClose = document.getElementById("window-close-button");
     windowMax = document.getElementById("window-maximize");
@@ -182,7 +183,9 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
            applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
 
     $(titleInput).keydown(function(e){
@@ -195,8 +198,12 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
             applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
+
+    $(cancelImageButton).on("click", cancelImage);
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
@@ -213,7 +220,7 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
            applyLink();
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();       
+            cancelLink();       
         else
             modifyLink();
     });
@@ -228,10 +235,12 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
             applyLink();
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();        
+            cancelLink();        
         else
             modifyLink();        
     });
+
+    $(cancelLinkButton).on("click", cancelLink);
 
     /* More.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
@@ -242,10 +251,12 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
     
-    /* stats.js */
+    /* stats.js 
+    * Waiting for the prod.
     
     if (navigator.onLine)
         initStats();
+    */
 
     /* styles.js */
     getStyle();

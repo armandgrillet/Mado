@@ -43,7 +43,6 @@
 .tool-displayer {
 	/* Positioning */
 	position: absolute;
-	top: 5px;
 
 	/* Box-model */
 	width: 315px;
@@ -89,6 +88,7 @@
 /* The displayer is actually a container that fades out when combined with the "hidden" class */
 #md-control .tool-displayer {
 	/* Positioning */
+	top: 5px;
 	left: 40px;
 
 	/* Misc */
@@ -281,90 +281,25 @@
 }
 
 /* IMAGE INSERTION SPECIFICS */
-#browse-image-module {
-	/* Positioning */
-	clear: both;
-
+/* The first button, enables the user to choose his galleries */
+#galleries-button {
 	/* Box-model */
-	padding-top: 5px;
+	width: 50%; /* This button takes half the available width */
+	padding: 7px 0; /* Override the default left and right padding so that the text can display in one line */
 }
 
-#image-status-container {
+/* The second button, aside the first one, enables the user to choose an image */
+#browse-image {
 	/* Positioning */
-	float: left;
+	margin-top: 0; /* Override the default top margin so that it aligns with the first button */
+	margin-left: 5px; /* Set a thin margin between the first and the second buttons */
 
 	/* Box-model */
-	width: 50%;
-	height: 32px; /* Matches the button's height */
-	padding-left: 5px;
-
-	/* Typography */
-	line-height: 30px; /* For vertical centering of the text. See #image-statut below */
-}
-
-#image-status {
-	/* Box-model */
-	width: 100%;
-
-	/* Typography */
-	font-size: 0.8em;
-	line-height: 1.1em;
-	font-weight: bold;
-	vertical-align: middle;
-	word-wrap: break-word;
+	width: calc(50% - 5px); /* This button takes half the available width, minus the margin */
 }
 
 /* The textual extension of the chosen image */
-#extension { color: #b5b4b3; }
-
-/* HTML CONVERSION SIDEBAR */
-#conversion-control { right: 0; }
-
-/* RIGHT SIDEBAR TOOLS */
-/* The displayer is actually a container that fades out when combined with the "hidden" class */
-#conversion-control .tool-displayer {
-	/* Positioning */
-	right: 40px;
-
-	/* Misc */
-	-webkit-transform-origin: 314px 15px;
-}
-
-/* The arrow is a gray corner for the "box" (see #conversion-control .tool-box below) */
-#conversion-control .tool-arrow {
-	/* Positioning */
-	margin-right: 1px;
-	float: right;
-
-	/* Visual */
-	border-color: transparent transparent transparent #fff;
-	border-width: 4px 0 4px 4px;
-}
-
-/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #conversion-control .tool-arrow above) */
-#conversion-control .tool-box {
-	/* Box-model */
-	width: 120px;
-	float: right;
-}
-
-/* STYLES TOOL SPECIFICS */
-.style-choice-container {
-	/* Box-model */
-	display: block;
-	width: 100%;
-	height: 27px;
-
-	/* Typography */
-	font-size: 0.8em;
-	line-height: 27px;
-	font-weight: bold;
-	color: #4a4942;
-}
-
-.style-choice-container label:hover { color: #000; }
-
-.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
+#extension { opacity: 0.8; }
 
 /* -----------
 	Workspace
@@ -458,11 +393,13 @@
 }
 
 /* HTML AREA */
+.sheet:last-of-type { padding: 0 0 0 40px; }
+
 #html-conversion {
 	/* Box-model */
 	width: 100%;
 	height: 100%;
-	padding: 40px 0;
+	padding: 40px 40px 40px 0;
 	overflow-x: hidden;
 	overflow-y: auto;
 }

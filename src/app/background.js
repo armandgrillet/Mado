@@ -5,6 +5,7 @@
 * Resume:
 	* anotherWindow (x, y, width, height): create a new window with given parameters.
 	* firstWindow (): create a window without information.
+	* newBounds (BoundsObject): set in the storage the new bounds.
 	* theMinWidth (): set the window's minWidth.
 	* windowCreation (): choose which window to create (another window or a first window).
 */
@@ -35,6 +36,10 @@ function firstWindow () {
 	});
 }
 
+function newBounds (bounds) {
+	chrome.storage.local.set({"lastX" : bounds.left, "lastY" : bounds.top, "lastWidth" : bounds.width, "lastHeight" : bounds.height });
+}
+
 function theMinWidth () {
 	/* For the 0.2
 	if (screen.width < 1600)
@@ -54,10 +59,6 @@ function windowCreation () {
 		else
 			firstWindow();
 	});	
-}
-
-function newBounds (lastX, lastY, lastWidth, lastHeight) {
-	chrome.storage.local.set({"lastX" : lastX, "lastY" : lastY, "lastWidth" : lastWidth, "lastHeight" : lastHeight });
 }
 
 /*

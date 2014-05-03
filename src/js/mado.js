@@ -65,7 +65,10 @@ function fileName (path) {
 }
 
 function minFileName (path) {
-	return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+	if (path == "") // If there's nothing it returns the basic "document".
+		return "document";
+	else
+		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
 }
 
 function moreWindow (choice) {
@@ -78,6 +81,7 @@ function moreWindow (choice) {
 		      	width: 498,
 		      	height: 664
 		    }, 
+		    frame : "none",
 		    // The window can't be resized.
 		    minWidth: 498, 
 		    minHeight: 664,
@@ -294,38 +298,45 @@ $(document).click( function(e) {
 	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
-		imageStatus.style.display = "none";
 		altInput.value = "";
 		titleInput.value = "";
 		imageLoaded = undefined;
 
-		imageDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-image").length > 0) {
-			imageDiv = document.getElementById("mado-image");
-			titleInput.value = imageDiv.innerText;
-			initialText = titleInput.value;
+		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-image");
 		}
+		imageDisplayer.className = "tool-displayer";
+		imageDiv = document.getElementById("mado-image");
+		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
-		cancelImage();
+		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+		imageDisplayer.className = "tool-displayer hidden";
+		selectElementContents(imageDiv);
+		restoreSelection("mado-image");
+	}
 
 	/* link.js */
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
-
-		linkDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-link").length > 0) {
-			linkDiv = document.getElementById("mado-link");
-			hypertextInput.value = linkDiv.innerText;
-			initialText = hypertextInput.value;
+		
+		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-link");
 		}
-		urlInput.focus();
+		linkDisplayer.className = "tool-displayer";
+		linkDiv = document.getElementById("mado-link");
+		setLinkInputs();
+		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length)
-		cancelLink();
+	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+		linkDisplayer.className = "tool-displayer hidden";
+		selectElementContents(linkDiv);
+		restoreSelection("mado-link");
+	}
 
 	/* more.js */
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.
@@ -403,7 +414,7 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 */
 
 function conversion () {
-	if (markdown.innerText.length > 0) { // There is Markdown in the contenteditable.
+	if ((markdown.innerHTML > 4) || (markdown.innerText.length > 0 && markdown.innerHTML != "<br>")) { // There is Markdown in the contenteditable.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -438,6 +449,7 @@ function conversion () {
 		}
 	}
 	else { // No Markdown here.
+		markdown.innerHTML = ""; // If the innerHTML is "<br>".
 		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
@@ -491,6 +503,8 @@ function endOfConversion () {
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
+		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
+			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
 	});
 
@@ -512,6 +526,7 @@ function pasteContent () {
             pasteDiv.innerText = pasteZone.value;       
         else
             $(markdown).innerText = $(markdown).innerText + pasteZone.value;
+        pasteZone.value = ""; // Reset the hidden textarea content.
         selectElementContents(pasteDiv);
         restoreSelection("mado-paste");
         conversion();
@@ -578,35 +593,18 @@ function setEditorSyntax () {
 */
 
 var charsDiv; // The div who contains the document's chars number.
-var markdownSaved; // The last Markdown text saved.
 var nameDiv; // The div who contains the name of the opened document.
-var saveState; // The div who displays if the document is saved or not.
 var wordsDiv; // The div who contains the document's words number.
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
-	* checkSaveState (): change saveState's innerHTML.
 	* counterSelection (): what counter to display.
 	* displayCounter (): change charsDiv and wordsDiv.
 	* resetCounter (): what to display if there is nothing in the contenteditable.
 */
 
-function checkSaveState () {
-	if (markdown.innerText != "") {
-		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
-			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
-		else
-			saveState.innerHTML = "| Saved <span class=\"little-icon-saved\"></span>";
-	}
-	else {
-		if (markdownSaved != undefined)
-			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
-		else
-			saveState.innerHTML = "";
-	}
-}
 
 function counterSelection () {
 	if (charsDiv.style.display == "none") {
@@ -811,7 +809,7 @@ function answer () {
 		case 1: // Nothing found.
 			answer1.innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2);
+			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
 			break;
 		case 2: // One answer found.
 			resultsContainer.className = "one-result";
@@ -828,12 +826,15 @@ function answer () {
 }
 
 function displayAnswers () {
+	for (var i = 1; i <= 3; i++) // Reset the results' position.
+		if (window["result" + i].className == "result switched")
+			window["result" + i].className = "result";
+
 	if (help.value.length == 0)
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
-			resetAnswerDiv(2);
 			if (help.value.length == 1)
 				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
 			else if (help.value.length == 2)
@@ -845,7 +846,7 @@ function displayAnswers () {
 }
 
 function resetAnswerDiv(begin) {
-	for (var i = begin; i < 4; i++) { 
+	for (var i = begin; i <= 3; i++) { 
 		if (window["answer" + i].innerHTML == "")
 			i = 3;
 		else {
@@ -861,6 +862,7 @@ function switchResult (numResult) {
 		window["result" + numResult].className = "result switched";
 	else // If corresponding example displayed
 		window["result" + numResult].className = "result";
+	help.focus();
 }
 /* This document handles the image insertion. */
 
@@ -872,13 +874,13 @@ function switchResult (numResult) {
 
 /* HTML shortcuts. */
 var altInput; // The input for the alternative text.
+var cancelImageButton; // The "Cancel" button.
 var galleriesButton; // The "Galleries" button.
 var imageButton; // The "Image" button.
 var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var imageStatus; // The div to display the image path.
 var titleInput; // The input for the title of the image
 
 /* Functions variables. 
@@ -909,25 +911,23 @@ var rightFile; // If false the JS is looking for an image.
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* modifyImage (): enables the realtime modification of an image.
 	* update (): update the list of folders and analyse the files in folders.
+	* setBrowserText (imagePath): set the text in the button with the image's path.
+	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
 */
 
 function applyImage () {
-	if (altInput.value == "") // An alternative input is obligatory
+	if (altInput.value == "") { // An alternative input is obligatory
+		altInput.setAttribute("class", "flash");
 		altInput.focus();
+		altInput.removeAttribute("class");
+	}
 	else if (imageLoaded != undefined){ // An image is obligatory
-		if (titleInput.value == "")
-			image = "![" + altInput.value + "](" + imageLoaded + ')';
-		else 
-			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-		if (imageDiv != undefined)
-			imageDiv.innerText = image;		
-		else
-			$(markdown).innerText = $(markdown).innerText + image;		
+		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
-		conversion();
 	}
 }
 
@@ -937,6 +937,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
+	conversion();
 }
 
 function chooseGalleries () {
@@ -1006,7 +1007,7 @@ function galleryAnalysis (index) {
 	}
 	else {
 		imagesArray.length = 0;
-		conversion();
+		modifyImage();
 	}
 }
 
@@ -1052,18 +1053,49 @@ function loadImage () {
 		function(loadedImage) {
 			if (loadedImage) {			    
 				chrome.fileSystem.getDisplayPath(loadedImage, function(path) {
-					imageBrowser.innerHTML = "Change the image";
-					imageStatus.innerHTML = fileName(path.replace(/\\/g, "/"));
-					if (imageStatus.innerHTML.length > 35) // Too long to be beautiful.
-						imageStatus.innerHTML = imageStatus.innerHTML.substring(0, 15) + "(...)" + imageStatus.innerHTML.substring(imageStatus.innerHTML.length - 15, imageStatus.innerHTML.length);
-					imageStatus.innerHTML = imageStatus.innerHTML.substring(0, imageStatus.innerHTML.lastIndexOf('.')) + "<span id=\"extension\">" + imageStatus.innerHTML.substring(imageStatus.innerHTML.lastIndexOf('.'), imageStatus.innerHTML.length) + "</span";
-					imageStatus.style.display = "inline-block";
+					setImageBrowserText(fileName(path.replace(/\\/g, "/")));				
 					imageLoaded = path.replace(/\\/g, "/");
+					modifyImage();
 					altInput.focus();
 				});
 			}
 		}
 	);
+}
+
+function modifyImage () {
+	if (titleInput.value == "")
+		image = "![" + altInput.value + "](" + imageLoaded + ')';
+	else 
+		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	if (imageDiv != undefined)
+		imageDiv.innerText = image;		
+	else
+		$(markdown).innerText = $(markdown).innerText + image;		
+	conversion();
+}
+
+function setImageBrowserText (path) {
+	imageBrowser.innerHTML = path;
+	if (imageBrowser.innerHTML.length > 15) // Too long to be beautiful.
+		imageBrowser.innerHTML = imageBrowser.innerHTML.substring(0, 6) + "(…)" + imageBrowser.innerHTML.substring(imageBrowser.innerHTML.length - 6, imageBrowser.innerHTML.length);
+}
+
+function setImageInputs () {
+	initialText = imageDiv.innerText;
+	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
+		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
+			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
+			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		else {
+			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
+			setImageBrowserText(fileName(imageLoaded));
+		}
+		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
+	}
+	
 }
 
 function update () {	
@@ -1077,6 +1109,7 @@ function update () {
 */
 
 /* HTML shortcuts. */
+var cancelLinkButton; // The "Cancel" button.
 var hypertextInput; // The div that contains the hypertext.
 var link; // The content that is added.
 var linkButton; // The "Link" button.
@@ -1091,21 +1124,17 @@ var linkDiv; // The div with id="mado-link".
 	* applyLink (): what to do when the user press enter after setting the link.
 	* cancelLink (): what to do if the user press elsewhere the link container when he was adding a link.
 	* modifyLink (): enables the realtime modification of a link.
+	* setLinkInputs (): recognizes when the selected text is a link and set the inputs in consequence.
 */
 
 function applyLink () {
-	if (urlInput.value == "")
-		urlInput.focus();	
+	if (urlInput.value == "") {
+		urlInput.setAttribute("class", "flash");
+		urlInput.focus();
+		urlInput.removeAttribute("class");
+	}
 	else {
-		if (hypertextInput.value == "")
-			link = '[' + urlInput.value + "](" + urlInput.value + ')';
-		else 
-			link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-		if (linkDiv != undefined)
-			linkDiv.innerText = link;		
-		else
-			$(markdown).innerText = $(markdown).innerText + link;
-
+		modifyLink();
 		linkDisplayer.className = "tool-displayer hidden";
 		selectElementContents(linkDiv);
 		restoreSelection("mado-link");
@@ -1119,6 +1148,7 @@ function cancelLink () {
 	linkDisplayer.className = "tool-displayer hidden";	
 	selectElementContents(linkDiv);
 	restoreSelection("mado-link");
+	conversion();
 }
 
 function modifyLink () {
@@ -1131,6 +1161,16 @@ function modifyLink () {
 	else
 		$(markdown).innerText = $(markdown).innerText + link;
 	conversion();
+}
+
+function setLinkInputs () {
+	initialText = linkDiv.innerText;
+	if (/\[\w*\]\(.*\)/.test(linkDiv.innerText)) {
+		urlInput.value = linkDiv.innerText.match(/\(.*\)/)[0].substring(1, linkDiv.innerText.match(/\(.*\)/)[0].length - 1); 
+		hypertextInput.value = linkDiv.innerText.match(/\[\w*\]/)[0].substring(1, linkDiv.innerText.match(/\[\w*\]/)[0].length - 1);
+	}
+	else
+		hypertextInput.value = linkDiv.innerText;
 }
 /* This document handles the "More" button and his behavior. */
 
@@ -1167,8 +1207,7 @@ window.onload = function() {
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");
-    saveState = document.getElementById("save-state");
+    nameDiv = document.getElementById("doc-name");   
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -1184,16 +1223,17 @@ window.onload = function() {
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
+    cancelImageButton = document.getElementById("cancel-image");
     galleriesButton = document.getElementById("galleries-button");
     imageButton = document.getElementById("image-button");
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
-    imageStatus = document.getElementById("image-status");
     altInput = document.getElementById("alt-input");
     titleInput = document.getElementById("title-input");
 
     /* link.js */
+    cancelLinkButton = document.getElementById("cancel-link");
     linkButton = document.getElementById("link-button");
     linkDisplayer = document.getElementById("link-insertion-displayer");
     urlInput = document.getElementById("url-input");
@@ -1233,6 +1273,7 @@ window.onload = function() {
     head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
     quitCloseButton = document.getElementById("quit");
     saveQuitCloseButton = document.getElementById("save-quit");
+    saveState = document.getElementById("save-state");
     windowCloseContainer = document.getElementById("window-close");
     windowClose = document.getElementById("window-close-button");
     windowMax = document.getElementById("window-maximize");
@@ -1329,7 +1370,9 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
            applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
 
     $(titleInput).keydown(function(e){
@@ -1342,8 +1385,12 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
             applyImage();
         else if (e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+            cancelImage();
+        else
+            modifyImage();
     });
+
+    $(cancelImageButton).on("click", cancelImage);
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
@@ -1360,7 +1407,7 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
            applyLink();
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();       
+            cancelLink();       
         else
             modifyLink();
     });
@@ -1375,10 +1422,12 @@ window.onload = function() {
         if (e.keyCode == 13) // The user press enter
             applyLink();
         else if (e.keyCode == 27) // The user press echap
-            $(linkButton).click();        
+            cancelLink();        
         else
             modifyLink();        
     });
+
+    $(cancelLinkButton).on("click", cancelLink);
 
     /* More.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
@@ -1390,10 +1439,9 @@ window.onload = function() {
     displayRecentFiles();
     
     /* stats.js */
-    
     if (navigator.onLine)
         initStats();
-
+    
     /* styles.js */
     getStyle();
 
@@ -1791,14 +1839,14 @@ function activate (clickedBtn, classState) {
 }
 
 function initActivation () { 
-	if (window.innerWidth > 1365) // Big window
+	if (chrome.app.window.current().getBounds().width > 1365) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {
 		switchToMD.className = "switch-button activated";
 		workspace.className = "markdown-view";
 	}
 
-	previousSize = window.innerWidth; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
+	previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
 }
 
 function setWindowResizing () {
@@ -1843,8 +1891,11 @@ function switchShortcuts (direction) {
 var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
 var head; // The "head" section of the main app.
+var markdownSaved; // The last Markdown text saved.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
+var saveState; // The div who displays if the document is saved or not.
+var stylesheetLink = document.createElement("link"); // Create a "link" node.
 var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
@@ -1857,6 +1908,7 @@ var bounds; // This is the variable who stores the bounds when the window is max
 * Functions (in alphabetical order).
 *
 * Resume:
+	* checkSaveState (): change saveState's innerHTML.
 	* closeWindow (): what to do when the user clicks on close.
 	* determineFrame (): which window bar style to display on launch, according to the OS.
 	* maximizeWindow (): what to do when the user clicks on maximize.
@@ -1867,18 +1919,32 @@ var bounds; // This is the variable who stores the bounds when the window is max
 	* saveQuitCloseWindow (): what to do when the user clicks on "Save and exit".
 */
 
+function checkSaveState () {
+	if (markdown.innerText != "") {
+		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
+		else
+			saveState.innerHTML = "";
+	}
+	else {
+		if (markdownSaved != undefined)
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
+		else
+			saveState.innerHTML = "";
+	}
+}
+
 function closeWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
-	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") // Save not made.
+	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
 	else 
 		chrome.app.window.current().close();
 }
 
 function determineFrame () {
-	var stylesheetLink = document.createElement("link"); // Create a "link" node.
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
@@ -1913,7 +1979,7 @@ function minimizeWindow () {
 
 function quitCloseWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
 	chrome.app.window.current().close();
 }
@@ -1961,7 +2027,7 @@ function saveAsAndQuit () {
 }
 
 function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved pr the document is not in Markdown.
 		saveAsAndQuit();
 	else
 		saveAndQuit();

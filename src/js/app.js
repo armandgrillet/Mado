@@ -65,7 +65,10 @@ function fileName (path) {
 }
 
 function minFileName (path) {
-	return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+	if (path == "") // If there's nothing it returns the basic "document".
+		return "document";
+	else
+		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
 }
 
 function moreWindow (choice) {
@@ -78,6 +81,7 @@ function moreWindow (choice) {
 		      	width: 498,
 		      	height: 664
 		    }, 
+		    frame : "none",
 		    // The window can't be resized.
 		    minWidth: 498, 
 		    minHeight: 664,

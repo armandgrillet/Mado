@@ -22,8 +22,11 @@
 	background: transparent;
 
 	/* Misc */
+	transition: background-color 0.1s ease;
 	-webkit-app-region: no-drag; /* Disable drag action */
 }
+
+#window-bar li:active { transition: none; }
 
 #window-close-button:hover { background-color: #d11; }
 

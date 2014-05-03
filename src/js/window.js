@@ -10,8 +10,11 @@
 var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
 var head; // The "head" section of the main app.
+var markdownSaved; // The last Markdown text saved.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
+var saveState; // The div who displays if the document is saved or not.
+var stylesheetLink = document.createElement("link"); // Create a "link" node.
 var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
@@ -24,6 +27,7 @@ var bounds; // This is the variable who stores the bounds when the window is max
 * Functions (in alphabetical order).
 *
 * Resume:
+	* checkSaveState (): change saveState's innerHTML.
 	* closeWindow (): what to do when the user clicks on close.
 	* determineFrame (): which window bar style to display on launch, according to the OS.
 	* maximizeWindow (): what to do when the user clicks on maximize.
@@ -34,18 +38,32 @@ var bounds; // This is the variable who stores the bounds when the window is max
 	* saveQuitCloseWindow (): what to do when the user clicks on "Save and exit".
 */
 
+function checkSaveState () {
+	if (markdown.innerText != "") {
+		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
+		else
+			saveState.innerHTML = "";
+	}
+	else {
+		if (markdownSaved != undefined)
+			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
+		else
+			saveState.innerHTML = "";
+	}
+}
+
 function closeWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
-	if (saveState.innerHTML == "| Unsaved <span class=\"little-icon-unsaved\"></span>") // Save not made.
+	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
 	else 
 		chrome.app.window.current().close();
 }
 
 function determineFrame () {
-	var stylesheetLink = document.createElement("link"); // Create a "link" node.
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
@@ -80,7 +98,7 @@ function minimizeWindow () {
 
 function quitCloseWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-	    backgroundPage.newBounds(window.screenX, window.screenY, window.innerWidth, window.innerHeight);
+	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
 	chrome.app.window.current().close();
 }
@@ -128,7 +146,7 @@ function saveAsAndQuit () {
 }
 
 function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved pr the document is not in Markdown.
 		saveAsAndQuit();
 	else
 		saveAndQuit();

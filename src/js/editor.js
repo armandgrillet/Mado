@@ -43,7 +43,7 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 */
 
 function conversion () {
-	if (markdown.innerText.length > 0) { // There is Markdown in the contenteditable.
+	if ((markdown.innerHTML > 4) || (markdown.innerText.length > 0 && markdown.innerHTML != "<br>")) { // There is Markdown in the contenteditable.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
@@ -78,6 +78,7 @@ function conversion () {
 		}
 	}
 	else { // No Markdown here.
+		markdown.innerHTML = ""; // If the innerHTML is "<br>".
 		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
@@ -131,6 +132,8 @@ function endOfConversion () {
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
+		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
+			$(this).attr("href", "http://" + $(this).attr("href"));
 		$(this).attr("target", "_blank");
 	});
 
@@ -152,6 +155,7 @@ function pasteContent () {
             pasteDiv.innerText = pasteZone.value;       
         else
             $(markdown).innerText = $(markdown).innerText + pasteZone.value;
+        pasteZone.value = ""; // Reset the hidden textarea content.
         selectElementContents(pasteDiv);
         restoreSelection("mado-paste");
         conversion();

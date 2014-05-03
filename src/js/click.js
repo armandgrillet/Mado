@@ -20,38 +20,45 @@ $(document).click( function(e) {
 	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
-		imageStatus.style.display = "none";
 		altInput.value = "";
 		titleInput.value = "";
 		imageLoaded = undefined;
 
-		imageDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-image").length > 0) {
-			imageDiv = document.getElementById("mado-image");
-			titleInput.value = imageDiv.innerText;
-			initialText = titleInput.value;
+		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-image");
 		}
+		imageDisplayer.className = "tool-displayer";
+		imageDiv = document.getElementById("mado-image");
+		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
-		cancelImage();
+		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+		imageDisplayer.className = "tool-displayer hidden";
+		selectElementContents(imageDiv);
+		restoreSelection("mado-image");
+	}
 
 	/* link.js */
 	if ($(e.target).closest(linkButton).length && linkDisplayer.className == "tool-displayer hidden") {	
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
-
-		linkDisplayer.className = "tool-displayer";
-		if ($(markdown).find("#mado-link").length > 0) {
-			linkDiv = document.getElementById("mado-link");
-			hypertextInput.value = linkDiv.innerText;
-			initialText = hypertextInput.value;
+		
+		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
+			markdown.focus();
+			changeContentHighlighted("mado-link");
 		}
-		urlInput.focus();
+		linkDisplayer.className = "tool-displayer";
+		linkDiv = document.getElementById("mado-link");
+		setLinkInputs();
+		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length)
-		cancelLink();
+	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+		linkDisplayer.className = "tool-displayer hidden";
+		selectElementContents(linkDiv);
+		restoreSelection("mado-link");
+	}
 
 	/* more.js */
 	if ($(e.target).closest(moreButton).length && moreDisplayer.className == "hidden") { // Click on moreButton with moreButton hidden.

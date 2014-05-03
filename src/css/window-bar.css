@@ -45,6 +45,24 @@
 	pointer-events: none;
 }
 
+#app-header-centered { position: relative; } /* Help positioning the "Unsaved" icon */
+
+#save-state span {
+	/* Positioning */
+	position: absolute; /* See #app-header-centered above */
+	left: -20px; /* Override the child span's own width */
+	top: 0;
+
+	/* Box-model */
+	display: block;
+	width: 20px;
+	height: 20px;
+
+	/* Typography */
+	line-height: 20px;
+	text-align: center;
+}
+
 /* -------
 	Alert
    ------- */
@@ -139,9 +157,7 @@
 
 .alert-part:not(:last-of-type) { padding-bottom: 10px; }
 
-/* ---------------
-	Alert actions
-   ---------------
+/* ALERT ACTIONS
    Contains the style for the alert's footer. The footer itself contains the buttons that respond to the alert. */
 #alert-actions {
 	/* Positioning */

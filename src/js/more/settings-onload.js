@@ -4,6 +4,9 @@ window.onload = function() {
 	/*
     * Shortcuts.
     */
+    head = document.getElementsByTagName("head")[0]; // The "head" section of the option window.
+    windowClose = document.getElementById("window-close"); // Get the close button
+
 	markdownSyntax = document.getElementById("markdown-radio");
 	gfmSyntax = document.getElementById("gfm-radio");
 
@@ -26,6 +29,8 @@ window.onload = function() {
 	/*
     * Functions.
     */
+    determineCloseButton(); // Determine the close button style.
+
 	// getDisplaySize();
 	getSyntax();
 	getResizing();
@@ -43,4 +48,8 @@ window.onload = function() {
 	$(viewOnResize).on("click", setResizing);
 
 	$(analytics).on("click", setAnalytics);
+
+	$(windowClose).on("click", function() {
+        chrome.app.window.current().close();
+    });
 }
