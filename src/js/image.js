@@ -217,19 +217,18 @@ function setImageBrowserText (path) {
 
 function setImageInputs () {
 	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
-		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
-			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
-			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
+	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
+			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
 		}
-		else {
-			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
-		}
-		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
+		else
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
+		setImageBrowserText(fileName(imageLoaded));
+		altInput.value = initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1); 
 	}
-	
+	else
+		altInput.value = initialText;	
 }
 
 function update () {	

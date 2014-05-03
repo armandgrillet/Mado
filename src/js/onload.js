@@ -147,10 +147,6 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    });
-
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -211,7 +207,10 @@ window.onload = function() {
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
-        changeContentHighlighted("mado-image");
+        if (linkDisplayer.className == "tool-displayer")
+            cancelLink(); 
+        if (imageDisplayer.className == "tool-displayer hidden")
+             changeContentHighlighted("mado-image");
     });
 
     $(imageBrowser).on("click", loadImage);
@@ -245,7 +244,8 @@ window.onload = function() {
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
-        changeContentHighlighted("mado-link");
+        if (linkDisplayer.className == "tool-displayer hidden")
+            changeContentHighlighted("mado-link");
     });
     
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.

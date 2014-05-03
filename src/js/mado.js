@@ -337,8 +337,7 @@ $(document).click( function(e) {
 		imageDiv = document.getElementById("mado-image");
 		setImageInputs();
 	}
-	else if (imageDisplayer.className == "tool-displayer" && 
-		! $(e.target).closest(imageBox).length) {// The user doesn't click on the image insertion box.
+	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
 		imageDisplayer.className = "tool-displayer hidden";
 		selectElementContents(imageDiv);
 		restoreSelection("mado-image");
@@ -359,7 +358,7 @@ $(document).click( function(e) {
 		setLinkInputs();
 		urlInput.focus();			
 	}
-	else if (linkDisplayer.className == "tool-displayer" && ! $(e.target).closest(linkDisplayer).length) {
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
 		linkDisplayer.className = "tool-displayer hidden";
 		selectElementContents(linkDiv);
 		restoreSelection("mado-link");
@@ -1114,19 +1113,18 @@ function setImageBrowserText (path) {
 
 function setImageInputs () {
 	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(imageDiv.innerText)) { // An image
-		if (/!\[.*\]\(.*\s".*"\)/.test(imageDiv.innerText)) {// Optional title is here.
-			titleInput.value = imageDiv.innerText.match(/".*"\)/)[0].substring(1, imageDiv.innerText.match(/".*"\)/)[0].length - 2); 
-			imageLoaded = imageDiv.innerText.match(/.*\s"/)[0].substring(2, imageDiv.innerText.match(/.*\s"/)[0].length - 2).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
+	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
+			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
 		}
-		else {
-			imageLoaded = imageDiv.innerText.match(/\]\(\S+\)/)[0].substring(2, imageDiv.innerText.match(/\]\(\S+\)/)[0].length - 1).replace(/\\/g, "/");
-			setImageBrowserText(fileName(imageLoaded));
-		}
-		altInput.value = imageDiv.innerText.match(/!\[.+\]/)[0].substring(2, imageDiv.innerText.match(/!\[.+\]/)[0].length - 1); 
+		else
+			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
+		setImageBrowserText(fileName(imageLoaded));
+		altInput.value = initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1); 
 	}
-	
+	else
+		altInput.value = initialText;	
 }
 
 function update () {	
@@ -1196,12 +1194,12 @@ function modifyLink () {
 
 function setLinkInputs () {
 	initialText = linkDiv.innerText;
-	if (/\[\w*\]\(.*\)/.test(linkDiv.innerText)) {
-		urlInput.value = linkDiv.innerText.match(/\(.*\)/)[0].substring(1, linkDiv.innerText.match(/\(.*\)/)[0].length - 1); 
-		hypertextInput.value = linkDiv.innerText.match(/\[\w*\]/)[0].substring(1, linkDiv.innerText.match(/\[\w*\]/)[0].length - 1);
+	if (/\[.*\]\(.*\)/.test(initialText)) {
+		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
+		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);
 	}
 	else
-		hypertextInput.value = linkDiv.innerText;
+		hypertextInput.value = initialText;
 }
 /* This document handles the "More" button and his behavior. */
 
@@ -1365,10 +1363,6 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
-    $(markdown).bind('scroll', function() {
-       console.log('Event worked');
-    });
-
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -1429,7 +1423,10 @@ window.onload = function() {
 
     /* image.js */
     $(imageButton).on("mousedown", function() {
-        changeContentHighlighted("mado-image");
+        if (linkDisplayer.className == "tool-displayer")
+            cancelLink(); 
+        if (imageDisplayer.className == "tool-displayer hidden")
+             changeContentHighlighted("mado-image");
     });
 
     $(imageBrowser).on("click", loadImage);
@@ -1463,7 +1460,8 @@ window.onload = function() {
 
     /* link.js */
     $(linkButton).on("mousedown", function() {
-        changeContentHighlighted("mado-link");
+        if (linkDisplayer.className == "tool-displayer hidden")
+            changeContentHighlighted("mado-link");
     });
     
     Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
@@ -1507,7 +1505,7 @@ window.onload = function() {
     /* recentfiles.js */
     displayRecentFiles();
 
-    /* stats.js */  
+    /* stats.js */
     if (navigator.onLine)
         initStats();
 

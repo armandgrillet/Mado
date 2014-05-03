@@ -2,6 +2,37 @@
 	MAIN CONTENT
    ============== */
 
+/* -----------------------
+	Drag & drop container
+   ----------------------- */
+#document { transition: box-shadow .1s ease; }
+
+#drag-and-drop-container {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
+	/* Misc */
+	transition: -webkit-transform .05s ease-in;
+	-webkit-transform-origin: center;
+}
+
+/* When a document is being dragged over Mado */
+#document.dragging {
+	/* Visual */
+	box-shadow: 0 0 20px 0 rgba(0,0,0,.1) inset;
+
+	/* Misc */
+	transition: box-shadow .2s ease;
+}
+
+#document.dragging #drag-and-drop-container {
+	/* Misc */
+	transition: -webkit-transform .2s ease;
+	-webkit-transform: scale(.9);
+}
+
 /* ---------
 	Sidebar
    --------- */
@@ -282,6 +313,10 @@
 	background-position: center;
 }
 
+/* LINK INSERTION SPECIFICS */
+/* The "Ok" button */
+#insert-link { margin-left: 5px; }
+
 /* IMAGE INSERTION SPECIFICS */
 /* The first button, enables the user to choose his galleries */
 #galleries-button {
@@ -303,6 +338,9 @@
 /* The textual extension of the chosen image */
 #extension { opacity: 0.8; }
 
+/* The "Ok" button */
+#insert-image { margin-left: 5px; }
+
 /* -----------
 	Workspace
    ----------- */
@@ -315,7 +353,11 @@
 	height: 100%;
 }
 
-#workspace, #center-line-container { transition: all .25s ease-out; } /* The workspace and the center-line must have the same transition */
+#workspace,
+#center-line-container {
+	/* Misc */
+	transition: all .25s ease-out; /* The workspace and the center-line must have the same transition */
+}
 
 /* Setting the possible states for the "workspace" div and their behavior. */
 #workspace.markdown-view {

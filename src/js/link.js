@@ -62,10 +62,10 @@ function modifyLink () {
 
 function setLinkInputs () {
 	initialText = linkDiv.innerText;
-	if (/\[\w*\]\(.*\)/.test(linkDiv.innerText)) {
-		urlInput.value = linkDiv.innerText.match(/\(.*\)/)[0].substring(1, linkDiv.innerText.match(/\(.*\)/)[0].length - 1); 
-		hypertextInput.value = linkDiv.innerText.match(/\[\w*\]/)[0].substring(1, linkDiv.innerText.match(/\[\w*\]/)[0].length - 1);
+	if (/\[.*\]\(.*\)/.test(initialText)) {
+		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
+		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);
 	}
 	else
-		hypertextInput.value = linkDiv.innerText;
+		hypertextInput.value = initialText;
 }
