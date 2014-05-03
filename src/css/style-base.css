@@ -1,0 +1,1307 @@
+﻿/* ==============
+	MISCELLANOUS
+   ============== */
+* {
+	/* Box-model */
+	box-sizing: border-box; /* Simplifies width and height calculation */
+
+	/* Misc */
+	outline: none; /* Disables default outlining style (on Google Chrome, a golden border light) */
+}
+
+html,
+body {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	/* Box-model */
+	padding: 40px 0 20px; /* Simplifies positioning according to the topbar and the footer */
+	overflow: hidden;
+
+	/* Typography */
+	font-family: "Segoe UI", "Helvetica Neue", Roboto, "Open Sans", sans-serif; /* System fonts for Windows, OS X and Android/Chrome OS */
+	font-size: 11pt;
+
+	/* Visual */
+	background-color: #fafafa;
+}
+
+/* The call to action (CTA) class forces the cursor to be a pointer */
+.cta { cursor: pointer; }
+
+/* The button class renders a generic clickable button */
+.button {
+	/* Box-model */
+	float: left;
+	padding: 7px 10px;
+
+	/* Typography */
+	color: #fff;
+	font-size: 10pt;
+	line-height: 12pt;
+	font-weight: bold;
+	text-align: center;
+
+	/* Visual */
+	background-color: #1c75ea;
+	border-bottom: 2px solid #104387;
+	border-radius: 3px;
+}
+
+.button:not(:first-child) { margin-top: 5px; }
+
+.button:hover {
+	/* Visual */
+	background-color: #187af9;
+
+	/* Misc */
+	transition: background-color .1s ease;
+}
+
+.button:active {
+	/* Visual */
+	background-color: #156ad8;
+	border-bottom: none;
+	border-top: 2px solid #104387;
+
+	/* Misc */
+	transition: none;
+}
+
+.button-grey {
+	/* Typography */
+	color: #4a4942;
+
+	/* Visual */
+	background-color: #e9e9e9;
+	border-bottom: 2px solid #d0d0d0;
+}
+
+.button-grey:hover { background-color: #f0f0f0; }
+
+.button-grey:active {
+	/* Visual */
+	background-color: #e9e9e9;
+	border-bottom: none;
+	border-top: 2px solid #d0d0d0;
+}
+
+/* --------------
+	Basic styles
+   -------------- */
+a {
+	/* Typography */
+	color: #1c75ea;
+	text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+a:active { color: #187af9; }
+
+em { font-style: italic; }
+
+strong { font-weight: bold; }
+
+sup {
+	/* Typography */
+	font-size: 9pt;
+	line-height: 0;
+	vertical-align: super;
+}
+
+input[type="text"] {
+	/* Box-model */
+	width: 300px;
+	height: 30px;
+	padding: 0 5px;
+
+	/* Visual */
+	border: 1px solid #f0f0f0;
+}
+
+input[type="text"]:not(:first-child) { margin-top: 5px; }
+
+input[type="text"]:focus { border: 1px solid #e0e0e0; }
+
+
+/* =======
+	FONTS
+   ======= */
+
+@font-face {
+	/* Typography */
+	font-family: SourceCodePro;
+	src: url('../fonts/SourceCodePro-Regular.ttf');
+}
+
+
+/* ========
+	NAVBAR
+   ======== */
+
+/* Building the navbar structure */
+#navbar {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+
+	/* Box-model */
+	width: 100%;
+	height: 40px;
+	overflow: visible;
+
+	/* Typography */
+	color: white;
+
+	/* Visual */
+	background-color: #325c9c;
+}
+
+/* --------------
+	Navbar items
+   -------------- */
+/* Items on the left */
+#navbar .nav-item { float: left; }
+
+/* Slight space on the left of the first item ("New") */
+#navbar .nav-item:first-of-type { margin-left: 5px; }
+
+#navbar .nav-item:not(#recent):hover,
+#recent-button:hover,
+#more-button:hover {
+	/* Visual */
+	background-color: #3e6aab;
+}
+
+.nav-icon,
+#more {
+	/* Box-model */
+	width: 40px;
+	height: 100%;
+
+	/* Typography */
+	color: #fff;
+	line-height: 40px;
+	text-align: center;
+}
+
+/* Navbar "More" button is on the right and has a slight space on its right, like the "New" button */
+#more {
+	/* Positioning */
+	margin-right: 5px;
+
+	/* Box-model */
+	float: right;
+}
+
+/* Navbar icons */
+.nav-icon {
+	/* Box-model */
+	padding-left: 10px;
+	float: left;
+
+	/* Misc */
+	transition: padding-left .1s ease;
+}
+
+/* Navbar labels (only on big screens) */
+.nav-label {
+	/* Box-model */
+	width: 55px;
+	height: 40px;
+	overflow: hidden;
+
+	/* Typography */
+	line-height: 40px;
+
+	/* Misc */
+	transition: width .1s ease, opacity .3s ease;
+}
+
+/* "RECENT" LIST */
+/* Setting the "Recent" button's positioning to relative */
+#recent { position: relative; }
+
+/* The recent files displayer hides or shows the actual drop-down list of recent files */
+#recent-files-displayer {
+	/* Positioning */
+	position: absolute;
+	top: 40px;
+	left: 0px; /* With the padding-left, it seems like it begins at 40 pixels from the left */
+
+	/* Box-model */
+	width: 200px;
+
+	/* Misc */
+	-webkit-transform-origin: 20px 1px;
+	transition: all .15s ease-out;
+}
+
+#recent-files-displayer.hidden {
+	/* Misc */
+	-webkit-transform: scale(0);
+}
+
+/* The arrow is a gray corner for the container */
+#recent-files-arrow {
+	/* Positioning */
+	position: relative; /* For the Z-index */
+	margin: 1px 0 0 16px;
+	z-index: 1600;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-color: transparent transparent #fff transparent;
+	border-style: solid;
+	border-width: 0 4px 4px 4px;
+}
+
+/* The recent files container is a list of all the recent files */
+#recent-files-container {
+	/* Box-model */
+	width: 200px;
+	overflow: hidden;
+
+	/* Typography */
+	font-size: 10pt;
+	line-height: 12pt;
+	color: #4a4942;
+
+	/* Visual */
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0,0,0,.2);
+
+	/* Misc */
+	transition: height .1s ease;
+}
+
+/* The list item that contains the name of a recent file */
+.recent-file {
+	/* Box-model */
+	width: 100%;
+	height: 40px;
+	padding: 0 5px;
+
+	/* Misc */
+	cursor: pointer;
+	transition: all .1s ease-out;
+}
+
+.recent-file:hover {
+	/* Typography */
+	color: #1a1a1a;
+
+	/* Visual */
+	background-color: #fafafa;
+}
+
+/* List item in deletion */
+.recent-file.deleted {
+	/* Box-model */
+	height: 0;
+	padding: 0 15px 0 0;
+
+	/* Visual */
+	border-top: none;
+
+	/* Misc */
+	pointer-events: none;
+}
+
+/* Wrapped part inside the list item */
+.recent-file-wrapped {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	padding: 5px 15px 5px 0;
+	overflow: hidden;
+
+	/* Typography */
+	font-weight: bold;
+	line-height: 25px; /* For vertical centering of the text (see .recent-file-wrapped > p below) */
+}
+
+.recent-file-wrapped > p {
+	/* Box-model */
+	display: inline-block;
+
+	/* Typography */
+	line-height: 11pt;
+	vertical-align: middle;
+}
+
+/* Slight margin on top of the first recent file */
+.recent-file:first-of-type { margin-top: 5px; }
+
+/* Separation between the recent files */
+.recent-file:not(:first-of-type) .recent-file-wrapped { border-top: 1px solid #fafafa; } /* /!\ COMMON STYLE WITH .result:not(:first-of-type) */
+
+/* Deletion button for each list item */
+.delete-recent-button {
+	/* Positioning */
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	margin: -10px 0 0;
+
+	/* Box-model */
+	width: 20px;
+	height: 20px;
+
+	/* Typography */
+	color: #4a4942;
+	text-align: center;
+	line-height: 20px;
+
+	/* Misc */
+	cursor: pointer;
+}
+
+.delete-recent-button:hover { color: #c01a1a; }
+
+.recent-file.deleted .delete-recent-button { pointer-events: none; } /* Prevent pointer events on the button itself during deletion animation */
+
+/* Information down the list of recent documents */
+#recent-files-info {
+	/* Box-model */
+	width: 100%;
+	height: 40px;
+	padding: 0 5px;
+
+	/* Typography */
+	font-weight: bold;
+	line-height: 40px;
+	text-align: center;
+
+	/* Visual */
+	background-color: #fff;
+
+	/* Misc */
+	transition: all .1s ease-out;
+}
+
+#recent-files-info.clear-all .icon-recent-clear {
+	/* Positioning */
+	display: inline;
+
+	/* Typography */
+	line-height: 40px;
+}
+
+/* When there are items in the list */
+#recent-files-info.clear-all {
+	/* Visual */
+	background-color: #f0f0f0;
+
+	/* Misc */
+	cursor: pointer;
+	transition: background-color .1s ease;
+}
+
+#recent-files-info.clear-all:hover {
+	/* Typography */
+	line-height: 38px;
+
+	/* Visual */
+	background-color: #f9f9f9;
+	border-bottom: 2px solid #e0e0e0;
+}
+
+#recent-files-info.clear-all:active {
+	/* Typography */
+	line-height: 38px;
+
+	/* Visual */
+	background-color: #f0f0f0;
+	border-bottom: none;
+	border-top: 2px solid #e0e0e0;
+	
+	/* Misc */
+	transition: none;
+}
+
+/* ---------------
+	Navbar switch
+   --------------- */
+#view-switch {
+	/* Positioning */
+	/* Absolute centering, found on http://codepen.io/shshaw/full/gEiDt */
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+
+	/* Box-model */
+	width: 220px;
+	height: 26px;
+
+	/* Misc */
+	transition: width .3s ease;
+}
+
+.switch-button {
+	/* Box-model */
+	height: 100%;
+	padding: 0 5px;
+	overflow: hidden;
+
+	/* Typography */
+	font-size: 10pt;
+	line-height: 26px;
+	text-align: center;
+
+	/* Visual */
+	background-color: #143d7a;
+	border-color: #103365; /* Prevents buggy color transition */
+
+	/* Misc */
+	cursor: pointer;
+	transition: width .3s ease;
+}
+
+/* The first and the third switch buttons ("Markdown" & "HTML") */
+.switch-button:nth-of-type(2n-1) { width: 90px; }
+
+/* The second switch button ("Both") */
+.switch-button:nth-of-type(2) {
+	/* Positioning */
+	/* Absolute centering, found on http://codepen.io/shshaw/full/gEiDt */
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+
+	/* Box-model */
+	width: 40px;
+}
+
+/* The switch button on the left ("Markdown") */
+.switch-button:first-of-type { border-radius: 3px 0 0 3px; }
+
+/* The switch button on the right ("HTML") */
+.switch-button:last-of-type {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	/* Visual */
+	border-radius: 0 3px 3px 0;
+}
+
+/* When the user hovers a switch button that is not activated already */
+.switch-button:not(.activated):hover {
+	/* Typography */
+	line-height: 24px;
+
+	/* Visual */
+	background-color: #194584;
+	border-bottom: 2px solid #103365;
+
+	/* Misc */
+	transition: all .2s ease;
+}
+
+.switch-button.activated {
+	/* Typography */
+	line-height: 24px;
+
+	/* Visual */
+	background-color: #103365;
+	border-top: 2px solid #0c2a54;
+
+	/* Misc */
+	cursor: default; /* This makes the button visually not clickable */
+}
+
+/* The switch cursor is a triangle showing which display mode is on */
+#switch-cursor {
+	/* Positioning */
+	position: fixed;
+	top: 36px;
+	left: 50%;
+	z-index: 1500;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-color: transparent transparent #fafafa;
+	border-style: solid;
+	border-width: 0 4px 4px;
+
+	/* Misc */
+	transition: margin-left .15s ease-out;
+}
+
+/* Switch cursor's position when in normal mode */
+.normal #switch-cursor { margin-left: -4px; }
+
+/* Switch cursor's position when in markdown view */
+.markdown-view #switch-cursor { margin-left: -69px; }
+
+/* Switch cursor's position when in HTML view */
+.conversion-view #switch-cursor { margin-left: 61px; }
+
+/* "MORE" OPTIONS */
+/* Setting the "More" button's positioning to relative */
+#more { position: relative; }
+
+/* The "More" displayer hides or shows the actual drop-down list of options */
+#more-displayer {
+	/* Positioning */
+	position: absolute;
+	top: 40px;
+	right: 0px;
+
+	/* Box-model */
+	width: 120px;
+
+	/* Misc */
+	-webkit-transform-origin: 100px 1px;
+	transition: all .15s ease-out;
+}
+
+#more-displayer.hidden {
+	/* Misc */
+	-webkit-transform: scale(0);
+}
+
+/* The arrow is a gray corner for the container */
+#more-arrow {
+	/* Positioning */
+	position: relative; /* For the Z-index */
+	margin: 1px 0 0 96px;
+	z-index: 1500;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-color: transparent transparent #fff transparent;
+	border-style: solid;
+	border-width: 0 4px 4px 4px;
+}
+
+/* The "More" container is a list of all the options */
+#more-container {
+	/* Box-model */
+	width: 120px;
+	overflow: hidden;
+
+	/* Typography */
+	color: #4a4942;
+	font-size: 10pt;
+	line-height: 12pt;
+	text-align: left;
+
+	/* Visual */
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0,0,0,.2);
+
+	/* Misc */
+	transition: height .1s ease;
+}
+
+/* The list item that contains the name of an option */
+.more-option {
+	/* Box-model */
+	width: 100%;
+	height: 40px;
+	padding: 0 5px;
+
+	/* Misc */
+	cursor: pointer;
+	transition: all .1s ease-out;
+}
+
+.more-option:hover {
+	/* Typography */
+	color: #1a1a1a;
+
+	/* Visual */
+	background-color: #fafafa;
+}
+
+/* Wrapped part inside the list item */
+.more-option-wrapped {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	padding: 5px 0;
+	overflow: hidden;
+
+	/* Typography */
+	font-weight: bold;
+	line-height: 25px; /* For vertical centering of the text (see .recent-file-wrapped > p below) */
+}
+
+.more-option-wrapped > p {
+	/* Box-model */
+	display: inline-block;
+
+	/* Typography */
+	line-height: 11pt;
+	vertical-align: middle;
+}
+
+/* Slight margin on top of the first options */
+.more-option:first-of-type { margin-top: 5px; }
+
+/* Separation between the options */
+.more-option:not(:first-of-type) .more-option-wrapped { border-top: 1px solid #fafafa; } /* /!\ COMMON STYLE WITH .result:not(:first-of-type) */
+
+/* Slight margin under the last option */
+.more-option:last-of-type { margin-bottom: 5px; }
+
+/* ==============
+	MAIN CONTENT
+   ============== */
+
+/* ----------
+	Sidebars
+   ---------- */
+.sidebar {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+
+	/* Box-model */
+	width: 40px;
+}
+
+/* Icon buttons in the sidebars */
+.tool {
+	/* Box-model */
+	width: 40px;
+	height: 40px;
+
+	/* Typography */
+	color: #4a4942;
+	text-align: center;
+	line-height: 40px;
+}
+
+.tool:hover { color: #000; }
+
+/* SIDEBAR TOOLS */
+/* Sidebar tool container */
+.tool-container {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	width: 40px; /* In order not to interfere with the textarea */
+	overflow: visible; /* In order to let the help input displayer display properly */
+}
+
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+.tool-displayer {
+	/* Positioning */
+	position: absolute;
+	top: 5px;
+
+	/* Box-model */
+	width: 315px;
+
+	/* Misc */
+	transition: all .1s ease-out;
+}
+
+/* When the displayer is hidden */
+.tool-displayer.hidden { -webkit-transform: scale(0); }
+
+/* The arrow is a gray corner for the "box" (see .tool-box below) */
+.tool-arrow {
+	/* Positioning */
+	position: relative; /* For the Z-index */
+	margin-top: 11px; /* The tip matches the middle of the button */
+	z-index: 1000;
+
+	/* Box-model */
+	width: 0;
+	height: 0;
+
+	/* Visual */
+	border-style: solid;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see .tool-arrow above) */
+.tool-box {
+	/* Box-model */
+	height: auto;
+	padding: 5px;
+
+	/* Visual */
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0,0,0,.2);
+}
+
+/* Markdown sidebar */
+#md-control { left: 0; }
+
+/* LEFT SIDEBAR TOOLS */
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+#md-control .tool-displayer {
+	/* Positioning */
+	left: 40px;
+
+	/* Misc */
+	-webkit-transform-origin: 1px 15px;
+}
+
+/* The arrow is a gray corner for the "box" (see #md-control .tool-box below) */
+#md-control .tool-arrow {
+	/* Positioning */
+	margin-left: 1px;
+
+	/* Box-model */
+	float: left;
+
+	/* Visual */
+	border-color: transparent #fff transparent transparent;
+	border-width: 4px 4px 4px 0;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #md-control .tool-arrow above) */
+#md-control .tool-box {
+	/* Box-model */
+	width: 310px;
+	float: left;
+}
+
+/* HELP INPUT SPECIFICS: HELP RESULTS */
+#help-results-container {
+	/* Box-model */
+	/* No default height set: its height is set by its possible classes. */
+	overflow: hidden;
+	
+	/* Typography */
+	font-size: 10pt;
+	line-height: 10pt;
+	color: #1a1a1a;
+
+	/* Misc */
+	opacity: 1;
+	transition: all .1s ease-out;
+}
+
+/* The four cases for the help results */
+#help-results-container.hidden {
+	/* Box-model */
+	height: 0;
+
+	/* Misc */
+	opacity: 0;
+}
+
+#help-results-container.one-result { height: 50px; }
+
+#help-results-container.two-results { height: 100px; }
+
+#help-results-container.three-results { height: 150px; }
+
+/* Container for both the answer and the example, also features a switch button to navigate between each */
+.result {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	width: 200%; /* Twice the #help-results-container's width */
+	height: 50px;
+}
+
+.result:not(:first-of-type) { border-top: 1px solid #fafafa; }
+
+/* The button to switch between the answer and the example */
+.result-switch-container {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 50%;
+	z-index: 1000;
+
+	/* Box-model */
+	width: 30px;
+	height: 100%;
+
+	/* Visual */
+	background-color: #fff; /* Hides the text underneath it during the transition */
+}
+
+.result-switch {
+	/* Positioning */
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin: -15px 0 0; /* Auto vertical centering, more flexible in case of modification */
+
+	/* Box-model */
+	width: 30px;
+	height: 30px;
+
+	/* Typography */
+	color: #4a4942;
+	text-align: center;
+	line-height: 30px;
+
+	/* Misc */
+	cursor: pointer;
+	transition: all .1s ease-out;
+}
+
+.result-switch:hover { color: #000; }
+
+/* The button's behavior when activated */
+.result.switched .result-switch { -webkit-transform: rotate(180deg); }
+
+.answer,
+.example {
+	/* Positioning */
+	position: absolute;
+	top: 5px;
+	padding-right: 30px;
+
+	/* Box-model */
+	width: 50%; /* Half the .result's width, which means all the #help-results-container's width */
+	height: 100%; /* All the .result's height */
+
+	/* Misc */
+	transition: left .1s ease-out;
+}
+
+/* Markdown answer of the help result, visible until the switch button is clicked */
+.answer { left: 0; }
+
+/* Answer behaviour when the switch is activated: it slides to the left and disappears */
+.result.switched .answer { left: -50%; }
+
+/* Example version of the help result, visible once the switch button is clicked */
+.example { left: 50%; }
+
+/* Example behaviour once the switch is activated: it slides to the left and shows up */
+.result.switched .example { left: 0; }
+
+/* When there is no result yet (less than 3 characters in the input), or no result at all */
+.no-result { font-weight: bold; }
+
+.no-result .result-switch { display: none; } /* Hide the switch */
+
+.no-result .answer,
+.no-result .example {
+	/* Misc */
+	transition: none; /* Cancel transitions for visual stability */
+}
+
+/* Part of the answer that matches the input */
+.match {
+	/* Visual */
+	border-radius: 2px;
+
+	/* Typography */
+	color: #0a0a0a;
+
+	/* Visual */
+	background-color: #f0f0f0;
+}
+
+/* Title of the help item */
+.help-title { font-weight: bold; }
+
+/* Code in the help item */
+.help-code {
+	/* Typography */
+	font-family: SourceCodePro;
+	color: #4a4942;
+
+	/* Misc */
+	cursor: text; /* Visually inform the user that the example code is selectable */
+	-webkit-user-select: text; /* Enable the user to select the example code */
+}
+
+/* Example images for the image insertion syntax */
+.example-image {
+	/* Positioning */
+	margin: 0 auto;
+
+	/* Box-model */
+	width: 33%;
+	height: calc(100% - 10px); /* Delete the visual padding */
+
+	/* Visual */
+	background-color: #e0e0e0;
+	background-image: url("../img/example-image.png");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* IMAGE INSERTION SPECIFICS */
+#image-status-container {
+	/* Positioning */
+	float: left;
+
+	/* Box-model */
+	width: 50%;
+	height: 32px; /* Matches the button's height */
+	padding-left: 5px;
+
+	/* Typography */
+	line-height: 30px; /* For vertical centering of the text. See #image-statut below */
+}
+
+#image-status {
+	/* Box-model */
+	width: 100%;
+
+	/* Typography */
+	font-size: 10pt;
+	font-weight: bold;
+	line-height: 11pt;
+	vertical-align: middle;
+	word-wrap: break-word;
+}
+
+/* The textual extension of the chosen image */
+#extension { color: #b5b4b3; }
+
+/* HTML CONVERSION SIDEBAR */
+#conversion-control { right: 0; }
+
+/* RIGHT SIDEBAR TOOLS */
+/* The displayer is actually a container that fades out when combined with the "hidden" class */
+#conversion-control .tool-displayer {
+	/* Positioning */
+	right: 40px;
+
+	/* Misc */
+	-webkit-transform-origin: 314px 15px;
+}
+
+/* The arrow is a gray corner for the "box" (see #conversion-control .tool-box below) */
+#conversion-control .tool-arrow {
+	/* Positioning */
+	margin-right: 1px;
+
+	/* Box-model */
+	float: right;
+
+	/* Visual */
+	border-color: transparent transparent transparent #fff;
+	border-width: 4px 0 4px 4px;
+}
+
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #conversion-control .tool-arrow above) */
+#conversion-control .tool-box {
+	/* Box-model */
+	width: 120px;
+	float: right;
+}
+
+/* STYLES TOOL SPECIFICS */
+.style-choice-container {
+	/* Box-model */
+	display: block;
+	width: 100%;
+	height: 27px;
+
+	/* Typography */
+	font-size: 10pt;
+	font-weight: bold;
+	line-height: 27px;
+	color: #4a4942;
+}
+
+.style-choice-container label:hover { color: #000; }
+
+.style-choice-container input[type="radio"]:checked + label:hover { color: #4a4942; }
+
+/* -----------
+	Workspace
+   ----------- */
+/* Wrapping all the content in the "workspace" div. */
+#workspace {
+	/* Positioning */
+	position: relative;
+
+	/* Box-model */
+	height: 100%;
+
+	/* Misc */
+	transition: all .25s ease-out;
+}
+
+/* Setting the possible states for the "workspace" div and their behavior. */
+#workspace.markdown-view {
+	/* Positioning */
+	margin-left: 0;
+
+	/* Box-model */
+	width: 200%;
+}
+
+#workspace.normal {
+	/* Positioning */
+	margin-left: 0;
+
+	/* Box-model */
+	width: 100%;
+}
+
+#workspace.conversion-view {
+	/* Positioning */
+	margin-left: -100%;
+
+	/* Box-model */
+	width: 200%;
+}
+
+/* /!\ ONLY FOR MADO v1.1+ IN CASE OF SUCCESS */
+/* Specific state when the user opens the CSS editor */
+/*#workspace.stylesheet-view {*/
+	/* Positioning */
+	/*margin-left: -50%;*/ /* /!\ SIMPLE BUT POSSIBLY NOT THE BEST SOLUTION: IT PULLS THE RIGHT SIDEBAR ON THE MIDDLE OF THE SCREEN */
+	
+	/* Box-model */
+	/*width: 100%;
+}*/
+
+/* --------
+	Sheets
+   -------- */
+.sheet {
+	/* Box-model */
+	float: left;
+	width: 50%;
+	height: 100%;
+	padding: 0 40px;
+
+	/* Typography */
+	color: #4a4942;
+}
+
+/* ---------------
+	Markdown area
+   --------------- */
+#markdown {
+	/* Box-model */
+	width: 100%;
+	min-height: 100%;
+	padding: 40px 10px 40px;
+
+	/* Typography */
+	font-family: SourceCodePro;
+	font-size: 11pt;
+
+	/* Visual */
+	border: none;
+	background-color: transparent;
+
+	/* Misc */
+	resize: none;
+}
+
+/* -----------
+	HTML area
+   ----------- */
+#html-conversion {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+	padding: 40px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+/* ----------------------
+	Center vertical line
+   ---------------------- */
+#center-line-container {
+	/* Positioning */
+	position: fixed;
+	top: 0;
+	left: 50%;
+
+	/* Box-model */
+	width: 1px;
+	height: 100%;
+	padding: 80px 0 60px; /* /!\ ADJUST PADDING ACCORDING TO THE FINAL APP */
+
+	/* Misc */
+	transition: left .25s ease-out; /* /!\ SAME TRANSITION AS #workspace */
+}
+
+/* Center line behavior according to the workspace mode */
+.markdown-view #center-line-container { left: 100%; }
+
+/* Center line behavior according to the conversion view mode */
+.conversion-view #center-line-container { left: -1%; } /* /!\ IT DRAWS A LINE ON THE LEFT BORDER */
+
+/* The visual center line. Nothing to change here. */
+#center-line {
+	/* Box-model */
+	width: 100%;
+	height: 100%;
+
+	/* Visual */
+	background-color: #e0e0e0; /* /!\ CHANGE FOR AESTHETIC? */
+}
+
+/* ============
+	BOTTOM BAR
+   ============ */
+footer {
+	/* Positioning */
+	position: fixed;
+	bottom: 0;
+	left: 0;
+
+	/* Box-model */
+	width: 100%;
+	height: 20px;
+	padding: 0 10px;
+
+	/* Typography */
+	font-size: 10pt;
+	line-height: 20px;
+	color: #fafafa;
+
+	/* Visual */
+	background-color: #4a4942;
+
+	/* Misc */
+	cursor: default;
+}
+
+#character-nb,
+#word-nb {
+	/* Positioning */
+	display: inline;
+
+	/* Visual */
+	border-radius: 2px;
+
+	/* Misc */
+	cursor: pointer;
+}
+
+#character-nb:hover,
+#word-nb:hover {
+	/* Typography */
+	color: #fff;
+
+	/* Visual */
+	background-color: #5f5e52;
+
+}
+
+#character-nb:active,
+#word-nb:active {
+	/* Visual */
+	background-color: #424139;
+}
+
+#save-state {
+	/* Positioning */
+	position: relative; /* Help positioning the corresponding icon */
+
+	/* Box-model */
+	padding-right: 20px; /* Give the icon the place to display */
+}
+
+#save-state span {
+	/* Positioning */
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	/* Box-model */
+	display: block;
+	width: 20px;
+	height: 20px;
+
+	/* Typography */
+	line-height: 20px !important;
+	text-align: center;
+}
+
+
+/* ================================
+	RESPONSIVE FOR SMALLER SCREENS
+   ================================ */
+/* Screens strictly under 1600 pixels */
+@media screen and (max-width: 1599px) {
+	/* --------------
+		Navbar items
+	   -------------- */
+	.nav-icon { padding: 0; }
+
+	.nav-label {
+		/* Box-model */
+		width: 0;
+
+		/* Misc */
+		opacity: 0;
+	}
+}
+
+/* Screens strictly under 1366 pixels */
+@media screen and (max-width: 1365px) {
+	/* ---------------
+		Navbar switch
+	   --------------- */
+	#view-switch { width: 180px; } /* Normal width minus the "Both" button's width */
+
+	/* The second switch button ("Both") */
+	.switch-button:nth-of-type(2) {
+		/* Box-model */
+		width: 0;
+		padding: 0;
+	}
+
+	/* Switch cursor's position when in markdown view and normal view */
+	.markdown-view #switch-cursor,
+	.normal #switch-cursor {
+		/* Positioning */
+		margin-left: -49px;
+	}
+
+	/* Switch cursor's position when in HTML view */
+	.conversion-view #switch-cursor { margin-left: 41px; }
+
+	/* /!\ NORMAL CLASS <=> MARKDOWN-VIEW (FOR SECURITY & FOR LAUNCH VISUAL STABILITY) */
+
+	/* -----------
+		Workspace
+	   ----------- */
+	/* Setting the workspace's behavior in normal mode when on small screen */
+	#workspace.normal { width: 200%; }
+
+	.normal #center-line-container {
+		/* Positioning */
+		left: 100%;
+
+		/* Misc */
+		opacity: 0;
+	}
+}

@@ -1,0 +1,49 @@
+/* Default style for the conversion view. Its name, "Home", is obvious and reminds of the comfort and softness of a familiar house. */
+
+/* -------
+	Lists
+   ------- */
+/* UNORDERED LISTS */
+.sheet:last-of-type .home ul li:before {
+	/* Box-model */
+	width: 20pt;
+	padding: 0 12pt 0 0;
+
+	/* Typography */
+	text-align: right;
+}
+
+/* Sub-lists */
+.sheet:last-of-type .home ul ul { padding-bottom: 0; }
+
+/* ORDERED LISTS */
+.sheet:last-of-type .home ol li:before {
+	/* Box-model */
+	width: 20pt;
+	padding: 0 12pt 0 0;
+
+	/* Typography */
+	text-align: right;
+
+	/* Misc */
+	content: counter(list)".";
+}
+
+/* Sub-lists */
+.sheet:last-of-type .home ol ol { padding-bottom: 0; }
+
+/* -------------
+	Blockquotes
+   ------------- */
+.sheet:last-of-type .home blockquote {
+	/* Positioning */
+	margin-bottom: 8pt;
+	margin-left: auto;
+
+	/* Box-model */
+	width: calc(100% - 24pt);
+	padding: 8pt 0 0 12pt;
+
+	/* Visual */
+	border-left: 8pt solid rgba(0,0,0,.1);
+}
