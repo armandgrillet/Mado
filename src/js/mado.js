@@ -167,7 +167,7 @@ function openFileButton () {
 	 		type: "openFile",
 	 		accepts:[
 	 			{
-	 				extensions: ["md", "txt"]
+	 				extensions: ["markdown", "md", "txt"]
 	 			}
 	 		] 
 		}, 
