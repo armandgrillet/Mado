@@ -113,7 +113,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.innerText.length > 0) {
+	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -128,6 +128,11 @@ function newWindow () {
 				minHeight: 240
 		  	}
 	  	);
+  	}
+  	else if (markdown.innerHTML == firstMessage) {
+  		markdown.innerHTML = "";
+  		conversion();
+  		$(markdown).focus();
   	}
 }
 

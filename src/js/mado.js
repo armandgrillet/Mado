@@ -113,7 +113,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.innerText.length > 0) {
+	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -128,6 +128,11 @@ function newWindow () {
 				minHeight: 240
 		  	}
 	  	);
+  	}
+  	else if (markdown.innerHTML == firstMessage) {
+  		markdown.innerHTML = "";
+  		conversion();
+  		$(markdown).focus();
   	}
 }
 
@@ -382,6 +387,7 @@ var pasteZone; // The textarea used when the user pastes content.
 /* Global. */
 var closeDiv; // The end of the div.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
+var firstMessage = "# Dear user,<br><br>Thanks for installing **Mado**. For your first launch, here is some information:<br><br>* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.<br>* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.<br>* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, “Settings” section).<br>* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.<br><br>We hope you will enjoy Mado,<br><br>**[A+A](https://twitter.com/AplusA_io)**<br><br>***<br><br>P.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
 var initialText; // A save used when the user cancel a link/image.
 var newCE; // The new contenteditable content (temporary).
 var openDiv; // The beginning of the div.
@@ -1329,6 +1335,12 @@ window.onload = function() {
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
+    chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
+        if (mado["firstLaunch"] == undefined) {
+            markdown.innerHTML = firstMessage;
+            chrome.storage.local.set({ "firstLaunch" : false });
+        }
+    });
     $(markdown).focus();
     $(markdown).on("input propertychange", conversion);
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
@@ -1436,6 +1448,7 @@ window.onload = function() {
     displayRecentFiles();
     
     /* stats.js */
+    
     if (navigator.onLine)
         initStats();
 
