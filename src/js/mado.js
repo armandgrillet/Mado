@@ -2,16 +2,31 @@
 
 /* 
 * Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
 */
 
+/* HTML shortcuts. */
+var exportButton; // "Export" button.
+var newButton; // "New" button.
+var openButton; // "Open" button.
+var printButton; // "Print" button.
+var recentButton; // "Recent Files" button.
+var saveButton; // "Save" button.
+var saveAsButton; // "Save As" button.
+var windowTitle; // Mado's active window's title attribute.
+
+/* Functions variables. */
 var fileEntry; // This is the variable who stores the file opened.
-var lastWidth; // This is the last zier of the window.
+var lastWidth; // This is the last size of the window.
 var truncated; // To know the size when something is saved.
+
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
+	* contentChanged(): what to do when the user changes something in Markdown div.
 	* closeWindow(): what to do when the window is closed.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
@@ -26,6 +41,15 @@ var truncated; // To know the size when something is saved.
 	* saveFile (): what to do when the user clicks on "Save", if the user haven't save its document yet, the function who's working is saveAsFile ().
 	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
 */
+
+function contentChanged () {
+	conversion();
+	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
+            centerLine.style.display = "none";
+        }
+    else
+        centerLine.style.display = "block";
+}
 
 function errorHandler() {
 	if (fileInLoading != undefined) {
@@ -131,7 +155,7 @@ function newWindow () {
   	}
   	else if (markdown.innerHTML == firstMessage) {
   		markdown.innerHTML = "";
-  		conversion();
+  		contentChanged();
   		$(markdown).focus();
   	}
 }
@@ -156,8 +180,9 @@ function openFile(fileToOpen) {
 
 		 			// For the footer.
 		 			markdownSaved = markdown.innerText;
-		 			conversion();
+		 			contentChanged();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
+		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
 	 		};
@@ -207,6 +232,7 @@ function saveAsFile () {
 						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
+		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 				    };
 				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 				}, errorHandler);
@@ -232,7 +258,6 @@ function saveFile () {
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();
-				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		    };
 		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 		}, errorHandler);
@@ -258,9 +283,9 @@ function theMinWidth () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
+	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1366 && lastWidth < 1366 && windowResizing) 
+	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
 		switchToBoth.click(); // viewswitch.js
 
 	lastWidth = window.innerWidth;
@@ -367,11 +392,11 @@ $(document).click( function(e) {
 			! $(e.target).closest(windowCloseContainer).length ||  // The click is not on something in the closeDisplayer (closeButton included).
 			$(e.target).closest(cancelCloseButton).length // The click is on the "Cancel" button.
 			)
-		)		
+		)
 		closeDisplayer.className = "hidden";
 });
 
-/* Functions linked to the Markdown markdown. */
+/* Functions linked to the Markdown editor. */
 
 /* 
 * Variables (in alphabetical order). 
@@ -380,8 +405,10 @@ $(document).click( function(e) {
 */
 
 /* HTML shortcuts. */
+var centerLine; // The line that separates Markdown and HTML views.
 var conversionDiv; // The div who contains the HTML conversion.
 var markdown; // The contenteditable where the user writes.
+var markdownContainer;
 var pasteZone; // The textarea used when the user pastes content.
 
 /* Global. */
@@ -532,7 +559,7 @@ function pasteContent () {
         pasteZone.value = ""; // Reset the hidden textarea content.
         selectElementContents(pasteDiv);
         restoreSelection("mado-paste");
-        conversion();
+        contentChanged();
     }, 20);
 }
 
@@ -585,19 +612,20 @@ function setEditorSyntax () {
                 chrome.storage.local.set({ "gfm" : false });
                 editorSyntax = false; 
         }
-        conversion();
+        contentChanged();
     });
 }
 
-/* Functions who handle Mado's footer. */
+/* Functions that handle Mado's footer. */
 
 /*
 * Variables (in alphabetical order).
 */
 
-var charsDiv; // The div who contains the document's chars number.
-var nameDiv; // The div who contains the name of the opened document.
-var wordsDiv; // The div who contains the document's words number.
+var charsDiv; // The div that contains the document's chars number.
+var linkUrlSpan; // The div that displays the href when a user is overing a link.
+var nameDiv; // The div that contains the name of the opened document.
+var wordsDiv; // The div that contains the document's words number.
 
 /*
 * Functions (in alphabetical order).
@@ -940,7 +968,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
-	conversion();
+	contentChanged();
 }
 
 function chooseGalleries () {
@@ -1075,7 +1103,7 @@ function modifyImage () {
 		imageDiv.innerText = image;		
 	else
 		$(markdown).innerText = $(markdown).innerText + image;		
-	conversion();
+	contentChanged();
 }
 
 function setImageBrowserText (path) {
@@ -1151,7 +1179,7 @@ function cancelLink () {
 	linkDisplayer.className = "tool-displayer hidden";	
 	selectElementContents(linkDiv);
 	restoreSelection("mado-link");
-	conversion();
+	contentChanged();
 }
 
 function modifyLink () {
@@ -1163,7 +1191,7 @@ function modifyLink () {
 		linkDiv.innerText = link;		
 	else
 		$(markdown).innerText = $(markdown).innerText + link;
-	conversion();
+	contentChanged();
 }
 
 function setLinkInputs () {
@@ -1202,15 +1230,19 @@ window.onload = function() {
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
+    windowTitle = document.getElementsByTagName("title")[0];
     
     /* editor.js */
+    centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
+    markdownContainer = document.getElementById("markdown-container");   
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");   
+    linkUrlSpan = document.getElementById("link-url");
+    nameDiv = document.getElementById("doc-name");
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -1264,6 +1296,7 @@ window.onload = function() {
     tramwayRadio = document.getElementById("tramway-style");
 
     /* viewswitch.js */
+    madoFooter = document.getElementById("mado-footer");
     workspace = document.getElementById("workspace");
     switchToMD = document.getElementById("switch-md");
     switchToBoth = document.getElementById("switch-both");
@@ -1301,8 +1334,9 @@ window.onload = function() {
                             reader.onload = function(e) { 
                                 markdown.innerText = e.target.result;
                                 markdownSaved = markdown.innerText;
-                                conversion();  
-                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";                     
+                                contentChanged();  
+                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
+                                windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
                             };
                             reader.readAsText(file);
                         },
@@ -1331,6 +1365,10 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
+    $(markdown).bind('scroll', function() {
+       console.log('Event worked');
+    });
+
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -1342,7 +1380,9 @@ window.onload = function() {
         }
     });
     $(markdown).focus();
-    $(markdown).on("input propertychange", conversion);
+    $(markdown).on("input propertychange", function() {
+    	contentChanged();
+    });
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
         pasteContent();   
     });
@@ -1351,9 +1391,29 @@ window.onload = function() {
             e.preventDefault();
     });  
 
+    $("#html-conversion").on("click", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
+            e.preventDefault();
+            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
+                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
+        }
+    });
+
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
     $(wordsDiv).on("click", counterSelection);
+
+    $("#html-conversion").on("mouseenter", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") == -1)
+            linkUrlSpan.innerHTML = e.currentTarget.href;
+        else
+            linkUrlSpan.innerHTML = e.currentTarget.hash;
+        linkUrlSpan.className = "show";
+    });
+
+    $("#html-conversion").on("mouseleave", "a", function() {
+        linkUrlSpan.className = "";
+    });
 
     /* help.js */ 
     Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
@@ -1446,9 +1506,8 @@ window.onload = function() {
 
     /* recentfiles.js */
     displayRecentFiles();
-    
-    /* stats.js */
-    
+
+    /* stats.js */  
     if (navigator.onLine)
         initStats();
 
@@ -1585,8 +1644,8 @@ function displayRecentFiles () {
 		 	footerHelp = document.createElement("li");
 		    footerHelp.setAttribute("id", "recent-files-info");
 		    if (recentFilesContainer.innerHTML != " ") {// Something in the div for recent files.
-		    	footerHelp.setAttribute("class", "clear-all"); // 
-		    	footerHelp.innerHTML = "Clear all";
+		    	footerHelp.setAttribute("class", "clear-all");
+		    	footerHelp.innerHTML = "<div class=\"icon-recent-clear\"></div><span class=\"clear-all-text\">Clear all</span>";
 	    	}
 		    else {
 		    	footerHelp.setAttribute("class", " "); // Nothing in the div for recent files.
@@ -1750,10 +1809,10 @@ function initStats () {
 function setTrackingPermission () {
 	chrome.storage.local.get("analytics",  function(mado) {
 		if (mado["analytics"] != undefined) 
-			service.n.setTrackingPermitted(mado["analytics"]);
+			service.t.setTrackingPermitted(mado["analytics"]);
 		else {
 			chrome.storage.local.set({ "analytics" : true });
-			service.n.setTrackingPermitted(true);
+			service.t.setTrackingPermitted(true);
 		}
 	});
 }
@@ -1817,6 +1876,7 @@ function setStyle (newStyle) {
 */
 
 /* HTML shortcuts. */
+var madoFooter; // Mado's footer.
 var switchToBoth; // Both switch.
 var switchToHTML; // HTML switch.
 var switchToMD; // Markdown switch.
@@ -1846,10 +1906,15 @@ function activate (clickedBtn, classState) {
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+
+	if (classState == "markdown-view")
+		madoFooter.className = classState;
+	else
+		madoFooter.removeAttribute("class");
 }
 
 function initActivation () { 
-	if (chrome.app.window.current().getBounds().width > 1365) // Big window
+	if (chrome.app.window.current().getBounds().width > 1159) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {
 		switchToMD.className = "switch-button activated";
@@ -1871,7 +1936,7 @@ function setWindowResizing () {
 }
 
 function switchShortcuts (direction) {
-	if (window.innerWidth > 1365) { // Normal window
+	if (window.innerWidth > 1159) { // Normal window
 		for (var i = 0; i < switchButtons.length; i++) {
 			if (switchButtons[i].className == "switch-button activated") { // We found what button is activated.
 				if (direction == "left" && i > 0) 
@@ -1950,7 +2015,7 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else 
+	else
 		chrome.app.window.current().close();
 }
 
@@ -1958,14 +2023,20 @@ function determineFrame () {
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
-	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-mac.css");
+	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-windows.css");
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
+		windowClose.setAttribute("class", "cta little-icon-win-close");
+		windowMax.setAttribute("class", "cta little-icon-win-maximize");
+		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
@@ -1975,12 +2046,25 @@ function determineFrame () {
 }
 
 function maximizeWindow () {
-	if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
-		bounds = chrome.app.window.current().getBounds();
-		chrome.app.window.current().maximize();
+	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
+		if (! (chrome.app.window.current().getBounds().left == 0  
+			&& chrome.app.window.current().getBounds().top == 0
+			&& chrome.app.window.current().getBounds().width == screen.availWidth
+			&& chrome.app.window.current().getBounds().height == screen.availHeight)
+			&& ! chrome.app.window.current().isMaximized()) {
+			bounds = chrome.app.window.current().getBounds();
+			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().setBounds(bounds);
 	}
-	else // Restore the last bounds.
-		chrome.app.window.current().setBounds(bounds);
+	else {
+		if (! chrome.app.window.current().isMaximized()) { // Maximize.
+			chrome.app.window.current().maximize();
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().restore();
+	}
 }
 
 function minimizeWindow () {

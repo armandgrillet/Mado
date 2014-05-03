@@ -33,10 +33,10 @@ function initStats () {
 function setTrackingPermission () {
 	chrome.storage.local.get("analytics",  function(mado) {
 		if (mado["analytics"] != undefined) 
-			service.n.setTrackingPermitted(mado["analytics"]);
+			service.t.setTrackingPermitted(mado["analytics"]);
 		else {
 			chrome.storage.local.set({ "analytics" : true });
-			service.n.setTrackingPermitted(true);
+			service.t.setTrackingPermitted(true);
 		}
 	});
 }

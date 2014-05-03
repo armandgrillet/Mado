@@ -99,7 +99,7 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type ul li {
+.sheet:last-of-type ul > li {
 	/* Positioning */
 	position: relative;
 
@@ -107,7 +107,7 @@
 	padding-left: 3em;
 }
 
-.sheet:last-of-type ul li:before {
+.sheet:last-of-type ul > li:before {
 	/* Positioning */
 	position: absolute;
 	top: 0;
@@ -121,13 +121,10 @@
 	content: "\2022"; /* '\2022' is the escaped Unicode version of '&#149;' (bullet) */
 }
 
-/* Sub-lists */
-.sheet:last-of-type ul ul { padding-bottom: 0; }
-
 /* ORDERED LISTS */
 .sheet:last-of-type ol { counter-reset: list; }
 
-.sheet:last-of-type ol li {
+.sheet:last-of-type ol > li {
 	/* Positioning */
 	position: relative;
 
@@ -138,7 +135,7 @@
 	counter-increment: list;
 }
 
-.sheet:last-of-type ol li:before {
+.sheet:last-of-type ol > li:before {
 	/* Positioning */
 	position: absolute;
 	top: 0;
@@ -152,8 +149,17 @@
 	content: counter(list);
 }
 
-/* Sub-lists */
-.sheet:last-of-type ol ol { padding-bottom: 0; }
+/* Prevent empty list items to be displayed without a height */
+.sheet:last-of-type li:empty { height: 1.3em; }
+
+/* SUB-LISTS */
+.sheet:last-of-type ol ol,
+.sheet:last-of-type ol ul,
+.sheet:last-of-type ul ul,
+.sheet:last-of-type ul ol {
+	/* Box-model */
+	padding-bottom: 0;
+}
 
 /* -------------
 	Blockquotes

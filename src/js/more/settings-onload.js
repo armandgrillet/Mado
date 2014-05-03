@@ -31,8 +31,9 @@ window.onload = function() {
     */
     determineCloseButton(); // Determine the close button style.
 
-	// getDisplaySize();
+	
 	getSyntax();
+	// getDisplaySize();
 	getResizing();
 	getAnalytics();
 

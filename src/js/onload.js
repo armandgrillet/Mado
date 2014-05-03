@@ -12,15 +12,19 @@ window.onload = function() {
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
+    windowTitle = document.getElementsByTagName("title")[0];
     
     /* editor.js */
+    centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
+    markdownContainer = document.getElementById("markdown-container");   
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
-    nameDiv = document.getElementById("doc-name");   
+    linkUrlSpan = document.getElementById("link-url");
+    nameDiv = document.getElementById("doc-name");
     wordsDiv = document.getElementById("word-nb");
     
     /* help.js */ 
@@ -74,6 +78,7 @@ window.onload = function() {
     tramwayRadio = document.getElementById("tramway-style");
 
     /* viewswitch.js */
+    madoFooter = document.getElementById("mado-footer");
     workspace = document.getElementById("workspace");
     switchToMD = document.getElementById("switch-md");
     switchToBoth = document.getElementById("switch-both");
@@ -111,8 +116,9 @@ window.onload = function() {
                             reader.onload = function(e) { 
                                 markdown.innerText = e.target.result;
                                 markdownSaved = markdown.innerText;
-                                conversion();  
-                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";                     
+                                contentChanged();  
+                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
+                                windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
                             };
                             reader.readAsText(file);
                         },
@@ -141,6 +147,10 @@ window.onload = function() {
     
     $(exportButton).on("click", exportFileHTML);
 
+    $(markdown).bind('scroll', function() {
+       console.log('Event worked');
+    });
+
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
@@ -152,7 +162,9 @@ window.onload = function() {
         }
     });
     $(markdown).focus();
-    $(markdown).on("input propertychange", conversion);
+    $(markdown).on("input propertychange", function() {
+    	contentChanged();
+    });
     $(markdown).bind('paste', function(){ // What to do if the user pastes something.
         pasteContent();   
     });
@@ -161,9 +173,29 @@ window.onload = function() {
             e.preventDefault();
     });  
 
+    $("#html-conversion").on("click", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
+            e.preventDefault();
+            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
+                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
+        }
+    });
+
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
     $(wordsDiv).on("click", counterSelection);
+
+    $("#html-conversion").on("mouseenter", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") == -1)
+            linkUrlSpan.innerHTML = e.currentTarget.href;
+        else
+            linkUrlSpan.innerHTML = e.currentTarget.hash;
+        linkUrlSpan.className = "show";
+    });
+
+    $("#html-conversion").on("mouseleave", "a", function() {
+        linkUrlSpan.className = "";
+    });
 
     /* help.js */ 
     Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
@@ -256,7 +288,7 @@ window.onload = function() {
 
     /* recentfiles.js */
     displayRecentFiles();
-    
+
     /* stats.js 
     * Waiting for the prod.
     

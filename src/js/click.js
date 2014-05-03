@@ -87,6 +87,6 @@ $(document).click( function(e) {
 			! $(e.target).closest(windowCloseContainer).length ||  // The click is not on something in the closeDisplayer (closeButton included).
 			$(e.target).closest(cancelCloseButton).length // The click is on the "Cancel" button.
 			)
-		)		
+		)
 		closeDisplayer.className = "hidden";
 });

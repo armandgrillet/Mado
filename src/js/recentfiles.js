@@ -100,8 +100,8 @@ function displayRecentFiles () {
 		 	footerHelp = document.createElement("li");
 		    footerHelp.setAttribute("id", "recent-files-info");
 		    if (recentFilesContainer.innerHTML != " ") {// Something in the div for recent files.
-		    	footerHelp.setAttribute("class", "clear-all"); // 
-		    	footerHelp.innerHTML = "Clear all";
+		    	footerHelp.setAttribute("class", "clear-all");
+		    	footerHelp.innerHTML = "<div class=\"icon-recent-clear\"></div><span class=\"clear-all-text\">Clear all</span>";
 	    	}
 		    else {
 		    	footerHelp.setAttribute("class", " "); // Nothing in the div for recent files.

@@ -1,7 +1,8 @@
 /* ============
 	BOTTOM BAR
    ============ */
-footer {
+
+#mado-footer {
 	/* Positioning */
 	position: fixed;
 	bottom: 0;
@@ -10,7 +11,7 @@ footer {
 	/* Box-model */
 	width: 100%;
 	height: 20px;
-	padding: 0 45px 0 10px;
+	padding: 0 40px 0 10px;
 
 	/* Typography */
 	font-size: 0.8em;
@@ -22,10 +23,29 @@ footer {
 
 	/* Misc */
 	cursor: default;
+	transition: padding .25s ease;
 }
 
-footer p { text-align: right; }
+#mado-footer.markdown-view { padding: 0 0 0 10px; }
 
+#mado-footer p { text-align: right; }
+
+/* LINK URL
+   Shows the URL of the link element that is currently hovered. */
+#link-url {
+	/* Typograhpy */
+	color: #b3b3b0;
+
+	/* Visual */
+	opacity: 0;
+
+	/* Misc */
+	transition: opacity .1s ease;
+}
+
+#link-url.show { opacity: 1; }
+
+/* NUMBER OF CHARS AND OF WORDS */
 #character-nb,
 #word-nb {
 	/* Positioning */
@@ -55,14 +75,19 @@ footer p { text-align: right; }
 }
 
 /* STYLES TOOL SPECIFICS */
-footer .tool-container {
+#mado-footer .tool-container {
 	/* Positioning */
 	position: absolute;
 	top: 0;
-	right: 10px;
+	right: 0;
+
+	/* Misc */
+	transition: right .25s ease;
 }
 
-footer .tool {
+#mado-footer.markdown-view .tool-container { right: -40px; }
+
+#mado-footer .tool {
 	/* Box-model */
 	width: 40px;
 	height: 20px;
@@ -72,10 +97,10 @@ footer .tool {
 	line-height: 20px;
 }
 
-footer .tool:hover { color: #fff; }
+#mado-footer .tool:hover { color: #fff; }
 
 /* The displayer is actually a container that fades out when combined with the "hidden" class */
-footer .tool-displayer {
+#mado-footer .tool-displayer {
 	/* Positioning */
 	right: 6px;
 	bottom: 22px;
@@ -87,8 +112,8 @@ footer .tool-displayer {
 	-webkit-transform-origin: 105px 96px;
 }
 
-/* The arrow is a gray corner for the "box" (see footer .tool-box below) */
-footer .tool-arrow {
+/* The arrow is a gray corner for the "box" (see #mado-footer .tool-box below) */
+#mado-footer .tool-arrow {
 	/* Positioning */
 	margin: 0 0 0 101px;
 	/* Visual */
@@ -96,8 +121,8 @@ footer .tool-arrow {
 	border-width: 4px 4px 0 4px;
 }
 
-/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see footer .tool-arrow above) */
-footer .tool-box { width: 120px; }
+/* The "box" is a gray container for the sidebar tool; it comes with an arrow (see #mado-footer .tool-arrow above) */
+#mado-footer .tool-box { width: 120px; }
 
 .style-choice-container {
 	/* Box-model */

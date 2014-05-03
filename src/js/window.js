@@ -59,7 +59,7 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else 
+	else
 		chrome.app.window.current().close();
 }
 
@@ -67,14 +67,20 @@ function determineFrame () {
 	stylesheetLink.setAttribute("rel", "stylesheet");
 	stylesheetLink.setAttribute("type", "text/css");
 
-	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-mac.css");
+	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window bar styles.
-		stylesheetLink.setAttribute("href", "css/window-bar-windows.css");
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
+		windowClose.setAttribute("class", "cta little-icon-win-close");
+		windowMax.setAttribute("class", "cta little-icon-win-maximize");
+		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window frame styles.
+		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
@@ -84,12 +90,25 @@ function determineFrame () {
 }
 
 function maximizeWindow () {
-	if (! chrome.app.window.current().isMaximized()) { // Save the bounds and maximize.
-		bounds = chrome.app.window.current().getBounds();
-		chrome.app.window.current().maximize();
+	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
+		if (! (chrome.app.window.current().getBounds().left == 0  
+			&& chrome.app.window.current().getBounds().top == 0
+			&& chrome.app.window.current().getBounds().width == screen.availWidth
+			&& chrome.app.window.current().getBounds().height == screen.availHeight)
+			&& ! chrome.app.window.current().isMaximized()) {
+			bounds = chrome.app.window.current().getBounds();
+			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().setBounds(bounds);
 	}
-	else // Restore the last bounds.
-		chrome.app.window.current().setBounds(bounds);
+	else {
+		if (! chrome.app.window.current().isMaximized()) { // Maximize.
+			chrome.app.window.current().maximize();
+		}
+		else // Restore the last bounds.
+			chrome.app.window.current().restore();
+	}
 }
 
 function minimizeWindow () {

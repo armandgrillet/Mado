@@ -7,6 +7,7 @@
 */
 
 /* HTML shortcuts. */
+var madoFooter; // Mado's footer.
 var switchToBoth; // Both switch.
 var switchToHTML; // HTML switch.
 var switchToMD; // Markdown switch.
@@ -36,10 +37,15 @@ function activate (clickedBtn, classState) {
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+
+	if (classState == "markdown-view")
+		madoFooter.className = classState;
+	else
+		madoFooter.removeAttribute("class");
 }
 
 function initActivation () { 
-	if (chrome.app.window.current().getBounds().width > 1365) // Big window
+	if (chrome.app.window.current().getBounds().width > 1159) // Big window
 		switchToBoth.className = "switch-button activated";
 	else {
 		switchToMD.className = "switch-button activated";
@@ -61,7 +67,7 @@ function setWindowResizing () {
 }
 
 function switchShortcuts (direction) {
-	if (window.innerWidth > 1365) { // Normal window
+	if (window.innerWidth > 1159) { // Normal window
 		for (var i = 0; i < switchButtons.length; i++) {
 			if (switchButtons[i].className == "switch-button activated") { // We found what button is activated.
 				if (direction == "left" && i > 0) 

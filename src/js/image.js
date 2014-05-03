@@ -71,7 +71,7 @@ function cancelImage () {
 	imageDisplayer.className = "tool-displayer hidden";
 	selectElementContents(imageDiv);
 	restoreSelection("mado-image");
-	conversion();
+	contentChanged();
 }
 
 function chooseGalleries () {
@@ -206,7 +206,7 @@ function modifyImage () {
 		imageDiv.innerText = image;		
 	else
 		$(markdown).innerText = $(markdown).innerText + image;		
-	conversion();
+	contentChanged();
 }
 
 function setImageBrowserText (path) {

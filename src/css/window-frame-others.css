@@ -1,7 +1,8 @@
-/* ===========================
-	WINDOWS WINDOW BAR STYLES
-   ===========================
-	Specific styles for Mado's window bar on Windows. */
+/* ==========================
+	OTHERS WINDOW BAR STYLES
+   ==========================
+	Specific styles for Mado's window bar on Windows.
+	It also sets up a border all around the app window. */
 
 #window-bar ul { height: 100%; } /* Enable percentage-based height for the list items */
 
@@ -28,6 +29,7 @@
 
 #window-bar li:active { transition: none; }
 
+/* Background colors for the buttons */
 #window-close-button:hover { background-color: #d11; }
 
 #window-close-button:active { background-color: #c01a1a; }

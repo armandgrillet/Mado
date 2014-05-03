@@ -1,7 +1,7 @@
-/* ============================
-	MAC OS X WINDOW BAR STYLES
-   ============================
-	Specific styles for Mado's window bar on Mac OS X. */
+/* ==============================
+	MAC OS X WINDOW FRAME STYLES
+   ==============================
+	Specific styles for Mado's window frame on Mac OS X. */
 
 #window-bar li {
 	/* Positioning */
@@ -89,3 +89,14 @@
 
 /* The arrow is a gray corner for the container */
 #close-alert-arrow { margin: 1px 0 0 5px; }
+
+/* --------
+	Header
+   -------- */
+#save-state span {
+	/* Box-model */
+	height: 16px !important;
+
+	/* Typography */
+	line-height: 16px !important;
+}

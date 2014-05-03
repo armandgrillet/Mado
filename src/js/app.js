@@ -2,16 +2,31 @@
 
 /* 
 * Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
 */
 
+/* HTML shortcuts. */
+var exportButton; // "Export" button.
+var newButton; // "New" button.
+var openButton; // "Open" button.
+var printButton; // "Print" button.
+var recentButton; // "Recent Files" button.
+var saveButton; // "Save" button.
+var saveAsButton; // "Save As" button.
+var windowTitle; // Mado's active window's title attribute.
+
+/* Functions variables. */
 var fileEntry; // This is the variable who stores the file opened.
-var lastWidth; // This is the last zier of the window.
+var lastWidth; // This is the last size of the window.
 var truncated; // To know the size when something is saved.
+
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
+	* contentChanged(): what to do when the user changes something in Markdown div.
 	* closeWindow(): what to do when the window is closed.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
@@ -26,6 +41,15 @@ var truncated; // To know the size when something is saved.
 	* saveFile (): what to do when the user clicks on "Save", if the user haven't save its document yet, the function who's working is saveAsFile ().
 	* int theMinWidth (): return the min width of a new window, it depends on the user's screen width.
 */
+
+function contentChanged () {
+	conversion();
+	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
+            centerLine.style.display = "none";
+        }
+    else
+        centerLine.style.display = "block";
+}
 
 function errorHandler() {
 	if (fileInLoading != undefined) {
@@ -131,7 +155,7 @@ function newWindow () {
   	}
   	else if (markdown.innerHTML == firstMessage) {
   		markdown.innerHTML = "";
-  		conversion();
+  		contentChanged();
   		$(markdown).focus();
   	}
 }
@@ -156,8 +180,9 @@ function openFile(fileToOpen) {
 
 		 			// For the footer.
 		 			markdownSaved = markdown.innerText;
-		 			conversion();
+		 			contentChanged();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
+		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
 	 		};
@@ -207,6 +232,7 @@ function saveAsFile () {
 						markdownSaved = markdown.innerText;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
+		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 				    };
 				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 				}, errorHandler);
@@ -232,7 +258,6 @@ function saveFile () {
 				// Footer
 				markdownSaved = markdown.innerText;
 				checkSaveState();
-				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		    };
 		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
 		}, errorHandler);
@@ -258,9 +283,9 @@ function theMinWidth () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
+	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1366 && lastWidth < 1366 && windowResizing) 
+	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
 		switchToBoth.click(); // viewswitch.js
 
 	lastWidth = window.innerWidth;
