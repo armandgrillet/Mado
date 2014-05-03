@@ -20,7 +20,7 @@ function anotherWindow (theX, theY, theWidth, theHeight) {
 	    }, 
     	frame: "none",
 	    minWidth: theMinWidth(), 
-	    minHeight: 240
+	    minHeight: 330
 	});
 }
 
@@ -32,7 +32,7 @@ function firstWindow () {
 	    }, 
 	    frame: "none",
 	    minWidth: theMinWidth(), 
-	    minHeight: 240
+	    minHeight: 330
 	});
 }
 
@@ -47,14 +47,14 @@ function theMinWidth () {
 	else
 		return 800;
 	*/
-	return 683;
+	return 750;
 }
 
 function windowCreation () {
 	chrome.storage.local.get(["lastX", "lastY", "lastWidth", "lastHeight"], function(mado) {
 		if (mado["lastX"] != undefined && mado["lastY"] != undefined && mado["lastWidth"] != undefined && mado["lastHeight"] != undefined
 		&& ! isNaN(mado["lastX"]) && ! isNaN(mado["lastY"]) && ! isNaN(mado["lastWidth"]) && ! isNaN(mado["lastHeight"])
-		&&	mado["lastX"] >= 0 && mado["lastY"] >= 0 && mado["lastWidth"] >= 240 && mado["lastHeight"] >= 683)
+		&&	mado["lastX"] >= 0 && mado["lastY"] >= 0 && mado["lastWidth"] >= 330 && mado["lastHeight"] >= 750)
 			anotherWindow(mado["lastX"], mado["lastY"], mado["lastWidth"], mado["lastHeight"]);
 		else
 			firstWindow();

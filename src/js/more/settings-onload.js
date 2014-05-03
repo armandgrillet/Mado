@@ -10,6 +10,8 @@ window.onload = function() {
 	markdownSyntax = document.getElementById("markdown-radio");
 	gfmSyntax = document.getElementById("gfm-radio");
 
+	highlightingCheck = document.getElementById("highlighting-checkbox");
+
 	smaDisplaySize = document.getElementById("small-display-radio");
 	medDisplaySize = document.getElementById("medium-display-radio");
 	bigDisplaySize = document.getElementById("big-display-radio");
@@ -21,10 +23,11 @@ window.onload = function() {
 	analytics = document.getElementById("analytics-checkbox");
 
 	/* Functions. */
-	if (screen.width < 1366) { // Don't show "Big" if the screen is too small
-		bigInputContainer.style.display = "none";
-		bigLabelContainer.style.display = "none";
-	}
+	// if (screen.width < 1366) { // Don't show "Big" if the screen is too small
+	// 	bigInputContainer.style.display = "none";
+	// 	$(bigInputContainer).css("display", "none");
+	// 	$(bigLabelContainer).css("display", "none");
+	// }
 
 	/*
     * Functions.
@@ -33,12 +36,14 @@ window.onload = function() {
 
 	
 	getSyntax();
+	// getHighlighting();
 	// getDisplaySize();
-	getResizing();
 	getAnalytics();
 
 	$(markdownSyntax).on("click", setSyntax);
 	$(gfmSyntax).on("click", setSyntax);
+
+	// $(highlightingCheck).on("click", setHighlighting);
 
 	/*
 	$(smaDisplaySize).on("click", function() { setDisplaySize("small"); });
@@ -46,8 +51,6 @@ window.onload = function() {
 	$(bigDisplaySize).on("click", function() { setDisplaySize("big"); });
 	*/
 	
-	$(viewOnResize).on("click", setResizing);
-
 	$(analytics).on("click", setAnalytics);
 
 	$(windowClose).on("click", function() {

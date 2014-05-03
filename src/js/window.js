@@ -10,18 +10,19 @@
 var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
 var head; // The "head" section of the main app.
+var lastBounds; // This is the last size of the window.
 var markdownSaved; // The last Markdown text saved.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
 var saveState; // The div who displays if the document is saved or not.
-var stylesheetLink = document.createElement("link"); // Create a "link" node.
+var frameStylesheetLink = document.createElement("link"); // Create a "link" node.
 var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
 var windowMin; // The minimize button.
 
-/* Functions variable. */
-var bounds; // This is the variable who stores the bounds when the window is maximised.
+/* Functions variables. */
+var boundsBeforeMaximized;
 
 /*
 * Functions (in alphabetical order).
@@ -39,8 +40,8 @@ var bounds; // This is the variable who stores the bounds when the window is max
 */
 
 function checkSaveState () {
-	if (markdown.innerText != "") {
-		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
+	if (markdown.value != "") {
+		if ((markdownSaved == undefined) || (markdown.value != markdownSaved))
 			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "";
@@ -59,55 +60,73 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else
+	else {
+		sendClosing(); // stats.js
 		chrome.app.window.current().close();
+	}
 }
 
 function determineFrame () {
-	stylesheetLink.setAttribute("rel", "stylesheet");
-	stylesheetLink.setAttribute("type", "text/css");
+	frameStylesheetLink.setAttribute("rel", "stylesheet");
+	frameStylesheetLink.setAttribute("type", "text/css");
 
 	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
+		frameStylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
+		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	else if (navigator.appVersion.indexOf("Linux") != -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
+		frameStylesheetLink.setAttribute("href", "css/window-frame-linux.css");
+		windowClose.setAttribute("class", "cta little-icon-lin-close");
+		windowMax.setAttribute("class", "cta little-icon-lin-maximize");
+		windowMin.setAttribute("class", "cta little-icon-lin-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window frame styles (which are primarily Chrome OS's styles).
+		frameStylesheetLink.setAttribute("href", "css/window-frame-chromeos.css");
+		windowClose.setAttribute("class", "cta little-icon-chr-close");
+		windowMax.setAttribute("class", "cta little-icon-chr-maximize");
+		windowMin.setAttribute("class", "cta little-icon-chr-minimize");
 	}
 
-	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
+	head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
 }
 
 function maximizeWindow () {
-	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
-		if (! (chrome.app.window.current().getBounds().left == 0  
-			&& chrome.app.window.current().getBounds().top == 0
-			&& chrome.app.window.current().getBounds().width == screen.availWidth
-			&& chrome.app.window.current().getBounds().height == screen.availHeight)
-			&& ! chrome.app.window.current().isMaximized()) {
-			bounds = chrome.app.window.current().getBounds();
-			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
-		}
-		else // Restore the last bounds.
-			chrome.app.window.current().setBounds(bounds);
-	}
-	else {
-		if (! chrome.app.window.current().isMaximized()) { // Maximize.
+	if (navigator.appVersion.indexOf("Win") == -1) {
+		if (! chrome.app.window.current().isMaximized()) // Maximize.
 			chrome.app.window.current().maximize();
-		}
 		else // Restore the last bounds.
 			chrome.app.window.current().restore();
+	}
+	else {
+		if (chrome.app.window.current().getBounds().width < screen.availWidth || 
+			chrome.app.window.current().getBounds().height < screen.availHeight) {
+			boundsBeforeMaximized = chrome.app.window.current().getBounds();
+			chrome.app.window.current().setBounds({
+				left: screen.availLeft, 
+				top: screen.availTop, 
+			 	width: screen.availWidth, 
+			 	height: screen.availHeight 
+			});
+		}
+		else { // Restore the last bounds.
+			if (boundsBeforeMaximized != undefined)
+				chrome.app.window.current().setBounds(boundsBeforeMaximized);
+			else
+				chrome.app.window.current().setBounds({ 
+					left: ((screen.availWidth - Math.round(screen.width * 0.85)) / 2), 
+					top: ((screen.availHeight - Math.round(screen.height * 0.85)) / 2), 
+					width: Math.round(screen.width * 0.85), 
+					height: Math.round(screen.height * 0.85) 
+				});
+		}
 	}
 }
 
@@ -116,10 +135,10 @@ function minimizeWindow () {
 }
 
 function quitCloseWindow () {
+	sendClosing(); // stats.js
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
-	chrome.app.window.current().close();
 }
 
 function saveAndQuit () {
@@ -133,7 +152,7 @@ function saveAndQuit () {
 		        }
 		        newRecentFile(fileEntry, "quit");
 		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 		}, errorHandler);
 }
 
@@ -155,7 +174,7 @@ function saveAsAndQuit () {
 				        }
 				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
 				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}
@@ -168,3 +187,23 @@ function saveQuitCloseWindow () {
 	else
 		saveAndQuit();
 }
+
+/*
+* Chrome methods.
+*
+* Resume:
+	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
+*/
+
+chrome.app.window.current().onBoundsChanged.addListener(function () {
+	if (chrome.app.window.current().getBounds().width < 1160 && switchToBoth.className == "switch-button activated")
+		switchToMD.click(); // Markdown is set as default view.
+	else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) 
+		switchToBoth.click(); // viewswitch.js
+
+	if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600)
+		addTopbarLabels();
+	else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600)
+		removeTopbarLabels();
+	lastBounds = chrome.app.window.current().getBounds();
+});

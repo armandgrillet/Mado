@@ -151,12 +151,11 @@
 /* HELP INPUT SPECIFICS: HELP RESULTS */
 #help-results-container {
 	/* Box-model */
-	/* No default height set: its height is set by its possible classes. */
 	overflow: hidden;
 	
 	/* Typography */
 	font-size: 0.8em;
-	line-height: 1em;
+	line-height: 1.2em;
 	color: #1a1a1a;
 
 	/* Misc */
@@ -166,27 +165,28 @@
 
 /* The four cases for the help results */
 #help-results-container.hidden {
+	/* Radical */
+	display: none;
+	
 	/* Box-model */
 	height: 0;
+	padding-top: 0;
 
 	/* Misc */
 	opacity: 0;
 }
 
-#help-results-container.one-result { height: 50px; }
-
-#help-results-container.two-results { height: 100px; }
-
-#help-results-container.three-results { height: 150px; }
-
 /* Container for both the answer and the example, also features a switch button to navigate between each */
 .result {
 	/* Positioning */
 	position: relative;
+	clear: both;
 
 	/* Box-model */
 	width: 200%; /* Twice the #help-results-container's width */
-	height: 50px;
+
+	/* Misc */
+	transition: -webkit-transform .1s ease;
 }
 
 .result:not(:first-of-type) { border-top: 1px solid #fafafa; }
@@ -205,6 +205,9 @@
 
 	/* Visual */
 	background-color: #fff; /* Hides the text underneath it during the transition */
+
+	/* Misc */
+	transition: right .1s ease;
 }
 
 .result-switch {
@@ -231,45 +234,28 @@
 .result-switch:hover { color: #000; }
 
 /* The button's behavior when activated */
+.result.switched .result-switch-container { right: 0; }
+
 .result.switched .result-switch { -webkit-transform: rotate(180deg); }
 
 .answer,
 .example {
-	/* Positioning */
-	position: absolute;
-	top: 5px;
-	padding-right: 30px;
+	/* Positionning */
+	float: left;
 
 	/* Box-model */
 	width: 50%; /* Half the .result's width, which means all the #help-results-container's width */
-	height: 100%; /* All the .result's height */
-
-	/* Misc */
-	transition: left .1s ease-out;
+	padding: 10px 30px 10px 0; /* Space for the result's switch */
 }
 
-/* Markdown answer of the help result, visible until the switch button is clicked */
-.answer { left: 0; }
-
-/* Answer behaviour when the switch is activated: it slides to the left and disappears */
-.result.switched .answer { left: -50%; }
-
-/* Example version of the help result, visible once the switch button is clicked */
-.example { left: 50%; }
-
-/* Example behaviour once the switch is activated: it slides to the left and shows up */
-.result.switched .example { left: 0; }
+.result.switched { -webkit-transform: translate(-50%,0); }
 
 /* When there is no result yet (less than 3 characters in the input), or no result at all */
 .no-result { font-weight: bold; }
 
 .no-result .result-switch { display: none; } /* Hide the switch */
 
-.no-result .answer,
-.no-result .example {
-	/* Misc */
-	transition: none; /* Cancel transitions for visual stability */
-}
+.no-result .result { transition: none; } /* Cancel transitions for visual stability */
 
 /* Part of the answer that matches the input */
 .match {
@@ -284,7 +270,16 @@
 }
 
 /* Title of the help item */
-.help-title { font-weight: bold; }
+.help-title {
+	/* Positioning */
+	margin-bottom: 5px;
+
+	/* Typography */
+	font-size: 0.85em;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
 
 /* Code in the help item */
 .help-code {
@@ -299,15 +294,11 @@
 
 /* Example images for the image insertion syntax */
 .example-image {
-	/* Positioning */
-	margin: 0 auto;
-
 	/* Box-model */
-	width: 33%;
-	height: calc(100% - 10px); /* Delete the visual padding */
+	width: 40px;
+	height: 36px;
 
 	/* Visual */
-	background-color: #e0e0e0;
 	background-image: url("../img/example-image.png");
 	background-repeat: no-repeat;
 	background-position: center;
@@ -316,6 +307,10 @@
 /* LINK INSERTION SPECIFICS */
 /* The "Ok" button */
 #insert-link { margin-left: 5px; }
+
+/* WEB IMAGE INSERTION SPECIFICS */
+/* The "Ok" button */
+#insert-webimage { margin-left: 5px; }
 
 /* IMAGE INSERTION SPECIFICS */
 /* The first button, enables the user to choose his galleries */
@@ -397,13 +392,17 @@
 }
 
 /* MARKDOWN AREA */
-#markdown-container { overflow: auto; }
+#markdown-container {
+	/* Box-model */
+	padding: 0 0 0 40px;
+	overflow: hidden;
+}
 
 #markdown {
 	/* Box-model */
 	width: 100%;
 	min-height: 100%;
-	padding: 40px 10px 40px;
+	padding: 40px 50px 40px 10px;
 
 	/* Typography */
 	font-family: SourceCodePro;

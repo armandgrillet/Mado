@@ -18,7 +18,7 @@ var windowTitle; // Mado's active window's title attribute.
 
 /* Functions variables. */
 var fileEntry; // This is the variable who stores the file opened.
-var lastWidth; // This is the last size of the window.
+var lastMarkdownHeight = 0;
 var truncated; // To know the size when something is saved.
 
 
@@ -43,12 +43,17 @@ var truncated; // To know the size when something is saved.
 */
 
 function contentChanged () {
+	if (lastMarkdownHeight == 0)
+		lastMarkdownHeight = markdown.scrollHeight;
+	else if(lastMarkdownHeight < markdown.scrollHeight) {
+		toTheBottom(); // scroll.js
+	}
+
 	conversion();
-	if (markdownContainer.scrollHeight > $(markdownContainer).height()) {
-            centerLine.style.display = "none";
-        }
+	if (markdown.clientHeight < markdown.scrollHeight)
+        $(centerLine).css("display", "none");
     else
-        centerLine.style.display = "block";
+        $(centerLine).css("display", "block");
 }
 
 function errorHandler() {
@@ -59,7 +64,7 @@ function errorHandler() {
 }
 
 function exportFileHTML () {
-	marked(markdown.innerText, function (err, content) {
+	marked(markdown.value, function (err, content) {
 		chrome.fileSystem.chooseEntry(
 			{
 				type: "saveFile", 
@@ -97,6 +102,7 @@ function minFileName (path) {
 }
 
 function moreWindow (choice) {
+	sendEvent("Window '" + choice + "' opened");
 	chrome.app.window.create(
 		choice, 
 		{
@@ -137,7 +143,8 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (markdown.innerText.length > 0 && (markdown.innerText.length != 916 || markdown.innerHTML != firstMessage)) {
+	sendEvent("New file");
+	if (markdown.value.length > 0 && markdown.value != firstMessage) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -149,23 +156,24 @@ function newWindow () {
 			    }, 
 			    frame: "none",
 			    minWidth: theMinWidth(), 
-				minHeight: 240
+				minHeight: 330
 		  	}
 	  	);
   	}
-  	else if (markdown.innerHTML == firstMessage) {
-  		markdown.innerHTML = "";
+  	else if (markdown.value == firstMessage) {
+  		markdown.value = "";
   		contentChanged();
   		$(markdown).focus();
   	}
 }
 
 function openFile(fileToOpen) {
+	sendEvent("File opened");
 	fileToOpen.file(
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (markdown.innerText != "") {// Something is already in the markdown, Mado opens a new window. 
+	 			if (markdown.value != "") {// Something is already in the markdown, Mado opens a new window. 
 	 				chrome.storage.local.set(
 		 				{
 		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
@@ -174,12 +182,12 @@ function openFile(fileToOpen) {
 	 				);
  				}
 	 			else {
-		 			markdown.innerText = e.target.result; // Display the file content.	
+		 			markdown.value = e.target.result; // Display the file content.	
 	 			 			
 		 			fileEntry = fileToOpen; // For save.
 
 		 			// For the footer.
-		 			markdownSaved = markdown.innerText;
+		 			markdownSaved = markdown.value;
 		 			contentChanged();
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
@@ -229,12 +237,12 @@ function saveAsFile () {
 				        newRecentFile(fileEntry); // Update the position of the file saved.
 
 						// Footer
-						markdownSaved = markdown.innerText;
+						markdownSaved = markdown.value;
 						checkSaveState();
 						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		 				windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}
@@ -256,10 +264,10 @@ function saveFile () {
 		        newRecentFile(fileEntry); // Update the position of the file saved.
 
 				// Footer
-				markdownSaved = markdown.innerText;
+				markdownSaved = markdown.value;
 				checkSaveState();
 		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 		}, errorHandler);
 	}
 }
@@ -271,25 +279,15 @@ function theMinWidth () {
 	else
 		return 800;
 	*/
-	return 683;
+	return 750;
 }
 
 /*
 * Chrome methods.
 *
 * Resume:
-	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
 	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
 */
-
-chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (window.innerWidth < 1160 && switchToBoth.className == "switch-button activated")
-		switchToMD.click(); // Markdown is set as default view.
-	else if (window.innerWidth >= 1160 && lastWidth < 1160 && windowResizing) 
-		switchToBoth.click(); // viewswitch.js
-
-	lastWidth = window.innerWidth;
-});
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
@@ -299,8 +297,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) { // What to 
             newDisplaySize(); // app.js 
         else if (key == "gfm")
             setEditorSyntax(); // editor.js
-        else if (key == "resize")
-            setWindowResizing(); // viewswitch.js         
     }
 });
 /* All the things to do the user clicks in a Mado's window. */
@@ -322,25 +318,33 @@ $(document).click( function(e) {
 	}
 
 	/* image.js */
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
+	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") {
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
-		titleInput.value = "";
+		initialText = markdown.value;
 		imageLoaded = undefined;
 
-		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-image");
-		}
 		imageDisplayer.className = "tool-displayer";
-		imageDiv = document.getElementById("mado-image");
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		if ($(e.target).closest(document.getElementById("insert-image")).length)
+			applyImage();
+		else
+			imageDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* link.js */
@@ -348,20 +352,29 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
+		initialText = markdown.value;
 		
-		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-link");
-		}
 		linkDisplayer.className = "tool-displayer";
-		linkDiv = document.getElementById("mado-link");
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setLinkInputs();
-		urlInput.focus();			
+		urlInput.focus();		
 	}
-	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
-		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {	
+		if ($(e.target).closest(document.getElementById("insert-link")).length)
+			applyLink();
+		else
+			linkDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* more.js */
@@ -371,6 +384,37 @@ $(document).click( function(e) {
 	else if (moreDisplayer.className != "hidden" && ! $(e.target).closest(moreBox).length)
 		moreDisplayer.className = "hidden";
 
+	/* online-image.js */
+	if ($(e.target).closest(onlineImageButton).length && onlineImageDisplayer.className == "tool-displayer hidden") {
+		onlineImageDisplayer.className = "tool-displayer";
+		/* Reset. */
+		onlineImageUrlInput.value = "";
+		onlineImageAltInput.value = "";
+		initialText = markdown.value;
+		
+		onlineImageDisplayer.className = "tool-displayer";
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
+		setOnlineImageInputs();
+		onlineImageUrlInput.focus();
+	}
+	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageDisplayer).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
+		if ($(e.target).closest(document.getElementById("insert-webimage")).length)
+			applyOnlineImage();
+		else
+			onlineImageDisplayer.className = "tool-displayer hidden";
+	}
+	
 	/* recentfiles.js */
 	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
 		displayRecentFiles(); // If the user remove something from another window.
@@ -383,7 +427,7 @@ $(document).click( function(e) {
 	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
 		stylesDisplayer.className = "tool-displayer";
 	}
-	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)		
+	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)
 		stylesDisplayer.className = "tool-displayer hidden";
 
 	/* window.js */
@@ -395,6 +439,80 @@ $(document).click( function(e) {
 		closeDisplayer.className = "hidden";
 });
 
+/* Functions that handle D&D. */
+
+/*
+* Variables (in alphabetical order).
+*/
+
+var documentSection; // The section named "document" in the HTML.
+var dragAndDropManager; // The manager launched onload.
+var dragMessageAlreadyVisible = false; // True if the message about Drag and Drop is already visible.
+var extensionsAllowed = [".markdown", ".md", ".txt"]; // Extensions allowed by Mado.
+var filePath; // The path of the dragged file.
+
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* counterSelection (): what counter to display.
+	* displayCounter (): change charsDiv and wordsDiv.
+	* resetCounter (): what to display if there is nothing in the contenteditable.
+*/
+
+function DnDManager(selector, onDropCallback) {
+	var el_ = document.querySelector(selector);
+	var overCount = 0;
+
+	this.dragenter = function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		overCount++;
+		el_.classList.add('dropping');
+	};
+
+	this.dragover = function(e) {  
+		if (! dragMessageAlreadyVisible) {
+			documentSection.className = "dragging";
+			dragMessageAlreadyVisible = 1;
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
+	this.dragleave = function(e) {
+		documentSection.removeAttribute("class");
+		dragMessageAlreadyVisible = 0;
+		e.stopPropagation();
+		e.preventDefault();
+		if (--overCount <= 0) {
+			el_.classList.remove('dropping');
+			overCount = 0;
+		}
+	};
+
+	this.drop = function(e) {
+		documentSection.removeAttribute("class");
+		dragMessageAlreadyVisible = 0;
+		e.stopPropagation();
+		e.preventDefault();
+
+		el_.classList.remove('dropping');
+
+		onDropCallback(e.dataTransfer)
+	};
+
+	el_.addEventListener('dragenter', this.dragenter, false);
+	el_.addEventListener('dragover', this.dragover, false);
+	el_.addEventListener('dragleave', this.dragleave, false);
+	el_.addEventListener('drop', this.drop, false);
+};
+
+function openDraggedFile (fileEntry) {
+	filePath = fileEntry.fullPath;
+	if (extensionsAllowed.indexOf(filePath.substring(filePath.lastIndexOf("."), filePath.length)) != -1)
+		openFile(fileEntry); // app.js
+}
 /* Functions linked to the Markdown editor. */
 
 /* 
@@ -406,33 +524,30 @@ $(document).click( function(e) {
 /* HTML shortcuts. */
 var centerLine; // The line that separates Markdown and HTML views.
 var conversionDiv; // The div who contains the HTML conversion.
-var markdown; // The contenteditable where the user writes.
-var markdownContainer;
+var markdown; // The textarea where the user writes.
 var pasteZone; // The textarea used when the user pastes content.
 
 /* Global. */
 var closeDiv; // The end of the div.
 var editorSyntax; // false if the syntax is Markdown, true if it's GFM.
-var firstMessage = "# Dear user,<br><br>Thanks for installing **Mado**. For your first launch, here is some information:<br><br>* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.<br>* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.<br>* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, “Settings” section).<br>* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.<br><br>We hope you will enjoy Mado,<br><br>**[A+A](https://twitter.com/AplusA_io)**<br><br>***<br><br>P.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
+var firstMessage = "# Dear user,\n\nThanks for installing **Mado**. For your first launch, here is some information:\n\n* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for MarkDown files) and offers an export in .html.\n* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.\n* Mado uses Google Analytics to know in real time how many users are currently running the app, for statistical analysis only. You can deactivate it anytime in the settings (top-right button, “Settings” section).\n* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.\n\nWe hope you will enjoy Mado,\n\n**[A+A](https://twitter.com/AplusA_io)**\n\n***\n\nP.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
 var initialText; // A save used when the user cancel a link/image.
-var newCE; // The new contenteditable content (temporary).
+var newCE; // The new textarea content (temporary).
 var openDiv; // The beginning of the div.
 var optiMarkdown; // The new Markdown, without useless div.
-var pasteDiv; // The div used when the user pastes content.
-var range; // Get the user's selection.
-var rangeSelection; // Set the user's new range selection.
-var savedSel; // The selection is saved here.
-var selection; // Set the user's new selection.
-var surroundDiv = document.createElement("div"); // Used to add the div to the contenteditable.
-var tempTextarea = document.createElement("textarea"); // Used to add the div to the contenteditable.
 var tempConversion; // A string used to don't display errors when an image is loaded.
 var tempMarkdown; // String used to modify the markdown innerHTML.
+
+var starSelect;
+var endSelect;
+var newEndSelect;
+var newRange;
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
-	* conversion (): what to do when the user change something on the contenteditable.
+	* conversion (): what to do when the user change something on the textarea.
 	* changeContentHighlighted (id): Add a div with id @param id around the selection. 
 	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
@@ -443,58 +558,36 @@ var tempMarkdown; // String used to modify the markdown innerHTML.
 */
 
 function conversion () {
-	if ((markdown.innerHTML > 4) || (markdown.innerText.length > 0 && markdown.innerHTML != "<br>")) { // There is Markdown in the contenteditable.
+	if (markdown.value.length > 0) { // There is Markdown in the textarea.
 		if (editorSyntax == undefined) {
 			chrome.storage.local.get("gfm",  function(mado) {
 				if (mado["gfm"] != undefined)
 					marked.setOptions({ gfm : mado["gfm"] });
 				else {
-					chrome.storage.local.set({ "gfm" : false });
-					marked.setOptions({ gfm : false });
+					chrome.storage.local.set({ "gfm" : true });
+					marked.setOptions({ gfm : true });
 				}
 				setEditorSyntax();
-				marked(markdown.innerText, function (err, content) { // Marked.js makes the conversion.	    	
-					/* Reset. */
-			    	imagePosition = 0;
-			    	for (var i = 0; i < imagesArray.length; i++) // Reset the images array.
-			       		imagesArray[i][2] = false;
-
-			       	tempConversion = content; 
-			       	displayImages();      
-			    });
 			});	    
 		}
-		else {
+		else
 			marked.setOptions({ gfm : editorSyntax });
-			marked(markdown.innerText, function (err, content) {  	
-		    	/* Reset. */
-		    	imagePosition = 0;
-		    	for (var i = 0; i < imagesArray.length; i++)
-		       		imagesArray[i][2] = false;
 
-		       	tempConversion = content;
-		       	displayImages();      
-		    });
-		}
+		marked(markdown.value, function (err, content) {  
+	    	/* Reset. */
+	    	imagePosition = 0;
+	    	for (var i = 0; i < imagesArray.length; i++)
+	       		imagesArray[i][2] = false;
+
+	       	tempConversion = content;
+	       	displayImages();    
+	    });
 	}
 	else { // No Markdown here.
-		markdown.innerHTML = ""; // If the innerHTML is "<br>".
 		conversionDiv.innerHTML = "See the result here";
 		resetCounter();
 		checkSaveState();
 	}
-}
-
-function changeContentHighlighted (id) {
-    range = rangy.getSelection().rangeCount ? rangy.getSelection().getRangeAt(0) : null;
-    if (range) {    
-        surroundDiv.id = id;
-        try {
-            range.surroundContents(surroundDiv);
-        }
-        catch(ex) {
-        }
-    }
 }
 
 function checkDiv (divCount, content, pos, id) {
@@ -524,11 +617,10 @@ function endOfConversion () {
 	imagePath = undefined;
 	rightFile = undefined;
 
-	for (var i = 0; i < imagesArray.length; i++) // Remove the images who are not used anymore.
+	for (var i = 0; i < imagesArray.length; i++) // Remove the images that are not used anymore.
 		if (imagesArray[i][2] == false)
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
 
-	tempConversion = tempConversion.replace(/<img src=\"img\/nofile.png/g, "<span class=\"nofile-link\"> <span class=\"nofile-visual\">File not found</span>&nbsp;</span><img class=\"nofile\" src=\"img/nofile.png");
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
@@ -537,70 +629,10 @@ function endOfConversion () {
 		$(this).attr("target", "_blank");
 	});
 
-	$(".nofile").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-link").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-	$(".nofile-visual").on("click", function() { chooseGalleries(); }); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
+	$("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", chooseGalleries); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
 
 	Countable.once(conversionDiv, function (counter) { displayCounter(counter); }, { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
 	checkSaveState();
-}
-
-function pasteContent () {
-	changeContentHighlighted("mado-paste");  
-	pasteDiv = document.getElementById("mado-paste");      
-    pasteZone.focus();
-
-    setTimeout(function(){
-        if (pasteDiv != undefined)
-            pasteDiv.innerText = pasteZone.value;       
-        else
-            $(markdown).innerText = $(markdown).innerText + pasteZone.value;
-        pasteZone.value = ""; // Reset the hidden textarea content.
-        selectElementContents(pasteDiv);
-        restoreSelection("mado-paste");
-        contentChanged();
-    }, 20);
-}
-
-function removeDivWithId (id) {
-	tempMarkdown = markdown.innerHTML;
-	tempMarkdown = tempMarkdown.replace(/< *div/g, "<div"); // <div
-	tempMarkdown = tempMarkdown.replace(/<div *>/g, "<div>"); // <div>
-	tempMarkdown = tempMarkdown.replace(/< *\/ *div *>/g, "</div>"); // </div>
-
-	if (tempMarkdown.indexOf("<div id=\"" + id + "\">") != -1) { // Remove the useless div.
-		optiMarkdown = checkDiv(0, tempMarkdown, tempMarkdown.indexOf("<div id=\"" + id + "\">"), id);
-		if (optiMarkdown[0] != -1) {
-			tempMarkdown = optiMarkdown[1];
-		}
-	}
-	markdown.innerHTML = tempMarkdown;
-}
-
-function restoreSelection (id) {
-	savedSel = rangy.saveSelection();
-	removeDivWithId(id);		
-	rangy.restoreSelection(savedSel);
-	rangy.removeMarkers(savedSel);
-}
-
-function selectElementContents(el) {
-    if (document.createRange && window.getSelection) {
-        rangeSelection = document.createRange();
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        try {
-            rangeSelection.seleectNodeContents(el);
-            selection.addRange(rangeSelection);
-        } catch (e) {
-            rangeSelection.selectNode(el);
-            selection.addRange(rangeSelection);
-        }
-    } else if (document.body.createTextRange) {
-        rangeSelection = document.body.createTextRange();
-        rangeSelection.moveToElementText(el);
-        rangeSelection.select();
-    }
 }
 
 function setEditorSyntax () {
@@ -608,12 +640,29 @@ function setEditorSyntax () {
         if (mado["gfm"] != undefined)
                 editorSyntax = mado["gfm"]; 
         else {
-                chrome.storage.local.set({ "gfm" : false });
-                editorSyntax = false; 
+                chrome.storage.local.set({ "gfm" : true });
+                editorSyntax = true; 
         }
         contentChanged();
     });
 }
+
+$.fn.setRange = function (start, end) { 
+    if (!end) 
+    	end = start; 
+    return this.each(function() {
+        if (this.setSelectionRange) {
+            this.focus();
+            this.setSelectionRange(start, end);
+        } else if (this.createTextRange) {
+            newRange = this.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', end);
+            range.moveStart('character', start);
+            range.select();
+        }
+    });
+};
 
 /* Functions that handle Mado's footer. */
 
@@ -638,12 +687,14 @@ var wordsDiv; // The div that contains the document's words number.
 
 function counterSelection () {
 	if (charsDiv.style.display == "none") {
-		charsDiv.style.display = "inline";
-		wordsDiv.style.display = "none";
+		$(charsDiv).css("display", "inline");
+		$(wordsDiv).css("display", "none");
+		sendEvent("Number of chars diplayed");
 	}
 	else {
-		charsDiv.style.display = "none";
-		wordsDiv.style.display = "inline";
+		$(charsDiv).css("display", "none");
+		$(wordsDiv).css("display", "inline");
+		sendEvent("Number of words diplayed");
 	}
 }
 
@@ -668,188 +719,139 @@ function resetCounter () {
 	* Arrays.
 */
 
-var answer1, answer2, answer3; // The divs who contain the answers.
 var answersContainer; // The div who contains the answers displayed.
-var example1, example2, example3; // The divs who contain the examples.
 var help; // The input where the user writes what he wants.
 var helpButton; // The help button.
 var helpDisplayer; // The div who contains all the help divs.
 var maxAnswers; // Check the number of answers displayed, max = 3.
-var result1, result2, result3; // The divs who contain the results.
 var resultsContainer; // Will contain the HTML results container.
-var resultSwitch1, resultSwitch2, resultSwitch3; // The divs who contain the result switchs.
 var wordPos; // Shortcut for "words[i][j].toLowerCase().indexOf(help.value.toLowerCase());".
 
-var words = [ // All the words that can be used on the help input, each line corresponding to the same line in 'answers'.
-	// Headers
-	["Headers", "Titles"],
-
-	// Emphasys
-	["Bold", "Strong emphasis"],
-	["Italic", "Emphasis"],
-	["Bold italic", "Combined emphasis"],
-
-	// Lists 
-	["Ordered lists"],
-	["Unordered lists"],
-
-	// Links 
-	["Inline-style links"],
-	["Reference-style links"],
-
-	// Images 
-	["Images (inline)", "Pictures (inline)"],
-	["Images (reference-style)", "Pictures (reference-style)"],
-
-	// Code and Syntax Highlighting
-	["Blocks of code"],
-
-	// Tables
-
-	// Blockquotes
-	["Blockquotes"],
-
-	// Inline HTML
-	["Inline HTML", "HTML in Markdown"],
-
-	// Horizontal Rules
-	["Horizontal rules"],
-
-	// Line Breaks
-	["Line breaks"],
-
-	// Joke
-	["Question"]
-];
-
-var answers = [ // The answers displayed.
-	// Headers
-	["Six sizes available, the size depends on the numbers of #. <br> #Big title (size 1, the biggest). <br> ####A less impresive title (size 4 on 6)."],
-
-	// Emphasys
-	["<span class=\"help-code\">**bold**</span> or <span class=\"help-code\">__bold__</span>"],
-	["<span class=\"help-code\">*italic*</span> or <span class=\"help-code\">_italic_</span>"],
-	["<span class=\"help-code\">**_ bold italic_**</span> or <span class=\"help-code\">*__bold italic__*</span> or <span class=\"help-code\">***this***</span> or <span class=\"help-code\">___this___</span>"],
-
-	// Lists 
-	["1. First ordered list item. <br>2. Another item."],
-	["* An item. <br>* A second item (you can also use + or -)."],
-
-	// Links 
-	["<span class=\"help-code\">[Hypertext](http://url.com)</span><br>(Also works with a local path.)"], // TODO : Change the link
-	["<span class=\"help-code\">[Hypertext][1]<br>[1]: http://url.com</span>"],
-
-	// Images
-	['<span class=\"help-code\">![alt text](path/to/image.jpg "Title")</span>'], 
-	['<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg "Title"</span>'],
-
-	// Code and Syntax Highlighting
-	["<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>"],
-
-	// Tables
-
-	// Blockquotes
-	["> Blockquotes only need <span class=\"help-code\">></span> to work. <br><br> <span class=\"help-code\">> Two blockquotes without a break (a line who isn't a blockquote)  are a single quote.</span>"],
-
-	// Inline HTML
-	["<span class=\"help-code\">It &lt;strong>works&lt;/strong>.</span>"],
-
-	// Horizontal Rules
-	["<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>"],
-
-	// Line Breaks
-	["To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."],
-
-	// Joke
-	["Seriously?"]
-];
-
-var examples = [
-	// Headers
-	["Six sizes available, the size depends on the numbers of #.<h1 id=\"big-title-size-1-the-biggest-\">Big title (size 1, the biggest).</h1><h4 id=\"a-less-impresive-title-size-4-on-6-br-\">A less impresive title (size 4 on 6).</h4>"],
-
-	// Emphasys
-	["<strong>Bold</strong>"],
-	["<em>Italic</em>"],
-	["<strong><em>Bold italic</em></strong>"],
-
-	// Lists TODO
-	["<ol><li>First ordered list item</li><li>Another item.</li></ol>"],
-	["<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"],
-
-	// Links 
-	["<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"], // TODO : Change the link
-	["<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"],
-
-	// Images
-	["<div class=\"example-image\"></div>"],
-	["<div class=\"example-image\"></div>"],
-
-	// Code and Syntax Highlighting
-	["<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"],
-
-	// Tables
-
-	// Blockquotes
-	["<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"],
-
-	// Inline HTML
-	["It <strong>works<strong>"],
-
-	// Horizontal Rules
-	["<hr> You can use Hyphens, asterisks or underscores.<hr>"],
-
-	// Line Breaks
-	["<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"],
-
-	// Joke
-	["Life's most persistent and urgent question is, 'What are you doing for others?'."]
+var helpArray = [
+	[
+		["Headers", "Titles"],
+		"Six sizes available, the size depends on the numbers of #. <br> #Big title (size 1, the biggest). <br> ####A less impresive title (size 4 on 6).",
+		"Six sizes available, the size depends on the numbers of #.<h1 id=\"big-title-size-1-the-biggest-\">Big title (size 1, the biggest).</h1><h4 id=\"a-less-impresive-title-size-4-on-6-br-\">A less impresive title (size 4 on 6).</h4>"
+	],
+	[
+		["Bold", "Strong emphasis"],
+		"<span class=\"help-code\">**bold**</span> or <span class=\"help-code\">__bold__</span>",
+		"<strong>Bold</strong>"
+	],
+	[
+		["Italic", "Emphasis"],
+		"<span class=\"help-code\">*italic*</span> or <span class=\"help-code\">_italic_</span>",
+		"<em>Italic</em>"
+	],
+	[
+		["Bold italic", "Combined emphasis"],
+		"<span class=\"help-code\">**_ bold italic_**</span> or <span class=\"help-code\">*__bold italic__*</span> or <span class=\"help-code\">***this***</span> or <span class=\"help-code\">___this___</span>",
+		"<strong><em>Bold italic</em></strong>"
+	],
+	[
+		["Ordered lists"],
+		"1. First ordered list item. <br>2. Another item.",
+		"<ol><li>First ordered list item</li><li>Another item.</li></ol>"
+	],
+	[
+		["Unordered lists"],
+		"* An item. <br>* A second item (you can also use + or -).",
+		"<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"
+	],
+	[
+		["Inline-style links"],
+		"<span class=\"help-code\">[Hypertext](http://aplusa.io/mado)</span><br>(Can be used to create an anchor.)",
+		"<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"
+	],
+	[
+		["Reference-style links"],
+		"<span class=\"help-code\">[Hypertext][1]<br>[1]: http://aplusa.io/mado</span>",
+		"<a target=\"_blank\" href=\"http://aplusa.io/mado\">Hypertext</a>"
+	],
+	[
+		["Images (inline)", "Pictures (inline)"],
+		"<span class=\"help-code\">![alt text](path/to/image.jpg \"Title\")</span>",
+		"<div class=\"example-image\"></div>"
+	],
+	[
+		["Images (reference-style)", "Pictures (reference-style)"],
+		"<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg \"Title\"</span>",
+		"<div class=\"example-image\"></div>"
+	],
+	[
+		["Blocks of code"],
+		"<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>",
+		"<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"
+	],
+	[
+		["Blockquotes"],
+		"> Blockquotes only need <span class=\"help-code\">></span> to work. <br><br> <span class=\"help-code\">> Two blockquotes without a break (a line who isn't a blockquote)  are a single quote.</span>",
+		"<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"
+	],
+	[
+		["Inline HTML", "HTML in Markdown"],
+		"<span class=\"help-code\">It &lt;strong>works&lt;/strong>.</span>",
+		"It <strong>works<strong>"
+	],
+	[
+		["Horizontal rules"],
+		"<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>",
+		"<hr> You can use Hyphens, asterisks or underscores.<hr>"
+	],
+	[
+		["Line breaks"],
+		"To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph.",
+		"<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"
+	],
+	[
+		["Tables", "Arrays"],
+		"| Tables&nbsp; | Are&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Cool&nbsp;&nbsp;|<br>| -------- |:----------------:| ------:|<br>| col 3 is | right-aligned | $13 &nbsp;&nbsp; |<br>| col 2 is | centered&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | $37 &nbsp;&nbsp; |",
+		"<table> <thead><tr> <th>Tables</th> <th align=\"center\">Are</th> <th align=\"right\">Cool</th> </tr></thead> <tbody> <tr> <td>col 3 is</td> <td align=\"center\">right-aligned</td> <td align=\"right\">$13</td> </tr> <tr> <td>col 2 is</td> <td align=\"center\">centered</td> <td align=\"right\">$37</td> </tr> </tbody> </table>"
+	],
+	[
+		["Question"],
+		"Seriously?",
+		"Life's most persistent and urgent question is, 'What are you doing for others?'."
+	]
 ];
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
-	* activateHelp (): show the help input and focus when the help button is clicked.
 	* answer (): find the answers and the examples for the question.
 	* displayAnswers (): display the answers.
 	* resetAnswerDiv (): clear the Help divs.
+	* setResultsHeight (number of results): set the help container's height, depending on the number of results.
 	* switchResult (result number): show the answer or the example when the user click on a switch.
 */
 
-function activateHelp () { // Show the help input and focus when the help button is clicked. MAYBE USELESS
-	if (helpDisplayer.className == "hidden") {
-		helpDisplayer.className = " ";
-    	help.focus();
-	}	
-}
-
 function answer () {
-	maxAnswers = 1; // Reset the number of answers that can be diplayed (max: 4)
-	for (var i = 0; i < words.length && maxAnswers < 4; i++) // A line = a syntax, this loop runs through each line.
-		for (var j = 0; j < words[i].length; j++) // A line can have many columns (different ways to say the same thing), this loop run through each column.
-			if (words[i][j].toLowerCase().indexOf(help.value.toLowerCase()) != -1) { // Everything in lower case to help the condition.
-				wordPos = words[i][j].toLowerCase().indexOf(help.value.toLowerCase());
-				window["answer" + maxAnswers].innerHTML = "<span class=\"help-title\">" + words[i][j].substring(0, wordPos) + "<span class=\"match\">" + words[i][j].substr(wordPos, help.value.length) + "</span>" + words[i][j].substring(wordPos + help.value.length) + "</span>: " + answers[i]; // Put the answer in the appropriate div.
-				window["example" + maxAnswers].innerHTML = examples[i]; // Put the answer in the appropriate div.
+	maxAnswers = 0; // Reset the number of answers that can be diplayed (max: 3)
+	for (var i = 0; i < helpArray.length && maxAnswers < 3; i++) // A line = a syntax, this loop runs through each line.
+		for (var j = 0; j < helpArray[i][0].length; j++) // A line can have many columns (different ways to say the same thing), this loop run through each column.
+			if (helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase()) > -1) { // Everything in lower case to help the condition.
+				wordPos = helpArray[i][0][j].toLowerCase().indexOf(help.value.toLowerCase());
+				document.getElementById("answer-" + (maxAnswers + 1)).innerHTML = "<h1 class=\"help-title\">" + helpArray[i][0][j].substring(0, wordPos) + "<span class=\"match\">" + helpArray[i][0][j].substr(wordPos, help.value.length) + "</span>" + helpArray[i][0][j].substring(wordPos + help.value.length) + "</h1>" + helpArray[i][1]; // Put the answer in the appropriate div.
+				document.getElementById("example-" + (maxAnswers + 1)).innerHTML = helpArray[i][2]; // Put the answer in the appropriate div.
 				maxAnswers++; // You can't have more than 3 answers.
-				j = words[i].length; // Change the line (to don't have 2 times the same answer).
+				j = helpArray[i][0].length; // Change the line (to don't have 2 times the same answer).
 			}
 	switch (maxAnswers) {
-		case 1: // Nothing found.
-			answer1.innerHTML = "No help found.";
+		case 0: // Nothing found.
+			document.getElementById("answer-1").innerHTML = "No help found.";
 			resultsContainer.className = "one-result no-result";
 			resetAnswerDiv(2); // This is 2 and not 1 to display the result "No help found."
 			break;
-		case 2: // One answer found.
+		case 1: // One answer found.
 			resultsContainer.className = "one-result";
 			resetAnswerDiv(2);
 			break;
-		case 3: // Two answers found.
+		case 2: // Two answers found.
 			resultsContainer.className = "two-results";
 			resetAnswerDiv(3);
 			break;
-		case 4: // Three answers found, maximum number possible at the same time.
+		case 3: // Three answers found, maximum number possible at the same time.
 			resultsContainer.className = "three-results";
 			break;
 	}
@@ -857,18 +859,24 @@ function answer () {
 
 function displayAnswers () {
 	for (var i = 1; i <= 3; i++) // Reset the results' position.
-		if (window["result" + i].className == "result switched")
-			window["result" + i].className = "result";
+		if (document.getElementById("result-" + i).className == "result switched")
+			document.getElementById("result-" + i).className = "result";
 
-	if (help.value.length == 0)
+	if (help.value.length == 0) {
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
+		resetAnswerDiv(3);
+		setResultsHeight();	
+	}
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
+			resetAnswerDiv(2);
 			if (help.value.length == 1)
-				answer1.innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
+				document.getElementById("answer-1").innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
 			else if (help.value.length == 2)
-				answer1.innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
+				document.getElementById("answer-1").innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
+
+			setResultsHeight();
 		}
 		else
 			answer(); // Find the answers.
@@ -877,21 +885,42 @@ function displayAnswers () {
 
 function resetAnswerDiv(begin) {
 	for (var i = begin; i <= 3; i++) { 
-		if (window["answer" + i].innerHTML == "")
+		if (document.getElementById("answer-" + i).innerHTML == "")
 			i = 3;
 		else {
-			window["answer" + i].innerHTML = "";
-			window["result" + i].className = "result";
-			window["example" + i].innerHTML = "";
+			document.getElementById("answer-" + i).innerHTML = "";
+			document.getElementById("result-" + i).className = "result";
+			document.getElementById("example-" + i).innerHTML = "";
 		}
 	}
 }
 
+function setResultsHeight() {
+	var totalHeight = 0;
+	for (var i = 1; i <= 3; i++) {// Check all the results, depending on the number of results
+		if ($("#answer-" + i).html() != "") {
+			$("#result-" + i).css("display", "block");
+			if ($("#answer-" + i).outerHeight() >= $("#example-" + i).outerHeight()) 
+				$("#result-" + i).css("height", $("#answer-" + i).outerHeight() + "px");
+			else
+				$("#result-" + i).css("height", $("#example-" + i).outerHeight() + "px");
+			totalHeight += $("#result-" + i).outerHeight(); // Add the height of the current result to the total height
+		}
+		else {
+			$("#result-" + i).css("height", 0);
+			$("#result-" + i).css("display", "none");
+		}
+		
+	}
+	$(resultsContainer).css("height", totalHeight + "px");
+
+}
+
 function switchResult (numResult) {
-	if (window["result" + numResult].className == "result") // If Markdown style displayed
-		window["result" + numResult].className = "result switched";
+	if (document.getElementById("result-" + numResult).className == "result") // If Markdown style displayed
+		document.getElementById("result-" + numResult).className = "result switched";
 	else // If corresponding example displayed
-		window["result" + numResult].className = "result";
+		document.getElementById("result-" + numResult).className = "result";
 	help.focus();
 }
 /* This document handles the image insertion. */
@@ -911,7 +940,6 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var titleInput; // The input for the title of the image
 
 /* Functions variables. 
 * startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.
@@ -923,9 +951,12 @@ var image; // The content who is added.
 var imageLoaded; // The path of the image selected.
 var imagePath; // The path of the image.
 var imagePosition = 0; // Used to don't keep on the same part of the document.
-var imagesArray = new Array(); // All the images on the file.
+var imagesArray = []; // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
+var researching; // If we're searching an image.
+var imagePathsArray = [];
+var imagePositionInArray;
 
 /*
 * Functions (in alphabetical order).
@@ -941,10 +972,12 @@ var rightFile; // If false the JS is looking for an image.
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* loadOnlineImage (): get the external image with a request.
 	* modifyImage (): enables the realtime modification of an image.
-	* update (): update the list of folders and analyse the files in folders.
 	* setBrowserText (imagePath): set the text in the button with the image's path.
 	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
+	* update (): update the list of folders and analyse the files in folders.
+	* updateOnline(): apply the new URL of the external image. 
 */
 
 function applyImage () {
@@ -954,20 +987,18 @@ function applyImage () {
 		altInput.removeAttribute("class");
 	}
 	else if (imageLoaded != undefined){ // An image is obligatory
-		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
 	}
 }
 
 function cancelImage () {
-	if (imageDiv != undefined)
-		imageDiv.innerText = initialText;		
-	imageDisplayer.className = "tool-displayer hidden";
-	selectElementContents(imageDiv);
-	restoreSelection("mado-image");
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
 	contentChanged();
+	imageDisplayer.className = "tool-displayer hidden";	
+	markdown.focus();
+	$(markdown).setRange(startSelect, endSelect);
 }
 
 function chooseGalleries () {
@@ -982,38 +1013,54 @@ function chromeUpdate (results) {
 function displayImages () {
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
-		rightFile = false;
+		researching = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
+		imagePathsArray.length = 0; // Reset
+	   	for(var i = 0; i < imagesArray.length; i++) { // Put all the names 
+	      	imagePathsArray.push(imagesArray[i][0]);
+	   	}
+	   	imagePositionInArray = imagePathsArray.indexOf(imagePath);
 
-		if(imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
-			if (imagesArray.length > 0){ // Files are already stored.
-				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
-					if(imagesArray[i][0] == imagePath) { // The file is already here.
-						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[i][1]); // Replace the path.		
-		    			imagesArray[i][2] = true; // The file has been used.
-		    			if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		    				displayImages();
-		    				break;
-		    			}
-		    			else
-	                     	endOfConversion();
-		        	}
-		        	else if (i == imagesArray.length - 1) // The file isn't here.   	
-		    			update(); // Get the ID of the file.
-				}       			
+		if (imgFormats.indexOf(imagePath.substr(imagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {		
+			if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
+				if (navigator.onLine) {
+					if (imagePositionInArray > -1) { // Image is already stored.
+						tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
+		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.	
+					}
+					else { // The array doesn't exist yet.
+						researching	= true;
+						updateOnline(imagePath); // Get the ID of the file.   	
+					}
+				}
+				else
+					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Internet not available</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);			
+	        }
+	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
+				if (imagePositionInArray > -1) { // Image is already stored.
+					tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
+	    			imagesArray[imagePositionInArray][2] = true; // The file has been used.
+	        	}
+				else { // The image is not in the array.
+					researching	= true;
+					rightFile = false;
+					update(); // Get the ID of the file.
+				}
 			}
-			else // The array doesn't exist yet.
-				update(); // Get the ID of the file.   	
+			if (! researching) // We're not searching an image in the PC or the web.
+				displayImages();
 		}
-		else
+		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
+			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">This is not an image</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
+		}
 	}
 	else
 		endOfConversion();
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.png"); 
+	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -1026,9 +1073,8 @@ function galleryAnalysis (index) {
 			currentGallery = index;
 			galleriesList.forEach(
 				function(item, indx, arr) { // For each gallery.
-		     		if (indx == index && imagePath != undefined && rightFile == false) {// If we're looking for a file.  
+		     		if (indx == index && imagePath != undefined && rightFile == false) // If we're looking for a file.  
 		     			item.root.createReader().readEntries(getImages); // Get the images of the folder.
-		     		}
 		  		}
 			)
 		}
@@ -1047,7 +1093,7 @@ function getImage (entryPath) {
 			var reader = new FileReader();
           	reader.onloadend = function(e) { // We have the file (.result).
           		imagesArray.push([imagePath, this.result, true]); // Add a new line.
-             	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), this.result);  
+          		tempConversion = tempConversion.substring(0, imagePosition) + this.result + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
              	rightFile = true;
              	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
              		displayImages();
@@ -1094,14 +1140,15 @@ function loadImage () {
 }
 
 function modifyImage () {
-	if (titleInput.value == "")
-		image = "![" + altInput.value + "](" + imageLoaded + ')';
-	else 
-		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	image = "![" + altInput.value + "](" + imageLoaded + ')';
 	if (imageDiv != undefined)
 		imageDiv.innerText = image;		
 	else
-		$(markdown).innerText = $(markdown).innerText + image;		
+		$(markdown).innerText = $(markdown).innerText + image;	
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;	
+	markdown.value = markdown.value.substring(0, startSelect) + image + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + image).length;
 	contentChanged();
 }
 
@@ -1112,19 +1159,20 @@ function setImageBrowserText (path) {
 }
 
 function setImageInputs () {
-	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
-		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
-			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
+	initialText = markdown.value.substring(startSelect, endSelect);
+	if (/!\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '!' &&
+		initialText[initialText.length - 1] == ')') {
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) // Optional title is here.
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
-		}
 		else
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
 		setImageBrowserText(fileName(imageLoaded));
 		altInput.value = initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1); 
 	}
 	else
-		altInput.value = initialText;	
+		altInput.value = initialText;
+	$(markdown).setRange(startSelect, newEndSelect);
 }
 
 function update () {	
@@ -1158,26 +1206,23 @@ var linkDiv; // The div with id="mado-link".
 
 function applyLink () {
 	if (urlInput.value == "") {
-		urlInput.setAttribute("class", "flash");
+		urlInput.setAttribute("class", "tool-first-item flash");
 		urlInput.focus();
-		urlInput.removeAttribute("class");
+		urlInput.setAttribute("class", "tool-first-item");
 	}
 	else {
-		modifyLink();
 		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
+		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
 	}
 }
 
 function cancelLink () {
-	if (linkDiv != undefined)
-		linkDiv.innerText = initialText;	
-
-	linkDisplayer.className = "tool-displayer hidden";	
-	selectElementContents(linkDiv);
-	restoreSelection("mado-link");
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
 	contentChanged();
+	linkDisplayer.className = "tool-displayer hidden";	
+	markdown.focus();
+	$(markdown).setRange(startSelect, endSelect);
 }
 
 function modifyLink () {
@@ -1185,21 +1230,24 @@ function modifyLink () {
 		link = '[' + urlInput.value + "](" + urlInput.value + ')';
 	else 
 		link = '[' + hypertextInput.value + "](" + urlInput.value + ')';
-	if (linkDiv != undefined)
-		linkDiv.innerText = link;		
-	else
-		$(markdown).innerText = $(markdown).innerText + link;
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;
+	markdown.value = markdown.value.substring(0, startSelect) + link + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + link).length;
 	contentChanged();
 }
 
 function setLinkInputs () {
-	initialText = linkDiv.innerText;
-	if (/\[.*\]\(.*\)/.test(initialText)) {
-		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1); 
+	initialText = markdown.value.substring(startSelect, endSelect);
+	if (/\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '[' &&
+		initialText[initialText.length - 1] == ')') {
 		hypertextInput.value = initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1);
+		urlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1);
 	}
 	else
 		hypertextInput.value = initialText;
+	$(markdown).setRange(startSelect, newEndSelect);
 }
 /* This document handles the "More" button and his behavior. */
 
@@ -1214,6 +1262,102 @@ var settingsLine; // Link to the settings.
 var qAndALine; // Link to the questions & answers.
 var shortcutsLine; // Link to an exhaustive list of the shortcuts.
 var aboutLine; // Link to the additional information about Mado.
+/* This document handles the online image insertion. */
+
+/* 
+* Variables (in alphabetical order). 
+	* HTML shortcuts.
+	* Functions variables.
+*/
+
+/* HTML shortcuts. */
+var onlineImageButton; // The "Web image" button.
+var onlineImageBox; // The clickable zone of the Web image insertion tool.
+var onlineImageDisplayer; // The div that displays or not the Web image insertion tool.
+var onlineImageUrlInput; // The div that contains the image's url.
+var onlineImageAltInput; // The div that contains the image's alt text.
+
+/* Functions variable. */
+var onlineImage; // The content that is added.
+
+/*
+* Functions (in alphabetical order).
+*
+* Resume:
+	* applyOnlineImage (): what to do when the user press enter after setting the online image.
+	* cancelOnlineImage (): what to do if the user press elsewhere the link container when he was adding an online image.
+	* modifyOnlineImage (): enables the realtime modification of an online image.
+	* loadOnlineImage (): get the external image with a request.
+	* setOnlineImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
+	* updateOnline(): apply the new URL of the external image. 
+*/
+
+function applyOnlineImage () {
+	if (onlineImageUrlInput.value == "") { // An URL is obligatory
+		onlineImageUrlInput.setAttribute("class", "tool-first-item flash");
+		onlineImageUrlInput.focus();
+		onlineImageUrlInput.setAttribute("class", "tool-first-item");
+	}
+	else {
+		onlineImageDisplayer.className = "tool-displayer hidden";
+		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
+	}
+}
+
+function cancelOnlineImage () {
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
+	contentChanged();
+	onlineImageDisplayer.className = "tool-displayer hidden";
+	markdown.focus();
+	$(markdown).setRange(startSelect, endSelect);
+}
+
+function modifyOnlineImage () {
+	if (onlineImageAltInput.value == "")
+		onlineImage = "![" + onlineImageUrlInput.value + "](" + onlineImageUrlInput.value + ')';
+	else 
+		onlineImage = "![" + onlineImageAltInput.value + "](" + onlineImageUrlInput.value + ')';
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;
+	markdown.value = markdown.value.substring(0, startSelect) + onlineImage + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + onlineImage).length;
+	contentChanged();
+}
+
+var loadOnlineImage = function(uri, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.responseType = 'blob';
+	xhr.onload = function() {
+		callback(window.URL.createObjectURL(xhr.response), uri);
+	}
+	xhr.open('GET', uri, true);
+	xhr.send();
+}
+
+function setOnlineImageInputs () {
+	initialText = markdown.value.substring(startSelect, endSelect);
+	if (/!\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '!' &&
+		initialText[initialText.length - 1] == ')') {
+		onlineImageAltInput.value = initialText.match(/!\[.*\]/)[0].substring(2, initialText.match(/!\[.*\]/)[0].length - 1);
+		onlineImageUrlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1);
+	}
+	else
+		onlineImageAltInput.value = initialText;
+	$(markdown).setRange(startSelect, newEndSelect);
+}
+
+function updateOnline () {
+	loadOnlineImage(imagePath, function(blob_uri, requested_uri) {
+	  	tempConversion = tempConversion.replace(imagePath, blob_uri); 
+	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line in the array of images.
+		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
+	 		displayImages();
+	 	else // The end.
+	 		endOfConversion();
+	}); 
+}
 /* All the things to do when mado.html is loaded, event listeners are here because Chrome doesn't want JS in the HTML. */
 
 window.onload = function() {
@@ -1225,16 +1369,19 @@ window.onload = function() {
     exportButton = document.getElementById("export");
     newButton = document.getElementById("new");
     openButton = document.getElementById("open");
+    printButton = document.getElementById("print");
     recentButton = document.getElementById("recent");
     saveButton = document.getElementById("save");
     saveAsButton = document.getElementById("save-as");
     windowTitle = document.getElementsByTagName("title")[0];
+
+    /* drag-and-drop.js */
+    documentSection = document.getElementById("document");
     
     /* editor.js */
     centerLine = document.getElementById("center-line-container");
     conversionDiv = document.getElementById("html-conversion");
     markdown = document.getElementById("markdown");   
-    markdownContainer = document.getElementById("markdown-container");   
     pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
@@ -1247,12 +1394,6 @@ window.onload = function() {
     help = document.getElementById("help-input");
     helpButton = document.getElementById("help-button");
     helpDisplayer = document.getElementById("help-input-displayer");
-    for (var i = 1; i <= 3; i++) {
-        window["answer" + i] = document.getElementById("answer-" + i);
-        window["example" + i] = document.getElementById("example-" + i);
-        window["result" + i] = document.getElementById("result-" + i);
-        window["resultSwitch" + i] = document.getElementById("result-switch-" + i);
-    }
     resultsContainer = document.getElementById("help-results-container");
 
     /* image.js */
@@ -1262,8 +1403,7 @@ window.onload = function() {
     imageDisplayer = document.getElementById("image-insertion-displayer");
     imageBox = document.getElementById("image-insertion-box");
     imageBrowser = document.getElementById("browse-image");
-    altInput = document.getElementById("alt-input");
-    titleInput = document.getElementById("title-input");
+    altInput = document.getElementById("alt-input");  
 
     /* link.js */
     cancelLinkButton = document.getElementById("cancel-link");
@@ -1281,6 +1421,14 @@ window.onload = function() {
     shortcutsLine = document.getElementById("shortcuts");
     aboutLine = document.getElementById("about");
 
+    /* online-image.js */
+    cancelOnlineImageButton = document.getElementById("cancel-webimage");
+    onlineImageButton = document.getElementById("webimage-button");
+    onlineImageUrlInput = document.getElementById("webimage-url");
+    onlineImageAltInput = document.getElementById("webimage-alt-input");
+    onlineImageDisplayer = document.getElementById("webimage-insertion-displayer");
+    onlineImageBox = document.getElementById("webimage-insertion-box");
+
     /* recentfiles.js */
     recentButton = document.getElementById("recent-button");
     recentFilesDisplayer = document.getElementById("recent-files-displayer");
@@ -1296,6 +1444,7 @@ window.onload = function() {
     /* viewswitch.js */
     madoFooter = document.getElementById("mado-footer");
     workspace = document.getElementById("workspace");
+    switchCursor = document.getElementById("switch-cursor");
     switchToMD = document.getElementById("switch-md");
     switchToBoth = document.getElementById("switch-both");
     switchToHTML = document.getElementById("switch-html");
@@ -1330,8 +1479,8 @@ window.onload = function() {
                         function(file) {
                             var reader = new FileReader();
                             reader.onload = function(e) { 
-                                markdown.innerText = e.target.result;
-                                markdownSaved = markdown.innerText;
+                                markdown.value = e.target.result;
+                                markdownSaved = markdown.value;
                                 contentChanged();  
                                 nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";     
                                 windowTitle.innerHTML = fileName(fileEntry.fullPath) + " - Mado";                
@@ -1350,36 +1499,49 @@ window.onload = function() {
     newDisplaySize(); // Set the class of the body.
 
     $(newButton).on("click", newWindow);
-    Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
+    Mousetrap.bind(["command+n", "ctrl+n"], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
     
     $(openButton).on("click", openFileButton);
-    Mousetrap.bind(['command+o', 'ctrl+o'], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
+    Mousetrap.bind(["command+o", "ctrl+o"], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
     
     $(saveButton).on("click", saveFile);
-    Mousetrap.bind(['command+s', 'ctrl+s'], function(e) { saveFile(); return false; }); // Ctrl+s = save.
+    Mousetrap.bind(["command+s", "ctrl+s"], function(e) { saveFile(); return false; }); // Ctrl+s = save.
     
     $(saveAsButton).on("click", saveAsFile);
-    Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
+    Mousetrap.bind(["command+shift+s", "ctrl+shift+s"], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
     
     $(exportButton).on("click", exportFileHTML);
 
+    $(printButton).on("click", function() {
+        window.print();
+    });
+
+    Mousetrap.bind(["command+p", "ctrl+p"], function(e) { window.print(); return false; }); // Ctrl+p = print.
+
+    /* drag-and-drop.js */
+    dragAndDropManager = new DnDManager("body", function(data) {
+        openDraggedFile(data.items[0].webkitGetAsEntry());
+    });
+
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
-    charsDiv.style.display = "none"; // On launch we just display the number of words.
+    $(charsDiv).css("display", "none"); // On launch we just display the number of words.
 
     chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
         if (mado["firstLaunch"] == undefined) {
-            markdown.innerHTML = firstMessage;
+            if (markdownSaved == undefined) { // User has not open a file.
+                markdown.value = firstMessage;
+                contentChanged();
+            }
             chrome.storage.local.set({ "firstLaunch" : false });
         }
     });
     $(markdown).focus();
     $(markdown).on("input propertychange", function() {
     	contentChanged();
+        newInputForStats();
     });
-    $(markdown).bind('paste', function(){ // What to do if the user pastes something.
-        pasteContent();   
-    });
+    $(markdown).on("paste", newInputForStats);
     $(markdown).keydown(function(e){
         if (e.keyCode == 9) // The user press tab        
             e.preventDefault();
@@ -1389,7 +1551,7 @@ window.onload = function() {
         if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
             e.preventDefault();
             if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
-                $('#html-conversion').animate({scrollTop:$(e.currentTarget.hash).position().top}, 'slow');
+                $("#html-conversion").scrollTop($(e.currentTarget.hash).position().top);
         }
     });
 
@@ -1410,24 +1572,19 @@ window.onload = function() {
     });
 
     /* help.js */ 
-    Mousetrap.bind(['command+h', 'ctrl+h'], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
+    Mousetrap.bind(["command+h", "ctrl+h"], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
     $(help).keyup(function(e){
         if(e.keyCode == 27) // The user press echap
             $(helpButton).click();
     });
     $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
-    $(resultSwitch1).on("click", function() { switchResult("1"); });
-    $(resultSwitch2).on("click", function() { switchResult("2"); });
-    $(resultSwitch3).on("click", function() { switchResult("3"); });
+    $("#result-switch-1, #result-switch-2, #result-switch-3").on("click", function(e) {
+        switchResult(e.target.id.substr(e.target.id.length - 1));
+    });
+    $("#answer-1, #answer-2, #answer-3, #example-1, #example-2, #example-3").mutate('height', setResultsHeight);  
 
     /* image.js */
-    $(imageButton).on("mousedown", function() {
-        if (linkDisplayer.className == "tool-displayer")
-            cancelLink(); 
-        if (imageDisplayer.className == "tool-displayer hidden")
-             changeContentHighlighted("mado-image");
-    });
 
     $(imageBrowser).on("click", loadImage);
     $(galleriesButton).on("click", chooseGalleries);   
@@ -1441,31 +1598,10 @@ window.onload = function() {
             modifyImage();
     });
 
-    $(titleInput).keydown(function(e){
-        if (e.keyCode == 9) { // The user press tab
-            e.preventDefault();
-            $(altInput).select();
-        }
-    })
-    $(titleInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelImage();
-        else
-            modifyImage();
-    });
-
     $(cancelImageButton).on("click", cancelImage);
-
-    /* link.js */
-    $(linkButton).on("mousedown", function() {
-        if (linkDisplayer.className == "tool-displayer hidden")
-            changeContentHighlighted("mado-link");
-    });
     
-    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
-        changeContentHighlighted("mado-link");
+    /* link.js */
+    Mousetrap.bind(["command+k", "ctrl+k"], function(e) { // Ctrl+k = link.
         $(linkButton).click(); 
         return false; 
     }); 
@@ -1496,19 +1632,61 @@ window.onload = function() {
 
     $(cancelLinkButton).on("click", cancelLink);
 
-    /* More.js */
+    /* more.js */
     $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
     $(qAndALine).on("click", function() { moreWindow("more/qanda.html"); });
     $(shortcutsLine).on("click", function() { moreWindow("more/shortcuts.html"); });
     $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
+    
+    /* online-image.js */
+    $(onlineImageUrlInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+           applyOnlineImage();
+        else if (e.keyCode == 27) // The user press echap
+            cancelOnlineImage();       
+        else
+            modifyOnlineImage();
+    });
 
+    $(onlineImageAltInput).keydown(function(e){
+        if (e.keyCode == 9)  {
+            e.preventDefault();
+            $(onlineImageUrlInput).select();
+        }
+    })
+    $(onlineImageAltInput).keyup(function(e){
+        if (e.keyCode == 13) // The user press enter
+            applyOnlineImage();
+        else if (e.keyCode == 27) // The user press echap
+            cancelOnlineImage();        
+        else
+            modifyOnlineImage();        
+    });
+
+    $(cancelOnlineImageButton).on("click", cancelOnlineImage);
+    
     /* recentfiles.js */
     displayRecentFiles();
+
+    /* responsive.js */
+    if (chrome.app.window.current().getBounds().width < 1600)
+        addTopbarLabels();
+
+    /* scroll.js */
+    $(markdown).on ("scroll", function (e) {
+        if ($(markdown).is(":hover"))
+            asyncScroll("markdown");
+    });
+
+    $(conversionDiv).on ("scroll", function (e) {
+        if ($(conversionDiv).is(":hover"))
+            asyncScroll("HTML");
+    });
 
     /* stats.js */
     if (navigator.onLine)
         initStats();
-
+    
     /* styles.js */
     getStyle();
 
@@ -1518,23 +1696,23 @@ window.onload = function() {
 
     /* viewswitch.js */
     initActivation(); // Initializing the workspace and the switch.
-    setWindowResizing();
 
     // Getting and setting the click event on each of the switch buttons.
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });
     $(switchToBoth).on("click", function() { activate(this.id, "normal"); });
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
-    Mousetrap.bind(['command+alt+left', 'ctrl+alt+left'], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
-    Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { switchShortcuts("left"); return false; }); // Ctrl + -> = to the left.
+    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { switchShortcuts("right"); return false; }); // Ctrl + <- = to the right.
 
     /* window.js */
     determineFrame();
+    lastBounds = chrome.app.window.current().getBounds(); // Set the bounds at launch.
 
     $(quitCloseButton).on("click", quitCloseWindow);
     $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
 
     $(windowClose).on("click", closeWindow);
-    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+    Mousetrap.bind(["command+w", "ctrl+w"], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
 
     $(windowMax).on("click", maximizeWindow);
 
@@ -1590,7 +1768,7 @@ function checkRecentFile (fileNumber) {
 							chrome.fileSystem.restoreEntry(
 								mado["recentFileId" + fileNumber],
 								function (fileToOpen) {
-									if (fileToOpen) // The file is real.
+									if (fileToOpen) // The file still exists.
 										checkRecentFile(fileNumber + 1);				
 									else { // The file is empty or deleted.
 										document.getElementById("recent-" + fileNumber).setAttribute("class", "recent-file deleted"); // Change the class to do the visual effect.
@@ -1772,6 +1950,47 @@ function removeAllFilesInStorage (fileNumber) {
 		}	
 	);
 }
+function addTopbarLabels () {
+	$(exportButton).attr("title", "Export");
+	$(newButton).attr("title", "New");
+    $(openButton).attr("title", "Open");
+    $(printButton).attr("title", "Print");
+    $(recentButton).attr("title", "Recent");
+    $(saveButton).attr("title", "Save");
+    $(saveAsButton).attr("title", "Save as");
+}
+
+function removeTopbarLabels () {
+	$(exportButton).removeAttr("title");
+	$(newButton).removeAttr("title");
+	$(openButton).attr("title");
+    $(printButton).attr("title");
+    $(recentButton).attr("title");
+    $(saveButton).attr("title");
+    $(saveAsButton).attr("title");
+}
+var atTheBottom;
+
+// Si on est tout à la fin et qu'on voit que la hauteur est aggrandie alors on le remet à la fin. 
+
+function asyncScroll (zone, scroll) {
+	if (zone == "markdown")
+		$(conversionDiv).scrollTop(($(markdown).scrollTop() / (markdown.scrollHeight  - markdown.offsetHeight)) * (conversionDiv.scrollHeight - conversionDiv.offsetHeight));
+	else
+		$(markdown).scrollTop(($(conversionDiv).scrollTop() / (conversionDiv.scrollHeight  - conversionDiv.offsetHeight)) * (markdown.scrollHeight - markdown.offsetHeight));
+
+	if ($(markdown).scrollTop() + markdown.offsetHeight == markdown.scrollHeight)
+		atTheBottom = true;
+	else
+		atTheBottom = false;
+}
+
+function toTheBottom () {
+	if (atTheBottom == true) {
+		$(markdown).scrollTop(markdown.scrollHeight - markdown.offsetHeight);
+		$(conversionDiv).scrollTop(conversionDiv.scrollHeight - conversionDiv.offsetHeight);
+	}
+}
 /* The JS to send data to Analytics. */
 
 /* 
@@ -1780,28 +1999,53 @@ function removeAllFilesInStorage (fileNumber) {
 
 var service;
 var tracker;
+var markdownInputs = 0;
+var launchDate = new Date();
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
 	* initStats (): create a new service for Analytics.
+	* newInputForStats (): send a message when the user has put 50 things in the textarea.
+	* sendClosing (): calculate how long the user used this window.
+	* sendEvent (): send an event to analytics.
 	* setTrackingPermission (analyticsService): set the tracking permission.
 */
 
 
 function initStats () {
-    // Initialize the Analytics service object with the name of your app.
-    service = analytics.getService("Mado");
+    service = analytics.getService("Mado"); // Initialize the Analytics service object with the name of your app.
 
     setTrackingPermission();
 
-    // Get a Tracker using your Google Analytics app Tracking ID.
+    /* Get a Tracker using your Google Analytics app Tracking ID. */
     tracker = service.getTracker("UA-45134408-1"); // Need to change for the real ID.
 
-    // Record an "appView" each time the user launches your app or goes to a new
-    // screen within the app.
+    /* Record an "appView" each time the user launches your app or goes to a new screen within the app. */
     tracker.sendAppView("mainWindow");
+}
+
+function newInputForStats () {
+	markdownInputs++;
+	if (markdownInputs % 50 == 0)
+		sendEvent("50 inputs in the textarea");
+}
+
+function sendClosing () {
+	if (service != undefined && tracker != undefined && navigator.onLine)
+		chrome.storage.local.get("analytics",  function(mado) {
+			if (mado["analytics"] != false) 
+				tracker.sendEvent("Window lifetime", "Window has been closed", (parseInt(((new Date()).getTime() - launchDate.getTime()) / 1000 / 60) + ":" + parseInt(((new Date()).getTime() - launchDate.getTime()) / 1000 % 60)).toString());
+		});
+}
+
+function sendEvent (eventName) {
+	if (service != undefined && tracker != undefined && navigator.onLine)
+		chrome.storage.local.get("analytics",  function(mado) {
+			if (mado["analytics"] != false) 
+				tracker.sendEvent(eventName);
+		});
 }
 
 function setTrackingPermission () {
@@ -1814,8 +2058,6 @@ function setTrackingPermission () {
 		}
 	});
 }
-
-
 /* The JS to control Mado's styles. */
 
 /* 
@@ -1839,31 +2081,40 @@ var tramwayRadio; // Tramway style.
 * Resume:
 	* getStyle (): get the storage variable style.
 	* setStyle (newStyleToApply): set the storage variable "style".
+	* setStyleInHTML (newStyleToApply): Disable useless links in HTML and activate the good one.
 */
 
 function getStyle () {
 	chrome.storage.local.get("style",  function(mado) {
 		if (mado["style"] != undefined) {
-			if (mado["style"] == "home") 
-				homeRadio.checked = true;	
-			else if (mado["style"] == "clinic") 
-				clinicRadio.checked = true;	
-			else 
+			if (mado["style"] == "home")
+				homeRadio.checked = true;
+			else if (mado["style"] == "clinic")
+				clinicRadio.checked = true;
+			else
 				tramwayRadio.checked = true;
-
-			$(conversionDiv).attr("class", mado["style"]);			
+			setStyleInHTML(mado["style"]);
 		}
 		else {
 			homeRadio.checked = true;
-			setStyle ("home");
+			setStyle("home");
 		}
 	});
 }
 
 function setStyle (newStyle) {
-	chrome.storage.local.set({ "style" : newStyle }, function () {
-		$(conversionDiv).attr("class", newStyle);
-	});
+	setStyleInHTML(newStyle);
+	chrome.storage.local.set({ "style" : newStyle });
+}
+
+function setStyleInHTML (newStyle) {
+	for (var i = 0; i < document.styleSheets.length; i++)
+		if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
+	    	if (document.styleSheets.item(i).href.indexOf(newStyle) == -1) 
+	    		document.styleSheets.item(i).disabled = true;
+	    	else
+	    		document.styleSheets.item(i).disabled = false;
+		}
 }
 /* This document handles the view switch on the topbar. */
 
@@ -1875,6 +2126,7 @@ function setStyle (newStyle) {
 
 /* HTML shortcuts. */
 var madoFooter; // Mado's footer.
+var switchCursor; // Mado's switch cursor.
 var switchToBoth; // Both switch.
 var switchToHTML; // HTML switch.
 var switchToMD; // Markdown switch.
@@ -1882,8 +2134,7 @@ var workspace; // Getting the main container (workspace).
 
 /* Functions variables. */
 var previousSize; // The previous size of the window.
-var switchButtons = new Array(); // The array for the switch. 
-var windowResizing; // Get the storage variable "resize".
+var switchButtons = []; // The array for the switch.
 
 /*
 * Functions (in alphabetical order).
@@ -1891,7 +2142,6 @@ var windowResizing; // Get the storage variable "resize".
 * Resume:
 	* activate (buttonClicked, stateOfTheClass): handles the behavior of a switch button when it is clicked. The function sets the main container's class name according to the button.
 	* initActivation (): initalize the switch's look on Mado's launch.
-	* setWindowResizing (): set the storage variable "resize".
 	* switchShortcuts (theDirection): change the switch when the user uses a keyboard shortcut.
 */
 
@@ -1904,6 +2154,7 @@ function activate (clickedBtn, classState) {
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
+	switchCursor.className = classState; // Setting the cursor's class name according to the clicked button.
 
 	if (classState == "markdown-view")
 		madoFooter.className = classState;
@@ -1920,17 +2171,6 @@ function initActivation () {
 	}
 
 	previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
-}
-
-function setWindowResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != undefined)			
-			windowResizing = mado["resize"];
-		else {
-			chrome.storage.local.set({ "resize" : true });
-			windowResizing = true;
-		}
-	});
 }
 
 function switchShortcuts (direction) {
@@ -1964,18 +2204,19 @@ function switchShortcuts (direction) {
 var cancelCloseButton; // The "Cancel" button.
 var closeDisplayer; // The div that contains all the close divs.
 var head; // The "head" section of the main app.
+var lastBounds; // This is the last size of the window.
 var markdownSaved; // The last Markdown text saved.
 var quitCloseButton; // The "No, don't save" button.
 var saveQuitCloseButton; // The "Save and exit" button.
 var saveState; // The div who displays if the document is saved or not.
-var stylesheetLink = document.createElement("link"); // Create a "link" node.
+var frameStylesheetLink = document.createElement("link"); // Create a "link" node.
 var windowCloseContainer; // The close container.
 var windowClose; // The close button.
 var windowMax; // The maximize button.
 var windowMin; // The minimize button.
 
-/* Functions variable. */
-var bounds; // This is the variable who stores the bounds when the window is maximised.
+/* Functions variables. */
+var boundsBeforeMaximized;
 
 /*
 * Functions (in alphabetical order).
@@ -1993,8 +2234,8 @@ var bounds; // This is the variable who stores the bounds when the window is max
 */
 
 function checkSaveState () {
-	if (markdown.innerText != "") {
-		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
+	if (markdown.value != "") {
+		if ((markdownSaved == undefined) || (markdown.value != markdownSaved))
 			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "";
@@ -2013,55 +2254,73 @@ function closeWindow () {
 	});
 	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
 		closeDisplayer.className = "visible";
-	else
+	else {
+		sendClosing(); // stats.js
 		chrome.app.window.current().close();
+	}
 }
 
 function determineFrame () {
-	stylesheetLink.setAttribute("rel", "stylesheet");
-	stylesheetLink.setAttribute("type", "text/css");
+	frameStylesheetLink.setAttribute("rel", "stylesheet");
+	frameStylesheetLink.setAttribute("type", "text/css");
 
 	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-mac.css");
+		frameStylesheetLink.setAttribute("href", "css/window-frame-mac.css");
 		windowClose.setAttribute("class", "cta little-icon-mac-close");
 		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
 		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
 	}
-	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-windows.css");
+	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
+		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
 		windowClose.setAttribute("class", "cta little-icon-win-close");
 		windowMax.setAttribute("class", "cta little-icon-win-maximize");
 		windowMin.setAttribute("class", "cta little-icon-win-minimize");
 	}
-	else { // If the user is on another type of computer, redirect to the generic window frame styles.
-		stylesheetLink.setAttribute("href", "css/window-frame-others.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
+	else if (navigator.appVersion.indexOf("Linux") != -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
+		frameStylesheetLink.setAttribute("href", "css/window-frame-linux.css");
+		windowClose.setAttribute("class", "cta little-icon-lin-close");
+		windowMax.setAttribute("class", "cta little-icon-lin-maximize");
+		windowMin.setAttribute("class", "cta little-icon-lin-minimize");
+	}
+	else { // If the user is on another type of computer, redirect to the generic window frame styles (which are primarily Chrome OS's styles).
+		frameStylesheetLink.setAttribute("href", "css/window-frame-chromeos.css");
+		windowClose.setAttribute("class", "cta little-icon-chr-close");
+		windowMax.setAttribute("class", "cta little-icon-chr-maximize");
+		windowMin.setAttribute("class", "cta little-icon-chr-minimize");
 	}
 
-	head.appendChild(stylesheetLink); // Append the link node to the "head" section.
+	head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
 }
 
 function maximizeWindow () {
-	if (navigator.appVersion.indexOf("Win") != -1) { // Windows + Google = bad things.
-		if (! (chrome.app.window.current().getBounds().left == 0  
-			&& chrome.app.window.current().getBounds().top == 0
-			&& chrome.app.window.current().getBounds().width == screen.availWidth
-			&& chrome.app.window.current().getBounds().height == screen.availHeight)
-			&& ! chrome.app.window.current().isMaximized()) {
-			bounds = chrome.app.window.current().getBounds();
-			chrome.app.window.current().setBounds({ left: 0, top: 0, width: screen.availWidth, height: screen.availHeight });
-		}
-		else // Restore the last bounds.
-			chrome.app.window.current().setBounds(bounds);
-	}
-	else {
-		if (! chrome.app.window.current().isMaximized()) { // Maximize.
+	if (navigator.appVersion.indexOf("Win") == -1) {
+		if (! chrome.app.window.current().isMaximized()) // Maximize.
 			chrome.app.window.current().maximize();
-		}
 		else // Restore the last bounds.
 			chrome.app.window.current().restore();
+	}
+	else {
+		if (chrome.app.window.current().getBounds().width < screen.availWidth || 
+			chrome.app.window.current().getBounds().height < screen.availHeight) {
+			boundsBeforeMaximized = chrome.app.window.current().getBounds();
+			chrome.app.window.current().setBounds({
+				left: screen.availLeft, 
+				top: screen.availTop, 
+			 	width: screen.availWidth, 
+			 	height: screen.availHeight 
+			});
+		}
+		else { // Restore the last bounds.
+			if (boundsBeforeMaximized != undefined)
+				chrome.app.window.current().setBounds(boundsBeforeMaximized);
+			else
+				chrome.app.window.current().setBounds({ 
+					left: ((screen.availWidth - Math.round(screen.width * 0.85)) / 2), 
+					top: ((screen.availHeight - Math.round(screen.height * 0.85)) / 2), 
+					width: Math.round(screen.width * 0.85), 
+					height: Math.round(screen.height * 0.85) 
+				});
+		}
 	}
 }
 
@@ -2070,6 +2329,7 @@ function minimizeWindow () {
 }
 
 function quitCloseWindow () {
+	sendClosing(); // stats.js
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
@@ -2087,7 +2347,7 @@ function saveAndQuit () {
 		        }
 		        newRecentFile(fileEntry, "quit");
 		    };
-		    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+		    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 		}, errorHandler);
 }
 
@@ -2109,7 +2369,7 @@ function saveAsAndQuit () {
 				        }
 				        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.	
 				    };
-				    fileWriter.write(new Blob([markdown.innerText], {type: 'plain/text'}));
+				    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
 				}, errorHandler);
 			}
 		}
@@ -2122,3 +2382,23 @@ function saveQuitCloseWindow () {
 	else
 		saveAndQuit();
 }
+
+/*
+* Chrome methods.
+*
+* Resume:
+	* chrome.app.window.current().onBoundsChanged.addListener (): what to do when the window is resized or moved.
+*/
+
+chrome.app.window.current().onBoundsChanged.addListener(function () {
+	if (chrome.app.window.current().getBounds().width < 1160 && switchToBoth.className == "switch-button activated")
+		switchToMD.click(); // Markdown is set as default view.
+	else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) 
+		switchToBoth.click(); // viewswitch.js
+
+	if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600)
+		addTopbarLabels();
+	else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600)
+		removeTopbarLabels();
+	lastBounds = chrome.app.window.current().getBounds();
+});

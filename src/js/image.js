@@ -15,7 +15,6 @@ var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
 var imageDiv; // The div with id="mado-image".
-var titleInput; // The input for the title of the image
 
 /* Functions variables. 
 * startSelect, endSelect, newStarSelect, newEndSelect are created in link.js.
@@ -27,9 +26,12 @@ var image; // The content who is added.
 var imageLoaded; // The path of the image selected.
 var imagePath; // The path of the image.
 var imagePosition = 0; // Used to don't keep on the same part of the document.
-var imagesArray = new Array(); // All the images on the file.
+var imagesArray = []; // All the images on the file.
 var imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
 var rightFile; // If false the JS is looking for an image.
+var researching; // If we're searching an image.
+var imagePathsArray = [];
+var imagePositionInArray;
 
 /*
 * Functions (in alphabetical order).
@@ -45,10 +47,12 @@ var rightFile; // If false the JS is looking for an image.
 	* getImage (theCorrectImage): what to do when the image is find on the user's PC.
 	* getImages (): search the image in the gallery.
 	* loadImage (): let the user choose an image when he clicks on the button.
+	* loadOnlineImage (): get the external image with a request.
 	* modifyImage (): enables the realtime modification of an image.
-	* update (): update the list of folders and analyse the files in folders.
 	* setBrowserText (imagePath): set the text in the button with the image's path.
 	* setImageInputs (): recognizes when the selected text is an image and set the inputs in consequence.
+	* update (): update the list of folders and analyse the files in folders.
+	* updateOnline(): apply the new URL of the external image. 
 */
 
 function applyImage () {
@@ -58,20 +62,18 @@ function applyImage () {
 		altInput.removeAttribute("class");
 	}
 	else if (imageLoaded != undefined){ // An image is obligatory
-		modifyImage();	
 		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		markdown.focus();
+		$(markdown).setRange(startSelect, newEndSelect);
 	}
 }
 
 function cancelImage () {
-	if (imageDiv != undefined)
-		imageDiv.innerText = initialText;		
-	imageDisplayer.className = "tool-displayer hidden";
-	selectElementContents(imageDiv);
-	restoreSelection("mado-image");
+	markdown.value = markdown.value.substring(0, startSelect) + initialText + markdown.value.substring(newEndSelect, markdown.length);
 	contentChanged();
+	imageDisplayer.className = "tool-displayer hidden";	
+	markdown.focus();
+	$(markdown).setRange(startSelect, endSelect);
 }
 
 function chooseGalleries () {
@@ -86,38 +88,54 @@ function chromeUpdate (results) {
 function displayImages () {
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
 		imagePosition = tempConversion.indexOf("<img src=\"", imagePosition) + 10;
-		rightFile = false;
+		researching = false;
 		imagePath = tempConversion.substring(imagePosition, tempConversion.indexOf("\"", imagePosition));
+		imagePathsArray.length = 0; // Reset
+	   	for(var i = 0; i < imagesArray.length; i++) { // Put all the names 
+	      	imagePathsArray.push(imagesArray[i][0]);
+	   	}
+	   	imagePositionInArray = imagePathsArray.indexOf(imagePath);
 
-		if(imagePath.substring(0, 4) != "data") { // The path is not already translated (if the same image is in the file twice).
-			if (imagesArray.length > 0){ // Files are already stored.
-				for (var i = 0; i < imagesArray.length; i++) { // Search if the image is in the array.
-					if(imagesArray[i][0] == imagePath) { // The file is already here.
-						tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), imagesArray[i][1]); // Replace the path.		
-		    			imagesArray[i][2] = true; // The file has been used.
-		    			if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-		    				displayImages();
-		    				break;
-		    			}
-		    			else
-	                     	endOfConversion();
-		        	}
-		        	else if (i == imagesArray.length - 1) // The file isn't here.   	
-		    			update(); // Get the ID of the file.
-				}       			
+		if (imgFormats.indexOf(imagePath.substr(imagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {		
+			if (imagePath.substring(0, 7) == "http://" || imagePath.substring(0, 8) == "https://") {
+				if (navigator.onLine) {
+					if (imagePositionInArray > -1) { // Image is already stored.
+						tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
+		    			imagesArray[imagePositionInArray][2] = true; // The file has been used.	
+					}
+					else { // The array doesn't exist yet.
+						researching	= true;
+						updateOnline(imagePath); // Get the ID of the file.   	
+					}
+				}
+				else
+					tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Internet not available</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);			
+	        }
+	        else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") { // Not already translated
+				if (imagePositionInArray > -1) { // Image is already stored.
+					tempConversion = tempConversion.substring(0, imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
+	    			imagesArray[imagePositionInArray][2] = true; // The file has been used.
+	        	}
+				else { // The image is not in the array.
+					researching	= true;
+					rightFile = false;
+					update(); // Get the ID of the file.
+				}
 			}
-			else // The array doesn't exist yet.
-				update(); // Get the ID of the file.   	
+			if (! researching) // We're not searching an image in the PC or the web.
+				displayImages();
 		}
-		else
+		else if (imagePath.substring(0, 5) != "data:" && imagePath.substring(0, 5) != "blob:") {
+			tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">This is not an image</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);;
 			displayImages();
+		}
 	}
 	else
 		endOfConversion();
 }
 
 function fileNotFound () {
-	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), "img/nofile.png"); 
+	tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + fileName(imagePath.replace(/\\/g, "/")) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
 	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
  		displayImages();
  	else // The end.
@@ -130,9 +148,8 @@ function galleryAnalysis (index) {
 			currentGallery = index;
 			galleriesList.forEach(
 				function(item, indx, arr) { // For each gallery.
-		     		if (indx == index && imagePath != undefined && rightFile == false) {// If we're looking for a file.  
+		     		if (indx == index && imagePath != undefined && rightFile == false) // If we're looking for a file.  
 		     			item.root.createReader().readEntries(getImages); // Get the images of the folder.
-		     		}
 		  		}
 			)
 		}
@@ -151,7 +168,7 @@ function getImage (entryPath) {
 			var reader = new FileReader();
           	reader.onloadend = function(e) { // We have the file (.result).
           		imagesArray.push([imagePath, this.result, true]); // Add a new line.
-             	tempConversion = tempConversion.replace(new RegExp(imagePath, "g"), this.result);  
+          		tempConversion = tempConversion.substring(0, imagePosition) + this.result + tempConversion.substring(imagePosition + imagePath.length); // Replace the path.	
              	rightFile = true;
              	if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
              		displayImages();
@@ -198,14 +215,15 @@ function loadImage () {
 }
 
 function modifyImage () {
-	if (titleInput.value == "")
-		image = "![" + altInput.value + "](" + imageLoaded + ')';
-	else 
-		image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
+	image = "![" + altInput.value + "](" + imageLoaded + ')';
 	if (imageDiv != undefined)
 		imageDiv.innerText = image;		
 	else
-		$(markdown).innerText = $(markdown).innerText + image;		
+		$(markdown).innerText = $(markdown).innerText + image;	
+	if (newEndSelect == undefined)
+		newEndSelect = endSelect;	
+	markdown.value = markdown.value.substring(0, startSelect) + image + markdown.value.substring(newEndSelect, markdown.length);
+	newEndSelect = (markdown.value.substring(0, startSelect) + image).length;
 	contentChanged();
 }
 
@@ -216,19 +234,20 @@ function setImageBrowserText (path) {
 }
 
 function setImageInputs () {
-	initialText = imageDiv.innerText;
-	if (/!\[.*\]\(.*\)/.test(initialText)) { // An image
-		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) {// Optional title is here.
-			titleInput.value = initialText.match(/".*"\)/)[0].substring(1, initialText.match(/".*"\)/)[0].length - 2); 
+	initialText = markdown.value.substring(startSelect, endSelect);
+	if (/!\[.*\]\(.*\)/.test(initialText) &&
+		initialText[0] == '!' &&
+		initialText[initialText.length - 1] == ')') {
+		if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) // Optional title is here.
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
-		}
 		else
 			imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
 		setImageBrowserText(fileName(imageLoaded));
 		altInput.value = initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1); 
 	}
 	else
-		altInput.value = initialText;	
+		altInput.value = initialText;
+	$(markdown).setRange(startSelect, newEndSelect);
 }
 
 function update () {	

@@ -4,7 +4,7 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .home ul > li:before {
+#html-conversion ul > li:before {
 	/* Box-model */
 	width: 2em;
 
@@ -13,7 +13,7 @@
 }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .home ol > li:before {
+#html-conversion ol > li:before {
 	/* Box-model */
 	width: 2em;
 
@@ -27,7 +27,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type .home blockquote {
+#html-conversion blockquote {
 	/* Positioning */
 	margin-bottom: 0.7em;
 	margin-left: auto;

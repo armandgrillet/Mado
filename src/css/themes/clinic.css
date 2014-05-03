@@ -3,54 +3,7 @@
 /* -------
 	Fonts
    ------- */
-/* Bariol Regular */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	src: url('../../fonts/bariol_regular.ttf');
-}
-
-/* Bariol Bold */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-weight: bold;
-	src: url('../../fonts/bariol_bold.ttf');
-}
-
-/* Bariol Light */
-@font-face {
-	/* Typography */
-	font-family: BariolLight;
-	src: url('../../fonts/bariol_light.ttf');
-}
-
-/* Bariol Italic */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-style: italic;
-	src: url('../../fonts/bariol_regular_italic.ttf');
-}
-
-/* Bariol Bold Italic */
-@font-face {
-	/* Typography */
-	font-family: Bariol;
-	font-style: italic;
-	font-weight: bold;
-	src: url('../../fonts/bariol_bold_italic.ttf');
-}
-
-/* Bariol Light Italic */
-@font-face {
-	/* Typography */
-	font-family: BariolLight;
-	font-style: italic;
-	src: url('../../fonts/bariol_light_italic.ttf');
-}
-
-.sheet:last-of-type .clinic {
+#html-conversion {
 	/* Typography */
 	font-family: Bariol, sans-serif;
 	font-size: 1.1em;
@@ -61,9 +14,9 @@
 /* ------------
 	Paragraphs
    ------------ */
-.sheet:last-of-type p,
-.sheet:last-of-type ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
-.sheet:last-of-type ul {
+#html-conversion p,
+#html-conversion ol, /* Organized and unorganized lists follow the same rule : a blank space at the bottom */
+#html-conversion ul {
 	/* Box-model */
 	padding-bottom: 0.7em;
 }
@@ -71,13 +24,13 @@
 /* --------
 	Titles
    -------- */
-.sheet:last-of-type .clinic h1,
-.sheet:last-of-type .clinic h2 {
+#html-conversion h1,
+#html-conversion h2 {
 	/* Typography */
 	font-family: BariolLight;
 }
 
-.sheet:last-of-type .clinic h1 {
+#html-conversion h1 {
 	/* Box-model */
 	padding: 0.6em 0 0.3em;
 
@@ -85,7 +38,7 @@
 	font-size: 3em;
 }
 
-.sheet:last-of-type .clinic h2 {
+#html-conversion h2 {
 	/* Box-model */
 	padding: 0.7em 0 0.5em;
 
@@ -93,7 +46,7 @@
 	font-size: 2em;
 }
 
-.sheet:last-of-type .clinic h3 {
+#html-conversion h3 {
 	/* Box-model */
 	padding: 0.75em 0;
 
@@ -102,7 +55,7 @@
 	font-size: 1.25em;
 }
 
-.sheet:last-of-type .clinic h4 {
+#html-conversion h4 {
 	/* Box-model */
 	padding: 0.7em 0;
 
@@ -110,7 +63,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .clinic h5 {
+#html-conversion h5 {
 	/* Box-model */
 	padding-bottom: 0.85em;
 
@@ -119,7 +72,7 @@
 	font-weight: bold;
 }
 
-.sheet:last-of-type .clinic h6 {
+#html-conversion h6 {
 	/* Typography */
 	font-size: 0.8em;
 	font-weight: bold;
@@ -129,14 +82,14 @@
 	Lists
    ------- */
 /* UNORDERED LISTS */
-.sheet:last-of-type .clinic ul > li { padding-left: 2em; }
+#html-conversion ul > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ul > li:before { padding-left: 0; }
+#html-conversion ul > li:before { padding-left: 0; }
 
 /* ORDERED LISTS */
-.sheet:last-of-type .clinic ol > li { padding-left: 2em; }
+#html-conversion ol > li { padding-left: 2em; }
 
-.sheet:last-of-type .clinic ol > li:before {
+#html-conversion ol > li:before {
 	/* Box-model */
 	padding-left: 0;
 
@@ -149,13 +102,13 @@
 }
 
 /* Prevent empty list items to be displayed without a height */
-.sheet:last-of-type .clinic li:empty { height: 1.5em; }
+#html-conversion li:empty { height: 1.5em; }
 
 /* SUB-LISTS */
-.sheet:last-of-type .clinic ol ol,
-.sheet:last-of-type .clinic ol ul,
-.sheet:last-of-type .clinic ul ul,
-.sheet:last-of-type .clinic ul ol {
+#html-conversion ol ol,
+#html-conversion ol ul,
+#html-conversion ul ul,
+#html-conversion ul ol {
 	/* Box-model */
 	padding-bottom: 0;
 }
@@ -163,7 +116,7 @@
 /* -------------
 	Blockquotes
    ------------- */
-.sheet:last-of-type .clinic blockquote {
+#html-conversion blockquote {
 	/* Positioning */
 	margin-bottom: 0.7em;
 
@@ -175,15 +128,32 @@
 	border-left: none;
 }
 
+#html-conversion blockquote em { font-style: normal; }
+
+/* --------
+	Tables
+   -------- */
+#html-conversion td,
+#html-conversion th {
+	/* Box-model */
+	padding: 0.6em;
+
+	/* Visual */
+	border: 1px solid #dfdfdf;
+}
+
+/* Zebra stripes for the table's body */
+#html-conversion tbody tr:nth-child(2n+1) { background-color: #f3f3f3; }
+
 /* ------------------
 	Horizontal rules
    ------------------ */
-.sheet:last-of-type .clinic hr { margin: 0.7em auto 1.5em; }
+#html-conversion hr { margin: 0.7em auto 1.5em; }
 
 /* ------
 	Code
    ------ */
-.sheet:last-of-type .clinic code {
+#html-conversion code {
 	/* Typography */
 	font-size: 0.85em;
 	line-height: 1.45em;

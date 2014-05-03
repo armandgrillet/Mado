@@ -52,13 +52,13 @@ function getDisplaySize () {
 } 
 */
 
-function getResizing () {
-	chrome.storage.local.get("resize",  function(mado) {
-		if (mado["resize"] != false) {
-			viewOnResize.checked = true;
+/*function getHighlighting () {
+	chrome.storage.local.get("highlighting",  function(mado) {
+		if (mado["highlighting"] != false) {
+			highlightingCheck.checked = true;
 		}
 	});
-}
+}*/
 
 function getSyntax () {
 	chrome.storage.local.get("gfm",  function(mado) {
@@ -88,12 +88,12 @@ function setDisplaySize (newValue) {
 }
 */
 
-function setResizing () {
-	if (viewOnResize.checked)
-		chrome.storage.local.set({ "resize" : true });
+/*function setHighlighting () {
+	if (highlightingCheck.checked)
+		chrome.storage.local.set({ "highlighting" : true });
 	else 
-		chrome.storage.local.set({ "resize" : false });
-}
+		chrome.storage.local.set({ "highlighting" : false });
+}*/
 
 function setSyntax () {
 	if (markdownSyntax.checked)

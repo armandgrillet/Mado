@@ -17,25 +17,33 @@ $(document).click( function(e) {
 	}
 
 	/* image.js */
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { 
+	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") {
 		/* Reset. */
 		imageBrowser.innerHTML = "Choose an image";
 		altInput.value = "";
-		titleInput.value = "";
+		initialText = markdown.value;
 		imageLoaded = undefined;
 
-		if ($(markdown).find("#mado-image").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-image");
-		}
 		imageDisplayer.className = "tool-displayer";
-		imageDiv = document.getElementById("mado-image");
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-		selectElementContents(imageDiv);
-		restoreSelection("mado-image");
+		if ($(e.target).closest(document.getElementById("insert-image")).length)
+			applyImage();
+		else
+			imageDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* link.js */
@@ -43,20 +51,29 @@ $(document).click( function(e) {
 		/* Reset. */
 		urlInput.value = "";
 		hypertextInput.value = "";
+		initialText = markdown.value;
 		
-		if ($(markdown).find("#mado-link").length == 0) { // If the focus is not yet on the contenteditable.
-			markdown.focus();
-			changeContentHighlighted("mado-link");
-		}
 		linkDisplayer.className = "tool-displayer";
-		linkDiv = document.getElementById("mado-link");
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
 		setLinkInputs();
-		urlInput.focus();			
+		urlInput.focus();		
 	}
-	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {
-		linkDisplayer.className = "tool-displayer hidden";
-		selectElementContents(linkDiv);
-		restoreSelection("mado-link");
+	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {	
+		if ($(e.target).closest(document.getElementById("insert-link")).length)
+			applyLink();
+		else
+			linkDisplayer.className = "tool-displayer hidden";
 	}
 
 	/* more.js */
@@ -66,6 +83,37 @@ $(document).click( function(e) {
 	else if (moreDisplayer.className != "hidden" && ! $(e.target).closest(moreBox).length)
 		moreDisplayer.className = "hidden";
 
+	/* online-image.js */
+	if ($(e.target).closest(onlineImageButton).length && onlineImageDisplayer.className == "tool-displayer hidden") {
+		onlineImageDisplayer.className = "tool-displayer";
+		/* Reset. */
+		onlineImageUrlInput.value = "";
+		onlineImageAltInput.value = "";
+		initialText = markdown.value;
+		
+		onlineImageDisplayer.className = "tool-displayer";
+		if (markdown.selectionStart != markdown.selectionEnd
+			|| $(markdown).is(':focus')) {
+			startSelect = markdown.selectionStart;
+			endSelect = markdown.selectionEnd;
+		}
+		else {
+			startSelect = markdown.value.length;
+			endSelect = markdown.value.length;
+		}
+		if (startSelect != endSelect)
+			markdown.setSelectionRange(startSelect, endSelect);
+		newEndSelect = endSelect;
+		setOnlineImageInputs();
+		onlineImageUrlInput.focus();
+	}
+	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageDisplayer).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
+		if ($(e.target).closest(document.getElementById("insert-webimage")).length)
+			applyOnlineImage();
+		else
+			onlineImageDisplayer.className = "tool-displayer hidden";
+	}
+	
 	/* recentfiles.js */
 	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
 		displayRecentFiles(); // If the user remove something from another window.
@@ -78,7 +126,7 @@ $(document).click( function(e) {
 	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
 		stylesDisplayer.className = "tool-displayer";
 	}
-	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)		
+	else if (stylesDisplayer.className != "tool-displayer hidden" && ! $(e.target).closest(stylesDisplayer).length)
 		stylesDisplayer.className = "tool-displayer hidden";
 
 	/* window.js */
