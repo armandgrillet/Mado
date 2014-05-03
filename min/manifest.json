@@ -6,12 +6,13 @@
       		]
     	}
   	},
+    "default_locale": "en",
   	"manifest_version": 2,
-  	"name": "Mado",
-  	"version": "0.2",
+  	"name": "__MSG_appName__",
+  	"version": "0.2.0.1",
 
     "author": "A+A",
-  	"description": "Mado is a Markdown editor application. You can use it to take notes, write blog posts or edit documents.",
+  	"description": "__MSG_appDesc__",
   	"file_handlers": {
 		"text": {
         	"extensions": [
