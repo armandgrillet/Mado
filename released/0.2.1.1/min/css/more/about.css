@@ -1,3 +1,0 @@
-/* Property of A+A (juridically known as Allan Rope and Armand Grillet). ALL RIGHTS RESERVED.
-See our Terms of Service in the "About" section for further information. */
-ul li{position:relative;padding-left:1.3em}ul li:before{position:absolute;top:0;left:0;display:block;width:1.3em;content:"\2022"}.about-logo{margin:10px auto;display:block}.tos{font-size:.75em;line-height:1.35em}.tos p{padding-bottom:.65em}.tos ol{counter-reset:list}.tos ol li{position:relative;padding-left:1.35em;counter-increment:list}.tos ol li:before{position:absolute;top:0;left:0;display:block;width:1.35em;content:counter(list)}.tos sup{font-size:.65em}
