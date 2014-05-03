@@ -47,15 +47,3 @@ function setStyle (newStyle) {
 		$(conversionDiv).attr("class", newStyle);
 	});
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) {
-	if ($(e.target).closest(stylesButton).length && stylesDisplayer.className == "tool-displayer hidden") {
-		stylesDisplayer.className = "tool-displayer";
-	}
-	else if (! $(e.target).closest(stylesDisplayer).length)		
-		stylesDisplayer.className = "tool-displayer hidden";
-});

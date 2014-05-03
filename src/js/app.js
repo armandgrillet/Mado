@@ -1,21 +1,24 @@
 /* The JS to control the scripts between Mado and the computer. */
 
 /* 
-* Variable. 
+* Variables (in alphabetical order). 
 */
 
 var fileEntry; // This is the variable who stores the file opened.
+var lastWidth; // This is the last zier of the window.
 
 /*
 * Functions (in alphabetical order).
 *
 * Resume:
+	* closeWindow(): what to do when the window is closed.
 	* errorHandler (): what to do if the users tries to open a removed file.
 	* exportFileHtml (): let the user export its file in HTML.
 	* string fileName (entirePath): return a string who is just the name of the file manipulated (with the extension).
+	* string minFileName (entirePath): return a string who is just the name of the file manipulated (without the extension).
 	* moreWindow (moreChoice): open the correct window when the user clicks on an element of the "More" dropdown.
 	* newDisplaySize (): what to do when the user changes the display size on the options.
-	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's textarea).
+	* newWindow (): open an empty new window, useful for many things (e.g. open a document when you have already something on the first windows's markdown).
 	* openFile (theFile): all the scripts to open correctly a file, used when the user clicks on "Open" or when he clicks on a recent file.
 	* openFileButton (): open a window to choose a file when the user clicks on "Open".
 	* saveAsFile (): what to do when the user clicks on "Save As".
@@ -31,11 +34,11 @@ function errorHandler() {
 }
 
 function exportFileHTML () {
-	marked(textarea.value, function (err, content) {
+	marked(markdown.innerText, function (err, content) {
 		chrome.fileSystem.chooseEntry(
 			{
 				type: "saveFile", 
-				suggestedName: "document.html"
+				suggestedName: minFileName(nameDiv.innerHTML) + ".html"
 			}, 
 			function(exportedFile) {
 				if (exportedFile) {
@@ -61,7 +64,11 @@ function fileName (path) {
 	return path.substring(path.lastIndexOf('/') + 1); 
 }
 
-function moreWindow(choice) {
+function minFileName (path) {
+	return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+}
+
+function moreWindow (choice) {
 	chrome.app.window.create(
 		choice, 
 		{
@@ -101,7 +108,7 @@ function newDisplaySize () {
 }
 
 function newWindow () {
-	if (textarea.value.length > 0) {
+	if (markdown.innerText.length > 0) {
 		chrome.app.window.create(
 			"mado.html", 
 			{
@@ -111,6 +118,7 @@ function newWindow () {
 			      	width: window.innerWidth,
 			      	height: window.innerHeight
 			    }, 
+			    frame: "none",
 			    minWidth: theMinWidth(), 
 				minHeight: 240
 		  	}
@@ -123,7 +131,7 @@ function openFile(fileToOpen) {
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (textarea.value != "") {// Something is already in the textarea, Mado opens a new window. 
+	 			if (markdown.innerText != "") {// Something is already in the markdown, Mado opens a new window. 
 	 				chrome.storage.local.set(
 		 				{
 		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
@@ -132,14 +140,14 @@ function openFile(fileToOpen) {
 	 				);
  				}
 	 			else {
-		 			textarea.value = e.target.result; // Display the file content.	
+		 			markdown.innerText = e.target.result; // Display the file content.	
 	 			 			
 		 			fileEntry = fileToOpen; // For save.
 
 		 			// For the footer.
-		 			markdownSaved = e.target.result;
+		 			markdownSaved = markdown.innerText;
 		 			conversion();
-		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;|";
+		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 	 			}
 		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
 	 		};
@@ -178,20 +186,21 @@ function saveAsFile () {
 					function(writer) {
 				 		writer.write(
 				 			new Blob(
-					 			[textarea.value],
+					 			[markdown.innerText],
 								{
 									type: "text/plain"
 								}
 							)
 						); 						
 						fileEntry = savedFile; // Save without asking the file.
+						newRecentFile(fileEntry); // Update the local storage, the file opened is now on top.
 
 						// Footer
-						markdownSaved = textarea.value;
+						markdownSaved = markdown.innerText;
 						checkSaveState();
-						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+						nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 
-						newRecentFile(savedFile); // Update the local storage, the file opened is now on top.
+						
 				 	}, 
 				errorHandler);
 			}
@@ -200,23 +209,25 @@ function saveAsFile () {
 }
 
 function saveFile () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;|") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
 		saveAsFile();
 	else { // If we have already loaded the file.
 		fileEntry.createWriter(
 			function(writer) {
 		 		writer.write(
 		 			new Blob(
-			 			[textarea.value],
+			 			[markdown.innerText],
 						{
 							type: "text/plain"
 						}
 					)
 				); 
+				newRecentFile(fileEntry); // Update the position of the file saved.
+
 				// Footer
-				markdownSaved = textarea.value;
+				markdownSaved = markdown.innerText;
 				checkSaveState();
-				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;|";
+				nameDiv.innerHTML = fileName(savedFile.fullPath) + "&nbsp;-";
 		 	}, 
 		errorHandler);
 	}
@@ -243,28 +254,21 @@ function theMinWidth () {
 chrome.app.window.current().onBoundsChanged.addListener(function () {
 	if (window.innerWidth < 1366 && switchToBoth.className == "switch-button activated")
 		switchToMD.click(); // Markdown is set as default view.
-	else 
-		chrome.storage.local.get("lastWidth", function (mado) {
-			if (window.innerWidth >= 1366 && mado["lastWidth"] < 1366) 
-				if (windowResizing)
-					switchToBoth.click(); // viewswitch.js
-		});
-	chrome.storage.local.set({"lastX" : window.screenX, "lastY" : window.screenY, "lastWidth" : window.innerWidth, "lastHeight" : window.innerHeight });
+	else if (window.innerWidth >= 1366 && lastWidth < 1366 && windowResizing) 
+		switchToBoth.click(); // viewswitch.js
+
+	lastWidth = window.innerWidth;
 });
 
-chrome.storage.onChanged.addListener(function(changes, namespace) { // What to do when a storage value is changed.
+chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
-        if (key == "gfm")
-            setEditorSyntax(); // editor.js
-        else if (key == "resize")
-            setWindowResizing(); // viewswitch.js 
+   		if (key == "analytics")
+            setTrackingPermission(); // stats.js 
         else if (key == "displaySize")
             newDisplaySize(); // app.js 
-        else if (key == "analytics")
-            setTrackingPermission(); // stats.js 
+        else if (key == "gfm")
+            setEditorSyntax(); // editor.js
+        else if (key == "resize")
+            setWindowResizing(); // viewswitch.js         
     }
 });
-
-
-
-

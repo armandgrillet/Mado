@@ -15,7 +15,8 @@ window.onload = function() {
     
     /* editor.js */
     conversionDiv = document.getElementById("html-conversion");
-    textarea = document.getElementById("markdown");   
+    markdown = document.getElementById("markdown");   
+    pasteZone = document.getElementById("paste-zone");
     
     /* footer.js */
     charsDiv = document.getElementById("character-nb");
@@ -79,6 +80,17 @@ window.onload = function() {
     switchToHTML = document.getElementById("switch-html");
     switchButtons.push(switchToMD, switchToBoth, switchToHTML); // Wrapping the switch buttons in an array.
 
+    /* window.js */
+    cancelCloseButton = document.getElementById("cancel"); 
+    closeDisplayer = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
+    head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
+    quitCloseButton = document.getElementById("quit");
+    saveQuitCloseButton = document.getElementById("save-quit");
+    windowCloseContainer = document.getElementById("window-close");
+    windowClose = document.getElementById("window-close-button");
+    windowMax = document.getElementById("window-maximize");
+    windowMin = document.getElementById("window-minimize");
+
     /*
     * Functions (JS files in alphabetical order).
     */
@@ -91,15 +103,15 @@ window.onload = function() {
                 function (theFileEntry) {
                     fileEntry = theFileEntry;
                     chrome.storage.local.remove("tempFileEntry");
-
-                    nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;|";
+    
                     fileEntry.file(
                         function(file) {
                             var reader = new FileReader();
                             reader.onload = function(e) { 
-                                textarea.value = e.target.result;
-                                markdownSaved = e.target.result;
-                                conversion();                       
+                                markdown.innerText = e.target.result;
+                                markdownSaved = markdown.innerText;
+                                conversion();  
+                                nameDiv.innerHTML = fileName(fileEntry.fullPath) + "&nbsp;-";                     
                             };
                             reader.readAsText(file);
                         },
@@ -116,19 +128,31 @@ window.onload = function() {
 
     $(newButton).on("click", newWindow);
     Mousetrap.bind(['command+n', 'ctrl+n'], function(e) { newWindow(); return false; }); // Ctrl+n = new window.
+    
     $(openButton).on("click", openFileButton);
     Mousetrap.bind(['command+o', 'ctrl+o'], function(e) { openFileButton(); return false; }); // Ctrl+o = open.
+    
     $(saveButton).on("click", saveFile);
     Mousetrap.bind(['command+s', 'ctrl+s'], function(e) { saveFile(); return false; }); // Ctrl+s = save.
+    
     $(saveAsButton).on("click", saveAsFile);
     Mousetrap.bind(['command+shift+s', 'ctrl+shift+s'], function(e) { saveAsFile(); return false; }); // Ctrl+shift+s = save as.
+    
     $(exportButton).on("click", exportFileHTML);
 
     /* editor.js */    
     setEditorSyntax(); // A conversion is made when the window is opened.
     charsDiv.style.display = "none"; // On launch we just display the number of words.
 
-    $(textarea).on("input propertychange", conversion);
+    $(markdown).focus();
+    $(markdown).on("input propertychange", conversion);
+    $(markdown).bind('paste', function(){ // What to do if the user pastes something.
+        pasteContent();   
+    });
+    $(markdown).keydown(function(e){
+        if (e.keyCode == 9) // The user press tab        
+            e.preventDefault();
+    });  
 
     /* footer.js */
     $(charsDiv).on("click", counterSelection);
@@ -147,43 +171,66 @@ window.onload = function() {
     $(resultSwitch3).on("click", function() { switchResult("3"); });
 
     /* image.js */
+    $(imageButton).on("mousedown", function() {
+        changeContentHighlighted("mado-image");
+    });
+
     $(imageBrowser).on("click", loadImage);
-    $(galleriesButton).on("click", chooseGalleries);
+    $(galleriesButton).on("click", chooseGalleries);   
+
     $(altInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
            applyImage();
+        else if (e.keyCode == 27) // The user press echap
+            $(imageButton).click();
     });
+
+    $(titleInput).keydown(function(e){
+        if (e.keyCode == 9) { // The user press tab
+            e.preventDefault();
+            $(altInput).select();
+        }
+    })
     $(titleInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
             applyImage();
-    });
-    $(altInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
+        else if (e.keyCode == 27) // The user press echap
             $(imageButton).click();
     });
-    $(titleInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(imageButton).click();
+
+    /* link.js */
+    $(linkButton).on("mousedown", function() {
+        changeContentHighlighted("mado-link");
     });
     
-    /* link.js */
-    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { $(linkButton).click(); return false; }); // Ctrl+k = link.
+    Mousetrap.bind(['command+k', 'ctrl+k'], function(e) { // Ctrl+k = link.
+        changeContentHighlighted("mado-link");
+        $(linkButton).click(); 
+        return false; 
+    }); 
 
     $(urlInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
            applyLink();
+        else if (e.keyCode == 27) // The user press echap
+            $(linkButton).click();       
+        else
+            modifyLink();
     });
+
+    $(hypertextInput).keydown(function(e){
+        if (e.keyCode == 9)  {
+            e.preventDefault();
+            $(urlInput).select();
+        }
+    })
     $(hypertextInput).keyup(function(e){
-        if(e.keyCode == 13) // The user press enter
+        if (e.keyCode == 13) // The user press enter
             applyLink();
-    });
-    $(urlInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(linkButton).click();
-    });
-    $(hypertextInput).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
-            $(linkButton).click();
+        else if (e.keyCode == 27) // The user press echap
+            $(linkButton).click();        
+        else
+            modifyLink();        
     });
 
     /* More.js */
@@ -196,6 +243,7 @@ window.onload = function() {
     displayRecentFiles();
     
     /* stats.js */
+    
     if (navigator.onLine)
         initStats();
 
@@ -216,4 +264,17 @@ window.onload = function() {
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
     Mousetrap.bind(['command+alt+left', 'ctrl+alt+left'], function(e) { switchShortcuts("left"); return false; }); // Ctrl+k = link.
     Mousetrap.bind(['command+alt+right', 'ctrl+alt+right'], function(e) { switchShortcuts("right"); return false; }); // Ctrl+k = link.
+
+    /* window.js */
+    determineFrame();
+
+    $(quitCloseButton).on("click", quitCloseWindow);
+    $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
+
+    $(windowClose).on("click", closeWindow);
+    Mousetrap.bind(['command+w', 'ctrl+w'], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+
+    $(windowMax).on("click", maximizeWindow);
+
+    $(windowMin).on("click", minimizeWindow);    
 }

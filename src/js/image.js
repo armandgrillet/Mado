@@ -13,6 +13,7 @@ var imageButton; // The "Image" button.
 var imageBox; // The clickable zone of the image insertion tool.
 var imageBrowser; // The button to choose an image.
 var imageDisplayer; // The div that displays or not the image insertion tool.
+var imageDiv; // The div with id="mado-image".
 var imageStatus; // The div to display the image path.
 var titleInput; // The input for the title of the image
 
@@ -35,6 +36,7 @@ var rightFile; // If false the JS is looking for an image.
 *
 * Resume:
 	* applyImage (): what to do when the user press enter after choosing an image.
+	* cancelImage (): what to do if the user press elsewhere the image container when he was adding an image.
 	* chooseGalleries (): open a pop-up to let the user chooses his galleries.
 	* chromeUpdate (newGalleries): set the galleries to be used in getImages().
 	* displayImages (): find the images on the document and display the correct corresponding data.
@@ -54,15 +56,23 @@ function applyImage () {
 			image = "![" + altInput.value + "](" + imageLoaded + ')';
 		else 
 			image = "![" + altInput.value + "](" + imageLoaded + " \"" + titleInput.value + "\")";
-
-		newStartSelect = (textarea.value.slice(0, startSelect)).length;
-		newEndSelect = (textarea.value.slice(0, startSelect) + image).length;
-		textarea.value = textarea.value.slice(0, startSelect) + image + textarea.value.slice(endSelect, textarea.length);
-		$(textarea).click();
-		textarea.focus();
-		textarea.setSelectionRange(newStartSelect, newEndSelect);
+		if (imageDiv != undefined)
+			imageDiv.innerText = image;		
+		else
+			$(markdown).innerText = $(markdown).innerText + image;		
+		imageDisplayer.className = "tool-displayer hidden";
+		selectElementContents(imageDiv);
+		restoreSelection("mado-image");
 		conversion();
 	}
+}
+
+function cancelImage () {
+	if (imageDiv != undefined)
+		imageDiv.innerText = initialText;		
+	imageDisplayer.className = "tool-displayer hidden";
+	selectElementContents(imageDiv);
+	restoreSelection("mado-image");
 }
 
 function chooseGalleries () {
@@ -195,28 +205,3 @@ function loadImage () {
 function update () {	
 	chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, chromeUpdate);
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) {
-	if ($(e.target).closest(imageButton).length && imageDisplayer.className == "tool-displayer hidden") { // Click on the "Image" button with the image insertion tool hidden
-		/* Reset. */
-		imageBrowser.innerHTML = "Choose an image";
-		imageStatus.style.display = "none";
-		altInput.value = "";
-		titleInput.value = "";
-		imageLoaded = undefined;
-
-		imageDisplayer.className = "tool-displayer";
-		startSelect = textarea.selectionStart;
-		endSelect = textarea.selectionEnd;
-		if (startSelect != endSelect) {
-			textarea.setSelectionRange(startSelect, endSelect);
-			titleInput.value = textarea.value.substring(startSelect, endSelect);
-		}
-	}
-	else if (! $(e.target).closest(imageBox).length) // The user doesn't click on the image insertion box.
-		imageDisplayer.className = "tool-displayer hidden";
-});

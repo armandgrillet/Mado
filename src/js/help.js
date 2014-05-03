@@ -155,7 +155,7 @@ var examples = [
 	* switchResult (result number): show the answer or the example when the user click on a switch.
 */
 
-function activateHelp () { // Show the help input and focus when the help button is clicked.
+function activateHelp () { // Show the help input and focus when the help button is clicked. MAYBE USELESS
 	if (helpDisplayer.className == "hidden") {
 		helpDisplayer.className = " ";
     	help.focus();
@@ -228,20 +228,3 @@ function switchResult (numResult) {
 	else // If corresponding example displayed
 		window["result" + numResult].className = "result";
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) {
-	if ($(e.target).closest(helpButton).length && helpDisplayer.className == "tool-displayer hidden") { // Click on the help button with the help input hide.
-		helpDisplayer.className = "tool-displayer";
-    	help.focus();
-	}
-	else if (! $(e.target).closest(help).length && ! $(e.target).closest(resultsContainer).length) { // The user doesn't click on the help input nor help results (with help displayed)
-		help.value = ""; // Reset the input of the help
-		resetAnswerDiv(1);
-		resultsContainer.className = "hidden"; // Hide the results container
-		helpDisplayer.className = "tool-displayer hidden";
-	}
-});

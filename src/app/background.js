@@ -17,6 +17,7 @@ function anotherWindow (theX, theY, theWidth, theHeight) {
 	      	width: theWidth,
 	      	height: theHeight
 	    }, 
+    	frame: "none",
 	    minWidth: theMinWidth(), 
 	    minHeight: 240
 	});
@@ -28,6 +29,7 @@ function firstWindow () {
 	      	width: Math.round(screen.width * 0.85),
 	      	height: Math.round(screen.height * 0.85)
 	    }, 
+	    frame: "none",
 	    minWidth: theMinWidth(), 
 	    minHeight: 240
 	});
@@ -46,12 +48,16 @@ function theMinWidth () {
 function windowCreation () {
 	chrome.storage.local.get(["lastX", "lastY", "lastWidth", "lastHeight"], function(mado) {
 		if (mado["lastX"] != undefined && mado["lastY"] != undefined && mado["lastWidth"] != undefined && mado["lastHeight"] != undefined
-		&& !isNaN(mado["lastX"]) && !isNaN(mado["lastY"]) && !isNaN(mado["lastWidth"]) && !isNaN(mado["lastHeight"])
-		&&	mado["lastX"] > 0 && mado["lastY"] > 0 && mado["lastWidth"] >= 240 && mado["lastHeight"] >= 683)
+		&& ! isNaN(mado["lastX"]) && ! isNaN(mado["lastY"]) && ! isNaN(mado["lastWidth"]) && ! isNaN(mado["lastHeight"])
+		&&	mado["lastX"] >= 0 && mado["lastY"] >= 0 && mado["lastWidth"] >= 240 && mado["lastHeight"] >= 683)
 			anotherWindow(mado["lastX"], mado["lastY"], mado["lastWidth"], mado["lastHeight"]);
 		else
 			firstWindow();
 	});	
+}
+
+function newBounds (lastX, lastY, lastWidth, lastHeight) {
+	chrome.storage.local.set({"lastX" : lastX, "lastY" : lastY, "lastWidth" : lastWidth, "lastHeight" : lastHeight });
 }
 
 /*
@@ -67,10 +73,3 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 	else // New file.
 	  	windowCreation();
 });
-
-
-
-
-
-
-

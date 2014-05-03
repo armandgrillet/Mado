@@ -28,7 +28,7 @@ var recentFiles = [ // Name of the recent files and the corresponding ids on the
 	* displayRecentFiles (): it just displays the recent files, no animation.
 	* newRecentFile (theFile): add a recent file.
 	* removeFile (numberOfTheFile): remove a file with an animation, removeFile(numberOfTheFile) -> removefileInStorage() -> displayRecentFiles().
-	* removefileInStorage (numberOfTheFile, whatToDoAfter): remove a file in the local storage.
+	* removefileInStorage (numberOfTheFile, OPTION whatToDoAfter): remove a file in the local storage.
 	* removeAllFiles (): remove all the recent files in the div and calls removeAllFilesInStorage().
 	* removeAllFilesInStorage (): remove all the files in the local storage.
 */
@@ -113,34 +113,42 @@ function displayRecentFiles () {
     ); 
 }
 
-function newRecentFile (file) {
+function newRecentFile (file, after) {
 	chrome.storage.local.get( // We have to affect the local storage
 		recentFiles, // Get all the recent files.
 		function(mado) { 
 			for (var i = 1; i <= 7; i++) { // Max : 7
 				if (mado["recentFile" + i] == undefined || mado["recentFile" + i] == file.fullPath || i == 7) { // If there's no file here or the file at this position is the file who is set, or it's just the end.
-					for (var j = i; j > 1; j--) { // The second loop begins, j -> j - 1.
-						/* Two things in local storage to change, the name of the file and its id.
-						First : The id */
-						chromeLocalFile = ("recentFileId" + j).toString(); // This is j.
-						nameContainer[chromeLocalFile] = mado["recentFileId" + (j - 1)]; // This is j - 1.
-						chrome.storage.local.set(nameContainer); // j is now j - 1.
-						nameContainer = {}; // Reset.
+					for (var j = i; j > 0; j--) { // The second loop begins, j -> j - 1.
+						if (j > 1) {
+							/* Two things in local storage to change, the name of the file and its id.
+							First : The id */
+							chromeLocalFile = ("recentFileId" + j).toString(); // This is j.
+							nameContainer[chromeLocalFile] = mado["recentFileId" + (j - 1)]; // This is j - 1.
+							chrome.storage.local.set(nameContainer); // j is now j - 1.
+							nameContainer = {}; // Reset.
 
-						// Secondly : the file name. (Same functions than for the id).
-						chromeLocalFile = ("recentFile" + j).toString();
-						nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
-						chrome.storage.local.set(nameContainer);
-						nameContainer = {};									
+							// Secondly : the file name. (Same functions than for the id).
+							chromeLocalFile = ("recentFile" + j).toString();
+							nameContainer[chromeLocalFile] = mado["recentFile" + (j - 1)];
+							chrome.storage.local.set(nameContainer);
+							nameContainer = {};	
+						}
+						else { // The end.
+							// Now the first recent file is empty, we set the ID and the name.
+							chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}); 	 	
+							chrome.storage.local.set({"recentFile1" : file.fullPath});
+
+							displayRecentFiles(); // Update the div.
+
+							if (after != undefined && after == "quit")
+								quitCloseWindow();
+						}							
 					}
 					break; // End of the loop
 				}
 			}
-			// Now the first recent file is empty, we set the ID and the name.
-			chrome.storage.local.set({"recentFileId1" : chrome.fileSystem.retainEntry(file)}, function() {}); 	
-			chrome.storage.local.set({"recentFile1" : file.fullPath}, function() {});
-
-			displayRecentFiles(); // Update the div.
+			
 		}
 	);
 }
@@ -222,16 +230,3 @@ function removeAllFilesInStorage (fileNumber) {
 		}	
 	);
 }
-
-/*
-* Listener.
-*/
-
-$(document).click(function(e) { 
-	if ($(e.target).closest(recentButton).length && recentFilesDisplayer.className == "hidden") {
-		displayRecentFiles(); // If the user remove something from another window.
-		recentFilesDisplayer.className = "";
-	}
-	else if (! $(e.target).closest(recentFilesContainer).length && recentFilesDisplayer.className == "")
-		recentFilesDisplayer.className = "hidden";
-});

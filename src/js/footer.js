@@ -17,11 +17,12 @@ var wordsDiv; // The div who contains the document's words number.
 	* checkSaveState (): change saveState's innerHTML.
 	* counterSelection (): what counter to display.
 	* displayCounter (): change charsDiv and wordsDiv.
+	* resetCounter (): what to display if there is nothing in the contenteditable.
 */
 
 function checkSaveState () {
-	if (textarea.value != "") {
-		if (markdownSaved == undefined || (textarea.value != markdownSaved))
+	if (markdown.innerText != "") {
+		if ((markdownSaved == undefined) || (markdown.innerText != markdownSaved))
 			saveState.innerHTML = "| Unsaved <span class=\"little-icon-unsaved\"></span>";
 		else
 			saveState.innerHTML = "| Saved <span class=\"little-icon-saved\"></span>";
@@ -46,10 +47,15 @@ function counterSelection () {
 }
 
 function displayCounter (counter) {
-	charsDiv.innerHTML = ' ' + counter.characters + " characters&nbsp;";
-  	wordsDiv.innerHTML = ' ' + counter.words + " words&nbsp;";
+	charsDiv.innerHTML = "&nbsp;" + counter.characters + " characters&nbsp;";
+  	wordsDiv.innerHTML = "&nbsp;" + counter.words + " words&nbsp;";
   	if (counter.characters == 1)
-  		charsDiv.innerHTML = ' ' + counter.characters + " character&nbsp;";
+  		charsDiv.innerHTML = "&nbsp;" + counter.characters + " character&nbsp;";
   	if (counter.words == 1)
-		wordsDiv.innerHTML = ' ' + counter.words + " word&nbsp;";
+		wordsDiv.innerHTML = "&nbsp;" + counter.words + " word&nbsp;";
+}
+
+function resetCounter () {
+	charsDiv.innerHTML = "&nbsp;0 characters&nbsp;";
+  	wordsDiv.innerHTML = "&nbsp;0 words&nbsp;";
 }
