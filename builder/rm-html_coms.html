@@ -1,0 +1,17 @@
+<html>
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  		<script type="text/javascript">
+			$(window).load(function(){
+				$("button").click(function(){
+    				$("textarea").val($("textarea").val().replace(/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->)(.|\n))*-->/g,""));   
+				});
+			});
+		</script>
+	</head>
+	<body>
+	  	<textarea></textarea>
+	  	<button>remove comments</button>
+	</body>
+</html>
