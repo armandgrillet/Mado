@@ -324,10 +324,8 @@ window.onload = function() {
     });
 
     /* stats.js */
-    /* Waiting for prod
     if (navigator.onLine)
         initStats();
-    */
     
     /* styles.js */
     getStyle();
