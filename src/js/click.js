@@ -29,8 +29,7 @@ $(document).click( function(e) {
 			|| $(markdown).is(':focus')) {
 			startSelect = markdown.selectionStart;
 			endSelect = markdown.selectionEnd;
-		}
-		else {
+		} else {
 			startSelect = markdown.value.length;
 			endSelect = markdown.value.length;
 		}
@@ -40,10 +39,11 @@ $(document).click( function(e) {
 		setImageInputs();
 	}
 	else if (imageDisplayer.className == "tool-displayer" && (! $(e.target).closest(imageBox).length || $(e.target).closest(document.getElementById("insert-image")).length)) {// The user doesn't click on the image insertion box.
-		if ($(e.target).closest(document.getElementById("insert-image")).length)
+		if ($(e.target).closest(document.getElementById("insert-image")).length) {
 			applyImage();
-		else
+		} else {
 			imageDisplayer.className = "tool-displayer hidden";
+		}
 	}
 
 	/* link.js */
@@ -58,11 +58,11 @@ $(document).click( function(e) {
 			|| $(markdown).is(':focus')) {
 			startSelect = markdown.selectionStart;
 			endSelect = markdown.selectionEnd;
-		}
-		else {
+		} else {
 			startSelect = markdown.value.length;
 			endSelect = markdown.value.length;
 		}
+
 		if (startSelect != endSelect)
 			markdown.setSelectionRange(startSelect, endSelect);
 		newEndSelect = endSelect;
@@ -70,10 +70,11 @@ $(document).click( function(e) {
 		urlInput.focus();		
 	}
 	else if (linkDisplayer.className == "tool-displayer" && (! $(e.target).closest(linkDisplayer).length || $(e.target).closest(document.getElementById("insert-link")).length)) {	
-		if ($(e.target).closest(document.getElementById("insert-link")).length)
+		if ($(e.target).closest(document.getElementById("insert-link")).length) {
 			applyLink();
-		else
+		} else {
 			linkDisplayer.className = "tool-displayer hidden";
+		}
 	}
 
 	/* more.js */
@@ -96,11 +97,11 @@ $(document).click( function(e) {
 			|| $(markdown).is(':focus')) {
 			startSelect = markdown.selectionStart;
 			endSelect = markdown.selectionEnd;
-		}
-		else {
+		} else {
 			startSelect = markdown.value.length;
 			endSelect = markdown.value.length;
 		}
+
 		if (startSelect != endSelect)
 			markdown.setSelectionRange(startSelect, endSelect);
 		newEndSelect = endSelect;
@@ -108,10 +109,11 @@ $(document).click( function(e) {
 		onlineImageUrlInput.focus();
 	}
 	else if (onlineImageDisplayer.className == "tool-displayer" && (! $(e.target).closest(onlineImageDisplayer).length || $(e.target).closest(document.getElementById("insert-webimage")).length)) {// The user doesn't click on the image insertion box.
-		if ($(e.target).closest(document.getElementById("insert-webimage")).length)
+		if ($(e.target).closest(document.getElementById("insert-webimage")).length) {
 			applyOnlineImage();
-		else
+		} else {
 			onlineImageDisplayer.className = "tool-displayer hidden";
+		}
 	}
 	
 	/* recentfiles.js */

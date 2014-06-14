@@ -50,10 +50,11 @@ function contentChanged () {
 	}
 
 	conversion();
-	if (markdown.clientHeight < markdown.scrollHeight)
+	if (markdown.clientHeight < markdown.scrollHeight) {
         $(centerLine).css("display", "none");
-    else
+	} else {
         $(centerLine).css("display", "block");
+	}
 }
 
 function errorHandler() {
@@ -95,10 +96,11 @@ function fileName (path) {
 }
 
 function minFileName (path) {
-	if (path == "") // If there's nothing it returns the basic "document".
+	if (path == "") { // There's nothing it returns the basic "document".
 		return "document";
-	else
+	} else {
 		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+	}
 }
 
 function moreWindow (choice) {
@@ -126,16 +128,16 @@ function moreWindow (choice) {
 function newDisplaySize () {
 	chrome.storage.local.get("displaySize",  function(mado) {
 		if (mado["displaySize"] != undefined) {
-			if (mado["displaySize"] == "small")
+			if (mado["displaySize"] == "small") {
 				$("body").attr("class", "small");
-			else {
-				if (mado["displaySize"] == "medium")
+			} else {
+				if (mado["displaySize"] == "medium") {
 					$("body").attr("class", " ");
-				else
+				} else {
 					$("body").attr("class", "big");	
+				}
 			}
-		}
-		else {
+		} else {
 			chrome.storage.local.set({ "displaySize" : "medium" });
 			$("body").attr("class", " ");
 		}
@@ -180,8 +182,7 @@ function openFile(fileToOpen) {
 		 				}, 
 		 				newWindow
 	 				);
- 				}
-	 			else {
+ 				} else {
 		 			markdown.value = e.target.result; // Display the file content.	
 	 			 			
 		 			fileEntry = fileToOpen; // For save.
@@ -250,9 +251,9 @@ function saveAsFile () {
 }
 
 function saveFile () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved or not a Markdown file.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") { // Not saved or not a Markdown file.
 		saveAsFile();
-	else { // If we have already loaded the file.
+	} else { // If we have already loaded the file.
 		fileEntry.createWriter(function(fileWriter) {
 		    truncated = false;
 		    fileWriter.onwriteend = function(e) {
@@ -291,11 +292,16 @@ function theMinWidth () {
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
-   		if (key == "analytics")
-            setTrackingPermission(); // stats.js 
-        else if (key == "displaySize")
-            newDisplaySize(); // app.js 
-        else if (key == "gfm")
-            setEditorSyntax(); // editor.js
+   		switch (key) {
+   			case "analytics":
+            	setTrackingPermission(); // stats.js 
+            	break;
+        	case "displaySize":
+        		newDisplaySize(); // app.js
+        		break;
+    		case "gfm":
+        		setEditorSyntax(); // editor.js
+        		break;
+		}
     }
 });
