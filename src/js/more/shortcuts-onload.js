@@ -14,12 +14,12 @@ window.onload = function() {
 	*/
     determineCloseButton(); // Determine the close button style.
 	
-	if (navigator.appVersion.indexOf("Mac") != -1) {// If the user is on a Mac.
+	if (navigator.appVersion.indexOf("Mac") > -1) {// If the user is on a Mac.
 		$(".ctrl-cmd-key").html("&#8984;"); // Insert the "Cmd" symbol.
 		$(helpShortcut).css("display", "none"); // Hide the help's shortcut.
-	}
-	else
+	} else {
 		$(".ctrl-cmd-key").html("Ctrl"); // Insert the "Ctrl" string.
+	}
 
 	$(windowClose).on("click", function() {
         chrome.app.window.current().close();

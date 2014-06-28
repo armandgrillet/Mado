@@ -11,6 +11,7 @@ window.onload = function() {
     * Functions.
     */
     determineCloseButton(); // Determine the close button style.
+    
     $(windowClose).on("click", function() {
         chrome.app.window.current().close();
     });

@@ -27,13 +27,17 @@ var tramwayRadio; // Tramway style.
 function getStyle () {
 	chrome.storage.local.get("style",  function(mado) {
 		if (mado["style"] != undefined) {
-			if (mado["style"] == "home")
-				homeRadio.checked = true;
-			else if (mado["style"] == "clinic")
-				clinicRadio.checked = true;
-			else
-				tramwayRadio.checked = true;
-			setStyleInHTML(mado["style"]);
+			switch (mado["style"]) {
+	            case "home":
+	                homeRadio.checked = true;
+	                break;
+	            case "clinic":
+	                clinicRadio.checked = true;
+	                break;
+	            case "tramway":
+	                tramwayRadio.checked = true;
+	        }
+	        setStyleInHTML(mado["style"]);
 		}
 		else {
 			homeRadio.checked = true;
@@ -48,11 +52,13 @@ function setStyle (newStyle) {
 }
 
 function setStyleInHTML (newStyle) {
-	for (var i = 0; i < document.styleSheets.length; i++)
+	for (var i = 0; i < document.styleSheets.length; i++) {
 		if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {
-	    	if (document.styleSheets.item(i).href.indexOf(newStyle) == -1) 
+	    	if (document.styleSheets.item(i).href.indexOf(newStyle) == -1) {
 	    		document.styleSheets.item(i).disabled = true;
-	    	else
+	    	} else {
 	    		document.styleSheets.item(i).disabled = false;
+	    	}
 		}
+	}
 }

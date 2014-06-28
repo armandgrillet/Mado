@@ -24,8 +24,7 @@ function counterSelection () {
 		$(charsDiv).css("display", "inline");
 		$(wordsDiv).css("display", "none");
 		sendEvent("Number of chars diplayed");
-	}
-	else {
+	} else {
 		$(charsDiv).css("display", "none");
 		$(wordsDiv).css("display", "inline");
 		sendEvent("Number of words diplayed");
@@ -35,10 +34,12 @@ function counterSelection () {
 function displayCounter (counter) {
 	charsDiv.innerHTML = "&nbsp;" + counter.characters + " characters&nbsp;";
   	wordsDiv.innerHTML = "&nbsp;" + counter.words + " words&nbsp;";
-  	if (counter.characters == 1)
+  	if (counter.characters == 1) {
   		charsDiv.innerHTML = "&nbsp;" + counter.characters + " character&nbsp;";
-  	if (counter.words == 1)
+  	}
+  	if (counter.words == 1) {
 		wordsDiv.innerHTML = "&nbsp;" + counter.words + " word&nbsp;";
+  	}
 }
 
 function resetCounter () {

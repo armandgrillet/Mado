@@ -21,15 +21,17 @@ var searchedWord;
 }*/
 
 function searchOther (prevOrNext) {
-	if (! prevOrNext)
+	if (! prevOrNext) {
 		searchPositionCase--;
-	else
+	} else {
 		searchPositionCase++;
+	}
 
-	if (searchPositionCase < 0)
+	if (searchPositionCase < 0) {
 		searchPositionCase = searchPositions.length - 1;
-	else if (searchPositionCase >= searchPositions.length)
+	} else if (searchPositionCase >= searchPositions.length) {
 		searchPositionCase = 0;
+	}
 
 	$(markdown).setRange(searchPositions[searchPositionCase], searchPositions[searchPositionCase] + searchedWord.length);
 }
@@ -49,12 +51,10 @@ function searchWord (word) {
 			searchPositionCase = 0;
 			// $(buttons).css("display", "block");
 			$(markdown).setRange(searchPositions[searchPositionCase], searchPositions[searchPositionCase] + searchedWord.length);
-		}
-		else {
+		} else {
 			// $(buttons).css("display", "none");
 		}
-	}
-	else {
+	} else {
 		// $(buttons).css("display", "none");
 		// iterations.innerHTML = 0;
 	}

@@ -3,7 +3,7 @@
 /* 
 * Variables (in alphabetical order). 
 	* HTML shortcuts.
-	* Functions variable.
+	* Functions variables.
 */
 
 /* HTML shortcuts. */
@@ -23,6 +23,7 @@ var windowMin; // The minimize button.
 
 /* Functions variables. */
 var boundsBeforeMaximized;
+var operatingSystem;
 
 /*
 * Functions (in alphabetical order).
@@ -41,16 +42,17 @@ var boundsBeforeMaximized;
 
 function checkSaveState () {
 	if (markdown.value != "") {
-		if ((markdownSaved == undefined) || (markdown.value != markdownSaved))
+		if ((markdownSaved == undefined) || (markdown.value != markdownSaved)) {
 			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-		else
+		} else {
 			saveState.innerHTML = "";
-	}
-	else {
-		if (markdownSaved != undefined)
+		}
+	} else {
+		if (markdownSaved != undefined) {
 			saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-		else
+		} else {
 			saveState.innerHTML = "";
+		}
 	}
 }
 
@@ -58,9 +60,9 @@ function closeWindow () {
 	chrome.runtime.getBackgroundPage(function (backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
 	    backgroundPage.newBounds(chrome.app.window.current().getBounds());
 	});
-	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") // Save not made.
+	if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") { // Save not made.
 		closeDisplayer.className = "visible";
-	else {
+	} else {
 		sendClosing(); // stats.js
 		chrome.app.window.current().close();
 	}
@@ -70,40 +72,31 @@ function determineFrame () {
 	frameStylesheetLink.setAttribute("rel", "stylesheet");
 	frameStylesheetLink.setAttribute("type", "text/css");
 
-	if (navigator.appVersion.indexOf("Mac") != -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
-		frameStylesheetLink.setAttribute("href", "css/window-frame-mac.css");
-		windowClose.setAttribute("class", "cta little-icon-mac-close");
-		windowMax.setAttribute("class", "cta little-icon-mac-maximize");
-		windowMin.setAttribute("class", "cta little-icon-mac-minimize");
+	if (navigator.appVersion.indexOf("Mac") > -1) { // If the user is on a Mac, redirect to the Mac window frame styles.
+		operatingSystem = "mac";
+	} else if (navigator.appVersion.indexOf("Win") > -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
+		operatingSystem = "windows";
+	} else if (navigator.appVersion.indexOf("Linux") > -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
+		operatingSystem = "linux";
+	} else { // If the user is on another type of computer, redirect to the generic window frame styles (which are primarily Chrome OS's styles).
+		operatingSystem = "chromeos";
 	}
-	else if (navigator.appVersion.indexOf("Win") != -1) { // If the user is on a Windows PC, redirect to the Windows window frame styles.
-		frameStylesheetLink.setAttribute("href", "css/window-frame-windows.css");
-		windowClose.setAttribute("class", "cta little-icon-win-close");
-		windowMax.setAttribute("class", "cta little-icon-win-maximize");
-		windowMin.setAttribute("class", "cta little-icon-win-minimize");
-	}
-	else if (navigator.appVersion.indexOf("Linux") != -1) { // If the user is on a Linux computer, redirect to the Linux Ubuntu window frame styles.
-		frameStylesheetLink.setAttribute("href", "css/window-frame-linux.css");
-		windowClose.setAttribute("class", "cta little-icon-lin-close");
-		windowMax.setAttribute("class", "cta little-icon-lin-maximize");
-		windowMin.setAttribute("class", "cta little-icon-lin-minimize");
-	}
-	else { // If the user is on another type of computer, redirect to the generic window frame styles (which are primarily Chrome OS's styles).
-		frameStylesheetLink.setAttribute("href", "css/window-frame-chromeos.css");
-		windowClose.setAttribute("class", "cta little-icon-chr-close");
-		windowMax.setAttribute("class", "cta little-icon-chr-maximize");
-		windowMin.setAttribute("class", "cta little-icon-chr-minimize");
-	}
+
+	frameStylesheetLink.setAttribute("href", "css/window-frame-" + operatingSystem + ".css");
+	windowClose.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-close"); 
+	windowMax.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-maximize");
+	windowMin.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-minimize");
 
 	head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
 }
 
 function maximizeWindow () {
 	if (navigator.appVersion.indexOf("Win") == -1) {
-		if (! chrome.app.window.current().isMaximized()) // Maximize.
+		if (! chrome.app.window.current().isMaximized()) { // Maximize.
 			chrome.app.window.current().maximize();
-		else // Restore the last bounds.
+		} else { // Restore the last bounds.
 			chrome.app.window.current().restore();
+		}
 	}
 	else {
 		if (chrome.app.window.current().getBounds().width < screen.availWidth || 
@@ -115,17 +108,17 @@ function maximizeWindow () {
 			 	width: screen.availWidth, 
 			 	height: screen.availHeight 
 			});
-		}
-		else { // Restore the last bounds.
-			if (boundsBeforeMaximized != undefined)
+		} else { // Restore the last bounds.
+			if (boundsBeforeMaximized != undefined) {
 				chrome.app.window.current().setBounds(boundsBeforeMaximized);
-			else
+			} else {
 				chrome.app.window.current().setBounds({ 
 					left: ((screen.availWidth - Math.round(screen.width * 0.85)) / 2), 
 					top: ((screen.availHeight - Math.round(screen.height * 0.85)) / 2), 
 					width: Math.round(screen.width * 0.85), 
 					height: Math.round(screen.height * 0.85) 
 				});
+			}
 		}
 	}
 }
@@ -183,10 +176,11 @@ function saveAsAndQuit () {
 }
 
 function saveQuitCloseWindow () {
-	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") // Not saved pr the document is not in Markdown.
+	if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") { // Not saved pr the document is not in Markdown.
 		saveAsAndQuit();
-	else
+	} else {
 		saveAndQuit();
+	}
 }
 
 /*
@@ -197,14 +191,16 @@ function saveQuitCloseWindow () {
 */
 
 chrome.app.window.current().onBoundsChanged.addListener(function () {
-	if (chrome.app.window.current().getBounds().width < 1160 && switchToBoth.className == "switch-button activated")
+	if (chrome.app.window.current().getBounds().width < 1160 && switchToBoth.className == "switch-button activated") {
 		switchToMD.click(); // Markdown is set as default view.
-	else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) 
+	} else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) {
 		switchToBoth.click(); // viewswitch.js
+	}
 
-	if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600)
+	if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600) {
 		addTopbarLabels();
-	else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600)
+	} else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600) {
 		removeTopbarLabels();
+	}
 	lastBounds = chrome.app.window.current().getBounds();
 });

@@ -145,9 +145,11 @@ function answer () {
 }
 
 function displayAnswers () {
-	for (var i = 1; i <= 3; i++) // Reset the results' position.
-		if (document.getElementById("result-" + i).className == "result switched")
+	for (var i = 1; i <= 3; i++) { // Reset the results' position.
+		if (document.getElementById("result-" + i).className == "result switched") {
 			document.getElementById("result-" + i).className = "result";
+		}
+	}
 
 	if (help.value.length == 0) {
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
@@ -158,23 +160,26 @@ function displayAnswers () {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
 			resetAnswerDiv(2);
-			if (help.value.length == 1)
-				document.getElementById("answer-1").innerHTML = "Add two more characters"; // The input has to have 3 characters minimum to launch the function.
-			else if (help.value.length == 2)
-				document.getElementById("answer-1").innerHTML = "Add one more character"; // The input has to have 3 characters minimum to launch the function.
-
+			switch (help.value.length) { // The input has to have 3 characters minimum to launch the function.
+				case 1: 
+					document.getElementById("answer-1").innerHTML = "Add two more characters";
+					break;
+				case 2:
+					document.getElementById("answer-1").innerHTML = "Add one more character";
+					break;
+			}
 			setResultsHeight();
-		}
-		else
+		} else {
 			answer(); // Find the answers.
+		}
 	}
 }
 
 function resetAnswerDiv(begin) {
 	for (var i = begin; i <= 3; i++) { 
-		if (document.getElementById("answer-" + i).innerHTML == "")
+		if (document.getElementById("answer-" + i).innerHTML == "") {
 			i = 3;
-		else {
+		} else {
 			document.getElementById("answer-" + i).innerHTML = "";
 			document.getElementById("result-" + i).className = "result";
 			document.getElementById("example-" + i).innerHTML = "";
@@ -187,10 +192,11 @@ function setResultsHeight() {
 	for (var i = 1; i <= 3; i++) {// Check all the results, depending on the number of results
 		if ($("#answer-" + i).html() != "") {
 			$("#result-" + i).css("display", "block");
-			if ($("#answer-" + i).outerHeight() >= $("#example-" + i).outerHeight()) 
+			if ($("#answer-" + i).outerHeight() >= $("#example-" + i).outerHeight())  {
 				$("#result-" + i).css("height", $("#answer-" + i).outerHeight() + "px");
-			else
+			} else {
 				$("#result-" + i).css("height", $("#example-" + i).outerHeight() + "px");
+			}
 			totalHeight += $("#result-" + i).outerHeight(); // Add the height of the current result to the total height
 		}
 		else {
@@ -204,9 +210,11 @@ function setResultsHeight() {
 }
 
 function switchResult (numResult) {
-	if (document.getElementById("result-" + numResult).className == "result") // If Markdown style displayed
+	if (document.getElementById("result-" + numResult).className == "result") { // If Markdown style displayed
 		document.getElementById("result-" + numResult).className = "result switched";
-	else // If corresponding example displayed
+	}
+	else { // If corresponding example displayed
 		document.getElementById("result-" + numResult).className = "result";
+	}
 	help.focus();
 }

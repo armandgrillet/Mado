@@ -35,31 +35,36 @@ function initStats () {
 
 function newInputForStats () {
 	markdownInputs++;
-	if (markdownInputs % 50 == 0)
+	if (markdownInputs % 50 == 0) {
 		sendEvent("50 inputs in the textarea");
+	}
 }
 
 function sendClosing () {
-	if (service != undefined && tracker != undefined && navigator.onLine)
+	if (service != undefined && tracker != undefined && navigator.onLine) {
 		chrome.storage.local.get("analytics",  function(mado) {
-			if (mado["analytics"] != false) 
+			if (mado["analytics"] != false) {
 				tracker.sendEvent("Window lifetime", "Window has been closed", (parseInt(((new Date()).getTime() - launchDate.getTime()) / 1000 / 60) + ":" + parseInt(((new Date()).getTime() - launchDate.getTime()) / 1000 % 60)).toString());
+			}
 		});
+	}
 }
 
 function sendEvent (eventName) {
-	if (service != undefined && tracker != undefined && navigator.onLine)
+	if (service != undefined && tracker != undefined && navigator.onLine) {
 		chrome.storage.local.get("analytics",  function(mado) {
-			if (mado["analytics"] != false) 
+			if (mado["analytics"] != false) {
 				tracker.sendEvent(eventName);
+			}
 		});
+	}	
 }
 
 function setTrackingPermission () {
 	chrome.storage.local.get("analytics",  function(mado) {
-		if (mado["analytics"] != undefined) 
+		if (mado["analytics"] != undefined) {
 			service.t.setTrackingPermitted(mado["analytics"]);
-		else {
+		} else {
 			chrome.storage.local.set({ "analytics" : true });
 			service.t.setTrackingPermitted(true);
 		}

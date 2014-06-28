@@ -33,8 +33,7 @@ function applyOnlineImage () {
 		onlineImageUrlInput.setAttribute("class", "tool-first-item flash");
 		onlineImageUrlInput.focus();
 		onlineImageUrlInput.setAttribute("class", "tool-first-item");
-	}
-	else {
+	} else {
 		onlineImageDisplayer.className = "tool-displayer hidden";
 		markdown.focus();
 		$(markdown).setRange(startSelect, newEndSelect);
@@ -50,12 +49,14 @@ function cancelOnlineImage () {
 }
 
 function modifyOnlineImage () {
-	if (onlineImageAltInput.value == "")
+	if (onlineImageAltInput.value == "") {
 		onlineImage = "![" + onlineImageUrlInput.value + "](" + onlineImageUrlInput.value + ')';
-	else 
+	} else {
 		onlineImage = "![" + onlineImageAltInput.value + "](" + onlineImageUrlInput.value + ')';
-	if (newEndSelect == undefined)
+	}
+	if (newEndSelect == undefined) {
 		newEndSelect = endSelect;
+	}
 	markdown.value = markdown.value.substring(0, startSelect) + onlineImage + markdown.value.substring(newEndSelect, markdown.length);
 	newEndSelect = (markdown.value.substring(0, startSelect) + onlineImage).length;
 	contentChanged();
@@ -78,9 +79,9 @@ function setOnlineImageInputs () {
 		initialText[initialText.length - 1] == ')') {
 		onlineImageAltInput.value = initialText.match(/!\[.*\]/)[0].substring(2, initialText.match(/!\[.*\]/)[0].length - 1);
 		onlineImageUrlInput.value = initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1);
-	}
-	else
+	} else {
 		onlineImageAltInput.value = initialText;
+	}
 	$(markdown).setRange(startSelect, newEndSelect);
 }
 
@@ -88,9 +89,10 @@ function updateOnline () {
 	loadOnlineImage(imagePath, function(blob_uri, requested_uri) {
 	  	tempConversion = tempConversion.replace(imagePath, blob_uri); 
 	  	imagesArray.push([imagePath, blob_uri, true]); // Add a new line in the array of images.
-		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) 
+		if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
 	 		displayImages();
-	 	else // The end.
+		} else { // The end.
 	 		endOfConversion();
+ 		}
 	}); 
 }

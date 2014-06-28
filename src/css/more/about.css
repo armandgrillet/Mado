@@ -28,40 +28,9 @@ ul li:before {
 	display: block;
 }
 
-/* Terms of Service (ToS) */
-.tos {
+/* License */
+.mit-license {
 	/* Typography */
 	font-size: 0.75em;
 	line-height: 1.35em;
 }
-
-.tos p { padding-bottom: 0.65em; }
-
-.tos ol { counter-reset: list; }
-
-.tos ol li {
-	/* Positioning */
-	position: relative;
-
-	/* Box-model */
-	padding-left: 1.35em;
-
-	/* Misc */
-	counter-increment: list;
-}
-
-.tos ol li:before {
-	/* Positioning */
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	/* Box-model */
-	display: block;
-	width: 1.35em;
-
-	/* Misc */
-	content: counter(list);
-}
-
-.tos sup { font-size: 0.65em; }

@@ -29,25 +29,27 @@ var switchButtons = []; // The array for the switch.
 
 function activate (clickedBtn, classState) {
 	for (var i = 0; i < switchButtons.length; i++) {
-		if (switchButtons[i].id != clickedBtn) // Deactivating the switch buttons that are not clicked.
+		if (switchButtons[i].id != clickedBtn) { // Deactivating the switch buttons that are not clicked.
 			switchButtons[i].className = "switch-button";
-		else // Activating the clicked button.
+		} else { // Activating the clicked button.
 			switchButtons[i].className = "switch-button activated";
+		}
 	}	
 
 	workspace.className = classState; // Setting the workspace's class name according to the clicked button.
 	switchCursor.className = classState; // Setting the cursor's class name according to the clicked button.
 
-	if (classState == "markdown-view")
+	if (classState == "markdown-view") {
 		madoFooter.className = classState;
-	else
+	} else {
 		madoFooter.removeAttribute("class");
+	}
 }
 
 function initActivation () { 
-	if (chrome.app.window.current().getBounds().width > 1159) // Big window
+	if (chrome.app.window.current().getBounds().width > 1159) { // Big window
 		switchToBoth.className = "switch-button activated";
-	else {
+	} else {
 		switchToMD.className = "switch-button activated";
 		workspace.className = "markdown-view";
 	}
@@ -59,18 +61,20 @@ function switchShortcuts (direction) {
 	if (window.innerWidth > 1159) { // Normal window
 		for (var i = 0; i < switchButtons.length; i++) {
 			if (switchButtons[i].className == "switch-button activated") { // We found what button is activated.
-				if (direction == "left" && i > 0) 
+				if (direction == "left" && i > 0) {
 					switchButtons[i - 1].click(); // The previous button is now activated.
-				else if (direction == "right" && i < switchButtons.length -1)
+				} else if (direction == "right" && i < switchButtons.length -1) {
 					switchButtons[i + 1].click(); // The next button is now activated.
+				}
 				i = switchButtons.length; // End of the loop.
 			}
 		}
 	}
 	else { // Small window, only Markdown and HTML views are available.
-		if (direction == "left")
+		if (direction == "left") {
 			switchToMD.click();
-		else
+		} else {
 			switchToHTML.click();
+		}
 	}	
 }

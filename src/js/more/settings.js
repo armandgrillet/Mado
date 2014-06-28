@@ -25,7 +25,7 @@ var analytics;
 
 function getAnalytics () {
 	chrome.storage.local.get("analytics",  function(mado) {
-		if (mado["analytics"] != false) {
+		if (mado["analytics"]) {
 			analytics.checked = true;
 		}
 	});
@@ -63,10 +63,11 @@ function getDisplaySize () {
 function getSyntax () {
 	chrome.storage.local.get("gfm",  function(mado) {
 		if (mado["gfm"] != undefined) {
-			if (mado["gfm"])
+			if (mado["gfm"]) {
 				gfmSyntax.checked = true;			
-			else
+			} else {
 				markdownSyntax.checked = true;	
+			}
 		}
 		else {
 			chrome.storage.local.set({ "gfm" : false });
@@ -76,10 +77,11 @@ function getSyntax () {
 }
 
 function setAnalytics () {
-	if (analytics.checked)
+	if (analytics.checked) {
 		chrome.storage.local.set({ "analytics" : true });
-	else 
+	} else {
 		chrome.storage.local.set({ "analytics" : false });
+	}
 }
 
 /*
@@ -96,8 +98,9 @@ function setDisplaySize (newValue) {
 }*/
 
 function setSyntax () {
-	if (markdownSyntax.checked)
+	if (markdownSyntax.checked) {
 		chrome.storage.local.set({ "gfm" : false });
-	else 
+	} else {
 		chrome.storage.local.set({ "gfm" : true });
+	}
 }

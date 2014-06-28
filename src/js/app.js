@@ -1,7 +1,7 @@
 /* The JS to control the scripts between Mado and the computer. */
 
-/* 
-* Variables (in alphabetical order). 
+/*
+* Variables (in alphabetical order).
 	* HTML shortcuts.
 	* Functions variables.
 */
@@ -43,9 +43,9 @@ var truncated; // To know the size when something is saved.
 */
 
 function contentChanged () {
-	if (lastMarkdownHeight == 0)
+	if (lastMarkdownHeight == 0) {
 		lastMarkdownHeight = markdown.scrollHeight;
-	else if(lastMarkdownHeight < markdown.scrollHeight) {
+	} else if (lastMarkdownHeight < markdown.scrollHeight) {
 		toTheBottom(); // scroll.js
 	}
 
@@ -68,9 +68,9 @@ function exportFileHTML () {
 	marked(markdown.value, function (err, content) {
 		chrome.fileSystem.chooseEntry(
 			{
-				type: "saveFile", 
+				type: "saveFile",
 				suggestedName: minFileName(nameDiv.innerHTML) + ".html"
-			}, 
+			},
 			function(exportedFile) {
 				if (exportedFile) {
 			 		exportedFile.createWriter(
@@ -82,8 +82,8 @@ function exportFileHTML () {
 										type: "text/HTML"
 									}
 								)
-							); 	 	
-			 			}, 
+							);
+			 			},
 			 		errorHandler);
 		 		}
 			}
@@ -92,31 +92,31 @@ function exportFileHTML () {
 }
 
 function fileName (path) {
-	return path.substring(path.lastIndexOf('/') + 1); 
+	return path.substring(path.lastIndexOf('/') + 1);
 }
 
 function minFileName (path) {
 	if (path == "") { // There's nothing it returns the basic "document".
 		return "document";
 	} else {
-		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.')); 
+		return path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.'));
 	}
 }
 
 function moreWindow (choice) {
 	sendEvent("Window '" + choice + "' opened");
 	chrome.app.window.create(
-		choice, 
+		choice,
 		{
 		    bounds: {
 		    	left: Math.round((window.screenX + (($(window).width() - 498) / 2))), // Perfect alignement.
 		    	top: Math.round((window.screenY + (($(window).height() - 664) / 2))), // Always perfect.
 		      	width: 498,
 		      	height: 664
-		    }, 
+		    },
 		    frame : "none",
 		    // The window can't be resized.
-		    minWidth: 498, 
+		    minWidth: 498,
 		    minHeight: 664,
 		    maxWidth: 498,
 		    maxHeight: 664
@@ -134,7 +134,7 @@ function newDisplaySize () {
 				if (mado["displaySize"] == "medium") {
 					$("body").attr("class", " ");
 				} else {
-					$("body").attr("class", "big");	
+					$("body").attr("class", "big");
 				}
 			}
 		} else {
@@ -148,21 +148,20 @@ function newWindow () {
 	sendEvent("New file");
 	if (markdown.value.length > 0 && markdown.value != firstMessage) {
 		chrome.app.window.create(
-			"mado.html", 
+			"mado.html",
 			{
 			    bounds: {
 			    	left: (window.screenX + 20), // "+ 20" to watch this is a new window.
-			    	top: (window.screenY + 20), 
+			    	top: (window.screenY + 20),
 			      	width: window.innerWidth,
 			      	height: window.innerHeight
-			    }, 
+			    },
 			    frame: "none",
-			    minWidth: theMinWidth(), 
+			    minWidth: theMinWidth(),
 				minHeight: 330
 		  	}
 	  	);
-  	}
-  	else if (markdown.value == firstMessage) {
+  	} else if (markdown.value == firstMessage) {
   		markdown.value = "";
   		contentChanged();
   		$(markdown).focus();
@@ -175,16 +174,16 @@ function openFile(fileToOpen) {
 		function(file) {
 	 		var reader = new FileReader();
 	 		reader.onload = function(e) {
-	 			if (markdown.value != "") {// Something is already in the markdown, Mado opens a new window. 
+	 			if (markdown.value != "") {// Something is already in the markdown, Mado opens a new window.
 	 				chrome.storage.local.set(
 		 				{
 		 					"tempFileEntry" : chrome.fileSystem.retainEntry(fileToOpen)
-		 				}, 
+		 				},
 		 				newWindow
 	 				);
  				} else {
-		 			markdown.value = e.target.result; // Display the file content.	
-	 			 			
+		 			markdown.value = e.target.result; // Display the file content.
+
 		 			fileEntry = fileToOpen; // For save.
 
 		 			// For the footer.
@@ -193,7 +192,7 @@ function openFile(fileToOpen) {
 		 			nameDiv.innerHTML = fileName(fileToOpen.fullPath) + "&nbsp;-";
 		 			windowTitle.innerHTML = fileName(fileToOpen.fullPath) + " - Mado";
 	 			}
-		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.						 	
+		 		newRecentFile(fileToOpen); // Update the local storage, the file opened is now on top.
 	 		};
 			reader.readAsText(file);
 		},
@@ -201,7 +200,7 @@ function openFile(fileToOpen) {
 	);
 }
 
-function openFileButton () {		
+function openFileButton () {
     chrome.fileSystem.chooseEntry(
     	{
 	 		type: "openFile",
@@ -209,11 +208,12 @@ function openFileButton () {
 	 			{
 	 				extensions: ["markdown", "md", "txt"]
 	 			}
-	 		] 
-		}, 
+	 		]
+		},
 		function(loadedFile) {
-			if (loadedFile) 
+			if (loadedFile) {
 				openFile(loadedFile);
+			}
 		}
 	);
 }
@@ -221,9 +221,9 @@ function openFileButton () {
 function saveAsFile () {
 	chrome.fileSystem.chooseEntry(
 		{
-			type: "saveFile", 
+			type: "saveFile",
 			suggestedName: "document.md"
-		}, 
+		},
 		function(savedFile) {
 			if (savedFile) {
 				savedFile.createWriter(function(fileWriter) {
@@ -287,14 +287,14 @@ function theMinWidth () {
 * Chrome methods.
 *
 * Resume:
-	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed. 
+	* chrome.storage.onChanged.addListener (): what to do when a chrome.storage.local variable is changed.
 */
 
 chrome.storage.onChanged.addListener(function (changes, namespace) { // What to do when a storage value is changed.
    	for (key in changes) {
    		switch (key) {
    			case "analytics":
-            	setTrackingPermission(); // stats.js 
+            	setTrackingPermission(); // stats.js
             	break;
         	case "displaySize":
         		newDisplaySize(); // app.js

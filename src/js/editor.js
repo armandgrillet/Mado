@@ -1,7 +1,7 @@
 /* Functions linked to the Markdown editor. */
 
-/* 
-* Variables (in alphabetical order). 
+/*
+* Variables (in alphabetical order).
 	* Shortcuts.
 	* Global.
 */
@@ -33,11 +33,11 @@ var newRange;
 *
 * Resume:
 	* conversion (): what to do when the user change something on the textarea.
-	* changeContentHighlighted (id): Add a div with id @param id around the selection. 
+	* changeContentHighlighted (id): Add a div with id @param id around the selection.
 	* checkDiv (divCount, content, pos, id): Remove a div from content, @return if it has working and the new content.
 	* endOfConversion (): what to do on the end of the conversion. It's a particular function to handle asynchronous image loadings.
 	* removeDivWithId (id): Remove a div from content via chechDiv (divCount, content, pos, id), use RegExp for strength.
-	* restoreSelection (id): Restore the previous elements selected by the user.	
+	* restoreSelection (id): Restore the previous elements selected by the user.
 	* selectElementContents(el) : Do weird things with HTML to re-set the selection.
 	* setEditorSyntax (): change editorSyntax when the user chane the syntax on the Settings window.
 */
@@ -53,19 +53,19 @@ function conversion () {
 					marked.setOptions({ gfm : true });
 				}
 				setEditorSyntax();
-			});	    
-		}
-		else
+			});
+		} else {
 			marked.setOptions({ gfm : editorSyntax });
+		}
 
-		marked(markdown.value, function (err, content) {  
+		marked(markdown.value, function (err, content) {
 	    	/* Reset. */
 	    	imagePosition = 0;
 	    	for (var i = 0; i < imagesArray.length; i++)
 	       		imagesArray[i][2] = false;
 
 	       	tempConversion = content;
-	       	displayImages();    
+	       	displayImages();
 	    });
 	}
 	else { // No Markdown here.
@@ -80,21 +80,21 @@ function checkDiv (divCount, content, pos, id) {
 	closeDiv = content.indexOf("</div>", pos);
 
 	if (closeDiv != -1) { // If we find a "<div>" or a "</div>".
-		if (openDiv != -1 && openDiv < closeDiv) // If <div is here first.
+		if (openDiv != -1 && openDiv < closeDiv) { // If <div is here first.
 			return (checkDiv(divCount + 1, content, openDiv + 5, id)); // Recursivity.
-		else { // If </div> is here first.
+		} else { // If </div> is here first.
 			if (divCount == 1) { // If we have the same ammount of "<div>" and "</div>".
-				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">")); 
-				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv); 
+				newCE = content.substring(0, content.indexOf("<div id=\"" + id + "\">"));
+				newCE += content.substring(content.indexOf("<div id=\"" + id + "\">") + ("<div id=\"" + id + "\">").length, closeDiv);
 				newCE += content.substring(closeDiv + 6); // Return the text without the useless "<div>" and "</div".
 				return [0, newCE];
-			}
-			else
+			} else {
 				return(checkDiv(divCount - 1, content, closeDiv + 6, id)); // Recursivity.
+			}
 		}
-	}
-	else
+	} else {
 		return [-1]; // Don't remove the brackets.
+	}
 }
 
 function endOfConversion () {
@@ -102,15 +102,18 @@ function endOfConversion () {
 	imagePath = undefined;
 	rightFile = undefined;
 
-	for (var i = 0; i < imagesArray.length; i++) // Remove the images that are not used anymore.
-		if (imagesArray[i][2] == false)
+	for (var i = 0; i < imagesArray.length; i++) {// Remove the images that are not used anymore.
+		if (imagesArray[i][2] == false) {
 			imagesArray = imagesArray.splice(imagesArray[i], 1);
+		}
+	}
 
 	conversionDiv.innerHTML = tempConversion; // Display the conversion.
 
 	$("#html-conversion a").each(function() { // Add target="_blank" to make links work.
-		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") // External link without correct syntax.
+		if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") { // External link without correct syntax.
 			$(this).attr("href", "http://" + $(this).attr("href"));
+		}
 		$(this).attr("target", "_blank");
 	});
 
@@ -121,20 +124,21 @@ function endOfConversion () {
 }
 
 function setEditorSyntax () {
-    chrome.storage.local.get("gfm",  function(mado) { 
-        if (mado["gfm"] != undefined)
-                editorSyntax = mado["gfm"]; 
-        else {
+    chrome.storage.local.get("gfm",  function(mado) {
+        if (mado["gfm"] != undefined) {
+                editorSyntax = mado["gfm"];
+        } else {
                 chrome.storage.local.set({ "gfm" : true });
-                editorSyntax = true; 
+                editorSyntax = true;
         }
         contentChanged();
     });
 }
 
-$.fn.setRange = function (start, end) { 
-    if (!end) 
-    	end = start; 
+$.fn.setRange = function (start, end) {
+    if (!end) {
+    	end = start;
+	}
     return this.each(function() {
         if (this.setSelectionRange) {
             this.focus();

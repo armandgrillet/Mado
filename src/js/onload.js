@@ -131,9 +131,9 @@ window.onload = function() {
                     );
                 }
             );          
-        }
-        else
+        } else {
             markdownSaved = undefined;
+        }
     });
 
     newDisplaySize(); // Set the class of the body.
@@ -183,15 +183,17 @@ window.onload = function() {
     });
     $(markdown).on("paste", newInputForStats);
     $(markdown).keydown(function(e){
-        if (e.keyCode == 9) // The user press tab        
+        if (e.keyCode == 9) { // The user press tab        
             e.preventDefault();
+        }
     });  
 
     $("#html-conversion").on("click", "a", function(e) {
         if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
             e.preventDefault();
-            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0)
+            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0) {
                 $("#html-conversion").scrollTop($(e.currentTarget.hash).position().top);
+            }
         }
     });
 
@@ -200,10 +202,11 @@ window.onload = function() {
     $(wordsDiv).on("click", counterSelection);
 
     $("#html-conversion").on("mouseenter", "a", function(e) {
-        if (e.currentTarget.href.indexOf("chrome-extension://") == -1)
+        if (e.currentTarget.href.indexOf("chrome-extension://") == -1) {
             linkUrlSpan.innerHTML = e.currentTarget.href;
-        else
+        } else {
             linkUrlSpan.innerHTML = e.currentTarget.hash;
+        }
         linkUrlSpan.className = "show";
     });
 
@@ -214,8 +217,9 @@ window.onload = function() {
     /* help.js */ 
     Mousetrap.bind(["command+h", "ctrl+h"], function(e) { $(helpButton).click(); return false; }); // Ctrl+h = display the help.
     $(help).keyup(function(e){
-        if(e.keyCode == 27) // The user press echap
+        if (e.keyCode == 27) { // The user press echap
             $(helpButton).click();
+        }
     });
     $(help).on("input propertychange", displayAnswers); // Launch the help when something is typed on the input.
 
@@ -229,13 +233,17 @@ window.onload = function() {
     $(imageBrowser).on("click", loadImage);
     $(galleriesButton).on("click", chooseGalleries);   
 
-    $(altInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-           applyImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelImage();
-        else
-            modifyImage();
+    $(altInput).keyup(function(e) {
+        switch (e.keyCode) {
+            case 13: // The user press enter.
+                applyImage();
+                break;
+            case 27: // The user press echap.
+                cancelImage();
+                break;
+            default:
+                modifyImage();
+        }
     });
 
     $(cancelImageButton).on("click", cancelImage);
@@ -247,12 +255,16 @@ window.onload = function() {
     }); 
 
     $(urlInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-           applyLink();
-        else if (e.keyCode == 27) // The user press echap
-            cancelLink();       
-        else
-            modifyLink();
+        switch (e.keyCode) {
+            case 13: // The user press enter.
+                applyLink();
+                break;
+            case 27: // The user press echap.
+                cancelLink();
+                break;
+            default:
+                modifyLink();
+        }
     });
 
     $(hypertextInput).keydown(function(e){
@@ -262,45 +274,65 @@ window.onload = function() {
         }
     })
     $(hypertextInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyLink();
-        else if (e.keyCode == 27) // The user press echap
-            cancelLink();        
-        else
-            modifyLink();        
+        switch (e.keyCode) {
+            case 13: // The user press enter.
+                applyLink();
+                break;
+            case 27: // The user press echap.
+                cancelLink();
+                break;
+            default:
+                modifyLink();
+        }      
     });
 
     $(cancelLinkButton).on("click", cancelLink);
 
     /* more.js */
-    $(settingsLine).on("click", function() { moreWindow("more/settings.html"); });
-    $(qAndALine).on("click", function() { moreWindow("more/qanda.html"); });
-    $(shortcutsLine).on("click", function() { moreWindow("more/shortcuts.html"); });
-    $(aboutLine).on("click", function() { moreWindow("more/about.html"); });
+    $(settingsLine).on("click", function() { 
+        moreWindow("more/settings.html"); 
+    });
+    $(qAndALine).on("click", function() { 
+        moreWindow("more/qanda.html"); 
+    });
+    $(shortcutsLine).on("click", function() { 
+        moreWindow("more/shortcuts.html"); 
+    });
+    $(aboutLine).on("click", function() { 
+        moreWindow("more/about.html"); 
+    });
     
     /* online-image.js */
     $(onlineImageUrlInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-           applyOnlineImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelOnlineImage();       
-        else
-            modifyOnlineImage();
+        switch (e.keyCode) {
+            case 13: // The user press enter.
+                applyOnlineImage();
+                break;
+            case 27: // The user press echap.
+                cancelOnlineImage();
+                break;
+            default:
+                modifyOnlineImage();
+        }
     });
 
     $(onlineImageAltInput).keydown(function(e){
-        if (e.keyCode == 9)  {
+        if (e.keyCode == 9) {
             e.preventDefault();
             $(onlineImageUrlInput).select();
         }
     })
     $(onlineImageAltInput).keyup(function(e){
-        if (e.keyCode == 13) // The user press enter
-            applyOnlineImage();
-        else if (e.keyCode == 27) // The user press echap
-            cancelOnlineImage();        
-        else
-            modifyOnlineImage();        
+        switch (e.keyCode) {
+            case 13: // The user press enter.
+                applyOnlineImage();
+                break;
+            case 27: // The user press echap.
+                cancelOnlineImage();
+                break;
+            default:
+                modifyOnlineImage();
+        }      
     });
 
     $(cancelOnlineImageButton).on("click", cancelOnlineImage);
@@ -309,18 +341,21 @@ window.onload = function() {
     displayRecentFiles();
 
     /* responsive.js */
-    if (chrome.app.window.current().getBounds().width < 1600)
+    if (chrome.app.window.current().getBounds().width < 1600) {
         addTopbarLabels();
+    }
 
     /* scroll.js */
     $(markdown).on ("scroll", function (e) {
-        if ($(markdown).is(":hover"))
+        if ($(markdown).is(":hover")) {
             asyncScroll("markdown");
+        }
     });
 
     $(conversionDiv).on ("scroll", function (e) {
-        if ($(conversionDiv).is(":hover"))
+        if ($(conversionDiv).is(":hover")) {
             asyncScroll("HTML");
+        }
     });
 
     /* stats.js */
@@ -341,8 +376,14 @@ window.onload = function() {
     $(switchToMD).on("click", function() { activate(this.id, "markdown-view"); });
     $(switchToBoth).on("click", function() { activate(this.id, "normal"); });
     $(switchToHTML).on("click", function() { activate(this.id, "conversion-view"); });
-    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { switchShortcuts("left"); return false; }); // Ctrl + -> = to the left.
-    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { switchShortcuts("right"); return false; }); // Ctrl + <- = to the right.
+    Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], function(e) { // Ctrl + -> = to the left.
+        switchShortcuts("left"); 
+        return false; }
+    ); 
+    Mousetrap.bind(["command+alt+right", "ctrl+alt+right"], function(e) { // Ctrl + <- = to the right.
+        switchShortcuts("right"); 
+        return false; 
+    }); 
 
     /* window.js */
     determineFrame();
@@ -352,7 +393,10 @@ window.onload = function() {
     $(saveQuitCloseButton).on("click", saveQuitCloseWindow);
 
     $(windowClose).on("click", closeWindow);
-    Mousetrap.bind(["command+w", "ctrl+w"], function(e) { closeWindow(); return false; }); // Ctrl+w = close.
+    Mousetrap.bind(["command+w", "ctrl+w"], function(e) { // Ctrl + w = close.
+        closeWindow(); 
+        return false; 
+    }); 
 
     $(windowMax).on("click", maximizeWindow);
 
