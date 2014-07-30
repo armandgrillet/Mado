@@ -13,65 +13,61 @@ module.exports = function(grunt) {
                     "!js/*.js",
                     "!js/more/*.js"
                 ],
-                dest: "../min/",
+                dest: "../min/"
             }
         },
 
         concat: { 
             mado: {
                 src: ["../src/js/*.js"],
-                dest: "../min/js/mado.js",
+                dest: "../min/js/mado.js"
             },
             moreAbout: {
                 src: [
                     ["../src/js/more/more-close-button.js", "../src/js/more/about-onload.js"],
                 ],
-                dest: "../min/js/more/about.js",
+                dest: "../min/js/more/about.js"
             },
             moreQanda: {
                 src: [
                     ["../src/js/more/more-close-button.js", "../src/js/more/qanda-onload.js"],
                 ],
-                dest: "../min/js/more/qanda.js",
+                dest: "../min/js/more/qanda.js"
             },
             moreSettings: {
                 src: [
                     ["../src/js/more/more-close-button.js", "../src/js/more/settings.js", "../src/js/more/settings-onload.js"],
                 ],
-                dest: "../min/js/more/settings.js",
+                dest: "../min/js/more/settings.js"
             },
             moreShortcuts: {
                 src: [
                     ["../src/js/more/more-close-button.js", "../src/js/more/shortcuts-onload.js"],
                 ],
-                dest: "../min/js/more/shortcuts.js",
+                dest: "../min/js/more/shortcuts.js"
+            }
+        },
+
+        uglify: {
+        	mado: {
+        		files: {
+        			"../min/js/mado.js": ["../min/js/mado.js"],
+        			"../min/js/more/about.js": ["../min/js/more/about.js"],
+        			"../min/js/more/qanda.js": ["../min/js/more/qanda.js"],
+        			"../min/js/more/settings.js": ["../min/js/more/settings.js"],
+        			"../min/js/more/shortcuts.js": ["../min/js/more/shortcuts.js"]
+        		}
             }
         },
 
         processhtml: {
             mado: {
                 files: {
-                    "../min/mado.html": ["../min/mado.html"]
-                }
-            },
-            moreAbout: {
-                files: {
-                    "../min/more/about.html": ["../min/more/about.html"]
-                }
-            },
-            moreQanda: {
-                files: {
-                    "../min/more/qanda.html": ["../min/more/qanda.html"]
-                }
-            },
-            moreSettings: {
-                files: {
-                    "../min/more/settings.html": ["../min/more/settings.html"]
-                }
-            },
-            moreShortcuts: {
-                files: {
-                    "../min/more/settings.html": ["../min/more/settings.html"]
+                    "../min/mado.html": ["../min/mado.html"],
+                    "../min/more/about.html": ["../min/more/about.html"],
+                    "../min/more/qanda.html": ["../min/more/qanda.html"],
+                    "../min/more/settings.html": ["../min/more/settings.html"],
+                    "../min/more/shortcuts.html": ["../min/more/shortcuts.html"]
                 }
             }
         },
@@ -94,8 +90,6 @@ module.exports = function(grunt) {
             }
         },
 
-        /* Closure Compiler automatique. */
-        
         usebanner: {
             html: {
                 options: {
@@ -135,11 +129,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-htmlclean");
     grunt.loadNpmTasks("grunt-processhtml");
     grunt.loadNpmTasks("grunt-yui-compressor");
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask("default", ["copy", "concat", "processhtml","htmlclean", "cssmin", "usebanner"]);
+    grunt.registerTask("default", ["copy", "concat", "uglify", "processhtml", "htmlclean", "cssmin", "usebanner"]);
 
 };
