@@ -1,4 +1,4 @@
-/* This document handles the "More" button and his behavior. */
+/* This document handles the "More" button and its behavior. */
 
 /* 
 * Variables (in alphabetical order). 
