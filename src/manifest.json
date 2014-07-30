@@ -11,16 +11,7 @@
   	"name": "__MSG_appName__",
   	"version": "0.3.1",
 
-    "author": "A+A",
-    "commands": {
-	"toggle-feature-foo": {
-		"suggested_key": {
-		  "default": "Ctrl+Shift+Y",
-		  "mac": "Command+Shift+Y"
-		},
-		"description": "Toggle feature foo"
-		}
-	},
+    "author": "Armand Grillet",
   	"description": "__MSG_appDesc__",
   	"file_handlers": {
 		"text": {
@@ -52,7 +43,7 @@
     		]
     	},
     	"storage",
-      "webview",
-      "<all_urls>"
+        "webview",
+        "<all_urls>"
     ] 	
 }
