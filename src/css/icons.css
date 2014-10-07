@@ -7,7 +7,7 @@
 
 @font-face {
 	font-family: 'Mado-Icons-Normal';
-	src: url('../fonts/Mado-Icons-Normal.svg#Mado-Icons-Normal') format('svg');
+	src: url('../fonts/Mado-Icons-Normal.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -81,7 +81,7 @@
 
 @font-face {
 	font-family: 'Mado-Little-Icons-Normal';
-	src: url('../fonts/Mado-Little-Icons-Normal.svg#Mado-Little-Icons-Normal') format('svg');
+	src: url('../fonts/Mado-Little-Icons-Normal.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
