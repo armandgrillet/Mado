@@ -102,8 +102,7 @@
 .little-icon-both,
 .little-icon-switch,
 .little-icon-delete,
-.little-icon-unsaved,
-.little-icon-saved {
+.little-icon-unsaved {
 	/* Typography */
 	font-family: 'Mado-Little-Icons-Normal';
 	speak: none;
