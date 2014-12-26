@@ -22,9 +22,7 @@ Editor.prototype = {
     constructor: Editor,
     convert: function() {
         if (this.markdown.val().length > 0) { // There is Markdown in the textarea.
-            marked(this.markdown.val(), $.proxy(function(err, content) {
-                this.conversionDiv.html(content);
-            }, this));
+            this.conversionDiv.html(marked(this.markdown.val()));
         } else { // No Markdown here.
             this.conversionDiv.html("See the result here");
         }
