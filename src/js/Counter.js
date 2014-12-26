@@ -39,6 +39,6 @@ Counter.prototype = {
     },
 
     update: function() {
-        Countable.once(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
+        Countable.count(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
     }
 }
