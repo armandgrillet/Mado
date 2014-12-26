@@ -38,8 +38,9 @@ Editor.prototype = {
     },
 
     getSelection: function() {
-        var selection = {"start": this.markdown.val().length, "end" : this.markdown.val().length};
-        if ((this.markdown[0].selectionStart != this.markdown[0].selectionEnd) || this.markdown.is(":focus")) {
+        var selection = {"start": undefined, "end" : undefined};
+
+        if (this.markdown.is(":focus")) {
             selection["start"] = this.markdown[0].selectionStart;
             selection["end"] = this.markdown[0].selectionEnd;
         }
