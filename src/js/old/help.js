@@ -154,14 +154,14 @@ function displayAnswers () {
 	if (help.value.length == 0) {
 		resultsContainer.className = "hidden"; // Hide the results container, there is nothing in it if there is nothing written in the help input.
 		resetAnswerDiv(3);
-		setResultsHeight();	
+		setResultsHeight();
 	}
 	else {
 		if (help.value.length < 3) {
 			resultsContainer.className = "one-result no-result";
 			resetAnswerDiv(2);
 			switch (help.value.length) { // The input has to have 3 characters minimum to launch the function.
-				case 1: 
+				case 1:
 					document.getElementById("answer-1").innerHTML = "Add two more characters";
 					break;
 				case 2:
@@ -176,7 +176,7 @@ function displayAnswers () {
 }
 
 function resetAnswerDiv(begin) {
-	for (var i = begin; i <= 3; i++) { 
+	for (var i = begin; i <= 3; i++) {
 		if (document.getElementById("answer-" + i).innerHTML == "") {
 			i = 3;
 		} else {
@@ -203,10 +203,9 @@ function setResultsHeight() {
 			$("#result-" + i).css("height", 0);
 			$("#result-" + i).css("display", "none");
 		}
-		
+
 	}
 	$(resultsContainer).css("height", totalHeight + "px");
-
 }
 
 function switchResult (numResult) {
