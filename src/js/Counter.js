@@ -1,6 +1,7 @@
-function Counter() {
+function Counter(countedDiv) {
     /* Outlets */
     this.charsDiv = $("#character-nb");
+    this.countedDiv = countedDiv;
     this.linkUrlSpan = $("#link-url");
     this.nameDiv = $("#doc-name");
     this.wordsDiv = $("#word-nb");
@@ -37,7 +38,7 @@ Counter.prototype = {
         }
     },
 
-    update: function(div) {
-        Countable.once(div, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
+    update: function() {
+        Countable.once(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
     }
 }

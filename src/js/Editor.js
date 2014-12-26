@@ -5,7 +5,7 @@ function Editor() {
     this.markdown = $("#markdown");
 
     /* Variables */
-    this.counter = new Counter();
+    this.counter = new Counter(this.markdown[0]);
     this.linkManager = new LinkManager(this);
     this.ImageManager = new ImageManager(this);
 
@@ -26,7 +26,7 @@ Editor.prototype = {
         } else { // No Markdown here.
             this.conversionDiv.html("See the result here");
         }
-        this.counter.update(this.markdown[0]);
+        this.counter.update();
     },
 
     focus: function() {
