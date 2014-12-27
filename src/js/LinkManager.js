@@ -9,9 +9,9 @@ function LinkManager(editor) {
 
     /* Variables */
     this.editor = editor;
-    this.initialText = "";
+    this.initialSelection = "";
     this.startSelection = 0;
-    this.initialEndSelection = 0;
+    this.firstEndSelection = 0;
     this.endSelection = 0;
 
     /* Events */
@@ -79,40 +79,33 @@ LinkManager.prototype = {
         } else {
             this.linkDisplayer.toggleClass("hidden");
             this.editor.focus();
-            this.editor.setRange(this.startSelection, this.endSelection);
+            this.editor.setSelection(this.endSelection, this.endSelection); // The caret is at the end of the link.
         }
     },
     cancel: function() {
-        var markdown = this.editor.getMarkdown();
-        this.editor.setMarkdown(markdown.substring(0, this.startSelection) + this.initialText + markdown.substring(this.endSelection, markdown.length));
         this.linkDisplayer.toggleClass("hidden");
-        this.editor.focus();
-        console.log("On souhaite mettre le range de " + this.startSelection + " à " + this.initialEndSelection);
-        this.editor.setRange(this.startSelection, this.initialEndSelection);
+        this.editor.replaceSelection(this.initialSelection, this.beginSelection, this.endSelection, "select");
     },
     display: function() {
         this.linkDisplayer.toggleClass("hidden");
         var selection = this.editor.getSelection();
-        var initialText = markdown.value.substring(selection["start"], selection["end"]); // Shortcut
-        this.initialText = initialText; // Save it for later.
-        this.startSelection = selection["start"];
-        this.initialEndSelection = selection["end"];
-        this.endSelection = selection["end"];
+        var initialSelection = selection.text; // Shortcut
+        this.initialSelection = initialSelection; // Save it for later.
+        this.startSelection = selection.start;
+        this.firstEndSelection = selection.end;
+        this.endSelection = selection.end;
 
-        if (/\[.*\]\(.*\)/.test(initialText) && initialText[0] == '[' && initialText[initialText.length - 1] == ')') {
-            this.hypertextInput.val(initialText.match(/\[.*\]/)[0].substring(1, initialText.match(/\[.*\]/)[0].length - 1));
-            this.urlInput.val(initialText.match(/\(.*\)/)[0].substring(1, initialText.match(/\(.*\)/)[0].length - 1));
+        if (/\[.*\]\(.*\)/.test(initialSelection) && initialSelection[0] == '[' && initialSelection.slice(-1) == ')') {
+            this.hypertextInput.val(initialSelection.match(/\[.*\]/)[0].substring(1, initialSelection.match(/\[.*\]/)[0].length - 1));
+            this.urlInput.val(initialSelection.match(/\(.*\)/)[0].substring(1, initialSelection.match(/\(.*\)/)[0].length - 1));
         } else {
-            this.hypertextInput.val(initialText);
+            this.hypertextInput.val(initialSelection);
         }
-        this.editor.setRange(selection["start"], this.endSelection);
-
         this.urlInput.focus();
     },
     reset: function() {
         this.urlInput.val("");
         this.hypertextInput.val("");
-        this.initialText = this.editor.getMarkdown();
     },
     update: function() {
         var link;
@@ -121,12 +114,7 @@ LinkManager.prototype = {
         } else {
             link = '[' + this.hypertextInput.val() + "](" + this.urlInput.val() + ')';
         }
-        console.log("Lien : " + link);
-        var markdown = this.editor.getMarkdown();
-        console.log("Partie avant de Markdown : " + markdown.substring(0, this.startSelection));
-        console.log("Partie arrière de Markdown : " + markdown.substring(this.endSelection, markdown.length));
-        this.editor.setMarkdown(markdown.substring(0, this.startSelection) + link + markdown.substring(this.endSelection, markdown.length));
-        this.endSelection = (markdown.substring(0, this.startSelection) + link).length;
-        console.log("Nouvelle fin : " + this.endSelection);
+        this.editor.setMarkdown(link, this.startSelection, this.endSelection);
+        this.endSelection = this.startSelection + link.length;
     }
 }

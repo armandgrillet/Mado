@@ -38,35 +38,21 @@ Editor.prototype = {
     },
 
     getSelection: function() {
-        var selection = {"start": undefined, "end" : undefined};
-
-        if (this.markdown.is(":focus")) {
-            selection["start"] = this.markdown[0].selectionStart;
-            selection["end"] = this.markdown[0].selectionEnd;
-        }
-        return selection;
+        return this.markdown.getSelection();
     },
 
-    setMarkdown: function(newMarkdown) {
-        this.markdown.val(newMarkdown);
+    replaceSelection: function(newSelectedText, start, end) {
+        this.markdown.setSelection(start, end);
+        console.log(newSelectedText);
+        this.markdown.replaceSelectedText(newSelectedText, "select");
+    },
+
+    setMarkdown: function(newMarkdown, start, end) {
+        this.markdown.val(this.markdown.val().substring(0, start) + newMarkdown + this.markdown.val().substring(end, this.markdown.val().length));
         this.convert();
     },
 
-    setRange: function(start, end) {
-        if (start < 0 || start > end || end > this.markdown.val().length) {
-            throw 'Incorrect range';
-        }
-        return this.markdown.each($.proxy(function(start, end) {
-            if (this.markdown.setSelectionRange) {
-                this.markdown.focus();
-                this.markdown.setSelectionRange(start, end);
-            } else if (this.markdown.createTextRange) {
-                newRange = this.createTextRange();
-                range.collapse(true);
-                range.moveEnd('character', end);
-                range.moveStart('character', start);
-                range.select();
-            }
-        }, this));
+    setSelection: function(start, end) {
+        this.markdown.setSelection(start, end);
     }
 }
