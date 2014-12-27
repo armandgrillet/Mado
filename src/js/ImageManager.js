@@ -14,9 +14,9 @@ function ImageManager(editor) {
     this.currentGallery; // Used when the code is searching an image to know where it is.
     this.galleriesList = []; // List who contains the galleries.
     this.startSelection;
-    this.initialEndSelection;
+    this.firstEndSelection;
     this.endSelection;
-    this.initialText;
+    this.initialSelection;
     this.image; // The content who is added.
     this.imageLoaded; // The path of the image selected.
     this.imagePath; // The path of the image.
@@ -70,15 +70,12 @@ ImageManager.prototype = {
         if (this.imageLoaded != undefined) {
             this.imageDisplayer.attr("class", "tool-displayer hidden");
             this.editor.focus();
-            this.editor.setRange(startSelect, newEndSelect);
+            this.editor.setSelection(this.endSelection, this.endSelection); // The caret is at the end of the link.
         }
     },
     cancel: function() {
-        var markdown = this.editor.getMarkdown();
-        this.editor.setMarkdown(markdown.substring(0, this.startSelection) + this.initialText + markdown.substring(this.endSelection, markdown.length));
-        this.imageDisplayer.attr("class", "tool-displayer hidden");
-        this.editor.focus();
-        this.editor.setRange(this.startSelection, this.initialEndSelection);
+        this.linkDisplayer.toggleClass("hidden");
+        this.editor.replaceSelection(this.initialSelection, this.startSelection, this.endSelection, "select");
     },
     chooseGalleries: function() {
         chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.updateGalleries(); }, this)); // Let the user chooses his folders.
@@ -105,22 +102,22 @@ ImageManager.prototype = {
         this.imageDisplayer.toggleClass("hidden");
         var selection = this.editor.getSelection();
         this.startSelection = selection["start"];
-        this.initialEndSelection = selection["end"];
+        this.firstEndSelection = selection["end"];
         this.endSelection = selection["end"];
-        this.initialText = this.editor.getMarkdown().substring(this.startSelection, this.endSelection);
-        var initialText = this.initialText;
-        if (/!\[.*\]\(.*\)/.test(initialText) &&
-            initialText[0] == '!' &&
-            initialText[initialText.length - 1] == ')') {
-            if (/!\[.*\]\(.*\s+".*"\)/.test(initialText)) { // Optional title is here.
-                this.imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
+        this.initialSelection = this.editor.getMarkdown().substring(this.startSelection, this.endSelection);
+        var initialSelection = this.initialSelection;
+        if (/!\[.*\]\(.*\)/.test(initialSelection) &&
+            initialSelection[0] == '!' &&
+            initialSelection[initialSelection.length - 1] == ')') {
+            if (/!\[.*\]\(.*\s+".*"\)/.test(initialSelection)) { // Optional title is here.
+                this.imageLoaded = initialSelection.match(/\(.*\)/)[0].substring(2, initialSelection.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
             } else {
-                this.imageLoaded = initialText.match(/\(.*\)/)[0].substring(2, initialText.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
+                this.imageLoaded = initialSelection.match(/\(.*\)/)[0].substring(2, initialSelection.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
             }
             this.setImageBrowserText(this.imageLoaded.substring(this.imageLoaded.replace(/\\/g, "/").lastIndexOf('/') + 1));
-            this.altInput.val(initialText.match(/!\[.+\]/)[0].substring(2, initialText.match(/!\[.+\]/)[0].length - 1));
+            this.altInput.val(initialSelection.match(/!\[.+\]/)[0].substring(2, initialSelection.match(/!\[.+\]/)[0].length - 1));
         } else {
-            this.altInput.val(initialText);
+            this.altInput.val(initialSelection);
         }
         this.editor.setRange(this.startSelection, this.endSelection);
     },
@@ -175,7 +172,6 @@ ImageManager.prototype = {
         }
     },
     fileNotFound: function() {
-
         tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.imagePath.substring(this.imagePath.replace(/\\/g, "/").lastIndexOf('/') + 1) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
         if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
             displayImages();
@@ -186,7 +182,7 @@ ImageManager.prototype = {
     reset: function() {
         this.imageBrowser.html("Choose an image");
         this.altInput.val("");
-        this.initialText = this.editor.getMarkdown();
+        this.initialSelection = this.editor.getMarkdown();
         this.imageLoaded = undefined;
     },
     setImageBrowser: function(path) {
@@ -207,7 +203,7 @@ ImageManager.prototype = {
         }
 
         if (this.endSelection == undefined) {
-            this.endSelection = this.initialEndSelection;
+            this.endSelection = this.firstEndSelection;
         }
         this.editor.setMarkdown(markdown.substring(0, this.startSelection) + this.image + markdown.substring(this.endSelection, markdown.length));
         this.endSelection = (markdown.substring(0, this.startSelection) + this.image).length;

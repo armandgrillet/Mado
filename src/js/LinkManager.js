@@ -84,7 +84,7 @@ LinkManager.prototype = {
     },
     cancel: function() {
         this.linkDisplayer.toggleClass("hidden");
-        this.editor.replaceSelection(this.initialSelection, this.beginSelection, this.endSelection, "select");
+        this.editor.replaceSelection(this.initialSelection, this.startSelection, this.endSelection, "select");
     },
     display: function() {
         this.linkDisplayer.toggleClass("hidden");
