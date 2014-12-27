@@ -84,13 +84,12 @@ ImageManager.prototype = {
         var t = this;
         chrome.fileSystem.chooseEntry({
             type: "openFile",
-            acceptsMultiple: false,
             accepts:[{ mimeTypes: ["image/*"] }]
-        }, function(entry, entries) {
+        }, function(entry) {
             if (entry) {
                 chrome.fileSystem.getDisplayPath(entry[0], function(path) {
-                    console.log(path);
-                    t.setImageBrowser(path.substring(path.replace(/\\/g, "/").lastIndexOf('/') + 1));
+                    var imageName = path.substring(path.replace(/\\/g, "/").lastIndexOf('/') + 1);
+                    t.setImageBrowser(imageName);
                     t.imageLoaded = path.replace(/\\/g, "/");
                     t.update();
                     t.altInput.focus();
@@ -185,28 +184,23 @@ ImageManager.prototype = {
         this.initialSelection = this.editor.getMarkdown();
         this.imageLoaded = undefined;
     },
-    setImageBrowser: function(path) {
-        if (path.length > 15) { // Too long to be beautiful.
-            this.imageBrowser.html(path.substring(0, 6) + "(…)" + path.substring(path.length - 6));
+    setImageBrowser: function(imageName) {
+        if (imageName.length > 15) { // Too long to be beautiful.
+            this.imageBrowser.html(imageName.substring(0, 6) + "(…)" + imageName.substring(imageName.length - 6));
         } else {
-            this.imageBrowser.html(path);
+            this.imageBrowser.html(imageName);
         }
     },
     update: function() {
-        this.image = "![" + this.altInput.val() + "](" + this.imageLoaded + ')';
-        var markdown = this.editor.getMarkdown();
-
-        if (this.imageDiv != undefined) {
-            this.imageDiv.text(image);
+        var image;
+        if (this.imageLoaded == undefined) {
+            image = "![" + this.altInput.val() + "]()";
         } else {
-            this.editor.setMarkdown(markdown + this.image);
+            image = "![" + this.altInput.val() + "](" + this.imageLoaded + ')';
         }
 
-        if (this.endSelection == undefined) {
-            this.endSelection = this.firstEndSelection;
-        }
-        this.editor.setMarkdown(markdown.substring(0, this.startSelection) + this.image + markdown.substring(this.endSelection, markdown.length));
-        this.endSelection = (markdown.substring(0, this.startSelection) + this.image).length;
+        this.editor.setMarkdown(image, this.startSelection, this.endSelection);
+        this.endSelection = this.startSelection + image.length;
     },
     updateGalleries: function() {
         chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, $.proxy(function(results) {
