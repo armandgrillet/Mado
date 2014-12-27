@@ -123,15 +123,19 @@ input[type="text"] {
 	border: 1px solid #f0f0f0;
 
 	/* Misc */
-	transition: border-color 0.8s ease 0.2s;
+	transition: border-color 0.2s ease;
 }
 
 input[type="text"]:focus { border-color: #e0e0e0; }
 
-input[type="text"].flash {
-	/* Visual */
-	border-color: #3ea2f9;
+input[type="text"].flash { -webkit-animation: flash 0.8s; }
 
-	/* Misc */
-	transition: none;
+@-webkit-keyframes flash {
+	0%, 25% {
+		border-color: #3ea2f9;
+	}
+	100% {
+		border-color: #e0e0e0;
+		-webkit-animation-timing-function: ease;
+	}
 }

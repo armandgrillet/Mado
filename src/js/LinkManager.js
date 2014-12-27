@@ -75,7 +75,9 @@ LinkManager.prototype = {
         if (this.urlInput.val() == "") {
             this.urlInput.attr("class", "tool-first-item flash");
             this.urlInput.focus();
-            this.urlInput.attr("class", "tool-first-item");
+            setTimeout($.proxy(function() {
+                this.urlInput.attr("class", "tool-first-item");
+            }, this), 800);
         } else {
             this.linkDisplayer.toggleClass("hidden");
             this.editor.focus();
