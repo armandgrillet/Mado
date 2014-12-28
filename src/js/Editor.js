@@ -8,6 +8,7 @@ function Editor() {
     this.displayManager = new DisplayManager(this);
     this.linkManager = new LinkManager(this);
     this.ImageManager = new ImageManager(this);
+    this.webImageManager = new WebImageManager(this);
 
     /* Events */
     this.markdown.on("input propertychange", $.proxy(function () {
@@ -43,7 +44,6 @@ Editor.prototype = {
 
     replaceSelection: function(newSelectedText, start, end) {
         this.markdown.setSelection(start, end);
-        console.log(newSelectedText);
         this.markdown.replaceSelectedText(newSelectedText, "select");
     },
 

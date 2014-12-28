@@ -7,7 +7,7 @@ function DisplayManager(editor) {
     this.editor = editor;
     this.galleries;
     this.imagesDisplayed = new ImageArray();
-    this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
+    this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images' type.
     this.imageFound;
     this.loadedImagePath;
     this.imagePosition = 0;
@@ -28,17 +28,11 @@ DisplayManager.prototype = {
                     this.displayImages(); // Recursivity.
                 } else if (this.loadedImagePath.substring(0, 7) == "http://" || this.loadedImagePath.substring(0, 8) == "https://") {
                     if (navigator.onLine) { // Online images
-                        if (imagePositionInArray > -1) { // Image is already stored.
-                            tempConversion = tempConversion.substring(0, this.imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
-                            imagesArray[imagePositionInArray][2] = true; // The file has been used.
-                        } else { // The array doesn't exist yet.
-                            researching	= true;
-                            updateOnline(this.loadedImagePath); // Get the ID of the file.
-                        }
+                        this.getOnlineImage();
                     } else {
                         tempConversion = tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Internet not available</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
                     }
-                } else { // The image is not in the array.
+                } else {
                     this.getOfflineImage();
                 }
             } else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
@@ -108,6 +102,18 @@ DisplayManager.prototype = {
             this.galleryAnalysis(0);
         }, this));
     },
+    getOnlineImage: function() {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = $.proxy(function() {
+            var webImage = window.URL.createObjectURL(xhr.response);
+            this.imagesDisplayed.addImage(this.loadedImagePath, webImage); // Add a new line.
+            this.tempConversion = this.tempConversion.substring(0, this.imagePosition) + webImage + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
+            this.displayImages();
+        }, this);
+        xhr.open('GET', this.loadedImagePath, true);
+        xhr.send(this.loadedImagePath);
+    },
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.
             this.tempConversion = marked(this.editor.getMarkdown());
@@ -116,5 +122,4 @@ DisplayManager.prototype = {
             this.conversionDiv.html("See the result here");
         }
     }
-
 }

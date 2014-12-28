@@ -11,31 +11,23 @@ function ImageManager(editor) {
 
     /* Variables */
     this.editor = editor;
-    this.currentGallery; // Used when the code is searching an image to know where it is.
-    this.galleriesList = []; // List who contains the galleries.
     this.startSelection;
     this.firstEndSelection;
     this.endSelection;
     this.initialSelection;
-    this.image; // The content who is added.
     this.imageLoaded; // The path of the image selected.
-    this.imagePath; // The path of the image.
-    this.imagePosition = 0; // Used to don't keep on the same part of the document.
-    this.imagesArray = []; // All the images on the file.
-    this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
-    this.rightFile; // If false the JS is looking for an image.
-    this.researching; // If we're searching an image.
-    this.tempConversion;
-    this.imagePathsArray = [];
-    this.imagePositionInArray = 0;
 
     /* Events */
     $(document).click($.proxy(function(e) {
-        if ($(e.target).closest("#image-button").length && this.imageDisplayer.attr("class", "tool-displayer hidden")) {
-            this.reset();
-            this.display();
-        } else if (!$(e.target).closest("#image-insertion-box").length && this.imageDisplayer.attr("class", "tool-displayer")) {// The user doesn't click on the image insertion box.
-            this.imageDisplayer.attr("class", "tool-displayer hidden");
+        if ($(e.target).closest("#image-button").length) {
+            if(this.imageDisplayer.attr("class") == "tool-displayer hidden") {
+                this.reset();
+                this.display();
+            } else {
+                this.imageDisplayer.toggleClass("hidden"); // This is not a cancellation.
+            }
+        } else if (this.imageDisplayer.attr("class") == "tool-displayer" && !$(e.target).closest("#image-insertion-displayer").length) {
+            this.imageDisplayer.toggleClass("hidden");
         }
     }, this));
 
@@ -74,7 +66,7 @@ ImageManager.prototype = {
         }
     },
     cancel: function() {
-        this.linkDisplayer.toggleClass("hidden");
+        this.imageDisplayer.toggleClass("hidden");
         this.editor.replaceSelection(this.initialSelection, this.startSelection, this.endSelection, "select");
     },
     chooseGalleries: function() {
@@ -100,22 +92,23 @@ ImageManager.prototype = {
     display: function() {
         this.imageDisplayer.toggleClass("hidden");
         var selection = this.editor.getSelection();
-        var initialSelection = selection.text; // Shortcut
         this.initialSelection = selection.text;
         this.startSelection = selection.start;
         this.firstEndSelection = selection.end;
         this.endSelection = selection.end;
-        if (/!\[.*\]\(.*\)/.test(initialSelection) && initialSelection[0] == '!' && initialSelection.slice(-1) == ')') {
-            if (/!\[.*\]\(.*\s+".*"\)/.test(initialSelection)) { // Optional title is here.
-                this.imageLoaded = initialSelection.match(/\(.*\)/)[0].substring(2, initialSelection.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
+
+        if (/!\[.*\]\(.*\)/.test(selection.text) && selection.text[0] == '!' && selection.text.slice(-1) == ')') {
+            if (/!\[.*\]\(.*\s+".*"\)/.test(selection.text)) { // Optional title is here.
+                this.imageLoaded = selection.text.match(/\(.*\)/)[0].substring(2, selection.text.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
             } else {
-                this.imageLoaded = initialSelection.match(/\(.*\)/)[0].substring(2, initialSelection.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
+                this.imageLoaded = selection.text.match(/\(.*\)/)[0].substring(2, selection.text.match(/\(.*\)/)[0].length - 1).replace(/\\/g, "/");
             }
-            this.setImageBrowserText(this.imageLoaded.substring(this.imageLoaded.replace(/\\/g, "/").lastIndexOf('/') + 1));
-            this.altInput.val(initialSelection.match(/!\[.+\]/)[0].substring(2, initialSelection.match(/!\[.+\]/)[0].length - 1));
+            this.setImageBrowser(this.imageLoaded.substring(this.imageLoaded.replace(/\\/g, "/").lastIndexOf('/') + 1));
+            this.altInput.val(selection.text.match(/!\[.+\]/)[0].substring(2, selection.text.match(/!\[.+\]/)[0].length - 1));
         } else {
-            this.altInput.val(initialSelection);
+            this.altInput.val(selection.text);
         }
+        this.altInput.focus();
     },
     reset: function() {
         this.imageBrowser.html("Choose an image");

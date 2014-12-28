@@ -30,11 +30,10 @@ function HelpManager() {
     /* Events */
     $(document).click($.proxy(function(e) {
         if ($(e.target).closest("#help-button").length && this.helpDisplayer.attr("class") == "tool-displayer hidden") { // Click on the help button with the help input hide.
+            this.reset();
             this.helpDisplayer.toggleClass("hidden");
             this.help.focus();
-        } else if (this.helpDisplayer.attr("class") != "tool-displayer hidden" &&
-            ! $(e.target).closest("#help-input").length &&
-            ! $(e.target).closest("#help-results-container").length) { // The user doesn't click on the help input nor help results (with help displayed)
+        } else if (this.helpDisplayer.attr("class") != "tool-displayer hidden" && !$(e.target).closest("#help-input-displayer").length) { // The user doesn't click on the help input nor help results (with help displayed).
             this.reset();
             this.resultsContainer.attr("class", "hidden"); // Hide the results container
             this.helpDisplayer.toggleClass("hidden");
@@ -61,7 +60,7 @@ function HelpManager() {
 HelpManager.prototype = {
     constructor: HelpManager,
     reset: function() {
-        this.help.value = ""; // Reset the input of the help
+        this.help.val("");
         this.resetAnswerDivs(1);
     },
     resetAnswerDivs: function(begin) {

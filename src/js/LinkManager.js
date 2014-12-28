@@ -16,17 +16,20 @@ function LinkManager(editor) {
 
     /* Events */
     $(document).click($.proxy(function(e) {
-        if ($(e.target).closest("#link-button").length && this.linkDisplayer.attr("class") == "tool-displayer hidden") {
-            this.reset();
-            this.display();
-        } else if (this.linkDisplayer.attr("class") == "tool-displayer" && (! $(e.target).closest("#link-insertion-displayer").length || $(e.target).closest("#insert-link").length)) {
-            if ($(e.target).closest("#insert-link").length) {
-                this.apply();
+        if ($(e.target).closest("#link-button").length) {    
+            if(this.linkDisplayer.attr("class") == "tool-displayer hidden") {
+                this.reset();
+                this.display();
             } else {
-                this.linkDisplayer.toggleClass("hidden");
+                this.linkDisplayer.toggleClass("hidden"); // This is not a cancellation.
             }
+        } else if (this.linkDisplayer.attr("class") == "tool-displayer" && !$(e.target).closest("#link-insertion-displayer").length) {
+            this.linkDisplayer.toggleClass("hidden"); // This is not a cancellation.
         }
     }, this));
+
+    this.insertLink.on("click", $.proxy(function(e){ this.apply(); }, this));
+    this.cancelLinkButton.on("click", $.proxy(function(e){ this.cancel(); }, this));
 
     Mousetrap.bind(["command+k", "ctrl+k"], $.proxy(function(e) { // Ctrl+k = link.
         this.linkButton.click();
@@ -65,8 +68,6 @@ function LinkManager(editor) {
             this.update();
         }
     }, this));
-
-    this.cancelLinkButton.on("click", $.proxy(function(e){ this.cancel(); }, this));
 }
 
 LinkManager.prototype = {
