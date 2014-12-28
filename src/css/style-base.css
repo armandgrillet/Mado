@@ -131,11 +131,12 @@ input[type="text"]:focus { border-color: #e0e0e0; }
 input[type="text"].flash { -webkit-animation: flash 0.8s; }
 
 @-webkit-keyframes flash {
-	0%, 25% {
-		border-color: #3ea2f9;
-	}
+	0%, 25% { border-color: #3ea2f9; }
 	100% {
+		/* Visual */
 		border-color: #e0e0e0;
-		-webkit-animation-timing-function: ease;
+
+		/* Misc */
+		-webkit-animation-timing-function: ease-out;
 	}
 }

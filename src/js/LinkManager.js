@@ -73,11 +73,11 @@ LinkManager.prototype = {
     constructor: LinkManager,
     apply: function() {
         if (this.urlInput.val() == "") {
-            this.urlInput.attr("class", "tool-first-item flash");
+            this.urlInput.addClass("flash"); // If the URL input is empty, a flash is triggered on it so that the user knows he has to fill it.
             this.urlInput.focus();
             setTimeout($.proxy(function() {
-                this.urlInput.attr("class", "tool-first-item");
-            }, this), 800);
+                this.urlInput.removeClass("flash");
+            }, this), 800); // The "flash" class is deleted after 0.8 seconds (the flash animation's duration).
         } else {
             this.linkDisplayer.toggleClass("hidden");
             this.editor.focus();
