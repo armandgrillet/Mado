@@ -1,11 +1,11 @@
 function Editor() {
     /* Outlets */
     this.centerLine = $("#center-line-container");
-    this.conversionDiv = $("#html-conversion");
     this.markdown = $("#markdown");
 
     /* Variables */
     this.counter = new Counter(this.markdown[0]);
+    this.displayManager = new DisplayManager(this);
     this.linkManager = new LinkManager(this);
     this.ImageManager = new ImageManager(this);
 
@@ -21,16 +21,16 @@ function Editor() {
 Editor.prototype = {
     constructor: Editor,
     convert: function() {
-        if (this.markdown.val().length > 0) { // There is Markdown in the textarea.
-            this.conversionDiv.html(marked(this.markdown.val()));
-        } else { // No Markdown here.
-            this.conversionDiv.html("See the result here");
-        }
+        this.displayManager.update();
         this.counter.update();
     },
 
     focus: function() {
         this.markdown.focus();
+    },
+
+    getLength: function() {
+        return this.markdown.val().length;
     },
 
     getMarkdown: function() {

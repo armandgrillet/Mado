@@ -78,7 +78,7 @@ ImageManager.prototype = {
         this.editor.replaceSelection(this.initialSelection, this.startSelection, this.endSelection, "select");
     },
     chooseGalleries: function() {
-        chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.updateGalleries(); }, this)); // Let the user chooses his folders.
+        chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.editor.update(); }, this)); // Let the user chooses his folders.
     },
     chooseImage: function() {
         var t = this;
@@ -87,7 +87,7 @@ ImageManager.prototype = {
             accepts:[{ mimeTypes: ["image/*"] }]
         }, function(entry) {
             if (entry) {
-                chrome.fileSystem.getDisplayPath(entry[0], function(path) {
+                chrome.fileSystem.getDisplayPath(entry, function(path) {
                     var imageName = path.substring(path.replace(/\\/g, "/").lastIndexOf('/') + 1);
                     t.setImageBrowser(imageName);
                     t.imageLoaded = path.replace(/\\/g, "/");
@@ -100,14 +100,12 @@ ImageManager.prototype = {
     display: function() {
         this.imageDisplayer.toggleClass("hidden");
         var selection = this.editor.getSelection();
-        this.startSelection = selection["start"];
-        this.firstEndSelection = selection["end"];
-        this.endSelection = selection["end"];
-        this.initialSelection = this.editor.getMarkdown().substring(this.startSelection, this.endSelection);
-        var initialSelection = this.initialSelection;
-        if (/!\[.*\]\(.*\)/.test(initialSelection) &&
-            initialSelection[0] == '!' &&
-            initialSelection[initialSelection.length - 1] == ')') {
+        var initialSelection = selection.text; // Shortcut
+        this.initialSelection = selection.text;
+        this.startSelection = selection.start;
+        this.firstEndSelection = selection.end;
+        this.endSelection = selection.end;
+        if (/!\[.*\]\(.*\)/.test(initialSelection) && initialSelection[0] == '!' && initialSelection.slice(-1) == ')') {
             if (/!\[.*\]\(.*\s+".*"\)/.test(initialSelection)) { // Optional title is here.
                 this.imageLoaded = initialSelection.match(/\(.*\)/)[0].substring(2, initialSelection.match(/\(.*\s+"/)[0].length - 2).replace(/\\/g, "/");
             } else {
@@ -117,65 +115,6 @@ ImageManager.prototype = {
             this.altInput.val(initialSelection.match(/!\[.+\]/)[0].substring(2, initialSelection.match(/!\[.+\]/)[0].length - 1));
         } else {
             this.altInput.val(initialSelection);
-        }
-        this.editor.setRange(this.startSelection, this.endSelection);
-    },
-    galleryAnalysis: function(index) {
-        if (! this.rightFile) {
-            if (index < this.galleriesList.length) {
-                this.currentGallery = index;
-                this.galleriesList.forEach(
-                    function(item, indx, arr) { // For each gallery.
-                        if (indx == index && this.imagePath != undefined && this.rightFile == false) // If we're looking for a file.
-                            item.root.createReader().readEntries($.proxy(function(entriesPath) { getImages(entriesPath); }, this)); // Get the images of the folder.
-                        }
-                    )
-                } else {
-                    fileNotFound();
-                }
-            } else {
-                imagesArray.length = 0;
-                modifyImage();
-            }
-    },
-    getImage: function(entryPath) {
-        var t = this;
-        galleriesList[currentGallery].root.getFile(entryPath, {create: false}, function(fileEntry) { // Time to get the ID of the file.
-            fileEntry.file(function(theFile) {
-                var reader = new FileReader();
-                reader.onloadend = function(e) { // We have the file (.result).
-                    t.imagesArray.push([imagePath, this.result, true]); // Add a new line.
-                    t.tempConversion = t.tempConversion.substring(0, t.imagePosition) + this.result + t.tempConversion.substring(t.imagePosition + t.imagePath.length); // Replace the path.
-                    t.rightFile = true;
-                    if (t.tempConversion.indexOf("<img src=\"", t.imagePosition) != -1) {
-                        t.displayImages();
-                    } else { // The end.
-                        t.endOfConversion();
-                    }
-                };
-                reader.readAsDataURL(theFile);
-            });
-        });
-    },
-    getImages: function(entriesPath) {
-        for (var i = 0; i < entriesPath.length && this.rightFile == false; i++) { // All the files in the repository, the correct file is not found yet.
-            if (entriesPath[i].isDirectory && this.imagePath.indexOf(entriesPath[i].fullPath) != -1) {// If the file is a directory and the right directory.
-                entriesPath[i].createReader().readEntries($.proxy(function(entriesPath) { getImages(entriesPath); }, this)); // Recursivity.
-                break;
-            } else if (imagePath.indexOf(entriesPath[i].fullPath) != -1) {// It's the correct image!
-                this.getImage(entriesPath[i].fullPath);
-                break;
-            } else if (i == (entriesPath.length - 1)) { // End of the gallery.
-                this.galleryAnalysis(currentGallery + 1);
-            }
-        }
-    },
-    fileNotFound: function() {
-        tempConversion = tempConversion.substring(0, imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.imagePath.substring(this.imagePath.replace(/\\/g, "/").lastIndexOf('/') + 1) +" not found</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + tempConversion.substring(imagePosition + imagePath.length);
-        if (tempConversion.indexOf("<img src=\"", imagePosition) != -1) {
-            displayImages();
-        } else { // The end.
-            endOfConversion();
         }
     },
     reset: function() {
@@ -201,11 +140,5 @@ ImageManager.prototype = {
 
         this.editor.setMarkdown(image, this.startSelection, this.endSelection);
         this.endSelection = this.startSelection + image.length;
-    },
-    updateGalleries: function() {
-        chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, $.proxy(function(results) {
-            this.galleriesList = results;
-            this.galleryAnalysis(0);
-        }, this));
     }
 }
