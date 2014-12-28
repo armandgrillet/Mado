@@ -10,21 +10,23 @@ function DisplayManager(editor) {
     this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images.
     this.imageFound;
     this.loadedImagePath;
-    this.imagePosition;
+    this.imagePosition = 0;
     this.tempConversion; // Temporary conversion before it is displayed in the conversionDiv.
 }
 
 DisplayManager.prototype = {
     constructor : DisplayManager,
     displayImages: function() {
-        console.log("displayImages");
         if (this.tempConversion.indexOf("<img src=\"", this.imagePosition) > -1) {
             this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + 10;
             this.loadedImagePath = this.tempConversion.substring(this.imagePosition, this.tempConversion.indexOf("\"", this.imagePosition));
 
             if (this.imgFormats.indexOf(this.loadedImagePath.substr(this.loadedImagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {
-                /*
-                if (this.loadedImagePath.substring(0, 7) == "http://" || this.loadedImagePath.substring(0, 8) == "https://") {
+                if (this.imagesDisplayed.hasPath(this.loadedImagePath)) { // Image is already stored.
+                    var image = this.imagesDisplayed.getImage(this.loadedImagePath);
+                    this.tempConversion = this.tempConversion.substring(0, this.imagePosition) + image + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
+                    this.displayImages(); // Recursivity.
+                } else if (this.loadedImagePath.substring(0, 7) == "http://" || this.loadedImagePath.substring(0, 8) == "https://") {
                     if (navigator.onLine) { // Online images
                         if (imagePositionInArray > -1) { // Image is already stored.
                             tempConversion = tempConversion.substring(0, this.imagePosition) + imagesArray[imagePositionInArray][1] + tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
@@ -36,24 +38,16 @@ DisplayManager.prototype = {
                     } else {
                         tempConversion = tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">Internet not available</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nointernet.png 1x, img/nointernet@2x.png 2x" + tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
                     }
-                } else */
-                if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") { // Not already translated
-                    if (this.imagesDisplayed.hasPath(this.loadedImagePath)) { // Image is already stored.
-                        var image = this.imagesDisplayed.getImage(this.loadedImagePath);
-                        tempConversion = tempConversion.substring(0, this.imagePosition) + image + tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
-                        this.imagesDisplayed.setUsed(this.loadedImagePath);
-                    } else { // The image is not in the array.
-                        console.log("We're searching an offline image");
-                        this.imageFound = false;
-                        this.getOfflineImage();
-                    }
+                } else { // The image is not in the array.
+                    this.getOfflineImage();
                 }
-            }
-            else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
+            } else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
                 this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">This is not an image</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);;
                 this.displayImages();
             }
         } else {
+            this.imagesDisplayed.clean();
+            this.imagePosition = 0;
             this.finishDisplaying();
         }
     },
@@ -61,7 +55,6 @@ DisplayManager.prototype = {
         this.conversionDiv.html(this.tempConversion);
     },
     galleryAnalysis: function(index) {
-        console.log("Gallery Analysis avec index " + index);
         var t = this;
         if (! this.imageFound) {
             if (index < this.galleries.length) {
@@ -88,7 +81,7 @@ DisplayManager.prototype = {
                     this.getImages(entries);
                 }, this));
                 break;
-            } else if (this.loadedImagePath.indexOf(entries[i].fullPath) != -1) {// It's the correct image!
+            } else if (this.loadedImagePath.indexOf(entries[i].fullPath) != -1) { // It is the correct image!
                 var t = this;
                 t.galleries[t.currentGallery].root.getFile(entries[i].fullPath, {create: false}, function(fileEntry) { // Time to get the ID of the file.
                     fileEntry.file(function(theFile) {
@@ -104,11 +97,12 @@ DisplayManager.prototype = {
                 });
                 break;
             } else if (i == (entries.length - 1)) { // End of the gallery.
-                t.galleryAnalysis(t.currentGallery + 1); // We're searching the next gallery.
+                this.galleryAnalysis(this.currentGallery + 1); // We're searching the next gallery.
             }
         }
     },
     getOfflineImage: function() {
+        this.imageFound = false;
         chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, $.proxy(function(galleries) {
             this.galleries = galleries;
             this.galleryAnalysis(0);

@@ -1,16 +1,19 @@
 function ImageArray() {
-    this.images = []; // This array has 3 columns: Path | Data | Used during last conversion.
+    this.images = new Array(); // This array has 3 columns: Path | Data | Used during last conversion.
 }
 
 ImageArray.prototype = {
     constructor: ImageArray,
     addImage: function(imagePath, imageData) {
+        console.log("On ajoute " + imagePath);
         this.images.push([imagePath, imageData, true]);
     },
     clean: function() {
         for (var i = 0; i < this.images.length; i++) {
-            if (this.images[i][2] == false) {
-                images.splice(i, 1);
+            if (this.images[i][2]) {
+                this.images[i][2] = false;
+            } else {
+                this.images.splice(i, 1);
                 i--;
             }
         }
@@ -21,7 +24,8 @@ ImageArray.prototype = {
     getImage: function(imagePath) {
         for (var i = 0; i < this.images.length; i++) { // Put all the names
             if (this.images[i][0] == imagePath) {
-                return images[i];
+                this.setUsed(imagePath);
+                return this.images[i][1];
             } else if (i == this.images.length -1) {
                 throw "Image's path not available in image array.";
             }
