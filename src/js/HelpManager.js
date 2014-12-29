@@ -29,14 +29,14 @@ function HelpManager() {
 
     /* Events */
     $(document).click($.proxy(function(e) {
-        if ($(e.target).closest("#help-button").length && this.helpDisplayer.attr("class") == "tool-displayer hidden") { // Click on the help button with the help input hide.
+        if ($(e.target).closest("#help-button").length && this.helpDisplayer.hasClass("hidden")) { // Click on the help button with the help input hidden.
             this.reset();
-            this.helpDisplayer.toggleClass("hidden");
+            this.helpDisplayer.removeClass("hidden");
             this.help.focus();
-        } else if (this.helpDisplayer.attr("class") != "tool-displayer hidden" && !$(e.target).closest("#help-input-displayer").length) { // The user doesn't click on the help input nor help results (with help displayed).
+        } else if (!this.helpDisplayer.hasClass("hidden") && !$(e.target).closest("#help-input-displayer").length) { // The user doesn't click on the help input nor help results (with help displayed).
             this.reset();
-            this.resultsContainer.attr("class", "hidden"); // Hide the results container
-            this.helpDisplayer.toggleClass("hidden");
+            this.resultsContainer.addClass("hidden"); // Hide the results container
+            this.helpDisplayer.addClass("hidden");
         }
     }, this));
 
@@ -63,6 +63,7 @@ HelpManager.prototype = {
         this.help.val("");
         this.resetAnswerDivs(1);
     },
+
     resetAnswerDivs: function(begin) {
         for (var i = begin; i <= 3; i++) {
             if ($("#answer-" + i).html() == "") {
@@ -74,6 +75,7 @@ HelpManager.prototype = {
             }
         }
     },
+
     searchAnswers: function () {
         for (var i = 1; i <= 3; i++) { // Reset the results' position.
             if ($("#result-" + i).attr("class") == "result switched") {
@@ -91,10 +93,10 @@ HelpManager.prototype = {
                 this.resetAnswerDivs(2);
                 switch (this.help.val().length) { // The input has to have 3 characters minimum to launch the function.
                 case 1:
-                    $("#answer-1").html("Add two more characters");
+                    $("#answer-1").html(chrome.i18n.getMessage("msgTwoMoreCharacters"));
                     break;
                 case 2:
-                    $("#answer-1").html("Add one more character");
+                    $("#answer-1").html(chrome.i18n.getMessage("msgOneMoreCharacter"));
                     break;
                 }
             } else {
@@ -113,14 +115,14 @@ HelpManager.prototype = {
                             $("#answer-" + (maxAnswers + 1)).html("<h1 class=\"help-title\">" + term.substring(0, wordPos) + "<span class=\"match\">" + term.substr(wordPos, this.help.val().length) + "</span>" + term.substring(wordPos + this.help.val().length) + "</h1>" + result); // Put the answer in the appropriate div.
                             document.getElementById("example-" + (maxAnswers + 1)).innerHTML = example; // Put the answer in the appropriate div.
                             maxAnswers++; // You can't have more than 3 answers.
-                            wordSearched = "We don't want to find again this word";
+                            break;
                         }
                         j++;
                     }
                 }
                 switch (maxAnswers) {
                 case 0: // Nothing found.
-                    $("#answer-1").html("No help found.");
+                    $("#answer-1").html(chrome.i18n.getMessage("msgNoHelpFound"));
                     this.resultsContainer.attr("class", "one-result no-result");
                     this.resetAnswerDivs(2); // This is 2 and not 1 to display the result "No help found."
                     break;
@@ -140,6 +142,7 @@ HelpManager.prototype = {
         }
         this.setResultsHeight();
     },
+
     setResultsHeight: function() {
         var totalHeight = 0;
         for (var i = 1; i <= 3; i++) {// Check all the results, depending on the number of results
@@ -159,6 +162,7 @@ HelpManager.prototype = {
         }
         this.resultsContainer.css("height", totalHeight + "px");
     },
+
     switch: function(resultNumber) {
         $("#result-" + resultNumber).toggleClass("switched");
         this.setResultsHeight();

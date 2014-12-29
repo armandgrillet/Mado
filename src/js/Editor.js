@@ -47,6 +47,10 @@ Editor.prototype = {
         this.markdown.replaceSelectedText(newSelectedText, "select");
     },
 
+    setGalleries: function() {
+        this.imageManager.setGalleries();
+    },
+
     setMarkdown: function(newMarkdown, start, end) {
         this.markdown.val(this.markdown.val().substring(0, start) + newMarkdown + this.markdown.val().substring(end, this.markdown.val().length));
         this.convert();

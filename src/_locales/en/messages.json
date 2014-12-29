@@ -5,6 +5,7 @@
   	"appDesc": {
   		"message": "Mado is a Markdown editor application. You can use it to take notes, write blog posts or edit documents."
   	},
+
    "helpHeaders0": {
       "message": "Headers"
    },
@@ -181,5 +182,27 @@
    },
    "helpQuestionResult": {
       "message": "Seriously?"
+   },
+
+   "msgOneMoreCharacter": {
+      "message": "Add one more character"
+   },
+   "msgTwoMoreCharacters": {
+      "message": "Add two more characters"
+   },
+   "msgNoHelpFound": {
+      "message": "No help found."
+   },
+   "msgNoTextInEditor": {
+      "message": "See the result here"
+   },
+   "msgNoInternet": {
+      "message": "Internet not available"
+   },
+   "msgNotAnImage": {
+      "message": "This is not an image"
+   },
+   "msgNotFound": {
+      "message": "not found"
    }
 }

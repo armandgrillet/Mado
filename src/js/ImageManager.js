@@ -20,20 +20,20 @@ function ImageManager(editor) {
     /* Events */
     $(document).click($.proxy(function(e) {
         if ($(e.target).closest("#image-button").length) {
-            if(this.imageDisplayer.attr("class") == "tool-displayer hidden") {
+            if(this.imageDisplayer.hasClass("hidden")) {
                 this.reset();
                 this.display();
             } else {
                 this.imageDisplayer.toggleClass("hidden"); // This is not a cancellation.
             }
-        } else if (this.imageDisplayer.attr("class") == "tool-displayer" && !$(e.target).closest("#image-insertion-displayer").length) {
+        } else if (!this.imageDisplayer.hasClass("hidden") && !$(e.target).closest("#image-insertion-displayer").length) {
             this.imageDisplayer.toggleClass("hidden");
         }
     }, this));
 
     this.insertImageButton.on("click", $.proxy(function(e){ this.apply(); }, this));
     this.imageBrowser.on("click", $.proxy(function(e){ this.chooseImage(); }, this));
-    this.galleriesButton.on("click", $.proxy(function(e){ this.chooseGalleries(); }, this));
+    this.galleriesButton.on("click", $.proxy(function(e){ this.setGalleries(); }, this));
     this.cancelImageButton.on("click", $.proxy(function(e){ this.cancel(); }, this));
 
     this.altInput.keyup($.proxy(function(e) {
@@ -65,13 +65,12 @@ ImageManager.prototype = {
             this.editor.setSelection(this.endSelection, this.endSelection); // The caret is at the end of the link.
         }
     },
+
     cancel: function() {
         this.imageDisplayer.toggleClass("hidden");
         this.editor.replaceSelection(this.initialSelection, this.startSelection, this.endSelection, "select");
     },
-    chooseGalleries: function() {
-        chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.editor.update(); }, this)); // Let the user chooses his folders.
-    },
+
     chooseImage: function() {
         var t = this;
         chrome.fileSystem.chooseEntry({
@@ -89,6 +88,7 @@ ImageManager.prototype = {
             }
         });
     },
+
     display: function() {
         this.imageDisplayer.toggleClass("hidden");
         var selection = this.editor.getSelection();
@@ -110,12 +110,18 @@ ImageManager.prototype = {
         }
         this.altInput.focus();
     },
+
     reset: function() {
         this.imageBrowser.html("Choose an image");
         this.altInput.val("");
         this.initialSelection = this.editor.getMarkdown();
         this.imageLoaded = undefined;
     },
+
+    setGalleries: function() {
+        chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.editor.update(); }, this)); // Let the user chooses his folders.
+    },
+
     setImageBrowser: function(imageName) {
         if (imageName.length > 15) { // Too long to be beautiful.
             this.imageBrowser.html(imageName.substring(0, 6) + "(…)" + imageName.substring(imageName.length - 6));
@@ -123,6 +129,7 @@ ImageManager.prototype = {
             this.imageBrowser.html(imageName);
         }
     },
+    
     update: function() {
         var image;
         if (this.imageLoaded == undefined) {

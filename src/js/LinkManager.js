@@ -16,15 +16,15 @@ function LinkManager(editor) {
 
     /* Events */
     $(document).click($.proxy(function(e) {
-        if ($(e.target).closest("#link-button").length) {    
+        if ($(e.target).closest("#link-button").length) {
             if(this.linkDisplayer.attr("class") == "tool-displayer hidden") {
                 this.reset();
                 this.display();
             } else {
-                this.linkDisplayer.toggleClass("hidden"); // This is not a cancellation.
+                this.linkDisplayer.addClass("hidden"); // This is not a cancellation.
             }
         } else if (this.linkDisplayer.attr("class") == "tool-displayer" && !$(e.target).closest("#link-insertion-displayer").length) {
-            this.linkDisplayer.toggleClass("hidden"); // This is not a cancellation.
+            this.linkDisplayer.removeClass("hidden"); // This is not a cancellation.
         }
     }, this));
 

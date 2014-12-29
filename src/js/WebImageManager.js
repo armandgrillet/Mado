@@ -18,14 +18,14 @@ function WebImageManager(editor) {
     /* Events */
     $(document).click($.proxy(function(e) {
         if ($(e.target).closest("#webimage-button").length) {
-            if(this.webImageDisplayer.attr("class") == "tool-displayer hidden") {
+            if (this.webImageDisplayer.hasClass("hidden")) {
                 this.reset();
                 this.display();
             } else {
                 this.webImageDisplayer.toggleClass("hidden"); // This is not a cancellation.
             }
-        } else if (this.webImageDisplayer.attr("class") == "tool-displayer" && !$(e.target).closest("#webimage-insertion-box").length) {
-            this.webImageDisplayer.toggleClass("hidden");
+        } else if (!this.webImageDisplayer.hasClass("hidden") && !$(e.target).closest("#webimage-insertion-box").length) {
+            this.webImageDisplayer.removeClass("hidden");
         }
     }, this));
 
