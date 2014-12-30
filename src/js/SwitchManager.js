@@ -11,14 +11,15 @@ function SwitchManager() {
 
     chrome.app.window.current().onBoundsChanged.addListener($.proxy(function () {
         if (chrome.app.window.current().getBounds().width < 1160 && this.switchToBoth.hasClass("activated")) {
-            this.switchToMD.click(); // Markdown is set as default view.
+            this.switchToMD.click(); // Markdown set as default view.
         } else if (chrome.app.window.current().getBounds().width >= 1160 && this.previousSize < 1160) {
-            this.switchToBoth.click(); // viewswitch.js
+            this.switchToBoth.click();
         }
         this.previousSize = chrome.app.window.current().getBounds().width;
     }, this));
 
     this.switchToMD.add(this.switchToBoth).add(this.switchToHTML).on("click", $.proxy(function(e) { this.activate(e.currentTarget.id); }, this));
+
     Mousetrap.bind(["command+alt+left", "ctrl+alt+left"], $.proxy(function(e) { // Ctrl + -> = to the left.
         this.switch("left");
         return false;
@@ -28,12 +29,16 @@ function SwitchManager() {
         return false;
     }, this));
 
+    /* Initialization */
     if (chrome.app.window.current().getBounds().width > 1159) { // Big window
         this.switchToBoth.addClass("activated");
     } else {
-        this.switchToMD.addClass("switch-button activated");
-        this.workspace.attr("class", "markdown-view");
+        this.switchToMD.addClass("activated");
+        this.workspace.add(this.switchCursor).attr("class", "markdown-view");
     }
+
+
+
 }
 
 SwitchManager.prototype = {
