@@ -1,29 +1,14 @@
 function Window() {
-    this.cancelCloseButton = document.getElementById("cancel");
-    this.closePopUp = document.getElementById("close-alert-displayer"); // The div that contains all the close divs.
-    this.head = document.getElementsByTagName("head")[0]; // The "head" section of the main app.
-    this.quitCloseButton = document.getElementById("quit");
-    this.saveAndQuitCloseButton = document.getElementById("save-quit");
-    this.saveState = document.getElementById("save-state");
-    this.closeContainer = document.getElementById("window-close");
-    this.close = document.getElementById("window-close-button");
-    this.maximize = document.getElementById("window-maximize");
-    this.minimize = document.getElementById("window-minimize");
-
-    chrome.app.window.current().onBoundsChanged.addListener(function () {
-        if (chrome.app.window.current().getBounds().width < 1160 && switchToBoth.className == "switch-button activated") {
-            switchToMD.click(); // Markdown is set as default view.
-        } else if (chrome.app.window.current().getBounds().width >= 1160 && lastBounds.width < 1160) {
-            switchToBoth.click(); // viewswitch.js
-        }
-
-        if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600) {
-            addTopbarLabels();
-        } else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600) {
-            removeTopbarLabels();
-        }
-        lastBounds = chrome.app.window.current().getBounds();
-    });
+    this.cancelCloseButton = $("#cancel");
+    this.closePopUp = $("#close-alert-displayer"); // The div that contains all the close divs.
+    this.head = $("head")[0]; // The "head" section of the main app.
+    this.quitCloseButton = $("#quit");
+    this.saveAndQuitCloseButton = $("#save-quit");
+    this.saveState = $("#save-state");
+    this.closeContainer = $("#window-close");
+    this.close = $("#window-close-button");
+    this.maximize = $("#window-maximize");
+    this.minimize = $("#window-minimize");
 }
 
 Window.prototype = {
