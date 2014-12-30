@@ -7,7 +7,7 @@ function Editor() {
     this.counter = new Counter(this.markdown[0]);
     this.displayManager = new DisplayManager(this);
     this.linkManager = new LinkManager(this);
-    this.ImageManager = new ImageManager(this);
+    this.imageManager = new ImageManager(this);
     this.webImageManager = new WebImageManager(this);
 
     /* Events */

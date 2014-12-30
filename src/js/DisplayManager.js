@@ -1,5 +1,6 @@
 function DisplayManager(editor) {
     /* Outlets */
+    this.convertedDiv = $("#markdown");
     this.conversionDiv = $("#html-conversion");
 
     /* Variables */
@@ -11,9 +12,20 @@ function DisplayManager(editor) {
     this.imageFound;
     this.loadedImagePath;
     this.imagePosition = 0;
+    this.scrollManager = new ScrollManager(this.convertedDiv, this.conversionDiv);
     this.styleManager = new StyleManager();
     this.tempConversion; // Temporary conversion before it is displayed in the conversionDiv.
     this.urlManager = new UrlManager(this.conversionDiv);
+
+    /* Events */
+    this.conversionDiv.on("click", "a", function(e) {
+        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
+            e.preventDefault();
+            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0) {
+                $("#html-conversion").scrollTop($(e.currentTarget.hash).position().top);
+            }
+        }
+    });
 }
 
 DisplayManager.prototype = {
@@ -52,22 +64,21 @@ DisplayManager.prototype = {
         this.conversionDiv.html(this.tempConversion);
 
         $("#html-conversion a").each(function() { // Add target="_blank" to make links work.
-        if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") { // External link without correct syntax.
-            $(this).attr("href", "http://" + $(this).attr("href"));
-        }
-        $(this).attr("target", "_blank");
-    });
+            if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") { // External link without correct syntax.
+                $(this).attr("href", "http://" + $(this).attr("href"));
+            }
+            $(this).attr("target", "_blank");
+        });
 
-    $("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
-},
-galleryAnalysis: function(index) {
-    console.log("Visite de la galerie " + index);
-    var t = this;
-    if (! this.imageFound) {
-        if (index < this.galleries.length) {
-            this.currentGallery = index;
-            this.galleries.forEach(
-                function(item, indx, arr) { // For each gallery.
+        $("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
+    },
+    galleryAnalysis: function(index) {
+        console.log("Visite de la galerie " + index);
+        var t = this;
+        if (! this.imageFound) {
+            if (index < this.galleries.length) {
+                this.currentGallery = index;
+                this.galleries.forEach(function(item, indx, arr) { // For each gallery.
                     item.root.createReader().readEntries(function(entries) {
                         t.getImages(entries);
                     });
@@ -125,6 +136,7 @@ galleryAnalysis: function(index) {
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.
             this.tempConversion = marked(this.editor.getMarkdown());
+            this.scrollManager.check
             this.displayImages(); // We will finish displaying it after displaying every images.
         } else { // No Markdown here.
             this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor"));
