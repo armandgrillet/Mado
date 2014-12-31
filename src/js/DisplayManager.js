@@ -26,6 +26,18 @@ function DisplayManager(editor) {
             }
         }
     });
+    chrome.storage.onChanged.addListener($.proxy(function (changes, namespace) {
+        for (key in changes) {
+            switch (key) {
+            case "gfm":
+                this.setSyntax();
+                break;
+            }
+        }
+    }, this));
+
+    /* Initialization */
+    this.setSyntax();
 }
 
 DisplayManager.prototype = {
@@ -54,7 +66,6 @@ DisplayManager.prototype = {
                 this.displayImages();
             }
         } else {
-            console.log("Fin de la conversion");
             this.imagesDisplayed.clean();
             this.imagePosition = 0;
             this.finishDisplaying();
@@ -132,6 +143,16 @@ DisplayManager.prototype = {
         }, this);
         xhr.open('GET', this.loadedImagePath, true);
         xhr.send(this.loadedImagePath);
+    },
+    setSyntax: function() {
+        chrome.storage.local.get("gfm", function(mado) {
+            if (mado["gfm"] != undefined) {
+                marked.setOptions({ gfm : mado["gfm"] });
+            } else {
+                chrome.storage.local.set({ "gfm" : true });
+                marked.setOptions({ gfm : true });
+            }
+        });
     },
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.

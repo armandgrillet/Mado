@@ -5,7 +5,6 @@ function ImageArray() {
 ImageArray.prototype = {
     constructor: ImageArray,
     addImage: function(imagePath, imageData) {
-        console.log("On ajoute " + imagePath);
         this.images.push([imagePath, imageData, true]);
     },
     clean: function() {
