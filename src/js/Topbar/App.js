@@ -1,12 +1,13 @@
-function App() {
+function App(editor) {
     /* Outlets */
     this.moreButton = $("#more-button");
     this.moreDisplayer = $("#more-displayer");
     this.moreBox = $("#more-container");
 
     /* Variables */
+    this.newFileManager = new NewFileManager(editor);
     this.switchManager = new SwitchManager();
-    
+
     /* Events */
     this.moreButton.on("click", $.proxy(function(e) { this.moreDisplayer.toggleClass("hidden"); }, this));
 

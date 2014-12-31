@@ -11,9 +11,7 @@ function Editor() {
     this.webImageManager = new WebImageManager(this);
 
     /* Events */
-    this.markdown.on("input propertychange", $.proxy(function () {
-        this.convert();
-    }, this));
+    this.markdown.on("input propertychange", $.proxy(function () { this.convert(); }, this));
 
     /* Initialization */
     this.convert();
