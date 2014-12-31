@@ -44,7 +44,6 @@ DisplayManager.prototype = {
     constructor : DisplayManager,
     displayImages: function() {
         if (this.tempConversion.indexOf("<img src=\"", this.imagePosition) > -1) {
-            console.log("Une image à afficher");
             this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + 10;
             this.loadedImagePath = this.tempConversion.substring(this.imagePosition, this.tempConversion.indexOf("\"", this.imagePosition));
             if (this.imgFormats.indexOf(this.loadedImagePath.substr(this.loadedImagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {
