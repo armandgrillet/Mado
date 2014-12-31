@@ -5,7 +5,9 @@ function App(editor) {
     this.moreBox = $("#more-container");
 
     /* Variables */
-    this.newFileManager = new NewFileManager(editor);
+    this.editor = editor;
+    this.newFileManager = new NewFileManager(this);
+    this.openFileManager = new OpenFileManager(this);
     this.switchManager = new SwitchManager();
 
     /* Events */
@@ -22,5 +24,18 @@ function App(editor) {
 }
 
 App.prototype = {
-    constructor: App
+    constructor: App,
+    focusOnEditor: function() {
+        this.editor.focus();
+    },
+    getEditorText: function() {
+        return this.editor.getMarkdown();
+    },
+    newFile: function() {
+        this.newFileManager.apply();
+    },
+    setEditorFile: function(name, content) {
+        this.editor.setMarkdown(content);
+        this.editor.saveWithName(name);
+    }
 }

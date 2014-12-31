@@ -1,9 +1,9 @@
-function NewFileManager(editor) {
+function NewFileManager(app) {
     /* Outlets */
     this.newButton = $("#new");
 
     /* Variables */
-    this.editor = editor;
+    this.app = app;
 
     /* Events */
     this.newButton.on("click", $.proxy(function () { this.apply(); }, this));
@@ -11,8 +11,10 @@ function NewFileManager(editor) {
 }
 
 NewFileManager.prototype = {
+    constructor: NewFileManager,
     apply: function() {
-        if (this.editor.getMarkdown().length > 0 && this.editor.getMarkdown() != chrome.i18n.getMessage("msgFirstLaunch")) {
+        if (this.app.getEditorText().length > 0 && this.app.getEditorText() != chrome.i18n.getMessage("msgFirstLaunch")) {
+            console.log("On créer une nouvelle fenêtre");
             chrome.app.window.create("mado.html", {
                 bounds: {
                     left: (window.screenX + 20), // "+ 20" to watch this is a new window.
@@ -24,9 +26,9 @@ NewFileManager.prototype = {
                 minWidth: 750,
                 minHeight: 330
             });
-        } else if (this.editor.getMarkdown() == chrome.i18n.getMessage("msgFirstLaunch")) {
-            this.editor.setMarkdown("");
-            this.editor.focus();
+        } else if (this.app.getEditorText() == chrome.i18n.getMessage("msgFirstLaunch")) {
+            this.app.setEditorText("");
+            this.app.focusOnEditor();
         }
     }
 }
