@@ -8,6 +8,7 @@ function App(editor) {
     this.newFileManager = new NewFileManager(this);
     this.openFileManager = new OpenFileManager(this);
     this.printManager = new PrintManager();
+    this.recentFilesManager = new RecentFilesManager(this);
     this.saveFileManager = new SaveFileManager(this);
     this.saveFileAsManager = new SaveFileAsManager(this);
     this.switchManager = new SwitchManager();

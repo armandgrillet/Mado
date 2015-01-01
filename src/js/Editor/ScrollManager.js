@@ -1,4 +1,7 @@
 function ScrollManager(firstZone, secondZone) {
+    /* Outlets */
+    this.centerLine = $("#center-line-container");
+
     /* Variables */
     this.atTheBottom;
     this.firstZone = firstZone;
@@ -40,9 +43,9 @@ ScrollManager.prototype = {
         this.lastFirstZoneHeight = this.firstZone[0].scrollHeight;
 
         if (markdown.clientHeight < markdown.scrollHeight) {
-            $(centerLine).css("display", "none");
+            this.centerLine.css("display", "none");
         } else {
-            $(centerLine).css("display", "block");
+            this.centerLine.css("display", "block");
         }
     }
 }

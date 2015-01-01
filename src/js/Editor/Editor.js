@@ -73,8 +73,10 @@ Editor.prototype = {
             } else { // No file loaded, we chekc if it is the first launch.
                 chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
                     if (mado["firstLaunch"] == undefined) {
-                        t.setMarkdown(chrome.i18n.getMEssage("msgFirstLaunch"));
+                        t.setMarkdown(chrome.i18n.getMessage("msgFirstLaunch"));
                         chrome.storage.local.set({ "firstLaunch" : false });
+                    } else {
+                        t.displayManager.update();
                     }
                 });
             }

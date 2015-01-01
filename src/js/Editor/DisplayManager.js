@@ -156,7 +156,7 @@ DisplayManager.prototype = {
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.
             this.tempConversion = marked(this.editor.getMarkdown());
-            this.scrollManager.check
+            this.scrollManager.checkZonesHeight();
             this.displayImages(); // We will finish displaying it after displaying every images.
         } else { // No Markdown here.
             this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor"));
