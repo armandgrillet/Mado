@@ -9,6 +9,13 @@ function SaveStateManager(editor) {
 
 SaveStateManager.prototype = {
     constructor: SaveStateManager,
+    isSaved: function() {
+        if (this.editor.getMarkdown() == this.savedText) {
+            return true;
+        } else {
+            return false;
+        }
+    },
     save: function() {
         this.savedText = this.editor.getMarkdown();
         this.update();

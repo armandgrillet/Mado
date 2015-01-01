@@ -38,6 +38,9 @@ App.prototype = {
     isNamed: function() {
         return this.editor.isNamed();
     },
+    isSaved: function() {
+        return this.editor.isSaved();
+    },
     newFile: function() {
         this.newFileManager.apply();
     },

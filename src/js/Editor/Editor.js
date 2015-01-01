@@ -84,11 +84,11 @@ Editor.prototype = {
     },
 
     isNamed: function() {
-        if (this.nameManager.getName() != undefined) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.nameManager.isNamed();
+    },
+
+    isSaved: function() {
+        return this.saveStateManager.isSaved();
     },
 
     replaceSelection: function(newSelectedText, start, end) {

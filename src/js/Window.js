@@ -1,6 +1,7 @@
-function Window() {
+function Window(app) {
+    /* Outlets */
     this.cancelCloseButton = $("#cancel");
-    this.closePopUp = $("#close-alert-displayer"); // The div that contains all the close divs.
+    this.closeDisplayer = $("#close-alert-displayer"); // The div that contains all the close divs.
     this.head = $("head")[0]; // The "head" section of the main app.
     this.quitCloseButton = $("#quit");
     this.saveAndQuitCloseButton = $("#save-quit");
@@ -9,39 +10,54 @@ function Window() {
     this.close = $("#window-close-button");
     this.maximize = $("#window-maximize");
     this.minimize = $("#window-minimize");
+
+    /* Variables */
+    this.app = app;
+
+    /* Events */
+    this.quitCloseButton.on("click", $.proxy(function(e) { this.quitCloseWindow(); }, this));
+    this.saveAndQuitCloseButton.on("click", $.proxy(function(e) { this.saveQuitCloseWindow(); }, this));
+
+    this.close.on("click", $.proxy(function(e) { this.closeWindow(); }, this));
+    Mousetrap.bind(["command+w", "ctrl+w"], $.proxy(function(e) { // Ctrl + w = close.
+        this.closeWindow();
+        return false;
+    }, this));
+
+    this.maximize.on("click", function(e) {
+        if (! chrome.app.window.current().isMaximized()) {
+            chrome.app.window.current().maximize();
+        } else { // Restore the last bounds.
+            chrome.app.window.current().restore();
+        }
+    });
+
+    this.minimize.on("click", function(e) {
+        chrome.app.window.current().minimize();
+    });
+
+    /* Initialization */
+    this.init();
 }
 
 Window.prototype = {
     constructor: Window,
-    checkSaveState: function() {
-        if (markdown.value != "") {
-            if (markdownSaved == undefined || markdown.value != markdownSaved) {
-                saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-            } else {
-                saveState.innerHTML = "";
-            }
-        } else {
-            if (markdownSaved != undefined) {
-                saveState.innerHTML = "<span class=\"little-icon-unsaved\"></span>";
-            } else {
-                saveState.innerHTML = "";
-            }
-        }
-    },
 
     closeWindow: function() {
-        chrome.runtime.getBackgroundPage(function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
+        chrome.runtime.getBackgroundPage( function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
             backgroundPage.newBounds(chrome.app.window.current().getBounds());
         });
-        if (saveState.innerHTML == "<span class=\"little-icon-unsaved\"></span>") { // Save not made.
-            closeDisplayer.className = "visible";
-        } else {
-            sendClosing(); // stats.js
+        if (this.app.isSaved()) { // Save not made.
             chrome.app.window.current().close();
+        } else {
+            this.closeDisplayer.attr("class", "visible");
         }
     },
 
-    determineFrame: function() {
+    init: function() {
+        var operatingSystem;
+        var frameStylesheetLink = document.createElement("link");
+
         frameStylesheetLink.setAttribute("rel", "stylesheet");
         frameStylesheetLink.setAttribute("type", "text/css");
 
@@ -56,23 +72,11 @@ Window.prototype = {
         }
 
         frameStylesheetLink.setAttribute("href", "css/window-frame-" + operatingSystem + ".css");
-        windowClose.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-close");
-        windowMax.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-maximize");
-        windowMin.setAttribute("class", "cta little-icon-" + operatingSystem .substring(0,3) + "-minimize");
+        this.close.attr("class", "cta little-icon-" + operatingSystem.substring(0,3) + "-close");
+        this.maximize.attr("class", "cta little-icon-" + operatingSystem.substring(0,3) + "-maximize");
+        this.minimize.attr("class", "cta little-icon-" + operatingSystem.substring(0,3) + "-minimize");
 
-        head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
-    },
-
-    maximizeWindow: function() {
-        if (! chrome.app.window.current().isMaximized()) {
-            chrome.app.window.current().maximize();
-        } else { // Restore the last bounds.
-            chrome.app.window.current().restore();
-        }
-    },
-
-    minimizeWindow: function() {
-        chrome.app.window.current().minimize();
+        this.head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
     },
 
     quitCloseWindow: function() {

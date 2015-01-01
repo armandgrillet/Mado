@@ -12,6 +12,13 @@ NameManager.prototype = {
     getName: function() {
         return this.name;
     },
+    isNamed: function() {
+        if (this.name != undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    },
     set: function(newName) {
         this.name = newName;
         this.windowName.html(newName + "&nbsp;-");
