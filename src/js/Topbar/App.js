@@ -8,6 +8,8 @@ function App(editor) {
     this.editor = editor;
     this.newFileManager = new NewFileManager(this);
     this.openFileManager = new OpenFileManager(this);
+    this.saveFileManager = new SaveFileManager(this);
+    this.saveFileAsManager = new SaveFileAsManager(this);
     this.switchManager = new SwitchManager();
 
     /* Events */
@@ -31,11 +33,26 @@ App.prototype = {
     getEditorText: function() {
         return this.editor.getMarkdown();
     },
+    isNamed: function() {
+        return this.editor.isNamed();
+    },
     newFile: function() {
         this.newFileManager.apply();
     },
-    setEditorFile: function(name, content) {
+    save: function() {
+        this.editor.save();
+    },
+    saveAs: function() {
+        this.saveFileAsManager.apply();
+    },
+    setEditorEntry: function(entry) {
+        this.saveFileManager.setFileToSave(entry);
+        this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
+    },
+    setEditorWithEntry: function(entry, content) {
+        this.saveFileManager.setFileToSave(entry);
         this.editor.setMarkdown(content);
-        this.editor.saveWithName(name);
-    }
+        this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
+    },
+
 }

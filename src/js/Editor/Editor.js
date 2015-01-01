@@ -17,16 +17,6 @@ function Editor() {
 
     /* Initialization */
     this.init();
-    chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
-        if (mado["firstLaunch"] == undefined) {
-            if (markdownSaved == undefined) { // User has not open a file.
-                markdown.value = firstMessage;
-                contentChanged();
-            }
-            chrome.storage.local.set({ "firstLaunch" : false });
-        }
-    });
-    this.convert();
 }
 
 Editor.prototype = {
@@ -47,10 +37,6 @@ Editor.prototype = {
 
     getMarkdown: function() {
         return this.markdown.val();
-    },
-
-    getName: function() {
-        return this.nameManager.getName();
     },
 
     getSelection: function() {
@@ -89,6 +75,14 @@ Editor.prototype = {
                 });
             }
         });
+    },
+
+    isNamed: function() {
+        if (this.nameManager.getName() != undefined) {
+            return true;
+        } else {
+            return false;
+        }
     },
 
     replaceSelection: function(newSelectedText, start, end) {

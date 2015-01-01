@@ -26,8 +26,7 @@ OpenFileManager.prototype = {
                                         t.app.newFile();
                                     });
                                 } else {
-                                    t.app.setEditorFile(loadedFile.fullPath.substring(loadedFile.fullPath.lastIndexOf('/') + 1), e.target.result); // Display the file content.
-                                    // fileEntry = loadedFile; // For save.
+                                    t.app.setEditorWithEntry(loadedFile, e.target.result);
                                 }
                                 // newRecentFile(file); // Update the local storage, the file opened is now on top.
                             };

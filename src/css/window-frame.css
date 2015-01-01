@@ -50,7 +50,7 @@
 	/* Positioning */
 	position: absolute; /* See #app-header-centered above */
 	left: -20px; /* Override the child span's own width */
-	top: 0;
+	top: -1px;
 
 	/* Box-model */
 	display: block;
