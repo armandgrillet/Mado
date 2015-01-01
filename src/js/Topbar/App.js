@@ -6,8 +6,10 @@ function App(editor) {
 
     /* Variables */
     this.editor = editor;
+    this.exportManager = new ExportManager(this);
     this.newFileManager = new NewFileManager(this);
     this.openFileManager = new OpenFileManager(this);
+    this.printManager = new PrintManager();
     this.saveFileManager = new SaveFileManager(this);
     this.saveFileAsManager = new SaveFileAsManager(this);
     this.switchManager = new SwitchManager();
@@ -33,6 +35,9 @@ App.prototype = {
     getEditorText: function() {
         return this.editor.getMarkdown();
     },
+    getName: function() {
+        return this.editor.getName();
+    },
     isNamed: function() {
         return this.editor.isNamed();
     },
@@ -53,6 +58,5 @@ App.prototype = {
         this.saveFileManager.setFileToSave(entry);
         this.editor.setMarkdown(content);
         this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
-    },
-
+    }
 }

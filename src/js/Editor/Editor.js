@@ -39,6 +39,10 @@ Editor.prototype = {
         return this.markdown.val();
     },
 
+    getName: function() {
+        return this.nameManager.getName();
+    },
+
     getSelection: function() {
         return this.markdown.getSelection();
     },
