@@ -29,7 +29,7 @@ OpenFileManager.prototype = {
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         if ((t.app.getEditorText().length > 0 && t.app.getEditorText() != chrome.i18n.getMessage("msgFirstLaunch")) || (t.app.isDocumentNamed())) { // Something is already in the markdown, Mado opens a new window.
-                            chrome.storage.local.set({ "appInitFileEntry": chrome.fileSystem.retainEntry(loadedFile), "editorInitFileEntry": chrome.fileSystem.retainEntry(loadedFile) }, function() {
+                            chrome.storage.local.set({ "appInitFileEntry": chrome.fileSystem.retainEntry(loadedFile), "editorInitFileEntry": chrome.fileSystem.retainEntry(loadedFile), "newFile": chrome.fileSystem.retainEntry(loadedFile), "newFilePath": loadedFile.fullPath }, function() {
                                 t.app.newFile();
                             });
                         } else {

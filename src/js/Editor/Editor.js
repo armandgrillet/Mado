@@ -61,8 +61,10 @@ Editor.prototype = {
                             function(file) {
                                 var reader = new FileReader();
                                 reader.onload = function(e) {
-                                    t.setMarkdown(e.target.result);
-                                    t.saveWithName(fileEntry.fullPath.substring(fileEntry.fullPath.lastIndexOf('/') + 1));
+                                    chrome.storage.local.set({ "newFile": chrome.fileSystem.retainEntry(fileEntry), "newFilePath": fileEntry.fullPath }, function() {
+                                        t.setMarkdown(e.target.result);
+                                        t.saveWithName(fileEntry.fullPath.substring(fileEntry.fullPath.lastIndexOf('/') + 1));
+                                    });
                                 };
                                 reader.readAsText(file);
                             },

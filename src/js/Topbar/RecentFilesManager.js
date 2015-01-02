@@ -37,21 +37,17 @@ function RecentFilesManager(app) {
 
 RecentFilesManager.prototype = {
     constructor: RecentFilesManager,
-    addRecentFile: function(entry, id) {
-        this.recentFiles.add([entry, id]);
-        chrome.storage.local.set({ "recentFiles": this.recentFiles });
-    },
     checkRecentFile: function(fileToCheck) {
         if (fileToCheck < this.recentFiles.length) {
             var t = this;
             chrome.fileSystem.isRestorable(t.recentFiles[fileToCheck]["id"], function(isRestorable) { // We check if it's still restorable.
                 if (!isRestorable) { // If it's not restorable.
-                    t.recentFiles = t.recentFiles.splice(fileToCheck, 1);
+                    t.recentFiles.splice(fileToCheck, 1);
                     t.checkRecentFile(fileToCheck);
                 } else {
                     chrome.fileSystem.restoreEntry(t.recentFiles[fileToCheck]["id"], function (fileToOpen) {
                         if (!fileToOpen) { // The file is empty or deleted.
-                            t.recentFiles = t.recentFiles.splice(fileToCheck, 1);
+                            t.recentFiles.splice(fileToCheck, 1);
                             t.checkRecentFile(fileToCheck);
                         } else {
                             t.checkRecentFile(fileToCheck + 1);
@@ -119,9 +115,8 @@ RecentFilesManager.prototype = {
         var t = this;
         $("#recent-" + file).attr("class", "recent-file deleted"); // Change the class to do the visual effect.
 
-        chrome.storage.local.set({ "recentFiles": this.recentFiles.splice(file, 1)}, function() {
-            this.recentFiles = this.recentFiles.splice(file, 1);
-        });
+        this.recentFiles.splice(file, 1);
+        chrome.storage.local.set({ "recentFiles": this.recentFiles });
 
         setTimeout(function() { // After the visual effect.
             $("#recent-" + file).remove();
@@ -133,10 +128,20 @@ RecentFilesManager.prototype = {
     },
     update: function() {
         chrome.storage.local.get(["newFile", "newFilePath"], $.proxy(function(mado) {
-            this.recentFiles.push({"path": mado["newFilePath"], "id": mado["newFile"]});
-            if (this.recentFiles.length > 7) {
-                this.recentFiles = this.recentFiles.slice(0, -1);
+            this.recentFiles.push({"path": mado["newFilePath"], "id": mado["newFile"]}); // Put the new one at the end of the recentFiles.
+            console.log("path = " + mado["newFilePath"]);
+            for (var i = 0; i < this.recentFiles.length - 1; i++) {
+                console.log("path = " + this.recentFiles[i]["path"]);
+                if (this.recentFiles[i]["path"] == mado["newFilePath"]) {
+                    this.recentFiles.splice(i, 1);
+                    i--;
+                }
             }
+
+            while (this.recentFiles.length > 7) {
+                this.recentFiles.shift();
+            }
+
             chrome.storage.local.set({ "recentFiles": this.recentFiles });
         }, this));
     }
