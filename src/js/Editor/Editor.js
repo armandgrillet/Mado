@@ -49,13 +49,13 @@ Editor.prototype = {
 
     init: function() {
         var t = this;
-        chrome.storage.local.get("tempFileEntry", function(mado) {  // If a file is loading.
-            if (mado["tempFileEntry"] != undefined) {
+        chrome.storage.local.get("editorInitFileEntry", function(mado) {  // If a file is loading.
+            if (mado["editorInitFileEntry"] != undefined) {
                 chrome.fileSystem.restoreEntry(
-                    mado["tempFileEntry"],
+                    mado["editorInitFileEntry"],
                     function (entry) {
                         fileEntry = entry;
-                        chrome.storage.local.remove("tempFileEntry");
+                        chrome.storage.local.remove("editorInitFileEntry");
 
                         fileEntry.file(
                             function(file) {
@@ -70,7 +70,7 @@ Editor.prototype = {
                         );
                     }
                 );
-            } else { // No file loaded, we chekc if it is the first launch.
+            } else { // No file loaded, we check if it is the first launch.
                 chrome.storage.local.get("firstLaunch", function(mado) { // Set text if it's the first launch.
                     if (mado["firstLaunch"] == undefined) {
                         t.setMarkdown(chrome.i18n.getMessage("msgFirstLaunch"));

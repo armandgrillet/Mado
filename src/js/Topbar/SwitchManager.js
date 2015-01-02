@@ -1,14 +1,18 @@
 function SwitchManager() {
+    /* Outlets */
     this.madoFooter = $("#mado-footer");
     this.switchCursor = $("#switch-cursor");
     this.switchToMD = $("#switch-md");
     this.switchToBoth = $("#switch-both");
     this.switchToHTML = $("#switch-html");
-    this.switchButtons = [this.switchToMD, this.switchToBoth, this.switchToHTML]; // Wrapping the switch buttons in an array.
+
     this.workspace = $("#workspace");
 
-    var previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
+    /* Variables */
+    this.switchButtons = [this.switchToMD, this.switchToBoth, this.switchToHTML]; // Wrapping the switch buttons in an array.
+    this.previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
 
+    /* Events */
     chrome.app.window.current().onBoundsChanged.addListener($.proxy(function () {
         if (chrome.app.window.current().getBounds().width < 1160 && this.switchToBoth.hasClass("activated")) {
             this.switchToMD.click(); // Markdown set as default view.
@@ -35,9 +39,6 @@ function SwitchManager() {
     } else {
         this.activate("switch-md");
     }
-
-
-
 }
 
 SwitchManager.prototype = {

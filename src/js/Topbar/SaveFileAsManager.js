@@ -12,7 +12,7 @@ function SaveFileAsManager(app) {
 
 SaveFileAsManager.prototype = {
     constructor: SaveFileAsManager,
-    apply: function() {
+    apply: function(callback) {
         var t = this;
         chrome.fileSystem.chooseEntry( { type: "saveFile", suggestedName: "document.md" }, function(savedFile) {
             if (savedFile) {
@@ -26,6 +26,9 @@ SaveFileAsManager.prototype = {
                         }
                         // newRecentFile(fileEntry); // Update the position of the file saved.
                         t.app.setEditorEntry(savedFile);
+                        if (callback != undefined) {
+                            callback();
+                        }
                     };
                     fileWriter.write(new Blob([t.app.getEditorText()], {type: 'plain/text'}));
                 }, function(error) { console.log(error); });

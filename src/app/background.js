@@ -64,7 +64,7 @@ chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.ht
 	"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --app-id=YourAppId "C:\Path\To\document.md"
 	*/
 	if (parameters.items != undefined) // If you're opening a Markdown file.
-		chrome.storage.local.set({ "tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry) }, windowCreation);
+		chrome.storage.local.set({ "appInitFileEntry": chrome.fileSystem.retainEntry(parameters.items[0].entry), "editorInitFileEntry": chrome.fileSystem.retainEntry(parameters.items[0].entry) }, windowCreation);
 	else // New file.
 	  	windowCreation();
 });

@@ -35,20 +35,26 @@ App.prototype = {
     getName: function() {
         return this.editor.getName();
     },
-    isNamed: function() {
+    isDocumentNamed: function() {
         return this.editor.isNamed();
     },
-    isSaved: function() {
+    isDocumentSaved: function() {
         return this.editor.isSaved();
+    },
+    isEntrySaved: function() {
+        return this.saveFileManager.isSaved();
     },
     newFile: function() {
         this.newFileManager.apply();
     },
-    save: function() {
+    setDocumentSaved: function() {
         this.editor.save();
     },
-    saveAs: function() {
-        this.saveFileAsManager.apply();
+    save: function(callback) {
+        this.saveFileManager.apply(callback);
+    },
+    saveAs: function(callback) {
+        this.saveFileAsManager.apply(callback);
     },
     setEditorEntry: function(entry) {
         this.saveFileManager.setFileToSave(entry);

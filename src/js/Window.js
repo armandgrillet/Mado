@@ -5,7 +5,6 @@ function Window(app) {
     this.head = $("head")[0]; // The "head" section of the main app.
     this.quitCloseButton = $("#quit");
     this.saveAndQuitCloseButton = $("#save-quit");
-    this.saveState = $("#save-state");
     this.closeContainer = $("#window-close");
     this.close = $("#window-close-button");
     this.maximize = $("#window-maximize");
@@ -15,9 +14,6 @@ function Window(app) {
     this.app = app;
 
     /* Events */
-    this.quitCloseButton.on("click", $.proxy(function(e) { this.quitCloseWindow(); }, this));
-    this.saveAndQuitCloseButton.on("click", $.proxy(function(e) { this.saveQuitCloseWindow(); }, this));
-
     this.close.on("click", $.proxy(function(e) { this.closeWindow(); }, this));
     Mousetrap.bind(["command+w", "ctrl+w"], $.proxy(function(e) { // Ctrl + w = close.
         this.closeWindow();
@@ -36,6 +32,10 @@ function Window(app) {
         chrome.app.window.current().minimize();
     });
 
+    this.cancelCloseButton.on("click", $.proxy(function(e) { this.closeDisplayer.attr("class", "hidden"); }, this));
+    this.quitCloseButton.on("click", $.proxy(function(e) { this.quitCloseWindow(); }, this));
+    this.saveAndQuitCloseButton.on("click", $.proxy(function(e) { this.saveQuitCloseWindow(); }, this));
+
     /* Initialization */
     this.init();
 }
@@ -44,10 +44,8 @@ Window.prototype = {
     constructor: Window,
 
     closeWindow: function() {
-        chrome.runtime.getBackgroundPage( function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-            backgroundPage.newBounds(chrome.app.window.current().getBounds());
-        });
-        if (this.app.isSaved()) { // Save not made.
+        if (this.app.isDocumentSaved()) { // Document saved.
+            this.setNewBounds();
             chrome.app.window.current().close();
         } else {
             this.closeDisplayer.attr("class", "visible");
@@ -80,57 +78,22 @@ Window.prototype = {
     },
 
     quitCloseWindow: function() {
-        sendClosing(); // stats.js
-        chrome.runtime.getBackgroundPage(function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-            backgroundPage.newBounds(chrome.app.window.current().getBounds());
-        });
+        this.setNewBounds();
         chrome.app.window.current().close();
     },
 
-    saveAndQuit: function() {
-        fileEntry.createWriter(function(fileWriter) {
-            truncated = false;
-            fileWriter.onwriteend = function(e) {
-                if (!truncated) {
-                    truncated = true;
-                    this.truncate(this.position);
-                    return;
-                }
-                newRecentFile(fileEntry, "quit");
-            };
-            fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
-        }, errorHandler);
-    },
-
-    saveAsAndQuit: function() {
-        chrome.fileSystem.chooseEntry(
-        {
-            type: "saveFile",
-            suggestedName: "document.md"
-        },
-        function(savedFile) {
-            if (savedFile) {
-                savedFile.createWriter(function(fileWriter) {
-                    truncated = false;
-                    fileWriter.onwriteend = function(e) {
-                        if (!truncated) {
-                            truncated = true;
-                            this.truncate(this.position);
-                            return;
-                        }
-                        newRecentFile(savedFile, "quit"); // Update the local storage, the file opened is now on top.
-                    };
-                    fileWriter.write(new Blob([markdown.value], {type: 'plain/text'}));
-                }, errorHandler);
-            }
-        });
-    },
-
     saveQuitCloseWindow: function() {
-        if (fileEntry == undefined || nameDiv.innerHTML.substring(nameDiv.innerHTML.length - 9) != "md&nbsp;-") { // Not saved pr the document is not in Markdown.
-            this.saveAsAndQuit();
+        this.setNewBounds();
+        if (this.app.isEntrySaved()) { // Document saved.
+            this.app.save(function(e) { chrome.app.window.current().close(); });
         } else {
-            this.saveAndQuit();
+            this.app.saveAs(function(e) { chrome.app.window.current().close(); });
         }
+    },
+
+    setNewBounds: function() {
+        chrome.runtime.getBackgroundPage( function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
+            backgroundPage.newBounds(chrome.app.window.current().getBounds());
+        });
     }
 }
