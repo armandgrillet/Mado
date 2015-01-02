@@ -93,3 +93,10 @@
 /* --------
 	Header
    -------- */
+#save-state span {
+	/* Box-model */
+	height: 18px !important;
+
+	/* Typography */
+	line-height: 18px !important;
+}
