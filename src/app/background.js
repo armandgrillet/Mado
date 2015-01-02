@@ -17,9 +17,9 @@ function anotherWindow (theX, theY, theWidth, theHeight) {
 	    	top: theY,
 	      	width: theWidth,
 	      	height: theHeight
-	    }, 
+	    },
     	frame: "none",
-	    minWidth: theMinWidth(), 
+	    minWidth: theMinWidth(),
 	    minHeight: 330
 	});
 }
@@ -29,9 +29,9 @@ function firstWindow () {
 	    bounds: {
 	      	width: Math.round(screen.width * 0.85),
 	      	height: Math.round(screen.height * 0.85)
-	    }, 
+	    },
 	    frame: "none",
-	    minWidth: theMinWidth(), 
+	    minWidth: theMinWidth(),
 	    minHeight: 330
 	});
 }
@@ -41,12 +41,6 @@ function newBounds (bounds) {
 }
 
 function theMinWidth () {
-	/* For the 0.2
-	if (screen.width < 1600)
-		return 683;
-	else
-		return 800;
-	*/
 	return 750;
 }
 
@@ -58,7 +52,7 @@ function windowCreation () {
 			anotherWindow(mado["lastX"], mado["lastY"], mado["lastWidth"], mado["lastHeight"]);
 		else
 			firstWindow();
-	});	
+	});
 }
 
 /*
@@ -66,11 +60,11 @@ function windowCreation () {
 */
 
 chrome.app.runtime.onLaunched.addListener(function(parameters) { // Open mado.html in a new window when button pressed.
-	/* If you want to try opening a Markdown file with Mado on Windows, open the command line and try that : 
+	/* If you want to try opening a Markdown file with Mado on Windows, open the command line and try that :
 	"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --app-id=YourAppId "C:\Path\To\document.md"
 	*/
 	if (parameters.items != undefined) // If you're opening a Markdown file.
-		chrome.storage.local.set({ "tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry) }, windowCreation);		
+		chrome.storage.local.set({ "tempFileEntry" : chrome.fileSystem.retainEntry(parameters.items[0].entry) }, windowCreation);
 	else // New file.
 	  	windowCreation();
 });

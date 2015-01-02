@@ -75,8 +75,6 @@ Editor.prototype = {
                     if (mado["firstLaunch"] == undefined) {
                         t.setMarkdown(chrome.i18n.getMessage("msgFirstLaunch"));
                         chrome.storage.local.set({ "firstLaunch" : false });
-                    } else {
-                        t.displayManager.update();
                     }
                 });
             }

@@ -144,14 +144,15 @@ DisplayManager.prototype = {
         xhr.send(this.loadedImagePath);
     },
     setSyntax: function() {
-        chrome.storage.local.get("gfm", function(mado) {
+        chrome.storage.local.get("gfm", $.proxy(function(mado) {
             if (mado["gfm"] != undefined) {
                 marked.setOptions({ gfm : mado["gfm"] });
             } else {
                 chrome.storage.local.set({ "gfm" : true });
                 marked.setOptions({ gfm : true });
             }
-        });
+            this.update();
+        }, this));
     },
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.

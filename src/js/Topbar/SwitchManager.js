@@ -31,10 +31,9 @@ function SwitchManager() {
 
     /* Initialization */
     if (chrome.app.window.current().getBounds().width > 1159) { // Big window
-        this.switchToBoth.addClass("activated");
+        this.activate("switch-both");
     } else {
-        this.switchToMD.addClass("activated");
-        this.workspace.add(this.switchCursor).attr("class", "markdown-view");
+        this.activate("switch-md");
     }
 
 

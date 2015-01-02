@@ -13,6 +13,7 @@ function Counter(countedDiv) {
 
     /* Initialization */
     this.charsDiv.css("display", "none"); // On launch we display the number of words.
+    this.update();
 }
 
 Counter.prototype = {
