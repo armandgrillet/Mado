@@ -38,14 +38,14 @@ StyleManager.prototype = {
                 case "tramway":
                     this.tramwayRadio[0].checked = true;
                 }
-                setStyle(mado["style"]);
+                this.setStyle(mado["style"]);
             } else {
                 this.homeRadio[0].checked = true;
-                setStyle("home");
+                this.setStyle("home");
             }
         }, this));
     },
-    
+
     setStyle: function(newStyle) {
         for (var i = 0; i < document.styleSheets.length; i++) {
             if (document.styleSheets.item(i).href.indexOf("css/themes/") != -1) {

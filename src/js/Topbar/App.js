@@ -15,9 +15,9 @@ function App(editor) {
 
     /* Events */
     chrome.app.window.current().onBoundsChanged.addListener($.proxy(function () {
-        if (chrome.app.window.current().getBounds().width < 1600 && lastBounds.width >= 1600) {
+        if (chrome.app.window.current().getBounds().width < 1600 && this.lastBounds.width >= 1600) {
             this.addLabels();
-        } else if (chrome.app.window.current().getBounds().width >= 1600 && lastBounds.width < 1600) {
+        } else if (chrome.app.window.current().getBounds().width >= 1600 && this.lastBounds.width < 1600) {
             this.removeLabels();
         }
         this.lastBounds = chrome.app.window.current().getBounds();
@@ -47,6 +47,9 @@ App.prototype = {
     newFile: function() {
         this.newFileManager.apply();
     },
+    openFile: function(file) {
+        this.openFileManager.open(file);
+    },
     setDocumentSaved: function() {
         this.editor.save();
     },
@@ -56,13 +59,16 @@ App.prototype = {
     saveAs: function(callback) {
         this.saveFileAsManager.apply(callback);
     },
+    setEditorText: function(entry) {
+        this.editor.setMarkdown("", 0, this.editor.getMarkdown().length);
+    },
     setEditorEntry: function(entry) {
         this.saveFileManager.setFileToSave(entry);
         this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
     },
     setEditorWithEntry: function(entry, content) {
         this.saveFileManager.setFileToSave(entry);
-        this.editor.setMarkdown(content);
+        this.editor.setMarkdown(content, 0, this.editor.getMarkdown().length);
         this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
     }
 }

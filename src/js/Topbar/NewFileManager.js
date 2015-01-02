@@ -13,7 +13,7 @@ function NewFileManager(app) {
 NewFileManager.prototype = {
     constructor: NewFileManager,
     apply: function() {
-        if (this.app.getEditorText().length > 0 && this.app.getEditorText() != chrome.i18n.getMessage("msgFirstLaunch")) {
+        if ((this.app.getEditorText().length > 0 && this.app.getEditorText() != chrome.i18n.getMessage("msgFirstLaunch")) || (this.app.isDocumentNamed())) {
             chrome.app.window.create("mado.html", {
                 bounds: {
                     left: (window.screenX + 20), // "+ 20" to watch this is a new window.

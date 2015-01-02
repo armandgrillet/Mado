@@ -24,11 +24,12 @@ SaveFileAsManager.prototype = {
                             this.truncate(this.position);
                             return;
                         }
-                        // newRecentFile(fileEntry); // Update the position of the file saved.
-                        t.app.setEditorEntry(savedFile);
-                        if (callback != undefined) {
-                            callback();
-                        }
+                        chrome.storage.local.set({ "newFile": chrome.fileSystem.retainEntry(savedFile), "newFilePath": savedFile.fullPath }, function() {
+                            t.app.setEditorEntry(savedFile);
+                            if (callback != undefined) {
+                                callback();
+                            }
+                        });
                     };
                     fileWriter.write(new Blob([t.app.getEditorText()], {type: 'plain/text'}));
                 }, function(error) { console.log(error); });

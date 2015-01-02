@@ -83,7 +83,6 @@ DisplayManager.prototype = {
         $("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
     },
     galleryAnalysis: function(index) {
-        console.log("Visite de la galerie " + index);
         var t = this;
         if (! this.imageFound) {
             if (index < this.galleries.length) {
