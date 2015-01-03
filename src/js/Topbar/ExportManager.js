@@ -13,7 +13,11 @@ ExportManager.prototype = {
     constructor: ExportManager,
     apply: function() {
         var textToEport = marked(this.app.getEditorText());
-        chrome.fileSystem.chooseEntry({ type: "saveFile", suggestedName: this.app.getName().replace(/\.[^/.]+$/, "") + ".html" }, function(exportedFile) {
+        var displayedName = "document.html";
+        if (this.app.getName() != undefined) {
+            displayedName = this.app.getName().replace(/\.[^/.]+$/, "") + ".html";
+        }
+        chrome.fileSystem.chooseEntry({ type: "saveFile", suggestedName: displayedName }, function(exportedFile) {
             if (exportedFile) {
                 exportedFile.createWriter( function(writer) {
                     writer.write(new Blob([textToEport], { type: "text/HTML" }));
