@@ -3,6 +3,7 @@ function App(editor) {
     this.editor = editor;
     this.lastBounds = chrome.app.window.current().getBounds();
 
+    this.dragAndDropManager = new DnDManager(this, "body");
     this.exportManager = new ExportManager(this);
     this.moreWindowsManager = new MoreWindowsManager();
     this.newFileManager = new NewFileManager(this);
