@@ -1,14 +1,12 @@
 function Counter(countedDiv) {
     /* Outlets */
-    this.charsDiv = $("#character-nb");
-    this.countedDiv = countedDiv;
-    this.linkUrlSpan = $("#link-url");
-    this.nameDiv = $("#doc-name");
-    this.wordsDiv = $("#word-nb");
+    this.charsDiv = $("#character-nb"); // The div containing the number of characters.
+    this.countedDiv = countedDiv; // The div that is counted.
+    this.wordsDiv = $("#word-nb"); // The div containing the number of words.
 
     /* Events */
     this.charsDiv.add(this.wordsDiv).on("click", $.proxy(function () {
-        this.changeInformationsDisplayed();
+        this.toggleInformationsDisplayed(); // Toggle the number displayed on click.
     }, this));
 
     /* Initialization */
@@ -18,7 +16,21 @@ function Counter(countedDiv) {
 
 Counter.prototype = {
     constructor: Counter,
-    changeInformationsDisplayed: function() {
+
+    /* Displays the number of characters and words in the div counted. */
+    display: function(counter) {
+        this.charsDiv.html("&nbsp;" + counter.characters + " " + chrome.i18n.getMessage("msgCharacters") + "&nbsp;");
+        this.wordsDiv.html("&nbsp;" + counter.words + " " + chrome.i18n.getMessage("msgWords") + "&nbsp;");
+        if (counter.characters == 1) {
+            this.charsDiv.html("&nbsp;" + " " + chrome.i18n.getMessage("msgCharacter") + "&nbsp;");
+        }
+        if (counter.words == 1) {
+            this.wordsDiv.html("&nbsp;" + counter.words + " " + chrome.i18n.getMessage("msgWord") + "&nbsp;");
+        }
+    },
+
+    /* Toggles the information displayed. */
+    toggleInformationsDisplayed: function() {
         if (this.charsDiv.css("display") == "none") {
             this.charsDiv.css("display", "inline");
             this.wordsDiv.css("display", "none");
@@ -28,18 +40,8 @@ Counter.prototype = {
         }
     },
 
-    display: function(counter) {
-        this.charsDiv.html("&nbsp;" + counter.characters + " characters&nbsp;");
-        this.wordsDiv.html("&nbsp;" + counter.words + " words&nbsp;");
-        if (counter.characters == 1) {
-            this.charsDiv.html("&nbsp;" + counter.characters + " character&nbsp;");
-        }
-        if (counter.words == 1) {
-            this.wordsDiv.html("&nbsp;" + counter.words + " word&nbsp;");
-        }
-    },
-
+    /* Update number of words and characters. */
     update: function() {
-        Countable.count(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Count the words in the conversionDiv without HTML tags.
+        Countable.count(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Without HTML tags.
     }
 }

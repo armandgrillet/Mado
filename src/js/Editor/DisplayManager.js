@@ -4,44 +4,37 @@ function DisplayManager(editor) {
     this.conversionDiv = $("#html-conversion");
 
     /* Variables */
-    this.currentGallery;
+    this.currentGallery; // Gallery currently visited by getImages();
     this.editor = editor;
-    this.galleries = [];
-    this.imagesDisplayed = new ImageArray();
+    this.galleries = []; // Galleries where we can read images.
+    this.imagesDisplayed = new ImageArray(); // Object containing opened images.
     this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images' type.
-    this.imageFound;
-    this.loadedImagePath;
-    this.imagePosition = 0;
-    this.scrollManager = new ScrollManager(this.convertedDiv, this.conversionDiv);
-    this.styleManager = new StyleManager();
+    this.loadedImagePath; // Path of the image found.
+    this.imagePosition = 0; // Help us to find all the images in a file.
+    this.scrollManager = new ScrollManager(this.convertedDiv, this.conversionDiv); // Object allowing a synchronized scroll between the convertedDiv and the conversionDiv.
+    this.styleManager = new StyleManager(); // Object to manage the styles of the conversionDiv.
     this.tempConversion; // Temporary conversion before it is displayed in the conversionDiv.
-    this.urlManager = new UrlManager(this.conversionDiv);
+    this.urlManager = new UrlManager(this.conversionDiv); // Managing what to do when user clicks a link.
 
     /* Events */
-    this.conversionDiv.on("click", "a", function(e) {
-        if (e.currentTarget.href.indexOf("chrome-extension://") != -1) { // Click on an inner link.
-            e.preventDefault();
-            if (e.currentTarget.hash != "" && $(e.currentTarget.hash).length != 0) {
-                $("#html-conversion").scrollTop($(e.currentTarget.hash).position().top);
-            }
-        }
-    });
     chrome.storage.onChanged.addListener($.proxy(function (changes, namespace) {
         for (key in changes) {
             switch (key) {
             case "gfm":
-                this.setSyntax();
+                this.setSyntax(); // Set the syntax if it has been changed in the Settings window.
                 break;
             }
         }
     }, this));
 
     /* Initialization */
-    this.setSyntax();
+    this.setSyntax(); // Set the syntax .
 }
 
 DisplayManager.prototype = {
     constructor : DisplayManager,
+
+    /* Finds images in the document and convert it because Chrome cannot directly access images. */
     displayImages: function() {
         if (this.tempConversion.indexOf("<img src=\"", this.imagePosition) > -1) {
             this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + "<img src=\"".length;
@@ -70,21 +63,25 @@ DisplayManager.prototype = {
             this.finishDisplaying();
         }
     },
-    finishDisplaying: function() {
-        this.conversionDiv.html(this.tempConversion);
 
-        $("#html-conversion a").each(function() { // Add target="_blank" to make links work.
-            if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") { // External link without correct syntax.
-                $(this).attr("href", "http://" + $(this).attr("href"));
+    /* Called at the end of the conversion, add some events. */
+    finishDisplaying: function() {
+        this.conversionDiv.html(this.tempConversion); /* Apply the new conversion. */
+
+        $("#html-conversion a").each(function() { // Add target="_blank" to external links.
+            if ($(this).attr("href").substring(0,1) != '#' && $(this).attr("href").substring(0,4) != "http") { // External link with no correct syntax.
+                $(this).attr("href", "http://" + $(this).attr("href")); // Add the HTTP protocol to create correct links.
             }
             $(this).attr("target", "_blank");
         });
 
-        $("#html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
+        $("#html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and if the user clicks the galleries choice appear.
     },
+
+    /* Analyze of a gallery to find an offline image. */
     galleryAnalysis: function(index) {
         var t = this;
-        if (! this.imageFound && index < this.galleries.length) {
+        if (index < this.galleries.length) {
             this.currentGallery = index;
             this.galleries.forEach(function(item, indx, arr) { // For each gallery.
                 if (indx == index) {
@@ -102,7 +99,6 @@ DisplayManager.prototype = {
                     this.getImages(directory, 0);
                 }, this)); // Recursivity.
             } else if (this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // It's the correct image!
-                this.imageFound = true;
                 var t = this;
                 entries[i].file(function(file) {
                     var reader = new FileReader();
@@ -126,7 +122,6 @@ DisplayManager.prototype = {
         }
     },
     getOfflineImage: function() {
-        this.imageFound = false;
         chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, $.proxy(function(galleries) {
             this.galleries = galleries;
             this.galleryAnalysis(0);

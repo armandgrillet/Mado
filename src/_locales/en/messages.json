@@ -187,6 +187,18 @@
    "msgFirstLaunch": {
       "message": "# Dear user,\n\nThanks for installing **Mado**. For your first launch, here is some information:\n\n* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for Markdown files) and offers an export in .html.\n* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.\n* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.\n\nI hope you will enjoy Mado,\n\n**[Armand Grillet](http://armand.gr/)**\n\n***\n\nP.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
    },
+   "msgCharacter": {
+      "message": "character"
+   },
+   "msgCharacters": {
+      "message": "characters"
+   },
+   "msgWord": {
+      "message": "word"
+   },
+   "msgWords": {
+      "message": "words"
+   },
    "msgOneMoreCharacter": {
       "message": "Add one more character"
    },

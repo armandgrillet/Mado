@@ -22,10 +22,10 @@ function WebImageManager(editor) {
                 this.reset();
                 this.display();
             } else {
-                this.webImageDisplayer.toggleClass("hidden"); // This is not a cancellation.
+                this.webImageDisplayer.addClass("hidden"); // This is not a cancellation.
             }
         } else if (!this.webImageDisplayer.hasClass("hidden") && !$(e.target).closest("#webimage-insertion-box").length) {
-            this.webImageDisplayer.removeClass("hidden");
+            this.webImageDisplayer.toggleClass("hidden");
         }
     }, this));
 
