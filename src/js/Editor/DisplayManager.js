@@ -43,6 +43,7 @@ function DisplayManager(editor) {
 DisplayManager.prototype = {
     constructor : DisplayManager,
     displayImages: function() {
+        console.log("Display images");
         if (this.tempConversion.indexOf("<img src=\"", this.imagePosition) > -1) {
             this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + 10;
             this.loadedImagePath = this.tempConversion.substring(this.imagePosition, this.tempConversion.indexOf("\"", this.imagePosition));
@@ -61,6 +62,7 @@ DisplayManager.prototype = {
                     this.getOfflineImage();
                 }
             } else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
+                console.loh("Ce n'est pas une image");
                 this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + chrome.i18n.getMessage("msgNotAnImage") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);;
                 this.displayImages();
             }
@@ -88,9 +90,12 @@ DisplayManager.prototype = {
             if (index < this.galleries.length) {
                 this.currentGallery = index;
                 this.galleries.forEach(function(item, indx, arr) { // For each gallery.
-                    item.root.createReader().readEntries(function(entries) {
-                        t.getImages(entries);
-                    });
+                    if (indx == index) {
+                        item.root.createReader().readEntries(function(entries) {
+                            console.log("Nouvelle gallerie");
+                            t.getImages(entries, 0);
+                        });
+                    }
                 });
             } else {
                 this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1); + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
@@ -98,15 +103,17 @@ DisplayManager.prototype = {
             }
         }
     },
-    getImages: function(entries) {
-        console.log(entries);
-        for (var i = 0; i < entries.length && !this.imageFound; i++) { // All the files in the repository, the correct file is not found yet.
-            if (entries[i].isDirectory && this.loadedImagePath.indexOf(entries[i].fullPath) != -1) {// If the file is a directory and the right directory.
-                entries[i].createReader().readEntries($.proxy(function(entries) {
-                    this.getImages(entries);
+    getImages: function(entries, i) {
+        if (i < entries.length) {
+            console.log(entries[i]);
+            if (entries[i].isDirectory && this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // If the file is a directory and the right directory.
+                console.log("C'est le bon dossier, on y va et on diminue le jeton");
+                entries[i].createReader().readEntries($.proxy(function(directory) {
+                    this.getImages(directory, 0);
                 }, this)); // Recursivity.
-                break;
-            } else if (this.loadedImagePath.indexOf(entries[i].fullPath) != -1) { // It's the correct image!
+            } else if (this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // It's the correct image!
+                console.log("Bonne image !");
+                this.imageFound = true;
                 var t = this;
                 entries[i].file(function(file) {
                     var reader = new FileReader();
@@ -117,8 +124,13 @@ DisplayManager.prototype = {
                     };
                     reader.readAsDataURL(file);
                 });
-                this.imageFound = true;
-            } else if (i == (entries.length - 1)) { // End of the gallery.
+            }  else {
+                console.log("Mauvaise image ou dossier, on continue sans diminuer le jeton");
+                this.getImages(entries, i + 1);
+            }
+        } else {
+            if (this.currentGallery < (this.galleries.length - 1)) { // We still have galleries to search.
+                console.log("Changement de gallerie");
                 this.galleryAnalysis(this.currentGallery + 1);
             }
         }
