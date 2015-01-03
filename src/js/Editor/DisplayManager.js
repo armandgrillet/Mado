@@ -84,49 +84,58 @@ DisplayManager.prototype = {
         if (index < this.galleries.length) {
             this.currentGallery = index;
             this.galleries.forEach(function(item, indx, arr) { // For each gallery.
-                if (indx == index) {
+                if (indx == index) { // If it is the correct gallery.
                     item.root.createReader().readEntries(function(entries) {
-                        t.getImages(entries, 0);
+                        t.getImages(entries, 0); // We try to found the image.
                     });
                 }
             });
         }
     },
+
+    /* Check if the image is in the entries
+     * entries: directory containing other directories and images.
+     * i: prosition in the directory.
+     */
     getImages: function(entries, i) {
         if (i < entries.length) {
             if (entries[i].isDirectory && this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // If the file is a directory and the right directory.
                 entries[i].createReader().readEntries($.proxy(function(directory) {
                     this.getImages(directory, 0);
                 }, this)); // Recursivity.
-            } else if (this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // It's the correct image!
+            } else if (this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // It is the correct image.
                 var t = this;
                 entries[i].file(function(file) {
                     var reader = new FileReader();
                     reader.onloadend = function(e) {
                         t.imagesDisplayed.addImage(t.loadedImagePath, e.target.result); // Add a new line.
-                        t.tempConversion = t.tempConversion.substring(0, t.imagePosition) + e.target.result + t.tempConversion.substring(t.imagePosition + t.loadedImagePath.length); // Replace the path.
+                        t.tempConversion = t.tempConversion.substring(0, t.imagePosition) + e.target.result + t.tempConversion.substring(t.imagePosition + t.loadedImagePath.length); // Replace the path by the image's data.
                         t.displayImages();
                     };
                     reader.readAsDataURL(file);
                 });
-            }  else {
+            }  else { // It is not the correct image, we look for the next element in the directory.
                 this.getImages(entries, i + 1);
             }
-        } else {
+        } else { // End of the directory.
             if (this.currentGallery < (this.galleries.length - 1)) { // We still have galleries to search.
-                this.galleryAnalysis(this.currentGallery + 1);
+                this.galleryAnalysis(this.currentGallery + 1); // We start the analysis of the next gallery.
             } else {
                 this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1) + ' ' + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class='nofile' srcset='img/nofile.png 1x, img/nofile@2x.png 2x'" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
                 this.displayImages();
             }
         }
     },
+
+    /* Reset image's search and launch it. */
     getOfflineImage: function() {
         chrome.mediaGalleries.getMediaFileSystems({ interactive : "no" }, $.proxy(function(galleries) {
             this.galleries = galleries;
-            this.galleryAnalysis(0);
+            this.galleryAnalysis(0); // Start the search.
         }, this));
     },
+
+    /* Obtain the online image and create a webview to display it. */
     getOnlineImage: function() {
         var xhr = new XMLHttpRequest();
         xhr.responseType = "blob";
@@ -136,9 +145,11 @@ DisplayManager.prototype = {
             this.tempConversion = this.tempConversion.substring(0, this.imagePosition) + webImage + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length); // Replace the path.
             this.displayImages();
         }, this);
-        xhr.open('GET', this.loadedImagePath, true);
+        xhr.open("GET", this.loadedImagePath, true);
         xhr.send(this.loadedImagePath);
     },
+
+    /* Set the syntax of marked depending on the data saved on chrome.storage.local, gfm or normal. */
     setSyntax: function() {
         chrome.storage.local.get("gfm", $.proxy(function(mado) {
             if (mado["gfm"] != undefined) {
@@ -147,16 +158,18 @@ DisplayManager.prototype = {
                 chrome.storage.local.set({ "gfm" : true });
                 marked.setOptions({ gfm : true });
             }
-            this.update();
+            this.update(); // Do a conversion.
         }, this));
     },
+
+    /* Transform the markdown in HTML. */
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.
-            this.tempConversion = marked(this.editor.getMarkdown());
-            this.scrollManager.checkZonesHeight();
-            this.displayImages(); // We will finish displaying it after displaying every images.
+            this.tempConversion = marked(this.editor.getMarkdown()); // Get the new conversion.
+            this.scrollManager.checkZonesHeight(); // Check the scroll.
+            this.displayImages(); // We will finish displaying it after displaying every images correctly.
         } else { // No Markdown here.
-            this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor"));
+            this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor")); // Display the message when there is no text.
         }
     }
 }

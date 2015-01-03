@@ -129,7 +129,6 @@ RecentFilesManager.prototype = {
     update: function() {
         chrome.storage.local.get(["newFile", "newFilePath"], $.proxy(function(mado) {
             this.recentFiles.push({"path": mado["newFilePath"], "id": mado["newFile"]}); // Put the new one at the end of the recentFiles.
-            console.log("path = " + mado["newFilePath"]);
             for (var i = 0; i < this.recentFiles.length - 1; i++) {
                 console.log("path = " + this.recentFiles[i]["path"]);
                 if (this.recentFiles[i]["path"] == mado["newFilePath"]) {
