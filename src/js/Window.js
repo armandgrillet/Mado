@@ -14,7 +14,14 @@ function Window(app) {
     this.app = app;
 
     /* Events */
-    this.close.on("click", $.proxy(function(e) { this.closeWindow(); }, this));
+    $(document).click($.proxy(function(e) {
+        if ($(e.target).closest(this.close).length) {
+            this.closeWindow();
+        } else if (this.closeDisplayer.hasClass("visible") && !$(e.target).closest(this.windowCloseContainer).length) {
+            this.closeDisplayer.attr("class", "hidden");
+        }
+    }, this));
+
     Mousetrap.bind(["command+w", "ctrl+w"], $.proxy(function(e) { // Ctrl + w = close.
         this.closeWindow();
         return false;
