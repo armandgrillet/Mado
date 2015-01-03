@@ -119,7 +119,7 @@ ImageManager.prototype = {
     },
 
     setGalleries: function() {
-        chrome.mediaGalleries.getMediaFileSystems({ interactive : 'yes' }, $.proxy(function(e){ this.editor.update(); }, this)); // Let the user chooses his folders.
+        chrome.mediaGalleries.getMediaFileSystems({ interactive : "yes" }, $.proxy(function(objectProperties){ this.editor.convert(); }, this)); // Let the user chooses his folders.
     },
 
     setImageBrowser: function(imageName) {
@@ -129,7 +129,7 @@ ImageManager.prototype = {
             this.imageBrowser.html(imageName);
         }
     },
-    
+
     update: function() {
         var image;
         if (this.imageLoaded == undefined) {

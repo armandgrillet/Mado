@@ -32,7 +32,7 @@ function WebImageManager(editor) {
     this.insertWebImageButton.on("click", $.proxy(function(e){ this.apply(); }, this));
     this.cancelWebImageButton.on("click", $.proxy(function(e){ this.cancel(); }, this));
 
-    this.webImageAltInput.add(this.webImageAltInput).keyup($.proxy(function(e) {
+    this.webImageAltInput.add(this.webImageUrlInput).keyup($.proxy(function(e) {
         switch (e.keyCode) {
         case 13: // The user press enter.
             this.apply();

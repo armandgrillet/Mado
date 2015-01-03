@@ -43,9 +43,8 @@ function DisplayManager(editor) {
 DisplayManager.prototype = {
     constructor : DisplayManager,
     displayImages: function() {
-        console.log("Display images");
         if (this.tempConversion.indexOf("<img src=\"", this.imagePosition) > -1) {
-            this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + 10;
+            this.imagePosition = this.tempConversion.indexOf("<img src=\"", this.imagePosition) + "<img src=\"".length;
             this.loadedImagePath = this.tempConversion.substring(this.imagePosition, this.tempConversion.indexOf("\"", this.imagePosition));
             if (this.imgFormats.indexOf(this.loadedImagePath.substr(this.loadedImagePath.lastIndexOf('.') + 1).toLowerCase()) > -1) {
                 if (this.imagesDisplayed.hasPath(this.loadedImagePath)) { // Image is already stored.
@@ -62,7 +61,6 @@ DisplayManager.prototype = {
                     this.getOfflineImage();
                 }
             } else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
-                console.loh("Ce n'est pas une image");
                 this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + chrome.i18n.getMessage("msgNotAnImage") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);;
                 this.displayImages();
             }
@@ -82,37 +80,28 @@ DisplayManager.prototype = {
             $(this).attr("target", "_blank");
         });
 
-        $("#html-conversion .nofile, #html-conversion .nofile-link, #html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
+        $("#html-conversion .nofile-visual").on("click", $.proxy(function(e){ this.editor.setGalleries(); }, this)); // If an image isn't loaded, a default image appeared and, if the user clicks, the galleries choice appeared.
     },
     galleryAnalysis: function(index) {
         var t = this;
-        if (! this.imageFound) {
-            if (index < this.galleries.length) {
-                this.currentGallery = index;
-                this.galleries.forEach(function(item, indx, arr) { // For each gallery.
-                    if (indx == index) {
-                        item.root.createReader().readEntries(function(entries) {
-                            console.log("Nouvelle gallerie");
-                            t.getImages(entries, 0);
-                        });
-                    }
-                });
-            } else {
-                this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1); + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/nofile.png 1x, img/nofile@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
-                this.displayImages();
-            }
+        if (! this.imageFound && index < this.galleries.length) {
+            this.currentGallery = index;
+            this.galleries.forEach(function(item, indx, arr) { // For each gallery.
+                if (indx == index) {
+                    item.root.createReader().readEntries(function(entries) {
+                        t.getImages(entries, 0);
+                    });
+                }
+            });
         }
     },
     getImages: function(entries, i) {
         if (i < entries.length) {
-            console.log(entries[i]);
             if (entries[i].isDirectory && this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // If the file is a directory and the right directory.
-                console.log("C'est le bon dossier, on y va et on diminue le jeton");
                 entries[i].createReader().readEntries($.proxy(function(directory) {
                     this.getImages(directory, 0);
                 }, this)); // Recursivity.
             } else if (this.loadedImagePath.indexOf(entries[i].fullPath.replace(/\'/g, "&#39;")) != -1) { // It's the correct image!
-                console.log("Bonne image !");
                 this.imageFound = true;
                 var t = this;
                 entries[i].file(function(file) {
@@ -125,13 +114,14 @@ DisplayManager.prototype = {
                     reader.readAsDataURL(file);
                 });
             }  else {
-                console.log("Mauvaise image ou dossier, on continue sans diminuer le jeton");
                 this.getImages(entries, i + 1);
             }
         } else {
             if (this.currentGallery < (this.galleries.length - 1)) { // We still have galleries to search.
-                console.log("Changement de gallerie");
                 this.galleryAnalysis(this.currentGallery + 1);
+            } else {
+                this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1) + ' ' + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class='nofile' srcset='img/nofile.png 1x, img/nofile@2x.png 2x'" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
+                this.displayImages();
             }
         }
     },
