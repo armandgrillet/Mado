@@ -2,6 +2,7 @@
 function Editor() {
     /* Outlets */
     this.markdown = $("#markdown"); // The div where is the markdown textarea.
+    this.conversionDiv = $("#html-conversion");
 
     /* Variables */
     this.counter = new Counter(this.markdown[0]); // Counter of words/characters.
@@ -10,6 +11,7 @@ function Editor() {
     this.linkManager = new LinkManager(this); // Manage the button to add links.
     this.nameManager = new NameManager(this); // Manage the name of the file written.
     this.saveStateManager = new SaveStateManager(this); // Manage the save state of the file.
+    this.scrollManager = new ScrollManager(this.markdown, this.conversionDiv); // Object allowing a synchronized scroll between the convertedDiv and the conversionDiv.
     this.webImageManager = new WebImageManager(this); // Manage the button to add online images.
 
     /* Events */
@@ -21,6 +23,11 @@ function Editor() {
 
 Editor.prototype = {
     constructor: Editor,
+
+    /* Automatic scroll depending on the height of the two zones. */
+    checkHeight: function() {
+        this.scrollManager.checkZonesHeight();
+    },
 
     /* Update the objects that have to change when the markdown area is changed. */
     convert: function() {

@@ -25,9 +25,11 @@ function StyleManager() {
 
 StyleManager.prototype = {
     constructor: StyleManager,
+
+    /* Gets the style in chrome.storage.local and applies it. */
     getStyle: function() {
         chrome.storage.local.get("style",  $.proxy(function(mado) {
-            if (mado["style"] != undefined) {
+            if (mado["style"]) {
                 switch (mado["style"]) {
                 case "home":
                     this.homeRadio[0].checked = true;
@@ -39,7 +41,7 @@ StyleManager.prototype = {
                     this.tramwayRadio[0].checked = true;
                 }
                 this.setStyle(mado["style"]);
-            } else {
+            } else { // Not settled yet, we choose Home.
                 this.homeRadio[0].checked = true;
                 this.setStyle("home");
             }

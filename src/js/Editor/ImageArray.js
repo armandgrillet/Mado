@@ -4,6 +4,7 @@ function ImageArray() {
 
 ImageArray.prototype = {
     constructor: ImageArray,
+    
     /* Add an image to the array.
      * imagePath: path of the image added.
      * imageData: data of the image added.

@@ -5,6 +5,7 @@ function App(editor) {
 
     this.dragAndDropManager = new DnDManager(this, "body");
     this.exportManager = new ExportManager(this);
+    this.labelManager = new LabelManager();
     this.moreWindowsManager = new MoreWindowsManager();
     this.newFileManager = new NewFileManager(this);
     this.openFileManager = new OpenFileManager(this);

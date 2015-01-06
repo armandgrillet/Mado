@@ -1,17 +1,15 @@
 function DisplayManager(editor) {
     /* Outlets */
-    this.convertedDiv = $("#markdown");
     this.conversionDiv = $("#html-conversion");
 
     /* Variables */
     this.currentGallery; // Gallery currently visited by getImages();
-    this.editor = editor;
+    this.editor = editor; // The editor.
     this.galleries = []; // Galleries where we can read images.
     this.imagesDisplayed = new ImageArray(); // Object containing opened images.
     this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images' type.
     this.loadedImagePath; // Path of the image found.
     this.imagePosition = 0; // Help us to find all the images in a file.
-    this.scrollManager = new ScrollManager(this.convertedDiv, this.conversionDiv); // Object allowing a synchronized scroll between the convertedDiv and the conversionDiv.
     this.styleManager = new StyleManager(); // Object to manage the styles of the conversionDiv.
     this.tempConversion; // Temporary conversion before it is displayed in the conversionDiv.
     this.urlManager = new UrlManager(this.conversionDiv); // Managing what to do when user clicks a link.
@@ -166,7 +164,7 @@ DisplayManager.prototype = {
     update: function() {
         if (this.editor.getLength() > 0) { // There is Markdown in the textarea.
             this.tempConversion = marked(this.editor.getMarkdown()); // Get the new conversion.
-            this.scrollManager.checkZonesHeight(); // Check the scroll.
+            this.editor.checkHeight(); // Check the scroll.
             this.displayImages(); // We will finish displaying it after displaying every images correctly.
         } else { // No Markdown here.
             this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor")); // Display the message when there is no text.
