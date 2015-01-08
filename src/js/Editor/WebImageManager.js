@@ -64,7 +64,7 @@ WebImageManager.prototype = {
             setTimeout($.proxy(function() {
                 this.altInput.removeClass("flash");
             }, this), 800); // The "flash" class is deleted after 0.8 seconds (the flash animation's duration).
-        } else if (this.webImageUrlInput.val() == "") { /
+        } else if (this.webImageUrlInput.val() == "") {
             this.webImageUrlInput.attr("class", "flash");
             this.webImageUrlInput.focus();
             this.webImageUrlInput.attr("class", "");
