@@ -33,7 +33,8 @@
 
 	/* Switch cursor's position when in markdown view and normal view */
 	#switch-cursor.markdown-view,
-	#switch-cursor.normal {
+	#switch-cursor.normal,
+	#switch-cursor {
 		/* Positioning */
 		margin-left: -49px;
 	}

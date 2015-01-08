@@ -297,7 +297,7 @@
 	background-color: #f0f0f0;
 	border-bottom: none;
 	border-top: 2px solid #e0e0e0;
-	
+
 	/* Misc */
 	transition: none;
 }
@@ -448,7 +448,7 @@
 	width: 120px;
 
 	/* Misc */
-	-webkit-transform-origin: 100px 1px;
+	-webkit-transform-origin: 105px 1px;
 	transition: all .15s ease-out;
 }
 

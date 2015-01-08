@@ -31,39 +31,48 @@
 		<link rel="stylesheet" type="text/css" href="css/print.css">
 
 		<!-- Generic JS -->
-		<script type="text/javascript" src="js/lib/countable.js"></script>	
-		<script type="text/javascript" src="js/lib/google-analytics-bundle.js"></script>
-		<script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/Countable.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="js/lib/marked.js"></script>
-		<script type="text/javascript" src="js/lib/mutate.js"></script>
 		<script type="text/javascript" src="js/lib/mousetrap.min.js"></script>
-		
+		<script type="text/javascript" src="js/lib/rangyinputs.js"></script>
+
 		<!-- build:js js/mado.js -->
 		<!-- JS for Mado (alphabetical order) -->
-		<script type="text/javascript" src="js/app.js"></script>
-		<script type="text/javascript" src="js/click.js"></script>
-		<script type="text/javascript" src="js/drag-and-drop.js"></script>
-		<script type="text/javascript" src="js/editor.js"></script>
-		<script type="text/javascript" src="js/find.js"></script>
-		<script type="text/javascript" src="js/footer.js"></script>
-		<script type="text/javascript" src="js/help.js"></script>
-		<script type="text/javascript" src="js/image.js"></script>
-		<script type="text/javascript" src="js/link.js"></script>
-		<script type="text/javascript" src="js/more.js"></script>
-		<script type="text/javascript" src="js/online-image.js"></script>
-		<script type="text/javascript" src="js/recentfiles.js"></script>
-		<script type="text/javascript" src="js/responsive.js"></script>
-		<script type="text/javascript" src="js/scroll.js"></script>
-		<script type="text/javascript" src="js/stats.js"></script>
-		<script type="text/javascript" src="js/styles.js"></script>
-		<script type="text/javascript" src="js/viewswitch.js"></script>
-		<script type="text/javascript" src="js/window.js"></script>
+		<script type="text/javascript" src="js/Editor/Counter.js"></script>
+		<script type="text/javascript" src="js/Editor/DisplayManager.js"></script>
+		<script type="text/javascript" src="js/Editor/Editor.js"></script>
+		<script type="text/javascript" src="js/Editor/HelpManager.js"></script>
+		<script type="text/javascript" src="js/Editor/ImageArray.js"></script>
+		<script type="text/javascript" src="js/Editor/ImageManager.js"></script>
+		<script type="text/javascript" src="js/Editor/LinkManager.js"></script>
+		<script type="text/javascript" src="js/Editor/NameManager.js"></script>
+		<script type="text/javascript" src="js/Editor/SaveStateManager.js"></script>
+		<script type="text/javascript" src="js/Editor/ScrollManager.js"></script>
+		<script type="text/javascript" src="js/Editor/StyleManager.js"></script>
+		<script type="text/javascript" src="js/Editor/UrlManager.js"></script>
+		<script type="text/javascript" src="js/Editor/WebImageManager.js"></script>
+
+		<script type="text/javascript" src="js/Topbar/App.js"></script>
+		<script type="text/javascript" src="js/Topbar/DnDManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/ExportManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/LabelManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/MoreWindowsManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/NewFileManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/OpenFileManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/PrintManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/RecentFilesManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/SaveFileManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/SaveFileAsManager.js"></script>
+		<script type="text/javascript" src="js/Topbar/SwitchManager.js"></script>
+
+		<script type="text/javascript" src="js/Window.js"></script>
 
 		<!-- Onload script -->
 		<script type="text/javascript" src="js/onload.js"></script>
 		<!-- /build -->
 	</head>
-	
+
 	<body>
 
 		<!-- FIXED TOPBAR -->
@@ -77,10 +86,10 @@
 						<span id="save-state"></span><span id="doc-name"></span> Mado
 					</span>
 				</div>
-				
+
 				<ul>
 					<li id="window-close">
-						
+
 						<div id="window-close-button"></div>
 						<!-- Close alert displayer -->
 						<div class="hidden" id="close-alert-displayer">
@@ -106,7 +115,7 @@
 									 - "No, don't save": close the document without saving the changes;
 									 - "Save and exit": save the changes, then close the document. -->
 								<footer id="alert-actions">
-									
+
 									<div class="alert-button-container">
 										<div class="cta button button-grey" id="cancel">Cancel</div>
 									</div>
@@ -126,9 +135,9 @@
 			</nav>
 
 			<nav id="navbar">
-				
+
 				<ul>
-					
+
 					<li class="cta nav-item" id="new">
 						<div class="nav-icon icon-new"></div><div class="nav-label">New</div>
 					</li>
@@ -161,7 +170,7 @@
 						<div class="nav-icon icon-print"></div><div class="nav-label">Print</div>
 					</li>
 				</ul>
-					
+
 				<!-- The view switch handles the main container. On big screens, it has three different states:
 					 - "Markdown" to diplay only the markdown area.
 					 - "Both" to display both the markdown and the HTML conversion areas.
@@ -225,26 +234,26 @@
 					 - "markdown-view": whatever the size of the screen, only the markdown area will be displayed.
 					 - "conversion-view": whatever the size of the screen, only the HTML conversion area will be displayed.
 					 These three states are handled via the main switch. See 'viewswitch.js' for further information. -->
-				<section id="workspace" class="normal">			
+				<section id="workspace" class="normal">
 					<!-- Markdown control sidebar
 						 Contains three square buttons:
 						 - The help-input accessor;
 						 - The link shortcut;
 						 - The image shortcut. -->
 					<aside class="sidebar" id="md-control">
-						
+
 						<ul>
 
 							<!-- Help tool -->
 							<li class="tool-container" id="help-input-container">
-							
+
 								<div class="cta tool icon-help" id="help-button"></div> <!-- When clicked, displays the help input via javascript. -->
 								<!-- Help input diplayer
 									 Displays the input on click on the "Help" button. It has two class states:
 									 - "hidden": hides its children.
 									 - No class: displays everything. -->
 								<div class="tool-displayer hidden" id="help-input-displayer">
-								
+
 									<!-- The arrow that comes with the box (see below) -->
 									<div class="tool-arrow"></div>
 									<!-- The gray box that contains the input -->
@@ -252,10 +261,10 @@
 
 										<!-- The help input itself -->
 										<input type="text" class="tool-first-item" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
-										
+
 										<!-- Results container -->
 										<ul class="hidden" id="help-results-container">
-											
+
 											<li class="result" id="result-1">
 												<div class="result-switch-container"><div class="result-switch little-icon-switch" id="result-switch-1"></div></div>
 												<div class="answer" id="answer-1"></div>
@@ -287,7 +296,7 @@
 								<div class="tool-displayer hidden" id="link-insertion-displayer">
 
 									<div class="tool-arrow"></div>
-								
+
 									<div class="tool-box" id="link-insertion-box">
 										<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
 										<input type="text" class="tool-first-item" id="url-input" placeholder="Type the URL">
@@ -314,7 +323,7 @@
 									 - "hidden": hides its children.
 									 - No class: displays everything. -->
 								<div class="tool-displayer hidden" id="webimage-insertion-displayer">
-									
+
 									<div class="tool-arrow"></div>
 
 									<div class="tool-box" id="webimage-insertion-box">
@@ -339,7 +348,7 @@
 									 - "hidden": hides its children.
 									 - No class: displays everything. -->
 								<div class="tool-displayer hidden" id="image-insertion-displayer">
-									
+
 									<div class="tool-arrow"></div>
 
 									<div class="tool-box" id="image-insertion-box">
@@ -400,11 +409,11 @@
 			<!-- HTML overview control navbar
 				 Contains the CSS picker square button. -->
 			<div class="tool-container" id="style-tool-container">
-			
+
 				<div class="cta tool icon-style" id="style-tool"></div>
-				
+
 				<div class="tool-displayer hidden" id="style-tool-displayer">
-					
+
 					<div class="tool-box">
 
 						<div class="style-choice-container">

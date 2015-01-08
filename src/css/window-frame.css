@@ -50,15 +50,15 @@
 	/* Positioning */
 	position: absolute; /* See #app-header-centered above */
 	left: -20px; /* Override the child span's own width */
-	top: 0;
+	top: 0px;
 
 	/* Box-model */
 	display: block;
 	width: 20px;
-	height: 20px;
+	height: 22px;
 
 	/* Typography */
-	line-height: 20px;
+	line-height: 22px;
 	text-align: center;
 }
 

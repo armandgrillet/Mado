@@ -95,8 +95,8 @@
    -------- */
 #save-state span {
 	/* Box-model */
-	height: 16px !important;
+	height: 18px !important;
 
 	/* Typography */
-	line-height: 16px !important;
+	line-height: 18px !important;
 }
