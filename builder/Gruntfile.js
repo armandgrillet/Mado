@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-    // 1. All configuration goes here 
+    // 1. All configuration goes here
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
 
@@ -11,38 +11,40 @@ module.exports = function(grunt) {
                 src: [
                     "**",
                     "!js/*.js",
-                    "!js/more/*.js"
+                    "!js/Editor/**",
+                    "!js/Topbar/**",
+                    "!js/more/**"
                 ],
                 dest: "../min/"
             }
         },
 
-        concat: { 
+        concat: {
             mado: {
-                src: ["../src/js/*.js"],
+                src: ["../src/js/*.js", "../src/js/Editor/*.js", "../src/js/Topbar/*.js"],
                 dest: "../min/js/mado.js"
             },
             moreAbout: {
                 src: [
-                    ["../src/js/more/more-close-button.js", "../src/js/more/about-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/about-onload.js"],
                 ],
                 dest: "../min/js/more/about.js"
             },
             moreQanda: {
                 src: [
-                    ["../src/js/more/more-close-button.js", "../src/js/more/qanda-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/qanda-onload.js"],
                 ],
                 dest: "../min/js/more/qanda.js"
             },
             moreSettings: {
                 src: [
-                    ["../src/js/more/more-close-button.js", "../src/js/more/settings.js", "../src/js/more/settings-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/SettingsManager.js", "../src/js/more/settings-onload.js"],
                 ],
                 dest: "../min/js/more/settings.js"
             },
             moreShortcuts: {
                 src: [
-                    ["../src/js/more/more-close-button.js", "../src/js/more/shortcuts-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/ShortcutsManager.js", "../src/js/more/shortcuts-onload.js"],
                 ],
                 dest: "../min/js/more/shortcuts.js"
             }
