@@ -15,8 +15,8 @@ CloseButtonManager.prototype = {
 
     init: function() {
         var operatingSystem;
-        var frameStylesheetLink = document.createElement("link");
 
+        var frameStylesheetLink = document.createElement("link"); // Create a link that will be the correct CSS file for the more-frame.
         frameStylesheetLink.setAttribute("rel", "stylesheet");
         frameStylesheetLink.setAttribute("type", "text/css");
 
@@ -29,7 +29,7 @@ CloseButtonManager.prototype = {
         }
 
         frameStylesheetLink.setAttribute("href", "../../css/more/more-frame-" + operatingSystem + ".css");
-        this.close.attr("class", "cta little-icon-" + operatingSystem.substring(0,3) + "-close");
+        this.close.attr("class", "cta little-icon-" + operatingSystem.substring(0,3) + "-close"); // Set the correct close icon.
 
         this.head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
     }

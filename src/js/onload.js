@@ -1,6 +1,5 @@
 window.onload = function() {
-    var editor = new Editor();
-    var helpManager = new HelpManager();
+    var editor = new Editor(); // The editor.
     var app = new App(editor);
     var appWindow = new Window(app);
 }

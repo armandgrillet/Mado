@@ -192,6 +192,17 @@
       "message": "Choose an image"
    },
 
+   "msgDocument": {
+      "message": "document"
+   },
+
+   "msgClearAll": {
+      "message": "Clear all"
+   },
+   "msgNoRecentDocument": {
+      "message": "No recent document."
+   },
+
    "msgNew": {
       "message": "New"
    },

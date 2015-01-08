@@ -5,7 +5,6 @@ function SwitchManager() {
     this.switchToMD = $("#switch-md");
     this.switchToBoth = $("#switch-both");
     this.switchToHTML = $("#switch-html");
-
     this.workspace = $("#workspace");
 
     /* Variables */
@@ -34,18 +33,20 @@ function SwitchManager() {
     }, this));
 
     /* Initialization */
-    if (chrome.app.window.current().getBounds().width > 1159) { // Big window
+    if (chrome.app.window.current().getBounds().width > 1159) { // Big window, both sides are displayed.
         this.activate("switch-both");
-    } else {
+    } else { // Small window, we only show the Markdown side.
         this.activate("switch-md");
     }
 }
 
 SwitchManager.prototype = {
     constructor: SwitchManager,
+
+    /* Do the switch. */
     activate: function(button) {
         for (var i = 0; i < this.switchButtons.length; i++) {
-            if (this.switchButtons[i].attr("id") != button) { // Deactivating the switch buttons that are not clicked.
+            if (this.switchButtons[i].attr("id") != button) { // Deactivating the switch buttons that are not selected.
                 this.switchButtons[i].removeClass("activated")
             } else { // Activating the clicked button.
                 this.switchButtons[i].addClass("activated");
@@ -53,33 +54,34 @@ SwitchManager.prototype = {
         }
 
         switch (button) {
-            case this.switchButtons[0].attr("id"):
+            case this.switchButtons[0].attr("id"): // Markdown.
                 this.workspace.add(this.switchCursor).add(this.madoFooter).attr("class", "markdown-view");
                 break;
-            case this.switchButtons[1].attr("id"):
+            case this.switchButtons[1].attr("id"): // Normal.
                 this.workspace.add(this.switchCursor).attr("class", "normal");
                 this.madoFooter.attr("class", "");
                 break;
-            case this.switchButtons[2].attr("id"):
+            case this.switchButtons[2].attr("id"): // HTML.
                 this.workspace.add(this.switchCursor).attr("class", "conversion-view");
                 this.madoFooter.attr("class", "");
                 break;
         }
     },
+
+    /* Shortcut used to switch in a specific direction. */
     switch: function(direction) {
         if (window.innerWidth > 1159) { // Normal window
             for (var i = 0; i < this.switchButtons.length; i++) {
-                if (this.switchButtons[i].hasClass("activated")) { // We found what button is activated.
-                    if (direction == "left" && i > 0) {
+                if (this.switchButtons[i].hasClass("activated")) { // We found which button is activated.
+                    if (direction == "left" && i > 0) { // Left.
                         this.switchButtons[i - 1].click(); // The previous button is now activated.
-                    } else if (direction == "right" && i < this.switchButtons.length -1) {
+                    } else if (direction == "right" && i < this.switchButtons.length -1) { // Right.
                         this.switchButtons[i + 1].click(); // The next button is now activated.
                     }
                     i = this.switchButtons.length; // End of the loop.
                 }
             }
-        }
-        else { // Small window, only Markdown and HTML views are available.
+        } else { // Small window, only Markdown and HTML views are available so the code is easier.
             if (direction == "left") {
                 this.switchToMD.click();
             } else {

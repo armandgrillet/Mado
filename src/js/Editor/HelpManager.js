@@ -38,7 +38,7 @@ function HelpManager() {
         }
     }, this));
 
-    Mousetrap.bind(["command+h", "ctrl+h"], $.proxy(function(e) { // Ctrl+h = display the help.
+    Mousetrap.bind(["ctrl+h"], $.proxy(function(e) { // Ctrl+h = display the help.
         this.helpButton.click();
         return false;
     }, this));

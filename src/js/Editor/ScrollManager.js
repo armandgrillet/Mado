@@ -19,6 +19,7 @@ function ScrollManager(firstZone, secondZone) {
 
 ScrollManager.prototype = {
     constructor: ScrollManager,
+    
     /* Apply a scroll on the zone not scrolled so that there is a scroll in the two zones, depending on the height of each zone. */
     asyncScroll: function(zone) {
         if (zone == this.firstZone[0].id) {

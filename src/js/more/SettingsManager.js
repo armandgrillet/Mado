@@ -13,6 +13,7 @@ function SettingsManager() {
 SettingsManager.prototype = {
     constructor: SettingsManager,
 
+    /* Get the correct syntax and display it. */
     init: function() {
         chrome.storage.local.get("gfm", $.proxy(function(mado) {
             if (mado["gfm"] != undefined) {
@@ -28,10 +29,12 @@ SettingsManager.prototype = {
             }
         }, this));
     },
+
+    /* Set the syntax in chrome.storage.local. */
     setSyntax: function() {
-        if (this.markdownSyntax[0].checked) {
+        if (this.markdownSyntax[0].checked) { // The div markdownSyntax has been checked.
             chrome.storage.local.set({ "gfm": false });
-        } else {
+        } else { // The div gfmSyntax has been checked.
             chrome.storage.local.set({ "gfm": true });
         }
     }

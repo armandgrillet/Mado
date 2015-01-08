@@ -7,6 +7,7 @@ function Editor() {
     /* Variables */
     this.counter = new Counter(this.markdown[0]); // Counter of words/characters.
     this.displayManager = new DisplayManager(this); // Convert the markdown in HTML.
+    this.helpManager = new HelpManager(); // Manage the help
     this.imageManager = new ImageManager(this); // Manage the button to add offline images.
     this.linkManager = new LinkManager(this); // Manage the button to add links.
     this.nameManager = new NameManager(this); // Manage the name of the file written.
