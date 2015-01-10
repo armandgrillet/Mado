@@ -26,7 +26,7 @@ NewFileManager.prototype = {
                 minHeight: 330
             });
         } else if (this.app.getEditorText() == chrome.i18n.getMessage("msgFirstLaunch")) {
-            this.app.restEditor();
+            this.app.resetEditor();
             this.app.focusOnEditor();
         }
     }
