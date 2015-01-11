@@ -108,4 +108,4 @@ Window.prototype = {
             callback();
         }, this));
     }
-}
+};

@@ -1,7 +1,7 @@
 function LinkManager(editor) {
     /* Outlets */
     this.cancelLinkButton = $("#cancel-link");
-    this.insertLink = $("#insert-link")
+    this.insertLink = $("#insert-link");
     this.linkButton = $("#link-button");
     this.linkDisplayer = $("#link-insertion-displayer");
     this.urlInput = $("#url-input");
@@ -9,10 +9,10 @@ function LinkManager(editor) {
 
     /* Variables */
     this.editor = editor; // The editor that we will modify.
-    this.startSelection; // The beginning of the selection in the editor when we are writing the link.
-    this.firstEndSelection; // The beginning of the selection in the editor when we apply the LinkManager.
-    this.endSelection; // The end of the selection in the editor when we are writing the link.
-    this.initialSelection;  // The text selected in the editor when we apply the LinkManager.
+    this.startSelection = undefined; // The beginning of the selection in the editor when we are writing the link.
+    this.firstEndSelection = undefined; // The beginning of the selection in the editor when we apply the LinkManager.
+    this.endSelection = undefined; // The end of the selection in the editor when we are writing the link.
+    this.initialSelection = undefined;  // The text selected in the editor when we apply the LinkManager.
 
     /* Events */
     $(document).click($.proxy(function(e) {
@@ -75,7 +75,7 @@ LinkManager.prototype = {
 
     /* Applies the new link and closes the manager. */
     apply: function() {
-        if (this.urlInput.val() == "") {
+        if (this.urlInput.val() === "") {
             this.urlInput.addClass("flash"); // If the URL input is empty, a flash is triggered on it so that the user knows he has to fill it.
             this.urlInput.focus();
             setTimeout($.proxy(function() {
@@ -122,7 +122,7 @@ LinkManager.prototype = {
     /* Input in the manager, we update the markdown */
     update: function() {
         var link;
-        if (this.hypertextInput.val() == "") { // Hypertext not given.
+        if (this.hypertextInput.val() === "") { // Hypertext not given.
             link = '[' + this.urlInput.val() + "](" + this.urlInput.val() + ')'; // Only displays the url twice.
         } else {
             link = '[' + this.hypertextInput.val() + "](" + this.urlInput.val() + ')'; // Displays the hypertext and the URL.
@@ -130,4 +130,4 @@ LinkManager.prototype = {
         this.editor.setMarkdown(link, this.startSelection, this.endSelection); // Sets the markdown value.
         this.endSelection = this.startSelection + link.length; // Modifies the selection for the next update.
     }
-}
+};

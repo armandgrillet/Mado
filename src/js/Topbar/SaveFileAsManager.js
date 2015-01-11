@@ -20,13 +20,13 @@ SaveFileAsManager.prototype = {
                     var truncated = false; // Variable used to do a good save even if the new file is shorter than the old one.
                     fileWriter.onwriteend = function(e) {
                         if (!truncated) {
-                            truncated = true
+                            truncated = true;
                             this.truncate(this.position);
                             return;
                         }
                         chrome.storage.local.set({ "newFile": chrome.fileSystem.retainEntry(savedFile), "newFilePath": savedFile.fullPath }, function() { // For RecentFilesManager.
                             t.app.setEditorEntry(savedFile); // The editor know that the document is saved.
-                            if (callback != undefined) {
+                            if (callback) {
                                 callback();
                             }
                         });
@@ -36,4 +36,4 @@ SaveFileAsManager.prototype = {
             }
         });
     }
-}
+};

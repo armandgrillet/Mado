@@ -3,4 +3,4 @@
 window.onload = function() {
 	var closeButtonManager = new CloseButtonManager();
 	var settingsManager = new SettingsManager();
-}
+};

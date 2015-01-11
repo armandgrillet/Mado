@@ -47,7 +47,7 @@ SwitchManager.prototype = {
     activate: function(button) {
         for (var i = 0; i < this.switchButtons.length; i++) {
             if (this.switchButtons[i].attr("id") != button) { // Deactivating the switch buttons that are not selected.
-                this.switchButtons[i].removeClass("activated")
+                this.switchButtons[i].removeClass("activated");
             } else { // Activating the clicked button.
                 this.switchButtons[i].addClass("activated");
             }
@@ -89,4 +89,4 @@ SwitchManager.prototype = {
             }
         }
     }
-}
+};

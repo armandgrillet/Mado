@@ -4,7 +4,7 @@ function NameManager() {
     this.headTitle = $("title")[0]; // The tag in the head.
 
     /* Variables */
-    this.name;
+    this.name = undefined;
 }
 
 NameManager.prototype = {
@@ -31,4 +31,4 @@ NameManager.prototype = {
         this.windowName.html(newName + "&nbsp;-"); // We put a caret between file's name and Mado.
         this.headTitle.innerHTML = newName + " - Mado"; // We still display Mado in the title.
     }
-}
+};

@@ -20,10 +20,10 @@ LabelManager.prototype = {
                 $(this.labels[i][0]).attr("title", chrome.i18n.getMessage(this.labels[i][1])); // We set the localized title.
             }
         } else if (chrome.app.window.current().getBounds().width >= this.bigWidth && this.lastWidth < this.bigWidth) {
-            for (var i = 0; i < this.labels.length; i++) {
-                $(this.labels[i][0]).removeAttr("title"); // Removes the titles because we are displaying them entirely.
+            for (var j = 0; j < this.labels.length; j++) {
+                $(this.labels[j][0]).removeAttr("title"); // Removes the titles because we are displaying them entirely.
             }
         }
         this.lastWidth = chrome.app.window.current().getBounds().width;
     }
-}
+};

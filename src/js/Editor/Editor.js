@@ -65,9 +65,9 @@ Editor.prototype = {
     init: function() {
         var t = this; // Shortcut.
         chrome.storage.local.get("editorInitFileEntry", function(mado) {
-            if (mado["editorInitFileEntry"] != undefined) { // We are loading a file at start.
+            if (mado.editorInitFileEntry) { // We are loading a file at start.
                 chrome.fileSystem.restoreEntry( // We get the entry.
-                    mado["editorInitFileEntry"],
+                    mado.editorInitFileEntry,
                     function (entry) {
                         fileEntry = entry; // Shortcut.
                         chrome.storage.local.remove("editorInitFileEntry"); // We remove the file that has been used.
@@ -89,7 +89,7 @@ Editor.prototype = {
                 );
             } else { // No file loaded, we check if it is the first launch.
                 chrome.storage.local.get("firstLaunch", function(mado) {
-                    if (mado["firstLaunch"] == undefined) { // It is the first launch, the variable does not exist yet.
+                    if (mado.firstLaunch === undefined) { // It is the first launch, the variable does not exist yet.
                         t.setMarkdown(chrome.i18n.getMessage("msgFirstLaunch")); // We set the textarea's text.
                         chrome.storage.local.set({ "firstLaunch" : false }); // We set the variable so that the message won't be displayed again.
                     }
@@ -151,4 +151,4 @@ Editor.prototype = {
     setSelection: function(start, end) {
         this.markdown.setSelection(start, end);
     }
-}
+};

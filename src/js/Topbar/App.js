@@ -14,16 +14,6 @@ function App(editor) {
     this.saveFileManager = new SaveFileManager(this);
     this.saveFileAsManager = new SaveFileAsManager(this);
     this.switchManager = new SwitchManager();
-
-    /* Events */
-    chrome.app.window.current().onBoundsChanged.addListener($.proxy(function () {
-        if (chrome.app.window.current().getBounds().width < 1600 && this.lastBounds.width >= 1600) {
-            this.addLabels();
-        } else if (chrome.app.window.current().getBounds().width >= 1600 && this.lastBounds.width < 1600) {
-            this.removeLabels();
-        }
-        this.lastBounds = chrome.app.window.current().getBounds();
-    }, this));
 }
 
 App.prototype = {
@@ -112,4 +102,4 @@ App.prototype = {
         this.editor.setMarkdown(content, 0, this.editor.getMarkdown().length);
         this.editor.saveWithName(entry.fullPath.substring(entry.fullPath.lastIndexOf('/') + 1));
     }
-}
+};

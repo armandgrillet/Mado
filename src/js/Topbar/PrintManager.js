@@ -9,4 +9,4 @@ function PrintManager() {
 
 PrintManager.prototype = {
     constructor: PrintManager
-}
+};

@@ -3,7 +3,7 @@ function ScrollManager(firstZone, secondZone) {
     this.centerLine = $("#center-line-container");
 
     /* Variables */
-    this.atTheBottom; // True if the user is at the end of the document.
+    this.atTheBottom = undefined; // True if the user is at the end of the document.
     this.firstZone = firstZone; // Zone 1 with synced scrolling.
     this.secondZone = secondZone; // Zone 2 with synced scrolling.
     this.lastFirstZoneHeight = firstZone[0].scrollHeight; // Save of the first zone height.
@@ -19,7 +19,7 @@ function ScrollManager(firstZone, secondZone) {
 
 ScrollManager.prototype = {
     constructor: ScrollManager,
-    
+
     /* Apply a scroll on the zone not scrolled so that there is a scroll in the two zones, depending on the height of each zone. */
     asyncScroll: function(zone) {
         if (zone == this.firstZone[0].id) {
@@ -45,4 +45,4 @@ ScrollManager.prototype = {
         }
         this.lastFirstZoneHeight = this.firstZone[0].scrollHeight; // Update the height saved.
     }
-}
+};

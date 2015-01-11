@@ -59,4 +59,4 @@ MoreWindowsManager.prototype = {
         );
         this.moreDisplayer.toggleClass("hidden"); // Hide the more displayer once a more window has been opened.
     }
-}
+};

@@ -4,7 +4,7 @@ function SaveFileManager(app) {
 
     /* Variables */
     this.app = app;
-    this.fileToSave; // The file saved.
+    this.fileToSave = undefined; // The file saved.
 
     /* Events */
     this.saveButton.on("click", $.proxy(function () { this.apply(); }, this));
@@ -31,7 +31,7 @@ SaveFileManager.prototype = {
                     }
                     chrome.storage.local.set({ "newFile": chrome.fileSystem.retainEntry(t.fileToSave), "newFilePath": t.fileToSave.fullPath }, function() { // For RecentFilesManager.
                         t.app.setDocumentSaved(); // The editor know that the document is saved.
-                        if (callback != undefined) {
+                        if (callback) {
                             callback();
                         }
                     });
@@ -48,9 +48,9 @@ SaveFileManager.prototype = {
     init: function() {
         var t = this;
         chrome.storage.local.get("appInitFileEntry", function(mado) {
-            if (mado["appInitFileEntry"] != undefined) {
+            if (mado.appInitFileEntry) {
                 chrome.fileSystem.restoreEntry(
-                    mado["appInitFileEntry"],
+                    mado.appInitFileEntry,
                     function (entry) {
                         t.fileToSave = entry; // Set fileToSave to allow direct saves.
                         chrome.storage.local.remove("appInitFileEntry");
@@ -73,4 +73,4 @@ SaveFileManager.prototype = {
     setFileToSave: function(fileEntry) {
         this.fileToSave = fileEntry;
     }
-}
+};

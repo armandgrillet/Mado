@@ -2,4 +2,4 @@
 
 window.onload = function() {
     var closeButtonManager = new CloseButtonManager();
-}
+};

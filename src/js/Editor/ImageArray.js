@@ -1,10 +1,10 @@
 function ImageArray() {
-    this.images = new Array(); // This array has 3 columns: Path | Data | Used during last conversion.
+    this.images = []; // This array has 3 columns: Path | Data | Used during last conversion.
 }
 
 ImageArray.prototype = {
     constructor: ImageArray,
-    
+
     /* Add an image to the array.
      * imagePath: path of the image added.
      * imageData: data of the image added.
@@ -61,4 +61,4 @@ ImageArray.prototype = {
             }
         }
     }
-}
+};

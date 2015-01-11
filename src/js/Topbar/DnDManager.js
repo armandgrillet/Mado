@@ -4,11 +4,10 @@ function DnDManager(app, selector) {
 
     /* Variables */
     this.app = app;
-    this.dragAndDropManager; // The manager launched onload.
     this.dragMessageAlreadyVisible = false; // True if the message about Drag and Drop is already visible.
     this.selector = document.querySelector(selector); // The fiel handled by the Drag and Drop manager.
     this.extensionsAllowed = [".markdown", ".md", ".txt"]; // Extensions allowed by Mado.
-    this.filePath; // The path of the dragged file.
+    this.filePath = undefined; // The path of the dragged file.
     this.overCount = 0; // Use to only display once the animation of drag.
 
     /* Events */
@@ -16,7 +15,7 @@ function DnDManager(app, selector) {
     this.selector.addEventListener("dragover", $.proxy(function(e) { this.dragover(e); }, this));
     this.selector.addEventListener("dragleave", $.proxy(function(e) { this.dragleave(e); }, this));
     this.selector.addEventListener("drop", $.proxy(function(e) { this.drop(e); }, this));
-};
+}
 
 DnDManager.prototype = {
     constructor: DnDManager,
@@ -65,4 +64,4 @@ DnDManager.prototype = {
             this.app.openFile(e.dataTransfer.items[0].webkitGetAsEntry()); // We open the file dropped.
         }
     }
-}
+};

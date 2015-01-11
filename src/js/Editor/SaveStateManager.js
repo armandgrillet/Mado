@@ -33,4 +33,4 @@ SaveStateManager.prototype = {
             this.saveState.html("");
         }
     },
-}
+};

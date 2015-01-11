@@ -30,4 +30,4 @@ NewFileManager.prototype = {
             this.app.focusOnEditor();
         }
     }
-}
+};

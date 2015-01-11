@@ -50,6 +50,11 @@ module.exports = function(grunt) {
             }
         },
 
+        jshint: {
+            beforeconcat: ["src/js/*.js", "src/js/Editor/*.js", "src/js/Topbar/*.js", "src/js/more/*.js"],
+            afterconcat: ["min/js/mado.js", "min/js/more/*.js"]
+        },
+
         uglify: {
         	mado: {
         		files: {
@@ -131,12 +136,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-htmlclean");
     grunt.loadNpmTasks("grunt-processhtml");
     grunt.loadNpmTasks("grunt-yui-compressor");
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask("default", ["copy", "concat", "uglify", "processhtml", "htmlclean", "cssmin", "usebanner"]);
+    grunt.registerTask("default", ["copy", "concat", "jshint", "uglify", "processhtml", "htmlclean", "cssmin", "usebanner"]);
 
 };

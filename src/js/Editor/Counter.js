@@ -44,4 +44,4 @@ Counter.prototype = {
     update: function() {
         Countable.count(this.countedDiv, $.proxy(function(counter) { this.display(counter); }, this), { stripTags: true }); // Without HTML tags.
     }
-}
+};

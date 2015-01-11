@@ -19,6 +19,16 @@ function StyleManager() {
         this.setStyle(e.target.id.slice(0, -6)); // Remove the part of the id with "-style".
     }, this));
 
+    chrome.storage.onChanged.addListener($.proxy(function(changes, namespace) {
+        for (var key in changes) {
+            switch (key) {
+            case "style":
+                this.getStyle(); // Get all the recent files again in chrome.storage.local and display them.
+                break;
+            }
+        }
+    }, this));
+
     /* Initialization */
     this.getStyle();
 }
@@ -29,8 +39,8 @@ StyleManager.prototype = {
     /* Gets the style in chrome.storage.local and applies it. */
     getStyle: function() {
         chrome.storage.local.get("style",  $.proxy(function(mado) {
-            if (mado["style"]) {
-                switch (mado["style"]) {
+            if (mado.style) {
+                switch (mado.style) {
                 case "home":
                     this.homeRadio[0].checked = true;
                     break;
@@ -40,7 +50,7 @@ StyleManager.prototype = {
                 case "tramway":
                     this.tramwayRadio[0].checked = true;
                 }
-                this.setStyle(mado["style"]);
+                this.setStyle(mado.style);
             } else { // Not settled yet, we choose Home.
                 this.homeRadio[0].checked = true;
                 this.setStyle("home");
@@ -60,4 +70,4 @@ StyleManager.prototype = {
         }
         chrome.storage.local.set({ "style" : newStyle });
     }
-}
+};

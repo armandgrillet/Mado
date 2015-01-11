@@ -19,4 +19,4 @@ ShortcutsManager.prototype = {
             this.ctrlOrCmdKey.html("Ctrl"); // Insert the "Ctrl" string.
         }
     }
-}
+};

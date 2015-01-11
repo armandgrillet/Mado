@@ -16,7 +16,7 @@ ExportManager.prototype = {
     apply: function() {
         var textToEport = marked(this.app.getEditorText()); // Get the text.
         var displayedName = chrome.i18n.getMessage("msgDocument") + "html"; // If the document is not saved we use something standard.
-        if (this.app.getName() != undefined) { // We have a real name so we use it.
+        if (this.app.getName()) { // We have a real name so we use it.
             displayedName = this.app.getName().replace(/\.[^/.]+$/, "") + ".html";
         }
         chrome.fileSystem.chooseEntry({ type: "saveFile", suggestedName: displayedName }, function(exportedFile) { // Save the file but it is in HTML.
@@ -27,4 +27,4 @@ ExportManager.prototype = {
             }
         });
     }
-}
+};

@@ -69,7 +69,7 @@ HelpManager.prototype = {
      */
     resetAnswerDivs: function(begin) {
         for (var i = begin; i <= 3; i++) { // i <= 3 because we only have 3 divs with help.
-            if ($("#answer-" + i).html() == "") { // If the help div is empty.
+            if ($("#answer-" + i).html() === "") { // If the help div is empty.
                 i = 3; // End of the loop.
             } else {
                 /* Reset the div. */
@@ -82,7 +82,7 @@ HelpManager.prototype = {
 
     /* Looks for help the user wants. */
     searchAnswers: function () {
-        if (this.help.val().length == 0) { // Nothing in the input.
+        if (this.help.val().length === 0) { // Nothing in the input.
             this.resultsContainer.attr("class", "hidden"); // Hide the results container, there is nothing in it if there is nothing written in the help input.
             this.resetAnswerDivs(3);
         }
@@ -105,7 +105,7 @@ HelpManager.prototype = {
                 for (var i = 0; i < arr.length && maxAnswers < 3; i++) { // A line = a syntax, this loop runs through each line.
                     var j = 0;
                     var wordSearched = "help" + arr[i]; // Get the subhect of help.
-                    while (loc.getMessage(wordSearched + j) != "") { // A subject can have different words describing it, we are checking each of them.
+                    while (loc.getMessage(wordSearched + j) !== "") { // A subject can have different words describing it, we are checking each of them.
                         if (loc.getMessage(wordSearched + j).toLowerCase().indexOf(this.help.val().toLowerCase()) > -1) { // Everything in lower case to help the condition.
                             var term = loc.getMessage(wordSearched + j); // What is searched.
                             var result = loc.getMessage(wordSearched + "Result"); // The result of the search.
@@ -146,7 +146,7 @@ HelpManager.prototype = {
     setResultsHeight: function() {
         var totalHeight = 0;
         for (var i = 1; i <= 3; i++) {// Check all the results, depending on the number of results
-            if ($("#answer-" + i).html() != "") {
+            if ($("#answer-" + i).html() !== "") {
                 $("#result-" + i).css("display", "block");
                 if ($("#answer-" + i).outerHeight() >= $("#example-" + i).outerHeight())  { // The eight of the answer is bigger than the example.
                     $("#result-" + i).css("height", $("#answer-" + i).outerHeight() + "px"); // Set the div's height as the answer's height.
@@ -168,4 +168,4 @@ HelpManager.prototype = {
         $("#result-" + resultNumber).toggleClass("switched");
         this.help.focus();
     }
-}
+};

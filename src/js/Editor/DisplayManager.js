@@ -3,20 +3,20 @@ function DisplayManager(editor) {
     this.conversionDiv = $("#html-conversion");
 
     /* Variables */
-    this.currentGallery; // Gallery currently visited by getImages();
+    this.currentGallery = undefined; // Gallery currently visited by getImages();
     this.editor = editor; // The editor.
     this.galleries = []; // Galleries where we can read images.
     this.imagesDisplayed = new ImageArray(); // Object containing opened images.
     this.imgFormats = ["png", "bmp", "jpeg", "jpg", "gif", "png", "svg", "xbm", "webp"]; // Authorized images' type.
-    this.loadedImagePath; // Path of the image found.
-    this.imagePosition = 0; // Help us to find all the images in a file.
+    this.loadedImagePath = undefined; // Path of the image found.
+    this.imagePosition = undefined; // Help us to find all the images in a file.
     this.styleManager = new StyleManager(); // Object to manage the styles of the conversionDiv.
-    this.tempConversion; // Temporary conversion before it is displayed in the conversionDiv.
+    this.tempConversion = undefined; // Temporary conversion before it is displayed in the conversionDiv.
     this.urlManager = new UrlManager(this.conversionDiv); // Managing what to do when user clicks a link.
 
     /* Events */
     chrome.storage.onChanged.addListener($.proxy(function (changes, namespace) {
-        for (key in changes) {
+        for (var key in changes) {
             switch (key) {
             case "gfm":
                 this.setSyntax(); // Set the syntax if it has been changed in the Settings window.
@@ -52,7 +52,7 @@ DisplayManager.prototype = {
                     this.getOfflineImage();
                 }
             } else if (this.loadedImagePath.substring(0, 5) != "data:" && this.loadedImagePath.substring(0, 5) != "blob:") {
-                this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + chrome.i18n.getMessage("msgNotAnImage") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);;
+                this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + chrome.i18n.getMessage("msgNotAnImage") + "</span>&nbsp;</span><img class=\"nofile\" srcset=\"img/notimage.png 1x, img/notimage@2x.png 2x" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
                 this.displayImages();
             }
         } else {
@@ -150,11 +150,10 @@ DisplayManager.prototype = {
     /* Set the syntax of marked depending on the data saved on chrome.storage.local, gfm or normal. */
     setSyntax: function() {
         chrome.storage.local.get("gfm", $.proxy(function(mado) {
-            if (mado["gfm"] != undefined) {
-                marked.setOptions({ gfm : mado["gfm"] });
+            if (mado.gfm !== undefined) {
+                marked.setOptions({ gfm : mado.gfm });
             } else {
                 chrome.storage.local.set({ "gfm" : true });
-                marked.setOptions({ gfm : true });
             }
             this.update(); // Do a conversion.
         }, this));
@@ -170,4 +169,4 @@ DisplayManager.prototype = {
             this.conversionDiv.html(chrome.i18n.getMessage("msgNoTextInEditor")); // Display the message when there is no text.
         }
     }
-}
+};

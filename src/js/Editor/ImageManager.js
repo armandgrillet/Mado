@@ -11,11 +11,11 @@ function ImageManager(editor) {
 
     /* Variables */
     this.editor = editor; // The editor that we will modify.
-    this.startSelection; // The beginning of the selection in the editor when we are writing the link.
-    this.firstEndSelection; // The beginning of the selection in the editor when we apply the ImageManager.
-    this.endSelection; // The end of the selection in the editor when we are writing the link.
-    this.initialSelection;  // The text selected in the editor when we apply the ImageManager.
-    this.imageLoaded; // The path of the image selected.
+    this.startSelection = undefined; // The beginning of the selection in the editor when we are writing the link.
+    this.firstEndSelection = undefined; // The beginning of the selection in the editor when we apply the ImageManager.
+    this.endSelection = undefined; // The end of the selection in the editor when we are writing the link.
+    this.initialSelection = undefined;  // The text selected in the editor when we apply the ImageManager.
+    this.imageLoaded = undefined; // The path of the image selected.
 
     /* Events */
     $(document).click($.proxy(function(e) {
@@ -55,13 +55,13 @@ ImageManager.prototype = {
 
     /* Applies the new image and closes the manager. */
     apply: function() {
-        if (this.altInput.val() == "") { // An alternative text is mandatory.
+        if (this.altInput.val() === "") { // An alternative text is mandatory.
             this.altInput.addClass("flash");
             this.altInput.focus(); // We focus the cursor on the input to add an alternative text.
             setTimeout($.proxy(function() {
                 this.altInput.removeClass("flash");
             }, this), 800); // The "flash" class is deleted after 0.8 seconds (the flash animation's duration).
-        } else if (this.imageLoaded != undefined) { // Everything looks good, we close the manager.
+        } else if (this.imageLoaded !== undefined) { // Everything looks good, we close the manager.
             this.imageDisplayer.addClass("hidden");
             this.editor.focus();
             this.editor.setSelection(this.endSelection, this.endSelection); // The caret is at the end of the image.
@@ -149,4 +149,4 @@ ImageManager.prototype = {
         this.editor.setMarkdown(image, this.startSelection, this.endSelection); // Sets the markdown value.
         this.endSelection = this.startSelection + image.length; // Modifies the selection for the next update.
     }
-}
+};

@@ -10,10 +10,10 @@ function WebImageManager(editor) {
 
     /* Variables */
     this.editor = editor; // The editor that we will modify.
-    this.startSelection; // The beginning of the selection in the editor when we are writing the link.
-    this.firstEndSelection; // The beginning of the selection in the editor when we apply the LinkManager.
-    this.endSelection; // The end of the selection in the editor when we are writing the link.
-    this.initialSelection;  // The text selected in the editor when we apply the LinkManager.
+    this.startSelection = undefined; // The beginning of the selection in the editor when we are writing the link.
+    this.firstEndSelection = undefined; // The beginning of the selection in the editor when we apply the LinkManager.
+    this.endSelection = undefined; // The end of the selection in the editor when we are writing the link.
+    this.initialSelection = undefined;  // The text selected in the editor when we apply the LinkManager.
 
     /* Events */
     $(document).click($.proxy(function(e) {
@@ -58,13 +58,13 @@ WebImageManager.prototype = {
 
     /* Applies the new image and closes the manager. */
     apply: function() {
-        if (this.webImageAltInput.val() == "") { // An alternative text is mandatory
+        if (this.webImageAltInput.val() === "") { // An alternative text is mandatory
             this.webImageAltInput.attr("class", "flash"); // We focus the cursor on the input to add an alternative text.
             this.webImageAltInput.focus();
             setTimeout($.proxy(function() {
                 this.altInput.removeClass("flash");
             }, this), 800); // The "flash" class is deleted after 0.8 seconds (the flash animation's duration).
-        } else if (this.webImageUrlInput.val() == "") {
+        } else if (this.webImageUrlInput.val() === "") {
             this.webImageUrlInput.attr("class", "flash");
             this.webImageUrlInput.focus();
             this.webImageUrlInput.attr("class", "");
@@ -113,4 +113,4 @@ WebImageManager.prototype = {
         this.editor.setMarkdown(webImage, this.startSelection, this.endSelection); // Sets the markdown value.
         this.endSelection = this.startSelection + webImage.length; // Modifies the selection for the next update.
     }
-}
+};

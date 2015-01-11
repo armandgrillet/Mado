@@ -33,4 +33,4 @@ CloseButtonManager.prototype = {
 
         this.head.appendChild(frameStylesheetLink); // Append the link node to the "head" section.
     }
-}
+};
