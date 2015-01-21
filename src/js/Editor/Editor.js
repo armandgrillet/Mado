@@ -123,7 +123,9 @@ Editor.prototype = {
         this.saveStateManager.save();
     },
 
-    /* Set that the document is saved and give it a name, it is not for real (the real save is made in App). */
+    /* Set that the document is saved and give it a name, it is not for real (the real save is made in App).
+     * newName: new name of the window.
+    */
     saveWithName: function(newName) {
         this.nameManager.set(newName);
         this.saveStateManager.save();

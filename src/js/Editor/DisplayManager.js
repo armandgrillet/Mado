@@ -88,6 +88,9 @@ DisplayManager.prototype = {
                     });
                 }
             });
+        } else {
+            this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1) + ' ' + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class='nofile' srcset='img/nofile.png 1x, img/nofile@2x.png 2x'" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
+            this.displayImages();
         }
     },
 
@@ -116,12 +119,7 @@ DisplayManager.prototype = {
                 this.getImages(entries, i + 1);
             }
         } else { // End of the directory.
-            if (this.currentGallery < (this.galleries.length - 1)) { // We still have galleries to search.
-                this.galleryAnalysis(this.currentGallery + 1); // We start the analysis of the next gallery.
-            } else {
-                this.tempConversion = this.tempConversion.substring(0, this.imagePosition - 10) + "<span class=\"nofile-link\"> <span class=\"nofile-visual\">" + this.loadedImagePath.replace(/\\/g, "/").substring(this.loadedImagePath.lastIndexOf('/') + 1) + ' ' + chrome.i18n.getMessage("msgNotFound") + "</span>&nbsp;</span><img class='nofile' srcset='img/nofile.png 1x, img/nofile@2x.png 2x'" + this.tempConversion.substring(this.imagePosition + this.loadedImagePath.length);
-                this.displayImages();
-            }
+            this.galleryAnalysis(this.currentGallery + 1); // We start the analysis of the next gallery.
         }
     },
 

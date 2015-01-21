@@ -17,8 +17,9 @@ SettingsManager.prototype = {
 
     /* Reset Mado and restart it. */
     clean: function() {
-        chrome.storage.local.clear();
-        chrome.runtime.reload();
+        chrome.storage.local.clear(function() {
+            chrome.runtime.reload();
+        });
     },
 
     /* Get the correct syntax and display it. */
