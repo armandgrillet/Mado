@@ -53,6 +53,8 @@
 		<script type="text/javascript" src="js/Editor/UrlManager.js"></script>
 		<script type="text/javascript" src="js/Editor/WebImageManager.js"></script>
 
+		<script type="text/javascript" src="js/Localizer.js"></script>
+
 		<script type="text/javascript" src="js/Topbar/App.js"></script>
 		<script type="text/javascript" src="js/Topbar/DnDManager.js"></script>
 		<script type="text/javascript" src="js/Topbar/ExportManager.js"></script>
@@ -99,13 +101,11 @@
 
 								<section id="alert-message">
 
-									<h1 id="alert-title">Unsaved changes</h1>
+									<h1 class="localized" id="alert-title">htmlUnsavedChangesTitle</h1>
 
 									<div class="alert-part">
 
-										<p>
-											This document has unsaved changes. Do you want to save these changes before exiting?
-										</p>
+										<p class="localized">htmlUnsavedChangesText</p>
 									</div>
 								</section>
 
@@ -117,13 +117,13 @@
 								<footer id="alert-actions">
 
 									<div class="alert-button-container">
-										<div class="cta button button-grey" id="cancel">Cancel</div>
+										<div class="cta button button-grey localized" id="cancel">htmlCancel</div>
 									</div>
 									<div class="alert-button-container">
-										<div class="cta button button-grey" id="quit">No, don't save</div>
+										<div class="cta button button-grey localized" id="quit">htmlDoNotSave</div>
 									</div>
 									<div class="alert-button-container">
-										<div class="cta button" id="save-quit">Save and exit</div>
+										<div class="cta button localized" id="save-quit">htmlSaveAndExit</div>
 									</div>
 								</footer>
 							</div>
@@ -139,14 +139,14 @@
 				<ul>
 
 					<li class="cta nav-item" id="new">
-						<div class="nav-icon icon-new"></div><div class="nav-label">New</div>
+						<div class="nav-icon icon-new"></div><div class="nav-label localized">msgNew</div>
 					</li>
 					<li class="cta nav-item" id="open">
-						<div class="nav-icon icon-open"></div><div class="nav-label">Open</div>
+						<div class="nav-icon icon-open"></div><div class="nav-label localized">msgOpen</div>
 					</li>
 					<li class="nav-item" id="recent">
 						<div class="cta" id="recent-button">
-							<div class="nav-icon icon-recent"></div><div class="nav-label">Recent</div>
+							<div class="nav-icon icon-recent"></div><div class="nav-label localized">msgRecent</div>
 						</div>
 						<!-- Recent files displayer -->
 						<div class="hidden" id="recent-files-displayer">
@@ -158,16 +158,16 @@
 						</div>
 					</li>
 					<li class="cta nav-item" id="save">
-						<div class="nav-icon icon-save"></div><div class="nav-label">Save</div>
+						<div class="nav-icon icon-save"></div><div class="nav-label localized">msgSave</div>
 					</li>
 					<li class="cta nav-item" id="save-as">
-						<div class="nav-icon icon-save-as"></div><div class="nav-label">Save as</div>
+						<div class="nav-icon icon-save-as"></div><div class="nav-label localized">msgSaveAs</div>
 					</li>
 					<li class="cta nav-item" id="export">
-						<div class="nav-icon icon-export"></div><div class="nav-label">Export</div>
+						<div class="nav-icon icon-export"></div><div class="nav-label localized">msgExport</div>
 					</li>
 					<li class="cta nav-item" id="print">
-						<div class="nav-icon icon-print"></div><div class="nav-label">Print</div>
+						<div class="nav-icon icon-print"></div><div class="nav-label localized">msgPrint</div>
 					</li>
 				</ul>
 
@@ -197,16 +197,16 @@
 						<ul id="more-container">
 
 							<li class="more-option" id="settings">
-								<div class="more-option-wrapped"><p>Settings</p></div>
+								<div class="more-option-wrapped"><p class="localized">htmlSettings</p></div>
 							</li>
 							<li class="more-option" id="q-and-a">
-								<div class="more-option-wrapped"><p>Q&amp;A</p></div>
+								<div class="more-option-wrapped"><p class="localized">htmlQA</p></div>
 							</li>
 							<li class="more-option" id="shortcuts">
-								<div class="more-option-wrapped"><p>Shortcuts</p></div>
+								<div class="more-option-wrapped"><p class="localized">htmlShortcuts</p></div>
 							</li>
 							<li class="more-option" id="about">
-								<div class="more-option-wrapped"><p>About Mado</p></div>
+								<div class="more-option-wrapped"><p class="localized">htmlAbout</p></div>
 							</li>
 						</ul>
 					</div>
@@ -260,7 +260,7 @@
 									<div class="tool-box" id="help-input-box">
 
 										<!-- The help input itself -->
-										<input type="text" class="tool-first-item" placeholder="Type a syntax (e.g. 'bold')" id="help-input">
+										<input type="text" class="tool-first-item localized-placeholder" placeholder="htmlHelpPlaceholder" id="help-input">
 
 										<!-- Results container -->
 										<ul class="hidden" id="help-results-container">
@@ -299,17 +299,17 @@
 
 									<div class="tool-box" id="link-insertion-box">
 										<!-- The first input is always required, it asks the user to type a URL (mandatory for a link) -->
-										<input type="text" class="tool-first-item" id="url-input" placeholder="Type the URL">
+										<input type="text" class="tool-first-item localized-placeholder" id="url-input" placeholder="htmlUrlPlaceholder">
 										<!-- The second input is optional, it enables the user to type the text that will be displayed in HTML
 											 Three cases here:
 											 - Text is selected in the textarea: this input is not displayed, the selected text will be used as hypertext.
 											 - No text is selected and the user types something into this input: the typed text will be used as hypertext.
 											 - No text is selected and the user does not type anything into this input: the URL typed into the first input will also be used as hypertext. -->
-										<input type="text" id="hypertext-input" placeholder="Type a text (optional)">
+										<input type="text" class="localized-placeholder" id="hypertext-input" placeholder="htmlHypertextPlaceholder">
 										<!-- The cancel button enables the user to withdraw his changes over a link he had started writing. -->
-										<div class="cta button button-grey" id="cancel-link">Cancel</div>
+										<div class="cta button button-grey localized" id="cancel-link">htmlCancel</div>
 										<!-- The ok button enables the user to confirm his changes over a link he had started writing. -->
-										<div class="cta button" id="insert-link">Ok</div>
+										<div class="cta button localized" id="insert-link">htmlOk</div>
 									</div>
 								</div>
 							</li>
@@ -328,13 +328,13 @@
 
 									<div class="tool-box" id="webimage-insertion-box">
 										<!-- The first input is required, it asks the user to type the URL for the Web image. -->
-										<input type="text" class="tool-first-item" id="webimage-url" placeholder="Type the image's URL">
+										<input type="text" class="tool-first-item localized-placeholder" id="webimage-url" placeholder="htmlImagesUrlPlaceholder">
 										<!-- The first input is required, it asks the user to type the alt text for the Web image. -->
-										<input type="text" id="webimage-alt-input" placeholder="Type an alt text">
+										<input type="text" class="localized-placeholder" id="webimage-alt-input" placeholder="htmlAltTextPlaceholder">
 										<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
-										<div class="cta button button-grey" id="cancel-webimage">Cancel</div>
+										<div class="cta button button-grey localized" id="cancel-webimage">htmlCancel</div>
 										<!-- The ok button enables the user to confirm his changes over a Web image he had started importing. -->
-										<div class="cta button" id="insert-webimage">Ok</div>
+										<div class="cta button localized" id="insert-webimage">htmlOk</div>
 									</div>
 								</div>
 							</li>
@@ -353,18 +353,18 @@
 
 									<div class="tool-box" id="image-insertion-box">
 										<!-- The galleries button is optional, it enables the user to choose which image galleries Mado can access. -->
-										<div class="cta button button-grey" id="galleries-button">Choose your galleries</div>
+										<div class="cta button button-grey localized" id="galleries-button">htmlChooseGalleries</div>
 										<!-- The browse button is required, it asks the user to choose an image on his hard drive.
 											 Two cases here:
 											 - No image chosen already: the browse button is entitled "Choose an image".
 											 - Already an image chosen: the browse button shows the image title and extension. -->
 										<div class="cta button" id="browse-image"></div>
 										<!-- The input is required, it asks the user to type the alt text for the image. -->
-										<input type="text" id="alt-input" placeholder="Type an alt text">
+										<input type="text" class="localized-placeholder" id="alt-input" placeholder="htmlAltTextPlaceholder">
 										<!-- The cancel button enables the user to withdraw his changes over an image he had started importing. -->
-										<div class="cta button button-grey" id="cancel-image">Cancel</div>
+										<div class="cta button button-grey localized" id="cancel-image">htmlCancel</div>
 										<!-- The ok button enables the user to confirm his changes over an image he had started importing. -->
-										<div class="cta button" id="insert-image">Ok</div>
+										<div class="cta button localized" id="insert-image">htmlOk</div>
 									</div>
 								</div>
 							</li>
@@ -377,7 +377,7 @@
 					<article class="sheet" id="markdown-container">
 						<!-- Textarea for typing markdown
 					 Controlled via JavaScript. See 'marked.js' for further information. -->
-						<textarea placeholder="Write here" id="markdown" autofocus></textarea>
+						<textarea class="localized-placeholder" placeholder="htmlMarkdownPlaceholder" id="markdown" autofocus></textarea>
 					</article>
 
 					<aside id="center-line-container"><div id="center-line"></div></aside>
