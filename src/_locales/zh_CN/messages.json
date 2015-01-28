@@ -188,6 +188,74 @@
       "message": "# 尊敬的用户，\n\n感谢您安装 **Mado**。 在你第一次启动时，下面是一些信息：\n\n* Mado 可以处理 .md， .markdown 以及 .txt 文件， 能够保存这些文件为 .md （Markdown 文件的官方扩展名）和导出 .html。\n* 你可以点击右下角的字数查看你的文档有多少个字符（*反之亦然*）。 点击眼睛图标可以选择HTML的显示格式。\n* 查看快捷键（右上角按钮，“快捷键”选项）以便更熟练使用Mado。\n\n我希望你会喜欢Mado，\n\n**[Armand Grillet](http://armand.gr/)**\n\n***\n\nP.S. 这个信息不会再次出现。点击导航条上的“新建”开始使用Mado。"
    },
 
+   "htmlUnsavedChangesText": {
+      "message": "本文档修改后未保存。是否在退出前保存？"
+   },
+
+   "htmlUnsavedChangesTitle": {
+      "message": "未保存修改"
+   },
+
+   "htmlCancel": {
+      "message": "取消 "
+   },
+
+   "htmlOk": {
+      "message": "确定"
+   },
+
+   "htmlDoNotSave": {
+      "message": "不保存"
+   },
+
+   "htmlSaveAndExit": {
+      "message": "保存且退出"
+   },
+
+   "htmlSettings": {
+      "message": "设置"
+   },
+
+   "htmlQA": {
+      "message": "Q&amp;A"
+   },
+
+   "htmlShortcuts": {
+      "message": "快捷键"
+   },
+
+   "htmlAbout": {
+      "message": "关于Mado"
+   },
+
+   "htmlHelpPlaceholder": {
+      "message": "输入一个语法 (e.g. 'bold')"
+   },
+
+   "htmlUrlPlaceholder": {
+      "message": "输入URL"
+   },
+
+   "htmlImagesUrlPlaceholder": {
+      "message": "输入图片的URL"
+   },
+
+   "htmlAltTextPlaceholder": {
+      "message": "输入提示文字"
+   },
+
+   "htmlHypertextPlaceholder": {
+      "message": "输入文字（可选）"
+   },
+
+   "htmlChooseGalleries": {
+      "message": "选择你的图片库"
+   },
+
+   "htmlMarkdownPlaceholder": {
+      "message": "在这里写"
+   },
+
    "msgChooseAnImage": {
       "message": "选择一张图片"
    },
