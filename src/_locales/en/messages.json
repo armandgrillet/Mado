@@ -188,6 +188,74 @@
       "message": "# Dear user,\n\nThanks for installing **Mado**. For your first launch, here is some information:\n\n* Mado handles .md, .markdown and .txt files, can save these files as .md (the official extension for Markdown files) and offers an export in .html.\n* You can click the number of words in the bottom-right corner to see the number of characters in your document (and *vice versa*). Click the eye icon next to it to change the style of the HTML view.\n* See the keyboard shortcuts (top-right button, “Shortcuts” section) to use Mado in depth.\n\nI hope you will enjoy Mado,\n\n**[Armand Grillet](http://armand.gr/)**\n\n***\n\nP.S. This message will not appear anymore. Click “New” in the navbar to start using Mado."
    },
 
+   "htmlUnsavedChangesText": {
+      "message": "This document has unsaved changes. Do you want to save these changes before exiting?"
+   },
+
+   "htmlUnsavedChangesTitle": {
+      "message": "Unsaved changes"
+   },
+
+   "htmlCancel": {
+      "message": "Cancel"
+   },
+
+   "htmlOk": {
+      "message": "Ok"
+   },
+
+   "htmlDoNotSave": {
+      "message": "No, don't save"
+   },
+
+   "htmlSaveAndExit": {
+      "message": "Save and exit"
+   },
+
+   "htmlSettings": {
+      "message": "Settings"
+   },
+
+   "htmlQA": {
+      "message": "Q&amp;A"
+   },
+
+   "htmlShortcuts": {
+      "message": "Shortcuts"
+   },
+
+   "htmlAbout": {
+      "message": "About Mado"
+   },
+
+   "htmlHelpPlaceholder": {
+      "message": "Type a syntax (e.g. 'bold')"
+   },
+
+   "htmlUrlPlaceholder": {
+      "message": "Type the URL"
+   },
+
+   "htmlImagesUrlPlaceholder": {
+      "message": "Type the image's URL"
+   },
+
+   "htmlAltTextPlaceholder": {
+      "message": "Type an alt text"
+   },
+
+   "htmlHypertextPlaceholder": {
+      "message": "Type a text (optional)"
+   },
+
+   "htmlChooseGalleries": {
+      "message": "Choose your galleries"
+   },
+
+   "htmlMarkdownPlaceholder": {
+      "message": "Write here"
+   },
+
    "msgChooseAnImage": {
       "message": "Choose an image"
    },
