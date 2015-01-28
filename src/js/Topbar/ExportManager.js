@@ -15,7 +15,7 @@ ExportManager.prototype = {
     /* Exportation of the document edited. */
     apply: function() {
         var textToEport = marked(this.app.getEditorText()); // Get the text.
-        var displayedName = chrome.i18n.getMessage("msgDocument") + "html"; // If the document is not saved we use something standard.
+        var displayedName = chrome.i18n.getMessage("msgDocument") + ".html"; // If the document is not saved we use something standard.
         if (this.app.getName()) { // We have a real name so we use it.
             displayedName = this.app.getName().replace(/\.[^/.]+$/, "") + ".html";
         }
