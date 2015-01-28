@@ -67,10 +67,10 @@
       "message": "Unordered lists"
    },
    "helpUnorderedListsExample": {
-      "message": "<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"
+      "message": "<ul><li>第一项。 </li><li>第二项 （你也可以使用 + 或者 -）</li></ul>"
    },
    "helpUnorderedListsResult": {
-      "message": "* An item. <br>* A second item (you can also use + or -)."
+      "message": "* 第一项。 <br>* 第二项 （你也可以使用 + 或者 -）。"
    },
    "helpInlineStyleLinks0": {
       "message": "Inline-style links"
@@ -100,7 +100,7 @@
       "message": "<div class=\"example-image\"></div>"
    },
    "helpInlineStyleImagesResult": {
-      "message": "<span class=\"help-code\">![alt text](path/to/image.jpg \"Title\")</span>"
+      "message": "<span class=\"help-code\">![提示文字](path/to/image.jpg \"图片标题\")</span>"
    },
    "helpReferenceStyleImages0": {
       "message": "Images (reference-style)"
@@ -112,25 +112,25 @@
       "message": "<div class=\"example-image\"></div>"
    },
    "helpReferenceStyleImagesResult": {
-      "message": "<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg \"Title\"</span>"
+      "message": "<span class=\"help-code\">![提示文字][图片Id] <br> [图片Id]: path/to/image.jpg \"图片标题\"</span>"
    },
    "helpCode0": {
       "message": "Blocks of code"
    },
    "helpCodeExample": {
-      "message": "<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"
+      "message": "<code>在一对3个反引号内写代码将生成代码块。</code><br><code>同样可以使用缩进来形成代码块（4个空格或者1个制表符）。</code>"
    },
    "helpCodeResult": {
-      "message": "<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>"
+      "message": "<span class=\"help-code\">```在一对3个反引号内写代码将生成代码块。```<br>&nbsp;&nbsp;&nbsp;&nbsp;同样可以使用缩进来形成代码块（4个空格或者1个制表符）。</span>"
    },
    "helpBlockquotes0": {
       "message": "Blockquotes"
    },
    "helpBlockquotesExample": {
-      "message": "<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"
+      "message": "<blockquote>引用只需要在行首加上 &gt; 。两层引用使用用两个 &gt; 就可以了</blockquote>"
    },
    "helpBlockquotesResult": {
-      "message": "> Blockquotes only need <span class=\"help-code\">></span> to work. <br><br> <span class=\"help-code\">> Two blockquotes without a break (a line who isn't a blockquote)  are a single quote.</span>"
+      "message": "> 引用只需要在行首加上 <span class=\"help-code\">></span> 。 <br><br> <span class=\"help-code\">> 两层引用。</span>"
    },
    "helpInlineHTML0": {
       "message": "Inline HTML"
