@@ -1,8 +1,263 @@
 {
-  	"appName": {
-    	"message": "Mado"
-  	},
-  	"appDesc": {
-  		"message": "Mado is a Markdown editor application. You can use it to take notes, write blog posts or edit documents."
-  	}
+   "appName": {
+      "message": "Mado"
+   },
+    "appDesc": {
+      "message": "Mado 是一个 Markdown 编辑器。 你可以用它来记笔记，写博客或者写文档。"
+   },
+
+   "helpHeaders0": {
+      "message": "Headers"
+   },
+   "helpHeaders1": {
+      "message": "Titles"
+   },
+   "helpHeadersExample": {
+      "message": "可以使用六种大小, 大小由 # 的个数决定。<h1 id=\"big-title-size-1-the-biggest-\"> 大标题 （一级标题，最大号标题）。</h1><h4 id=\"a-less-impresive-title-size-4-on-6-br-\"> 小标题 （四级标题）。</h4>"
+   },
+   "helpHeadersResult": {
+      "message": "可以使用六种大小, 大小由 # 的个数决定。<br> #大标题（一级标题，最大号标题）。<br> ####小标题 （四级标题）。"
+   },
+   "helpBold0": {
+      "message": "Bold"
+   },
+   "helpBold1": {
+      "message": "Strong emphasis"
+   },
+   "helpBoldExample": {
+      "message": "<strong>粗体</strong>"
+   },
+   "helpBoldResult": {
+      "message": "<span class=\"help-code\">**粗体**</span> or <span class=\"help-code\">__粗体__</span>"
+   },
+   "helpItalic0": {
+      "message": "Italic"
+   },
+   "helpItalic1": {
+      "message": "Emphasis"
+   },
+   "helpItalicExample": {
+      "message": "<em>斜体</em>"
+   },
+   "helpItalicResult": {
+      "message": "<span class=\"help-code\">*斜体*</span> or <span class=\"help-code\">_斜体_</span>"
+   },
+   "helpBoldItalic0": {
+      "message": "Bold italic"
+   },
+   "helpBoldItalic1": {
+      "message": "Combined emphasis"
+   },
+   "helpBoldItalicExample": {
+      "message": "<strong><em>粗斜体</em></strong>"
+   },
+   "helpBoldItalicResult": {
+      "message": "<span class=\"help-code\">**_ 粗斜体 _**</span> or <span class=\"help-code\">*__粗斜体__*</span> or <span class=\"help-code\">***这里***</span> or <span class=\"help-code\">___这里___</span>"
+   },
+   "helpOrderedLists0": {
+      "message": "Ordered lists"
+   },
+   "helpOrderedListsExample": {
+      "message": "<ol><li>有序列表第一项</li><li>其他项</li></ol>"
+   },
+   "helpOrderedListsResult": {
+      "message": "1. 有序列表第一项. <br>2. 其他项."
+   },
+   "helpUnorderedLists0": {
+      "message": "Unordered lists"
+   },
+   "helpUnorderedListsExample": {
+      "message": "<ul><li>An item. </li><li>A second item (you can also use + or -).</li></ul>"
+   },
+   "helpUnorderedListsResult": {
+      "message": "* An item. <br>* A second item (you can also use + or -)."
+   },
+   "helpInlineStyleLinks0": {
+      "message": "Inline-style links"
+   },
+   "helpInlineStyleLinksExample": {
+      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">Hypertext</a>"
+   },
+   "helpInlineStyleLinksResult": {
+      "message": "<span class=\"help-code\">[Hypertext](https://github.com/ArmandGrillet/Mado)</span><br>(Can be used to create an anchor.)"
+   },
+   "helpReferenceStyleLinks0": {
+      "message": "Reference-style links"
+   },
+   "helpReferenceStyleLinksExample": {
+      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">Hypertext</a>"
+   },
+   "helpReferenceStyleLinksResult": {
+      "message": "<span class=\"help-code\">[Hypertext][1]<br>[1]: https://github.com/ArmandGrillet/Mado</span>"
+   },
+   "helpInlineStyleImages0": {
+      "message": "Images (inline)"
+   },
+   "helpInlineStyleImages1": {
+      "message": "Pictures (inline)"
+   },
+   "helpInlineStyleImagesExample": {
+      "message": "<div class=\"example-image\"></div>"
+   },
+   "helpInlineStyleImagesResult": {
+      "message": "<span class=\"help-code\">![alt text](path/to/image.jpg \"Title\")</span>"
+   },
+   "helpReferenceStyleImages0": {
+      "message": "Images (reference-style)"
+   },
+   "helpReferenceStyleImages1": {
+      "message": "Pictures (reference-style)"
+   },
+   "helpReferenceStyleImagesExample": {
+      "message": "<div class=\"example-image\"></div>"
+   },
+   "helpReferenceStyleImagesResult": {
+      "message": "<span class=\"help-code\">![alt text][image Id] <br> [image Id]: path/to/image.jpg \"Title\"</span>"
+   },
+   "helpCode0": {
+      "message": "Blocks of code"
+   },
+   "helpCodeExample": {
+      "message": "<code>Write your code between three back-ticks to make a block of code.</code><br><code>You can also write code by indent your text with four spaces.</code>"
+   },
+   "helpCodeResult": {
+      "message": "<span class=\"help-code\">```Text between three back-ticks is a block of code.```<br>&nbsp;&nbsp;&nbsp;&nbsp;Text after four spaces is also a block of code.</span>"
+   },
+   "helpBlockquotes0": {
+      "message": "Blockquotes"
+   },
+   "helpBlockquotesExample": {
+      "message": "<blockquote>Blockquotes only need &gt; to work. To separate two blockquotes, insert a blank line between them.</blockquote>"
+   },
+   "helpBlockquotesResult": {
+      "message": "> Blockquotes only need <span class=\"help-code\">></span> to work. <br><br> <span class=\"help-code\">> Two blockquotes without a break (a line who isn't a blockquote)  are a single quote.</span>"
+   },
+   "helpInlineHTML0": {
+      "message": "Inline HTML"
+   },
+   "helpInlineHTML1": {
+      "message": "HTML in Markdown"
+   },
+   "helpInlineHTMLExample": {
+      "message": "It <strong>works<strong>"
+   },
+   "helpInlineHTMLResult": {
+      "message": "<span class=\"help-code\">It &lt;strong>works&lt;/strong>.</span>"
+   },
+   "helpHorizontaleRules0": {
+      "message": "Horizontal rules"
+   },
+   "helpHorizontaleRulesExample": {
+      "message": "<hr> You can use Hyphens, asterisks or underscores.<hr>"
+   },
+   "helpHorizontaleRulesResult": {
+      "message": "<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>"
+   },
+   "helpLineBreaks0": {
+      "message": "Line breaks"
+   },
+   "helpLineBreaksExample": {
+      "message": "<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"
+   },
+   "helpLineBreaksResult": {
+      "message": "To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."
+   },
+   "helpTables0": {
+      "message": "Tables"
+   },
+   "helpTables1": {
+      "message": "Arrays"
+   },
+   "helpTablesExample": {
+      "message": "<table> <thead><tr> <th>Tables</th> <th align=\"center\">Are</th> <th align=\"right\">Cool</th> </tr></thead> <tbody> <tr> <td>col 3 is</td> <td align=\"center\">right-aligned</td> <td align=\"right\">$13</td> </tr> <tr> <td>col 2 is</td> <td align=\"center\">centered</td> <td align=\"right\">$37</td> </tr> </tbody> </table>"
+   },
+   "helpTablesResult": {
+      "message": "| Tables&nbsp; | Are&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Cool&nbsp;&nbsp;|<br>| -------- |:----------------:| ------:|<br>| col 3 is | right-aligned | $13 &nbsp;&nbsp; |<br>| col 2 is | centered&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | $37 &nbsp;&nbsp; |"
+   },
+   "helpQuestion0": {
+      "message": "Question"
+   },
+   "helpQuestionExample": {
+      "message": "Life's most persistent and urgent question is, 'What are you doing for others?'."
+   },
+   "helpQuestionResult": {
+      "message": "Seriously?"
+   },
+
+   "msgFirstLaunch": {
+      "message": "# 尊敬的用户，\n\n感谢您安装 **Mado**。 在你第一次启动时，下面是一些信息：\n\n* Mado 可以处理 .md， .markdown 以及 .txt 文件， 能够保存这些文件为 .md （Markdown 文件的官方扩展名）和导出 .html。\n* 你可以点击右下角的字数查看你的文档有多少个字符（*反之亦然*）。 点击眼睛图标可以选择HTML的显示格式。\n* 查看快捷键（右上角按钮，“快捷键”选项）以便更熟练使用Mado。\n\n我希望你会喜欢Mado，\n\n**[Armand Grillet](http://armand.gr/)**\n\n***\n\nP.S. 这个信息不会再次出现。点击导航条上的“新建”开始使用Mado。"
+   },
+
+   "msgChooseAnImage": {
+      "message": "选择一张图片"
+   },
+
+   "msgDocument": {
+      "message": "文档"
+   },
+
+   "msgClearAll": {
+      "message": "全部清除"
+   },
+   "msgNoRecentDocument": {
+      "message": "没有最近文档。"
+   },
+
+   "msgNew": {
+      "message": "新建 "
+   },
+   "msgOpen": {
+      "message": "打开"
+   },
+   "msgRecent": {
+      "message": "最近"
+   },
+   "msgSave": {
+      "message": "保存"
+   },
+   "msgSaveAs": {
+      "message": "另存为"
+   },
+   "msgExport": {
+      "message": "导出"
+   },
+   "msgPrint": {
+      "message": "打印"
+   },
+
+   "msgCharacter": {
+      "message": "字符"
+   },
+   "msgCharacters": {
+      "message": "字符数"
+   },
+   "msgWord": {
+      "message": "字"
+   },
+   "msgWords": {
+      "message": "字数"
+   },
+
+   "msgOneMoreCharacter": {
+      "message": "添加一个字符"
+   },
+   "msgTwoMoreCharacters": {
+      "message": "添加两个字符"
+   },
+   "msgNoHelpFound": {
+      "message": "找不到帮助。"
+   },
+
+   "msgNoTextInEditor": {
+      "message": "这里显示结果"
+   },
+   "msgNoInternet": {
+      "message": "网络不可用"
+   },
+   "msgNotAnImage": {
+      "message": "这不是一张图片"
+   },
+   "msgNotFound": {
+      "message": "找不到"
+   }
 }
