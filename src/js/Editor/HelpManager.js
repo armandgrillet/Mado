@@ -58,6 +58,16 @@ function HelpManager() {
 HelpManager.prototype = {
     constructor: HelpManager,
 
+    /* Return the minimum length in the user language. */
+    localizedMinLength: function() {
+        switch (chrome.i18n.getUILanguage()) {
+            case "zh_CN":
+                return 2;
+            default:
+                return 3;
+        }
+    },
+
     /* Reset the help. */
     reset: function() {
         this.help.val(""); /* Empty the input with help */
@@ -87,14 +97,14 @@ HelpManager.prototype = {
             this.resetAnswerDivs(3);
         }
         else {
-            if (this.help.val().length < 3) { // Less than three characters in the input, we're not showing help.
+            if (this.help.val().length < this.localizedMinLength()) { // Less than three characters in the input, we're not showing help.
                 this.resultsContainer.attr("class", "one-result no-result"); // We only show one div to encourage the user.
                 this.resetAnswerDivs(2); // We reset the two other divs.
-                switch (this.help.val().length) {
-                case 1:
+                switch (this.localizedMinLength() - this.help.val().length) {
+                case 2:
                     $("#answer-1").html(chrome.i18n.getMessage("msgTwoMoreCharacters")); // Only one character, user has to give two more characters.
                     break;
-                case 2:
+                case 1:
                     $("#answer-1").html(chrome.i18n.getMessage("msgOneMoreCharacter")); // Only two characters, user has to give one more character.
                     break;
                 }
