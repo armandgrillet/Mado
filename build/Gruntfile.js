@@ -26,25 +26,19 @@ module.exports = function(grunt) {
             },
             moreAbout: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/about-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/about-onload.js"],
                 ],
                 dest: "../min/js/more/about.js"
             },
-            moreQanda: {
-                src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/qanda-onload.js"],
-                ],
-                dest: "../min/js/more/qanda.js"
-            },
             moreSettings: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/SettingsManager.js", "../src/js/more/settings-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/SettingsManager.js", "../src/js/more/settings-onload.js"],
                 ],
                 dest: "../min/js/more/settings.js"
             },
             moreShortcuts: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/ShortcutsManager.js", "../src/js/more/shortcuts-onload.js"],
+                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/ShortcutsManager.js", "../src/js/more/shortcuts-onload.js"],
                 ],
                 dest: "../min/js/more/shortcuts.js"
             }
@@ -60,7 +54,6 @@ module.exports = function(grunt) {
         		files: {
         			"../min/js/mado.js": ["../min/js/mado.js"],
         			"../min/js/more/about.js": ["../min/js/more/about.js"],
-        			"../min/js/more/qanda.js": ["../min/js/more/qanda.js"],
         			"../min/js/more/settings.js": ["../min/js/more/settings.js"],
         			"../min/js/more/shortcuts.js": ["../min/js/more/shortcuts.js"]
         		}
@@ -72,7 +65,6 @@ module.exports = function(grunt) {
                 files: {
                     "../min/mado.html": ["../min/mado.html"],
                     "../min/more/about.html": ["../min/more/about.html"],
-                    "../min/more/qanda.html": ["../min/more/qanda.html"],
                     "../min/more/settings.html": ["../min/more/settings.html"],
                     "../min/more/shortcuts.html": ["../min/more/shortcuts.html"]
                 }

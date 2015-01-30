@@ -23,6 +23,7 @@
 		<!-- build:js ../js/more/about.js -->
 		<!-- JS for options -->
 		<script type="text/javascript" src="../js/more/CloseButtonManager.js"></script>
+		<script type="text/javascript" src="../js/more/Localizer.js"></script>
 
 		<!-- JS for About -->
 		<script type="text/javascript" src="../js/more/about-onload.js"></script>
@@ -37,7 +38,7 @@
 
 		<div id="options-container">
 
-			<h1 id="option-title">About Mado</h1>
+			<h1 class="localized" id="option-title">moreAboutTitle</h1>
 
 			<!-- Mado version and credits -->
 			<div class="option-part">
@@ -45,51 +46,47 @@
 				<!-- Mado logo -->
 				<img class="about-logo" src="../app/icon48.png" alt="Mado logo">
 
-				<p id="mado-info">You are using Mado 0.4.1, created by <a target="_blank" href="http://armand.gr">Armand Grillet</a>.</p>
+				<p id="mado-info"><span class="localized">moreAboutUsing</span>0.4.1<span class="localized">moreAboutCreatedBy</span> <a target="_blank" href="http://armand.gr">Armand Grillet</a>.</p>
 			</div>
 
 			<!-- lib -->
 			<div class="option-part">
 
-				<p>
-					Remember Mado is here thanks to these projects:
-				</p>
+				<p class="localized">moreAboutProjects</p>
 
 				<ul>
 
-					<li><a href="http://sachaschmid.ch/Countable/" target="_blank">Countable</a> by <a href="http://sachaschmid.ch/" target="_blank">Sacha Schmid</a>.</li>
-					<li><a href="http://jquery.com" target="_blank">jQuery</a> by <a href="http://jquery.org" target="_blank">the jQuery Foundation</a>.</li>
-					<li><a href="https://github.com/chjj/marked" target="_blank">Marked</a> by <a href="http://dilated.cc/" target="_blank">Christopher Jeffrey</a>.</li>
-					<li><a href="http://craig.is/killing/mice" target="_blank">Mousetrap</a> by <a href="http://craig.is/" target="_blank">Craig Campbell</a>.</li>
-					<li><a href="https://github.com/timdown/rangyinputs" target="_blank">Rangy Inputs</a> by <a href="http://www.timdown.co.uk/" target="_blank">Tim Down</a>.</li>
+					<li><a href="http://sachaschmid.ch/Countable/" target="_blank">Countable</a> <span class="localized">moreAboutBy</span> <a href="http://sachaschmid.ch/" target="_blank">Sacha Schmid</a>.</li>
+					<li><a href="http://jquery.com" target="_blank">jQuery</a> <span class="localized">moreAboutBy</span> <a href="http://jquery.org" target="_blank">the jQuery Foundation</a>.</li>
+					<li><a href="https://github.com/chjj/marked" target="_blank">Marked</a> <span class="localized">moreAboutBy</span> <a href="http://dilated.cc/" target="_blank">Christopher Jeffrey</a>.</li>
+					<li><a href="http://craig.is/killing/mice" target="_blank">Mousetrap</a> <span class="localized">moreAboutBy</span> <a href="http://craig.is/" target="_blank">Craig Campbell</a>.</li>
+					<li><a href="https://github.com/timdown/rangyinputs" target="_blank">Rangy Inputs</a> <span class="localized">moreAboutBy</span> <a href="http://www.timdown.co.uk/" target="_blank">Tim Down</a>.</li>
 				</ul>
 			</div>
 
 			<!-- Fonts -->
 			<div class="option-part">
 
-				<p>
-					Fonts used in Mado:
-				</p>
+				<p class="localized">moreAboutFonts</p>
 
 				<ul>
 
-					<li><a href="http://www.fontsquirrel.com/fonts/arvo" target="_blank">Arvo</a> by <a href="http://files.korkork.com/" target="_blank">Anton Koovit</a>.</li>
-					<li><a href="http://www.bariol.com/" target="_blank">Bariol</a> by <a href="http://www.atipo.es/" target="_blank">Atipo</a>.</li>
-					<li><a href="http://www.fontsquirrel.com/fonts/source-code-pro" target="_blank">Source Code Pro</a> by <a href="http://www.adobe.com/" target="_blank">Adobe</a>.</li>
+					<li><a href="http://www.fontsquirrel.com/fonts/arvo" target="_blank">Arvo</a> <span class="localized">moreAboutBy</span> <a href="http://files.korkork.com/" target="_blank">Anton Koovit</a>.</li>
+					<li><a href="http://www.bariol.com/" target="_blank">Bariol</a> <span class="localized">moreAboutBy</span> <a href="http://www.atipo.es/" target="_blank">Atipo</a>.</li>
+					<li><a href="http://www.fontsquirrel.com/fonts/source-code-pro" target="_blank">Source Code Pro</a> <span class="localized">moreAboutBy</span> <a href="http://www.adobe.com/" target="_blank">Adobe</a>.</li>
 				</ul>
 			</div>
 
 			<!-- GitHub -->
 			<div class="option-part">
-				<p class="mado-github">Mado is <a class="to-github" href="https://github.com/ArmandGrillet/Mado" target="_blank">available on GitHub</a> under a MIT license.</p>
+				<p class="mado-github">Mado <a class="to-github localized" href="https://github.com/ArmandGrillet/Mado" target="_blank">moreAboutAvailableOnGitHub</a> <span class="localized">moreAboutMITLicense</span></p>
 			</div>
 			<!-- License -->
 			<div class="option-part">
 				<div class="option-part-title">The MIT License (MIT)</div>
 				<div class="mit-license">
 					<p>
-						Copyright (c) 2014 Armand Grillet
+						Copyright (c) 2015 Armand Grillet
 					<p>
 						Permission is hereby granted, free of charge, to any person obtaining a copy
 						of this software and associated documentation files (the "Software"), to deal

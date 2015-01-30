@@ -20,6 +20,7 @@
 		<!-- build:js ../js/more/settings.js -->
 		<!-- JS for options -->
 		<script type="text/javascript" src="../js/more/CloseButtonManager.js"></script>
+		<script type="text/javascript" src="../js/more/Localizer.js"></script>
 		<script type="text/javascript" src="../js/more/SettingsManager.js"></script>
 
 		<!-- JS for Settings (alphabetical order) -->
@@ -35,21 +36,21 @@
 
 		<div id="options-container">
 
-			<h1 id="option-title">Settings</h1>
+			<h1 class="localized" id="option-title">htmlSettings</h1>
 
 			<section class="option-part">
 
-				<h2 class="option-part-title">Syntax:</h2>
+				<h2 class="option-part-title localized">moreSettingsSyntaxTitle</h2>
 
 				<div class="input-container"><input class="cta" type="radio" name="syntax" id="gfm-radio"></div><div class="label-container"><label class="cta" for="gfm-radio">GFM (<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank">GitHub Flavored Markdown</a>)</label></div>
-				<div class="input-container"><input class="cta" type="radio" name="syntax" id="markdown-radio"></div><div class="label-container"><label class="cta" for="markdown-radio">Basic Markdown (without tables)</label></div>
+				<div class="input-container"><input class="cta" type="radio" name="syntax" id="markdown-radio"></div><div class="label-container"><label class="cta localized" for="markdown-radio">moreSettingsSyntaxMarkdown</label></div>
 			</section>
 
 			<section class="option-part">
 
-				<h2 class="option-part-title">Reset:</h2>
+				<h2 class="option-part-title localized">moreSettingsResetTitle</h2>
 
-				<button id="reset">Reset Mado, close all the windows (even unsaved documents) and restart the app</button>
+				<button class="localized" id="reset">moreSettingsResetButton</button>
 			</section>
 		</div>
 	</body>
