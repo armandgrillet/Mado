@@ -76,19 +76,19 @@
       "message": "行内式链接"
    },
    "helpInlineStyleLinksExample": {
-      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">Hypertext</a>"
+      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">超链接</a>"
    },
    "helpInlineStyleLinksResult": {
-      "message": "<span class=\"help-code\">[Hypertext](https://github.com/ArmandGrillet/Mado)</span><br>(Can be used to create an anchor.)"
+      "message": "<span class=\"help-code\">[超文本](https://github.com/ArmandGrillet/Mado)</span><br>(可以用来创建一个链接)"
    },
    "helpReferenceStyleLinks0": {
       "message": "参考式链接"
    },
    "helpReferenceStyleLinksExample": {
-      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">Hypertext</a>"
+      "message": "<a target=\"_blank\" href=\"https://github.com/ArmandGrillet/Mado\">超链接</a>"
    },
    "helpReferenceStyleLinksResult": {
-      "message": "<span class=\"help-code\">[Hypertext][1]<br>[1]: https://github.com/ArmandGrillet/Mado</span>"
+      "message": "<span class=\"help-code\">[超链接][1]<br>[1]: https://github.com/ArmandGrillet/Mado</span>"
    },
    "helpInlineStyleImages0": {
       "message": "图片（行内）"
@@ -139,49 +139,49 @@
       "message": "HTML 在 Markdown 中"
    },
    "helpInlineHTMLExample": {
-      "message": "It <strong>works<strong>"
+      "message": "如 <strong>加粗<strong>"
    },
    "helpInlineHTMLResult": {
-      "message": "<span class=\"help-code\">It &lt;strong>works&lt;/strong>.</span>"
+      "message": "<span class=\"help-code\">如 &lt;strong>加粗&lt;/strong>.</span>"
    },
    "helpHorizontaleRules0": {
       "message": "水平分割线"
    },
    "helpHorizontaleRulesExample": {
-      "message": "<hr> You can use Hyphens, asterisks or underscores.<hr>"
+      "message": "<hr> 你可以使用连字符`-`，星号`*`或下划线`_`。<hr>"
    },
    "helpHorizontaleRulesResult": {
-      "message": "<span class=\"help-code\">*** <br> You can use Hyphens, asterisks or underscores. <br> ---</span>"
+      "message": "<span class=\"help-code\">*** <br> 你可以使用连字符`-`，星号`*`或下划线`_`。<br> ---</span>"
    },
    "helpLineBreaks0": {
       "message": "换行"
    },
    "helpLineBreaksExample": {
-      "message": "<p>To separate two paragraphs, press Enter twice.</p><p>And you have a new paragraph!</p>"
+      "message": "<p>按两次Enter来分隔两个段落。</p><p>这就是新段落！</p>"
    },
    "helpLineBreaksResult": {
-      "message": "To separate two paragraphs, press <span class=\"help-code\">Enter</span> twice.<br><br>And you have a new paragraph."
+      "message": "按两次 <span class=\"help-code\">Enter</span> 来区分两个段落。<br><br>这就是新段落！"
    },
    "helpTables0": {
-      "message": "表"
+      "message": "表格"
    },
    "helpTables1": {
       "message": "数组"
    },
    "helpTablesExample": {
-      "message": "<table> <thead><tr> <th>Tables</th> <th align=\"center\">Are</th> <th align=\"right\">Cool</th> </tr></thead> <tbody> <tr> <td>col 3 is</td> <td align=\"center\">right-aligned</td> <td align=\"right\">$13</td> </tr> <tr> <td>col 2 is</td> <td align=\"center\">centered</td> <td align=\"right\">$37</td> </tr> </tbody> </table>"
+      "message": "<table> <thead><tr> <th>表格</th> <th align=\"center\">很</th> <th align=\"right\">酷</th> </tr></thead> <tbody> <tr> <td>第3列是</td> <td align=\"center\">右对齐</td> <td align=\"right\">$13</td> </tr> <tr> <td>第2列是</td> <td align=\"center\">居中</td> <td align=\"right\">$37</td> </tr> </tbody> </table>"
    },
    "helpTablesResult": {
-      "message": "| Tables&nbsp; | Are&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Cool&nbsp;&nbsp;|<br>| -------- |:----------------:| ------:|<br>| col 3 is | right-aligned | $13 &nbsp;&nbsp; |<br>| col 2 is | centered&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | $37 &nbsp;&nbsp; |"
+      "message": "| 表格&nbsp; | 很&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 酷&nbsp;&nbsp;|<br>| -------- |:----------------:| ------:|<br>| 第3列是 | 右对齐 | $13 &nbsp;&nbsp; |<br>| 第2列是 | 居中&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | $37 &nbsp;&nbsp; |"
    },
    "helpQuestion0": {
-      "message": "Question"
+      "message": "问题"
    },
    "helpQuestionExample": {
-      "message": "Life's most persistent and urgent question is, 'What are you doing for others?'."
+      "message": "生命中最持久的和紧迫的问题是，“你为别人做了什么？”"
    },
    "helpQuestionResult": {
-      "message": "Seriously?"
+      "message": "真的?"
    },
 
    "msgFirstLaunch": {
