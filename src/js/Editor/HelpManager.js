@@ -61,7 +61,7 @@ HelpManager.prototype = {
     /* Return the minimum length in the user language. */
     localizedMinLength: function() {
         switch (chrome.i18n.getUILanguage()) {
-            case "zh_CN":
+            case "zh-CN":
                 return 2;
             default:
                 return 3;
