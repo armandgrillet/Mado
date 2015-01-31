@@ -88,6 +88,15 @@
 	transition: width .1s ease, opacity .3s ease;
 }
 
+.nav-label.hidden {
+	/* Box-model */
+	width: 0px;
+
+	/* Misc */
+	opacity: 0;
+	transition: none;
+}
+
 /* "RECENT" LIST */
 /* Setting the "Recent" button's positioning to relative */
 #recent { position: relative; }

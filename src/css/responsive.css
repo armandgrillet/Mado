@@ -1,13 +1,19 @@
 /* ================================
 	RESPONSIVE FOR SMALLER SCREENS
    ================================ */
-/* When the screen is too small to display everything in the navbar, we hide the labels */
-.hide-labels .nav-label {
-	/* Box-model */
-	width: 0;
+/* Screens strictly under 1600 pixels */
+@media screen and (max-width: 1599px) {
+	/* --------------
+		Navbar items
+	   -------------- */
+	.nav-icon { padding: 0; }
 
-	/* Misc */
-	opacity: 0;
+	.nav-label {
+		/* Box-model */
+		width: 0;
+
+		/* Misc */
+		opacity: 0;
 }
 
 /* Screens strictly under 1366 pixels */
