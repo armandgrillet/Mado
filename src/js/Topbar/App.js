@@ -1,7 +1,7 @@
 function App(editor) {
     /* Variables */
     this.editor = editor;
-    this.lastBounds = chrome.app.window.current().getBounds();
+    this.lastBounds = chrome.app.window.current().outerBounds;
 
     this.dragAndDropManager = new DnDManager(this, "body");
     this.exportManager = new ExportManager(this);

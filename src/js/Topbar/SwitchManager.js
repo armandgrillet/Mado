@@ -9,16 +9,16 @@ function SwitchManager() {
 
     /* Variables */
     this.switchButtons = [this.switchToMD, this.switchToBoth, this.switchToHTML]; // Wrapping the switch buttons in an array.
-    this.previousSize = chrome.app.window.current().getBounds().width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
+    this.previousSize = chrome.app.window.current().outerBounds.width; // Setting the size of the window, forbid the resize() function to be launched before the complete loading.
 
     /* Events */
     chrome.app.window.current().onBoundsChanged.addListener($.proxy(function () {
-        if (chrome.app.window.current().getBounds().width < 1160 && this.switchToBoth.hasClass("activated")) {
+        if (chrome.app.window.current().outerBounds.width < 1160 && this.switchToBoth.hasClass("activated")) {
             this.switchToMD.click(); // Markdown set as default view.
-        } else if (chrome.app.window.current().getBounds().width >= 1160 && this.previousSize < 1160) {
+        } else if (chrome.app.window.current().outerBounds.width >= 1160 && this.previousSize < 1160) {
             this.switchToBoth.click();
         }
-        this.previousSize = chrome.app.window.current().getBounds().width;
+        this.previousSize = chrome.app.window.current().outerBounds.width;
     }, this));
 
     this.switchToMD.add(this.switchToBoth).add(this.switchToHTML).on("click", $.proxy(function(e) { this.activate(e.currentTarget.id); }, this));
@@ -33,7 +33,7 @@ function SwitchManager() {
     }, this));
 
     /* Initialization */
-    if (chrome.app.window.current().getBounds().width > 1159) { // Big window, both sides are displayed.
+    if (chrome.app.window.current().outerBounds.width > 1159) { // Big window, both sides are displayed.
         this.activate("switch-both");
     } else { // Small window, we only show the Markdown side.
         this.activate("switch-md");
