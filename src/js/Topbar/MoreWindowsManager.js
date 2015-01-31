@@ -5,7 +5,6 @@ function MoreWindowsManager() {
     this.moreBox = $("#more-container");
 
     this.settingsLine = $("#settings");
-    this.qAndALine = $("#q-and-a");
     this.shortcutsLine = $("#shortcuts");
     this.aboutLine = $("#about");
 
@@ -18,18 +17,15 @@ function MoreWindowsManager() {
         }
     }, this));
 
-    this.settingsLine.add(this.qAndALine).add(this.shortcutsLine).add(this.aboutLine).on("click", $.proxy(function(e) {
+    this.settingsLine.add(this.shortcutsLine).add(this.aboutLine).on("click", $.proxy(function(e) {
         switch (e.currentTarget.id) {
-        case "settings": // The user press enter.
+        case "settings":
             this.apply("more/settings.html");
             break;
-        case "q-and-a": // The user press echap.
-            this.apply("more/qanda.html");
-            break;
-        case "shortcuts": // The user press enter.
+        case "shortcuts":
             this.apply("more/shortcuts.html");
             break;
-        case "about": // The user press enter.
+        case "about":
             this.apply("more/about.html");
             break;
         }
