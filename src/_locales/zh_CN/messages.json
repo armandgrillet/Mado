@@ -232,6 +232,104 @@
       "message": "输入一个语法 (e.g. '粗体')"
    },
 
+   "moreAboutTitle": {
+      "message": "关于Mado"
+   },
+
+   "moreAboutUsing": {
+      "message": "您正在使用 Mado "
+   },
+
+   "moreAboutCreatedBy": {
+      "message": "，作者是"
+   },
+
+   "moreAboutProjects": {
+      "message": "Mado 在此感谢这些项目："
+   },
+
+   "moreAboutBy": {
+      "message": "由"
+   },
+
+   "moreAboutFonts": {
+      "message": "Mado 中使用的字体："
+   },
+
+   "moreAboutAvailableOnGitHub": {
+      "message": "可以从 GitHub 上获得，"
+   },
+
+   "moreAboutMITLicense": {
+      "message": "但需要在 MIT 授权条款下。"
+   },
+
+
+   "moreSettingsSyntaxTitle": {
+      "message": "语法："
+   },
+
+   "moreSettingsSyntaxMarkdown": {
+      "message": "基本的Markdown （不支持表）"
+   },
+
+   "moreSettingsResetTitle": {
+      "message": "重置："
+   },
+
+   "moreSettingsResetButton": {
+      "message": "重置Mado，关闭所有窗口（包括没保存的文档）重启应用"
+   },
+
+
+   "moreShortcutsClassicTitle": {
+      "message": "经典快捷键"
+   },
+
+   "moreShortcutsNew": {
+      "message": "创建新文档。"
+   },
+
+   "moreShortcutsOpen": {
+      "message": "打开文档。"
+   },
+
+   "moreShortcutsSave": {
+      "message": "保存文档。"
+   },
+
+   "moreShortcutsSaveAs": {
+      "message": "另存文档为..."
+   },
+
+   "moreShortcutsPrint": {
+      "message": "打印文档。"
+   },
+
+   "moreShortcutsHelp": {
+      "message": "打开快捷帮助工具。"
+   },
+
+   "moreShortcutsLink": {
+      "message": "添加一个链接"
+   },
+
+   "moreShortcutsClose": {
+      "message": "关闭窗口。"
+   },
+
+   "moreShortcutsSpecificTitle": {
+      "message": "Mado 特有快捷键"
+   },
+
+   "moreShortcutsSwitchLeft": {
+      "message": "切换工作区到左边。"
+   },
+
+   "moreShortcutsSwitchRight": {
+      "message": "切换工作区到左边。"
+   },
+
    "htmlUrlPlaceholder": {
       "message": "输入URL"
    },
