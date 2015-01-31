@@ -216,10 +216,6 @@
       "message": "Settings"
    },
 
-   "htmlQA": {
-      "message": "Q&amp;A"
-   },
-
    "htmlShortcuts": {
       "message": "Shortcuts"
    },
@@ -255,6 +251,106 @@
    "htmlMarkdownPlaceholder": {
       "message": "Write here"
    },
+
+
+   "moreAboutTitle": {
+      "message": "About Mado"
+   },
+
+   "moreAboutUsing": {
+      "message": "You are using Mado "
+   },
+
+   "moreAboutCreatedBy": {
+      "message": ", created by"
+   },
+
+   "moreAboutProjects": {
+      "message": "Remember Mado is here thanks to these projects:"
+   },
+
+   "moreAboutBy": {
+      "message": "by"
+   },
+
+   "moreAboutFonts": {
+      "message": "Fonts used in Mado:"
+   },
+
+   "moreAboutAvailableOnGitHub": {
+      "message": "is available on GitHub"
+   },
+
+   "moreAboutMITLicense": {
+      "message": "under a MIT license."
+   },
+
+
+   "moreSettingsSyntaxTitle": {
+      "message": "Syntax:"
+   },
+
+   "moreSettingsSyntaxMarkdown": {
+      "message": "Basic Markdown (without tables)"
+   },
+
+   "moreSettingsResetTitle": {
+      "message": "Reset:"
+   },
+
+   "moreSettingsResetButton": {
+      "message": "Reset Mado, close all the windows (even unsaved documents) and restart the app"
+   },
+
+
+   "moreShortcutsClassicTitle": {
+      "message": "Classic shortcuts"
+   },
+
+   "moreShortcutsNew": {
+      "message": "Create a new document."
+   },
+
+   "moreShortcutsOpen": {
+      "message": "Open an existing document."
+   },
+
+   "moreShortcutsSave": {
+      "message": "Save the document."
+   },
+
+   "moreShortcutsSaveAs": {
+      "message": "Save the document as…"
+   },
+
+   "moreShortcutsPrint": {
+      "message": "Print the document."
+   },
+
+   "moreShortcutsHelp": {
+      "message": "Open the quick help tool."
+   },
+
+   "moreShortcutsLink": {
+      "message": "Insert a link."
+   },
+
+   "moreShortcutsClose": {
+      "message": "Close the window."
+   },
+
+   "moreShortcutsSpecificTitle": {
+      "message": "Mado specific shortcuts"
+   },
+
+   "moreShortcutsSwitchLeft": {
+      "message": "Switch the workspace view to the left."
+   },
+
+   "moreShortcutsSwitchRight": {
+      "message": "Switch the workspace view to the right."
+   },
+
 
    "msgChooseAnImage": {
       "message": "Choose an image"
