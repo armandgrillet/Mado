@@ -104,7 +104,7 @@ Window.prototype = {
     /* Set the bounds and apply the callback function. */
     setNewBounds: function(callback) {
         chrome.runtime.getBackgroundPage($.proxy(function(backgroundPage) { // Set the bounds for the Mado's window size on relaunch.
-            backgroundPage.newBounds(chrome.app.window.current().getBounds());
+            backgroundPage.newBounds(chrome.app.window.current().outerBounds);
             callback();
         }, this));
     }

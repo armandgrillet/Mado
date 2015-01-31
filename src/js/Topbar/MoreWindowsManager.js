@@ -18,7 +18,7 @@ function MoreWindowsManager() {
     }, this));
 
     this.settingsLine.add(this.shortcutsLine).add(this.aboutLine).on("click", $.proxy(function(e) {
-        this.apply("more/" + e.currentTarget.id + ".html", e.currentTarget.id);
+        this.apply(e.currentTarget.id);
     }, this));
 }
 
@@ -26,24 +26,29 @@ MoreWindowsManager.prototype = {
     constructor: MoreWindowsManager,
 
     /* Open the correct window with a good size. */
-    apply: function(url, windowId) {
+    apply: function(windowId) {
         var newWindowConfig = {
-            bounds: {
+            outerBounds: {
                 left: Math.round((window.screenX + (($(window).width() - 498) / 2))), // Perfect left position.
                 top: Math.round((window.screenY + (($(window).height() - 664) / 2))), // Perfect top position.
                 width: 498,
                 height: 664
             },
             frame : "none",
+            id: windowId,
             resizable: false
         };
 
         if (windowId == "settings") {
             newWindowConfig.alwaysOnTop = true;
-            newWindowConfig.id = "settings";
         }
-        
-        chrome.app.window.create(url, newWindowConfig);
+
+        chrome.app.window.create("more/" + windowId + ".html", newWindowConfig, function(newWindow) {
+            newWindow.outerBounds.setPosition(
+                Math.round((window.screenX + (($(window).width() - 498) / 2))),
+                Math.round((window.screenY + (($(window).height() - 664) / 2)))
+            );
+        });
         this.moreDisplayer.toggleClass("hidden"); // Hide the more displayer once a more window has been opened.
     }
 };

@@ -26,7 +26,7 @@
       "128": "app/icon128.png",
       "256": "app/icon256.png"
    },
-   "minimum_chrome_version": "34",
+   "minimum_chrome_version": "35",
    "offline_enabled": true,
    "permissions": [
       "alwaysOnTopWindows",
