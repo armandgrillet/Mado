@@ -6,7 +6,7 @@ function Counter(countedDiv) {
 
     /* Events */
     this.charsDiv.add(this.wordsDiv).on("click", $.proxy(function () {
-        this.toggleInformationsDisplayed(); // Toggle the number displayed on click.
+        this.toggleInformationDisplayed(); // Toggle the number displayed on click.
     }, this));
 
     /* Initialization */
@@ -30,7 +30,7 @@ Counter.prototype = {
     },
 
     /* Toggles the information displayed. */
-    toggleInformationsDisplayed: function() {
+    toggleInformationDisplayed: function() {
         if (this.charsDiv.css("display") == "none") {
             this.charsDiv.css("display", "inline");
             this.wordsDiv.css("display", "none");
