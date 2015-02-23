@@ -1,3 +1,0 @@
-/* Copyright (c) 2015 Armand Grillet.
-See the license in the "About" section for further information. */
-#html-conversion ul>li:before{width:2em;text-align:right}#html-conversion ol>li:before{width:2em;text-align:right;content:counter(list)"."}#html-conversion blockquote{margin-bottom:.7em;margin-left:auto;width:calc(100% - 2.4em);padding:.7em 0 0 1.2em;border-left:.7em solid rgba(0,0,0,.1)}

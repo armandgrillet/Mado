@@ -1,3 +1,0 @@
-/* Copyright (c) 2015 Armand Grillet.
-See the license in the "About" section for further information. */
-#window-close{position:fixed;top:0;right:0;width:40px;height:20px;color:#fff;line-height:20px;text-align:center;background-color:#f24848;-webkit-app-region:no-drag}#window-close:hover{background-color:#d11}#window-close:active{background-color:#c01a1a}
