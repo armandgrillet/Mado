@@ -9,11 +9,13 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: "../src/",
                 src: [
-                    "**",
-                    "!js/*.js",
-                    "!js/Editor/**",
-                    "!js/Topbar/**",
-                    "!js/more/**"
+                    "manifest.json",
+                    "_locales/**",
+                    "app/**",
+                    "css/**",
+                    "fonts/**",
+                    "img/**",
+                    "js/lib/*"
                 ],
                 dest: "../min/"
             }
@@ -50,23 +52,23 @@ module.exports = function(grunt) {
         },
 
         uglify: {
-        	mado: {
-        		files: {
-        			"../min/js/mado.js": ["../min/js/mado.js"],
-        			"../min/js/more/about.js": ["../min/js/more/about.js"],
-        			"../min/js/more/settings.js": ["../min/js/more/settings.js"],
-        			"../min/js/more/shortcuts.js": ["../min/js/more/shortcuts.js"]
-        		}
+            mado: {
+                files: {
+                    "../min/js/mado.js": ["../min/js/mado.js"],
+                    "../min/js/more/about.js": ["../min/js/more/about.js"],
+                    "../min/js/more/settings.js": ["../min/js/more/settings.js"],
+                    "../min/js/more/shortcuts.js": ["../min/js/more/shortcuts.js"]
+                }
             }
         },
 
         processhtml: {
             mado: {
                 files: {
-                    "../min/mado.html": ["../min/mado.html"],
-                    "../min/more/about.html": ["../min/more/about.html"],
-                    "../min/more/settings.html": ["../min/more/settings.html"],
-                    "../min/more/shortcuts.html": ["../min/more/shortcuts.html"]
+                    "../min/mado.html": ["../src/mado.html"],
+                    "../min/more/about.html": ["../src/more/about.html"],
+                    "../min/more/settings.html": ["../src/more/settings.html"],
+                    "../min/more/shortcuts.html": ["../src/more/shortcuts.html"]
                 }
             }
         },
@@ -76,15 +78,6 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: "../min/",
                 src: "**/*.html",
-                dest: "../min/"
-            }
-        },
-
-        cssmin: {
-            dist: {
-                expand: true,
-                cwd: "../min/",
-                src: "**/*.css",
                 dest: "../min/"
             }
         },
@@ -128,7 +121,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-htmlclean");
@@ -136,6 +128,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-yui-compressor");
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask("default", ["copy", "concat", "jshint", "uglify", "processhtml", "htmlclean", "cssmin", "usebanner"]);
+    grunt.registerTask("default", ["copy", "concat", "jshint", "uglify", "processhtml", "htmlclean", "usebanner"]);
 
 };
