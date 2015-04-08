@@ -12,4 +12,4 @@ Mado is a Markdown editor application. It works on Chrome OS, Linux, Mac OS X an
 ##Main contributors
 
 * [Armand Grillet](https://twitter.com/ArmandGrillet)
-* [Allan T.H. Rope](https://twitter.com/AllanTHRope)
+* [Théophile Barbin](https://twitter.com/TheophileBarbin)
