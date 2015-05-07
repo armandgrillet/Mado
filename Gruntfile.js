@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         copy: {
             main: { // Copy the src in a min folder.
                 expand: true,
-                cwd: "../src/",
+                cwd: "src/",
                 src: [
                     "manifest.json",
                     "_locales/**",
@@ -17,47 +17,47 @@ module.exports = function(grunt) {
                     "img/**",
                     "js/lib/*"
                 ],
-                dest: "../min/"
+                dest: "min/"
             }
         },
 
         concat: {
             mado: {
-                src: ["../src/js/*.js", "../src/js/Editor/*.js", "../src/js/Topbar/*.js"],
-                dest: "../min/js/mado.js"
+                src: ["src/js/*.js", "src/js/Editor/*.js", "src/js/Topbar/*.js"],
+                dest: "min/js/mado.js"
             },
             moreAbout: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/about-onload.js"],
+                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/about-onload.js"],
                 ],
-                dest: "../min/js/more/about.js"
+                dest: "min/js/more/about.js"
             },
             moreSettings: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/SettingsManager.js", "../src/js/more/settings-onload.js"],
+                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/SettingsManager.js", "src/js/more/settings-onload.js"],
                 ],
-                dest: "../min/js/more/settings.js"
+                dest: "min/js/more/settings.js"
             },
             moreShortcuts: {
                 src: [
-                    ["../src/js/more/CloseButtonManager.js", "../src/js/more/Localizer.js", "../src/js/more/ShortcutsManager.js", "../src/js/more/shortcuts-onload.js"],
+                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/ShortcutsManager.js", "src/js/more/shortcuts-onload.js"],
                 ],
-                dest: "../min/js/more/shortcuts.js"
+                dest: "min/js/more/shortcuts.js"
             }
         },
 
         jshint: {
-            beforeconcat: ["../src/js/*.js", "../src/js/Editor/*.js", "../src/js/Topbar/*.js", "../src/js/more/*.js"],
-            afterconcat: ["../min/js/mado.js", "../min/js/more/*.js"]
+            beforeconcat: ["src/js/*.js", "src/js/Editor/*.js", "src/js/Topbar/*.js", "src/js/more/*.js"],
+            afterconcat: ["min/js/mado.js", "min/js/more/*.js"]
         },
 
         uglify: {
             mado: {
                 files: {
-                    "../min/js/mado.js": ["../min/js/mado.js"],
-                    "../min/js/more/about.js": ["../min/js/more/about.js"],
-                    "../min/js/more/settings.js": ["../min/js/more/settings.js"],
-                    "../min/js/more/shortcuts.js": ["../min/js/more/shortcuts.js"]
+                    "min/js/mado.js": ["min/js/mado.js"],
+                    "min/js/more/about.js": ["min/js/more/about.js"],
+                    "min/js/more/settings.js": ["min/js/more/settings.js"],
+                    "min/js/more/shortcuts.js": ["min/js/more/shortcuts.js"]
                 }
             }
         },
@@ -65,10 +65,10 @@ module.exports = function(grunt) {
         processhtml: {
             mado: {
                 files: {
-                    "../min/mado.html": ["../src/mado.html"],
-                    "../min/more/about.html": ["../src/more/about.html"],
-                    "../min/more/settings.html": ["../src/more/settings.html"],
-                    "../min/more/shortcuts.html": ["../src/more/shortcuts.html"]
+                    "min/mado.html": ["src/mado.html"],
+                    "min/more/about.html": ["src/more/about.html"],
+                    "min/more/settings.html": ["src/more/settings.html"],
+                    "min/more/shortcuts.html": ["src/more/shortcuts.html"]
                 }
             }
         },
@@ -76,9 +76,9 @@ module.exports = function(grunt) {
         htmlclean: {
             deploy: {
                 expand: true,
-                cwd: "../min/",
+                cwd: "min/",
                 src: "**/*.html",
-                dest: "../min/"
+                dest: "min/"
             }
         },
 
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
                     linebreak: true
                 },
                 files: {
-                    src: ["../min/*.html", "../min/more/*.html"]
+                    src: ["min/*.html", "min/more/*.html"]
                 }
             },
             cssJsBanner: {
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
                     linebreak: true
                 },
                 files: {
-                    src: ["../min/css/*.css", "../min/css/more/*.css", "../min/css/themes/*.css", "../min/js/mado.js", "../min/js/more/*.js", "!../min/css/icons.css"]
+                    src: ["min/css/*.css", "min/css/more/*.css", "min/css/themes/*.css", "min/js/mado.js", "min/js/more/*.js", "!min/css/icons.css"]
                 }
             },
             iconsBanner: {
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
                     linebreak: true
                 },
                 files: {
-                    src: ["../min/css/icons.css"]
+                    src: ["min/css/icons.css"]
                 }
             }
         }
@@ -129,5 +129,4 @@ module.exports = function(grunt) {
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     grunt.registerTask("default", ["copy", "concat", "jshint", "uglify", "processhtml", "htmlclean", "usebanner"]);
-
 };
