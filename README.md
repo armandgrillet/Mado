@@ -3,7 +3,7 @@ Mado
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 <p align="center">
-<img src="/src/app/icon128.png">
+<img src="img/icon128.png">
 <img src="http://i.imgur.com/zJrZNyd.png">
 </p>
 
