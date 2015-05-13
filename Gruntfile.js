@@ -5,16 +5,15 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
 
         copy: {
-            main: { // Copy the src in a min folder.
+            main: { // Copy everything in a min folder.
                 expand: true,
-                cwd: "src/",
                 src: [
                     "manifest.json",
                     "_locales/**",
-                    "app/**",
                     "css/**",
                     "fonts/**",
                     "img/**",
+                    "js/background.js",
                     "js/lib/*"
                 ],
                 dest: "min/"
@@ -23,31 +22,31 @@ module.exports = function(grunt) {
 
         concat: {
             mado: {
-                src: ["src/js/*.js", "src/js/Editor/*.js", "src/js/Topbar/*.js"],
+                src: ["js/onload.js", "js/Editor/*.js", "js/Topbar/*.js"],
                 dest: "min/js/mado.js"
             },
             moreAbout: {
                 src: [
-                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/about-onload.js"],
+                    ["js/more/CloseButtonManager.js", "js/more/Localizer.js", "js/more/about-onload.js"],
                 ],
                 dest: "min/js/more/about.js"
             },
             moreSettings: {
                 src: [
-                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/SettingsManager.js", "src/js/more/settings-onload.js"],
+                    ["js/more/CloseButtonManager.js", "js/more/Localizer.js", "js/more/SettingsManager.js", "js/more/settings-onload.js"],
                 ],
                 dest: "min/js/more/settings.js"
             },
             moreShortcuts: {
                 src: [
-                    ["src/js/more/CloseButtonManager.js", "src/js/more/Localizer.js", "src/js/more/ShortcutsManager.js", "src/js/more/shortcuts-onload.js"],
+                    ["js/more/CloseButtonManager.js", "js/more/Localizer.js", "js/more/ShortcutsManager.js", "js/more/shortcuts-onload.js"],
                 ],
                 dest: "min/js/more/shortcuts.js"
             }
         },
 
         jshint: {
-            beforeconcat: ["src/js/*.js", "src/js/Editor/*.js", "src/js/Topbar/*.js", "src/js/more/*.js"],
+            beforeconcat: ["js/onload.js", "js/Editor/*.js", "js/Topbar/*.js", "js/Window/*.js", "js/more/*.js"],
             afterconcat: ["min/js/mado.js", "min/js/more/*.js"]
         },
 
@@ -65,10 +64,10 @@ module.exports = function(grunt) {
         processhtml: {
             mado: {
                 files: {
-                    "min/mado.html": ["src/mado.html"],
-                    "min/more/about.html": ["src/more/about.html"],
-                    "min/more/settings.html": ["src/more/settings.html"],
-                    "min/more/shortcuts.html": ["src/more/shortcuts.html"]
+                    "min/mado.html": ["mado.html"],
+                    "min/more/about.html": ["more/about.html"],
+                    "min/more/settings.html": ["more/settings.html"],
+                    "min/more/shortcuts.html": ["more/shortcuts.html"]
                 }
             }
         },
