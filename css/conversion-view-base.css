@@ -325,10 +325,8 @@
 /* ------
 	Code
    ------ */
-code {
-	/* Box-model */
-	padding: 0 0.35em;
-
+/* Rules that preformatted text and code have in common */
+pre, code {
 	/* Typography */
 	font-family: SourceCodePro;
 	font-size: 0.95em;
@@ -340,13 +338,30 @@ code {
 	border-radius: 3px;
 }
 
-pre code {
+/* Only for inline code */
+code {
+	/* Box-model */
+	padding: 0 0.35em;
+}
+
+/* Preformatted text is a block */
+pre {
 	/* Positioning */
 	margin-bottom: 0.7em;
 
 	/* Box-model */
-	display: block;
 	width: 100%;
 	padding: 0.65em;
 	overflow-x: auto;
+}
+
+/* Cancel some rules for code inside a preformatted text tag to avoid nested code blocks */
+pre > code {
+	/* Box-model */
+	padding: 0;
+
+	/* Visual */
+	background: transparent;
+	border: none;
+	border-radius: 0;
 }
