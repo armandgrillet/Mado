@@ -1,4 +1,4 @@
-function Window(app) {
+function AppWindow(app) {
     /* Outlets */
     this.cancelCloseButton = $("#cancel"); // Close div to cancel closing.
     this.closeDisplayer = $("#close-alert-displayer"); // The div that contains all the close divs.
@@ -46,8 +46,8 @@ function Window(app) {
     this.init();
 }
 
-Window.prototype = {
-    constructor: Window,
+AppWindow.prototype = {
+    constructor: AppWindow,
 
     /* Close the window if the document is saved or display the closeDisplayer. */
     closeWindow: function() {

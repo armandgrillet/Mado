@@ -1,7 +1,7 @@
 window.onload = function() {
     var editor = new Editor(); // The editor.
     var app = new App(editor);
-    var appWindow = new Window(app);
+    var appWindow = new AppWindow(app);
 
     /* Localization */
     $(".localized-placeholder").each(function() {

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
         concat: {
             mado: {
-                src: ["js/onload.js", "js/Editor/*.js", "js/Topbar/*.js"],
+                src: ["js/onload.js", "js/Editor/*.js", "js/Topbar/*.js", "js/Window/*.js"],
                 dest: "min/js/mado.js"
             },
             moreAbout: {
