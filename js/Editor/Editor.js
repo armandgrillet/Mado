@@ -16,7 +16,20 @@ function Editor() {
     this.webImageManager = new WebImageManager(this); // Manage the button to add online images.
 
     /* Events */
-    this.markdown.on("input propertychange", $.proxy(function () { this.convert(); }, this)); // Conversion when there is a change in the markdown textarea.
+    this.markdown.on("input propertychange", $.proxy(function() { this.convert(); }, this)); // Conversion when there is a change in the markdown textarea.
+    this.markdown.on("keydown", function(e) {
+        if (e.keyCode === 9) {
+            e.preventDefault();
+            var start = this.selectionStart;
+            var end = this.selectionEnd;
+
+            // set textarea value to: text before caret + tab + text after caret
+            $(this).val($(this).val().substring(0, start) + "    " + $(this).val().substring(end));
+
+            // put caret at right position again
+            this.selectionStart = this.selectionEnd = start + 4;
+        }
+    });
 
     /* Initialization */
     this.init();
