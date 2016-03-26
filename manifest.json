@@ -1,48 +1,48 @@
 {
-   "app": {
-      "background": {
-         "scripts": [
-            "js/background.js"
-         ]
-      }
-   },
-   "default_locale": "en",
-   "manifest_version": 2,
-   "name": "__MSG_appName__",
-   "version": "0.5",
+    "app": {
+        "background": {
+            "scripts": [
+                "js/background.js"
+            ]
+        }
+    },
+    "default_locale": "en",
+    "manifest_version": 2,
+    "name": "__MSG_appName__",
+    "version": "0.5",
 
-   "author": "Armand Grillet",
-   "description": "__MSG_appDesc__",
-   "file_handlers": {
-      "text": {
-         "extensions": [
-            "md"
-         ]
-      }
-   },
-   "icons": {
-      "16": "img/icon16.png",
-      "48": "img/icon48.png",
-      "128": "img/icon128.png",
-      "256": "img/icon256.png"
-   },
-   "minimum_chrome_version": "35",
-   "offline_enabled": true,
-   "permissions": [
-      "alwaysOnTopWindows",
-      {
-         "fileSystem": [
-            "write",
-            "retainEntries"
-         ]
-      },
-      {
-         "mediaGalleries": [
-            "read"
-         ]
-      },
-      "storage",
-      "webview",
-      "<all_urls>"
-   ]
+    "author": "Armand Grillet",
+    "description": "__MSG_appDesc__",
+    "file_handlers": {
+        "text": {
+            "extensions": [
+                "md"
+            ]
+        }
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png",
+        "256": "img/icon256.png"
+    },
+    "minimum_chrome_version": "35",
+    "offline_enabled": true,
+    "permissions": [
+        "alwaysOnTopWindows",
+        {
+            "fileSystem": [
+                "write",
+                "retainEntries"
+            ]
+        },
+        {
+            "mediaGalleries": [
+                "read"
+            ]
+        },
+        "storage",
+        "webview",
+        "<all_urls>"
+    ]
 }
