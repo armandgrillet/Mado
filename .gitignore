@@ -7,9 +7,13 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# npm modules #
 /node_modules/*
 node_modules/
 node_modules
+
+# Minified version #
 /min/*
 min/
 min

@@ -3,7 +3,7 @@
  * counting on an HTML element.
  *
  * @author   Sacha Schmid (<https://github.com/RadLikeWhoa>)
- * @version  2.1.0
+ * @version  2.1.1
  * @license  MIT
  * @see      <http://radlikewhoa.github.io/Countable/>
  */
@@ -28,6 +28,18 @@
 
   var _liveElements = [],
       _event = 'oninput' in document ? 'input' : 'keyup'
+
+  /**
+   * IE9 is a special case. It does not fire an 'input' event when
+   * characters are deleted (via DEL key, BACKSPACE key, and CUT).
+   * If we want support for those actions we need to use the 'keyup'
+   * event instead.
+   * more info: http://www.matts411.com/post/internet-explorer-9-oninput/
+   */
+
+  if (navigator.userAgent.match(/MSIE 9.0/)) {
+    _event = 'keyup'
+  }
 
   /**
    * `String.trim()` polyfill for non-supporting browsers. This is the
@@ -392,4 +404,4 @@
   } else {
     global.Countable = Countable
   }
-}(this))
+}(this));

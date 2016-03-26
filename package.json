@@ -1,18 +1,23 @@
 {
-  "name": "Mado",
-  "version": "0.4.1",
-  "devDependencies": {
-    "grunt": "latest",
-    "grunt-banner": "latest",
-    "grunt-concat-css": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-cssmin": "latest",
-    "grunt-contrib-jshint": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-htmlclean": "latest",
-    "grunt-processhtml": "latest",
-    "grunt-yui-compressor": "latest"
-  }
+    "name": "Mado",
+    "version": "0.4.1",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ArmandGrillet/Mado.git"
+    },
+    "devDependencies": {
+        "grunt": "latest",
+        "grunt-banner": "latest",
+        "grunt-concat-css": "latest",
+        "grunt-contrib-clean": "latest",
+        "grunt-contrib-concat": "latest",
+        "grunt-contrib-copy": "latest",
+        "grunt-contrib-cssmin": "latest",
+        "grunt-contrib-jshint": "latest",
+        "grunt-contrib-uglify": "latest",
+        "grunt-htmlclean": "latest",
+        "grunt-processhtml": "latest",
+        "grunt-yui-compressor": "latest"
+    }
 }

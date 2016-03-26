@@ -85,7 +85,7 @@ module.exports = function(grunt) {
             html: {
                 options: {
                     position: "top",
-                    banner: "<!-- Copyright (c) 2015 Armand Grillet.\nSee the license in the \"About\" section for further information. -->",
+                    banner: "<!-- Copyright (c) 2016 Armand Grillet.\nSee the license in the \"About\" section for further information. -->",
                     linebreak: true
                 },
                 files: {
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
             cssJsBanner: {
                 options: {
                     position: "top",
-                    banner: "/* Copyright (c) 2015 Armand Grillet.\nSee the license in the \"About\" section for further information. */",
+                    banner: "/* Copyright (c) 2016 Armand Grillet.\nSee the license in the \"About\" section for further information. */",
                     linebreak: true
                 },
                 files: {
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
             iconsBanner: {
                 options: {
                     position: "top",
-                    banner: "/* Copyright (c) 2015 Armand Grillet.\nSee the license in the \"About\" section for further information.\nGenerated via IcoMoon (http://icomoon.io/app/) */",
+                    banner: "/* Copyright (c) 2016 Armand Grillet.\nSee the license in the \"About\" section for further information.\nGenerated via IcoMoon (http://icomoon.io/app/) */",
                     linebreak: true
                 },
                 files: {
