@@ -17,6 +17,7 @@ function Editor() {
 
     /* Events */
     this.markdown.on("input propertychange", $.proxy(function() { this.convert(); }, this)); // Conversion when there is a change in the markdown textarea.
+
     this.markdown.on("keydown", function(e) {
         if (e.keyCode === 9) {
             e.preventDefault();
@@ -30,6 +31,7 @@ function Editor() {
             this.selectionStart = this.selectionEnd = start + 4;
         }
     });
+    this.markdown.on("keydown", $.proxy(function(e) { if (e.keyCode === 9) { this.convert(); }}, this));
 
     /* Initialization */
     this.init();
